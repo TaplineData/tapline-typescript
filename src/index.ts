@@ -7,6 +7,8 @@ export type { ApiErrorBody, RetryConfig, TaplineClientConfig } from './types.js'
 export { AirbnbClient } from './services/airbnb/client.js';
 export { YoutubeClient } from './services/youtube/client.js';
 export { GmgnClient } from './services/gmgn/client.js';
+export { GeckoterminalClient } from './services/geckoterminal/client.js';
 export * as airbnb from './services/airbnb/index.js';
 export * as youtube from './services/youtube/index.js';
 export * as gmgn from './services/gmgn/index.js';
+export * as geckoterminal from './services/geckoterminal/index.js';
