@@ -1,16 +1,16 @@
-# tapline
+# @tapline/client
 
 The official TypeScript client for the [Tapline](https://tapline.sh) API:
-parsed, versioned JSON from live Airbnb and YouTube, one API key, one credit
-pool.
+parsed, versioned JSON from live Airbnb, YouTube and GMGN, one API key, one
+credit pool.
 
 ```sh
-npm install tapline
+npm install @tapline/client
 export TAPLINE_API_KEY="your-api-key"
 ```
 
 ```ts
-import { TaplineClient } from 'tapline';
+import { TaplineClient } from '@tapline/client';
 
 const tapline = new TaplineClient();
 
@@ -19,6 +19,8 @@ const results = await tapline.airbnb.search({ place_id: places.suggestions[0].pl
 
 const video = await tapline.youtube.getMetadata({ video_id: 'dQw4w9WgXcQ' });
 const comments = await tapline.youtube.getComments({ video_id: 'dQw4w9WgXcQ' });
+
+const token = await tapline.gmgn.search({ chain: 'sol', q: 'bonk' });
 ```
 
 `TaplineClient` reads `TAPLINE_API_KEY` and `TAPLINE_BASE_URL` from the
@@ -28,10 +30,11 @@ names, and resolves to the documented response type. Types are exported per
 service:
 
 ```ts
-import type { airbnb, youtube } from 'tapline';
+import type { airbnb, youtube, gmgn } from '@tapline/client';
 
 let listing: airbnb.ParsedListing;
 let channel: youtube.ChannelResponse;
+let trending: gmgn.TrendingToken;
 ```
 
 Failed requests throw `TaplineError` with `status`, `code`, `requestId` and the
