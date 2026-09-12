@@ -1,0 +1,50 @@
+{
+  "name": "tapline",
+  "version": "0.1.0",
+  "description": "The official TypeScript client for the Tapline API",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TaplineData/tapline-typescript.git"
+  },
+  "homepage": "https://tapline.sh",
+  "keywords": [
+    "tapline",
+    "youtube",
+    "airbnb",
+    "api",
+    "client",
+    "sdk",
+    "scraping"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.cjs.json && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
+    "prepublishOnly": "npm run build",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.scripts.json",
+    "test": "tsx scripts/test-retry.ts && tsx scripts/test-bigint.ts",
+    "smoke": "tsx scripts/smoke.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "ajv": "^8.20.0",
+    "tsx": "^4.22.0",
+    "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "axios": "^1.16.0",
+    "lossless-json": "^4.3.0"
+  }
+}
