@@ -1,7 +1,7 @@
 {
   "name": "@tapline/client",
-  "version": "0.2.0",
-  "description": "The official TypeScript client for the Tapline API",
+  "version": "0.2.1",
+  "description": "Typed TypeScript SDK for Tapline's web scraping APIs for YouTube, Airbnb, GMGN and GeckoTerminal.",
   "license": "MIT",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -10,16 +10,28 @@
     "type": "git",
     "url": "git+https://github.com/TaplineData/tapline-typescript.git"
   },
-  "homepage": "https://tapline.sh",
+  "homepage": "https://tapline.sh/sign-up?utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=package_metadata",
   "keywords": [
     "tapline",
+    "typescript",
     "youtube",
     "airbnb",
     "gmgn",
+    "geckoterminal",
     "api",
     "client",
     "sdk",
-    "scraping"
+    "scraping",
+    "web-scraping",
+    "scraping-api",
+    "api-client",
+    "youtube-scraper",
+    "youtube-transcript",
+    "airbnb-scraper",
+    "gmgn-api",
+    "geckoterminal-api",
+    "crypto-data",
+    "dex-data"
   ],
   "exports": {
     ".": {
