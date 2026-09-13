@@ -6,362 +6,362 @@ import type { ActivityRankInfoParams, AddressListRequest, AggedTokenTradesParams
 export class GmgnClient {
   constructor(private readonly base: BaseClient) {}
 
-  /** Gas Price List */
+  /** Current gas prices for every supported chain, with priority and MEV tip tiers, estimated confirmation times and the native token's USD price. Costs 2 credits. */
   async gasPriceList(): Promise<GetGasPriceListResponse> {
     return this.base.get<GetGasPriceListResponse>('/api/v1/gmgn/gas-price-list');
   }
 
-  /** Most-searched tokens per chain, same ranking payload as trending but scored on GMGN search volume. */
+  /** Most-searched tokens per chain, same ranking payload as trending but scored on GMGN search volume. Costs 2 credits. */
   async hotSearches(body: TrendingTokensRequest): Promise<GetHotSearchesResponse> {
     return this.base.post<GetHotSearchesResponse>('/api/v1/gmgn/hot-searches', body);
   }
 
-  /** Live Twitch Kol */
+  /** Twitch channels of known influencers streaming right now, grouped by chain. Costs 2 credits. */
   async liveTwitchKol(): Promise<GetLiveTwitchKolResponse> {
     return this.base.get<GetLiveTwitchKolResponse>('/api/v1/gmgn/live-twitch-kol');
   }
 
-  /** Major Coin Prices */
+  /** Spot prices for the major coins you name, one entry per symbol. Costs 2 credits. */
   async majorCoinPrices(body: SymbolListRequest): Promise<GetMajorCoinPricesResponse> {
     return this.base.post<GetMajorCoinPricesResponse>('/api/v1/gmgn/major-coin-prices', body);
   }
 
-  /** Trending token leaderboards. GMGN ranks every requested chain in one upstream call and returns one bucket per request entry, in the same order. */
+  /** Trending token leaderboards. GMGN ranks every requested chain in one upstream call and returns one bucket per request entry, in the same order. Costs 2 credits. */
   async trendingTokens(body: TrendingTokensRequest): Promise<GetTrendingTokensResponse> {
     return this.base.post<GetTrendingTokensResponse>('/api/v1/gmgn/trending-tokens', body);
   }
 
-  /** Activity Rank Info */
+  /** The chain's running trading competition: its leaderboard entries and the start and end of the scoring window. Costs 2 credits. */
   async activityRankInfo(params: ActivityRankInfoParams): Promise<GetActivityRankInfoResponse> {
     const { chain } = params;
     return this.base.get<GetActivityRankInfoResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/activity-rank-info`);
   }
 
-  /** A single wallet's token transfers in and out, bucketed by time. */
+  /** A single wallet's token transfers in and out, bucketed by time. Costs 2 credits. */
   async aggedTokenTransfers(params: AggedTokenTransfersParams): Promise<GetAggedTokenTransfersResponse> {
     const { chain, ...query } = params;
     return this.base.get<GetAggedTokenTransfersResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/agged-token-transfers`, query);
   }
 
-  /** Tokens ranked by the share of holders who also hold blue-chip assets. */
+  /** Tokens ranked by the share of holders who also hold blue-chip assets. Costs 2 credits. */
   async bluechipRank(params: BluechipRankParams): Promise<GetBluechipRankResponse> {
     const { chain, ...query } = params;
     return this.base.get<GetBluechipRankResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/bluechip-rank`, query);
   }
 
-  /** Every token a developer wallet has launched, with how many reached the open market and their all-time-high market caps. */
+  /** Every token a developer wallet has launched, with how many reached the open market and their all-time-high market caps. Costs 2 credits. */
   async devCreatedTokens(params: DevCreatedTokensParams): Promise<GetDevCreatedTokensResponse> {
     const { chain, wallet_address } = params;
     return this.base.get<GetDevCreatedTokensResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/dev-created-tokens/${encodeURIComponent(wallet_address)}`);
   }
 
-  /** Dex Trades Polling */
+  /** DEX trading activity on the chain over the window: the totals plus the leading launchpads and protocols, each with volume, trade count and trader count. Costs 2 credits. */
   async dexTradesPolling(params: DexTradesPollingParams): Promise<GetDexTradesPollingResponse> {
     const { chain, ...query } = params;
     return this.base.get<GetDexTradesPollingResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/dex-trades-polling`, query);
   }
 
-  /** Per-launchpad tax and trading-limit rules for the chain, with the localized warning text GMGN shows for each. */
+  /** Per-launchpad tax and trading-limit rules for the chain, with the localized warning text GMGN shows for each. Costs 2 credits. */
   async launchpadTaxPolicy(params: LaunchpadTaxPolicyParams): Promise<GetLaunchpadTaxPolicyResponse> {
     const { chain } = params;
     return this.base.get<GetLaunchpadTaxPolicyResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/launchpad-tax-policy`);
   }
 
-  /** Everything GMGN knows about each token in one call: pool, security, rug check, creator stats, trade stats and all-time high. */
+  /** Everything GMGN knows about each token in one call: pool, security, rug check, creator stats, trade stats and all-time high. Costs 2 credits. */
   async multiTokenFullInfo(params: MultiTokenFullInfoParams, body: AddressListRequest): Promise<GetMultiTokenFullInfoResponse> {
     const { chain } = params;
     return this.base.post<GetMultiTokenFullInfoResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/multi-token-full-info`, body);
   }
 
-  /** Multi Token Info */
+  /** Token profiles for a batch of addresses in one call. Costs 2 credits. */
   async multiTokenInfo(params: MultiTokenInfoParams, body: AddressListRequest): Promise<GetMultiTokenInfoResponse> {
     const { chain } = params;
     return this.base.post<GetMultiTokenInfoResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/multi-token-info`, body);
   }
 
-  /** Multi Window Token Info */
+  /** Token profiles for a batch of addresses, each with its biggest pool, creator, supply and price movement across every window. Costs 2 credits. */
   async multiWindowTokenInfo(params: MultiWindowTokenInfoParams, body: AddressListRequest): Promise<GetMultiWindowTokenInfoResponse> {
     const { chain } = params;
     return this.base.post<GetMultiWindowTokenInfoResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/multi-window-token-info`, body);
   }
 
-  /** Native Transfer */
+  /** The transfer that funded a wallet with the chain's native token, including who sent it. Costs 2 credits. */
   async nativeTransfer(params: NativeTransferParams): Promise<GetNativeTransferResponse> {
     const { chain, wallet_address } = params;
     return this.base.get<GetNativeTransferResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/native-transfer/${encodeURIComponent(wallet_address)}`);
   }
 
-  /** Newly created trading pairs with their launchpad, liquidity and base-token snapshot. */
+  /** Newly created trading pairs with their launchpad, liquidity and base-token snapshot. Costs 2 credits. */
   async newPairs(params: NewPairsParams): Promise<GetNewPairsResponse> {
     const { chain, ...query } = params;
     return this.base.get<GetNewPairsResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/new-pairs`, query);
   }
 
-  /** Search tokens and wallets by name, symbol, contract address or wallet address. Returns matching coins with full market data and matching wallets with 7-day P&L. */
+  /** Search tokens and wallets by name, symbol, contract address or wallet address. Returns matching coins with full market data and matching wallets with 7-day P&L. Costs 2 credits. */
   async search(params: SearchParams): Promise<SearchTokensResponse> {
     const { chain, ...query } = params;
     return this.base.get<SearchTokensResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/search`, query);
   }
 
-  /** Of all tokens sharing this name or symbol, the one with the highest market cap and the one created earliest. Use it to tell an original from a copycat. */
+  /** Of all tokens sharing this name or symbol, the one with the highest market cap and the one created earliest. Use it to tell an original from a copycat. Costs 2 credits. */
   async similarCoinExtremes(params: SimilarCoinExtremesParams): Promise<GetSimilarCoinExtremesResponse> {
     const { chain, ...query } = params;
     return this.base.get<GetSimilarCoinExtremesResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/similar-coin-extremes`, query);
   }
 
-  /** Similar Coins */
+  /** Tokens whose name or symbol is close to the one you pass, with each one's market cap and liquidity. Costs 2 credits. */
   async similarCoins(params: SimilarCoinsParams): Promise<GetSimilarCoinsResponse> {
     const { chain, ...query } = params;
     return this.base.get<GetSimilarCoinsResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/similar-coins`, query);
   }
 
-  /** Smart-money profile for a wallet: labels, socials and aggregate performance. GMGN's smart-money backend does not cover arbitrum, arc, robinhood, stable or xlayer; use /wallet-common-stat for those. */
+  /** Smart-money profile for a wallet: labels, socials and aggregate performance. GMGN's smart-money backend does not cover arbitrum, arc, robinhood, stable or xlayer; use /wallet-common-stat for those. Costs 2 credits. */
   async smartMoneyWalletInfo(params: SmartMoneyWalletInfoParams): Promise<GetSmartMoneyWalletInfoResponse> {
     const { chain, wallet_address } = params;
     return this.base.get<GetSmartMoneyWalletInfoResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/smart-money-wallet/${encodeURIComponent(wallet_address)}`);
   }
 
-  /** Tokens ranked by swap activity over the window, excluding wash trading. */
+  /** Tokens ranked by swap activity over the window, excluding wash trading. Costs 2 credits. */
   async swapRankings(params: SwapRankingsParams): Promise<GetSwapRankingsResponse> {
     const { chain, ...query } = params;
     return this.base.get<GetSwapRankingsResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/swap-rankings`, query);
   }
 
-  /** Compact token records for a batch of addresses: symbol, logo, decimals, supply, liquidity, launchpad and honeypot flag. */
+  /** Compact token records for a batch of addresses: symbol, logo, decimals, supply, liquidity, launchpad and honeypot flag. Costs 2 credits. */
   async tokenInfoBrief(params: TokenInfoBriefParams, body: AddressListRequest): Promise<GetTokenInfoBriefResponse> {
     const { chain } = params;
     return this.base.post<GetTokenInfoBriefResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token-info-brief`, body);
   }
 
-  /** Current price for up to many token addresses in one call. */
+  /** Current price for up to many token addresses in one call. Costs 2 credits. */
   async tokenPrices(params: TokenPricesParams, body: AddressListRequest): Promise<GetTokenPricesResponse> {
     const { chain } = params;
     return this.base.post<GetTokenPricesResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token-prices`, body);
   }
 
-  /** Tokens currently firing GMGN surge signals, with the market-cap snapshot at each trigger. */
+  /** Tokens currently firing GMGN surge signals, with the market-cap snapshot at each trigger. Costs 2 credits. */
   async tokenSignals(params: TokenSignalsParams, body: TokenSignalsRequest): Promise<GetTokenSignalsResponse> {
     const { chain } = params;
     return this.base.post<GetTokenSignalsResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token-signals`, body);
   }
 
-  /** Trades bucketed by time and aggregated per wallet, optionally narrowed to one wallet cohort. */
+  /** Trades bucketed by time and aggregated per wallet, optionally narrowed to one wallet cohort. Costs 2 credits. */
   async aggedTokenTrades(params: AggedTokenTradesParams): Promise<GetAggedTokenTradesResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetAggedTokenTradesResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/agged-trades`, query);
   }
 
-  /** GMGN's generated plain-language summary of what the token is, in English and both Chinese scripts. */
+  /** GMGN's generated plain-language summary of what the token is, in English and both Chinese scripts. Costs 2 credits. */
   async tokenAiNarrative(params: TokenAiNarrativeParams): Promise<GetTokenAiNarrativeResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenAiNarrativeResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/ai-narrative`);
   }
 
-  /** Bundler activity on the token: wallet count, swap count, hold and swap ratios, and quote volume. */
+  /** Bundler activity on the token: wallet count, swap count, hold and swap ratios, and quote volume. Costs 2 credits. */
   async tokenBundlerStat(params: TokenBundlerStatParams): Promise<GetTokenBundlerStatResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenBundlerStatResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/bundler-stat`);
   }
 
-  /** Price OHLCV candles for a token. */
+  /** Price OHLCV candles for a token. Costs 2 credits. */
   async tokenCandles(params: TokenCandlesParams): Promise<GetTokenCandlesResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenCandlesResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/candles`, query);
   }
 
-  /** Messages posted to a token's GMGN community feed, with each author's wallet and X handle. */
+  /** Messages posted to a token's GMGN community feed, with each author's wallet and X handle. Costs 2 credits. */
   async tokenCommunityMessages(params: TokenCommunityMessagesParams): Promise<GetTokenCommunityMessagesResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenCommunityMessagesResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/community-messages`, query);
   }
 
-  /** Creator wallet status and holdings, top-10 holder rate, DexScreener paid-promotion flags, and the creator's Twitter token-launch history. */
+  /** Creator wallet status and holdings, top-10 holder rate, DexScreener paid-promotion flags, and the creator's Twitter token-launch history. Costs 2 credits. */
   async tokenDevInfo(params: TokenDevInfoParams): Promise<GetTokenDevInfoResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenDevInfoResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/dev-info`);
   }
 
-  /** How the launchpad splits this token's trading fees, and which recipients have claimed. */
+  /** How the launchpad splits this token's trading fees, and which recipients have claimed. Costs 2 credits. */
   async tokenFeeDistribution(params: TokenFeeDistributionParams): Promise<GetTokenFeeDistributionResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenFeeDistributionResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/fee-distribution`);
   }
 
-  /** Per-pool fee configuration plus the security and launchpad summary GMGN shows beside it. */
+  /** Per-pool fee configuration plus the security and launchpad summary GMGN shows beside it. Costs 2 credits. */
   async tokenFeeInfo(params: TokenFeeInfoParams): Promise<GetTokenFeeInfoResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenFeeInfoResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/fee-info`);
   }
 
-  /** Funding trail for specific holders: native balance, first transfer in and out, wallet age and tags. */
+  /** Funding trail for specific holders: native balance, first transfer in and out, wallet age and tags. Costs 2 credits. */
   async tokenHolderExtraInfo(params: TokenHolderExtraInfoParams): Promise<GetTokenHolderExtraInfoResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenHolderExtraInfoResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/holder-extra-info`, query);
   }
 
-  /** Holder Stat */
+  /** How many of a token's holders fall into each wallet cohort: smart money, snipers, insiders, bundlers and the rest. Costs 2 credits. */
   async holderStat(params: HolderStatParams): Promise<GetTokenHolderStatResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenHolderStatResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/holder-stat`);
   }
 
-  /** Holders */
+  /** A token's holders, sortable by balance or profit and filterable by wallet cohort. Paginate with the `next` cursor. Costs 2 credits. */
   async holders(params: HoldersParams): Promise<GetTokenHoldersResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenHoldersResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/holders`, query);
   }
 
-  /** Add and remove liquidity events for the token, newest first. GMGN serves this on Solana only; every other chain answers HTTP 400. Use /liquidity-stats for the rest. */
+  /** Add and remove liquidity events for the token, newest first. GMGN serves this on Solana only; every other chain answers HTTP 400. Use /liquidity-stats for the rest. Costs 2 credits. */
   async liquidity(params: LiquidityParams): Promise<GetTokenLiquidityResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenLiquidityResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/liquidity`, query);
   }
 
-  /** Wallet-category breakdown of the token's liquidity providers: smart, fresh, renowned, creator, sniper, rat-trader, whale, top, following and bundler counts. */
+  /** Wallet-category breakdown of the token's liquidity providers: smart, fresh, renowned, creator, sniper, rat-trader, whale, top, following and bundler counts. Costs 2 credits. */
   async tokenLiquidityStats(params: TokenLiquidityStatsParams): Promise<GetTokenLiquidityStatsResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenLiquidityStatsResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/liquidity-stats`);
   }
 
-  /** Aggregate pool size and pool count across the token's liquidity pools. GMGN serves this on Solana only; every other chain answers HTTP 400. */
+  /** Aggregate pool size and pool count across the token's liquidity pools. GMGN serves this on Solana only; every other chain answers HTTP 400. Costs 2 credits. */
   async tokenLiquidityTrend(params: TokenLiquidityTrendParams): Promise<GetTokenLiquidityTrendResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenLiquidityTrendResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/liquidity-trend`);
   }
 
-  /** Live Preview */
+  /** The token's live-stream card: creator, socials, market cap and whether a stream is running right now. Costs 2 credits. */
   async livePreview(params: LivePreviewParams): Promise<GetLiveTokenPreviewResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetLiveTokenPreviewResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/live-preview`);
   }
 
-  /** Every logo the token has used, with the timestamp each was set. A changed logo is a common rebrand or impersonation signal. */
+  /** Every logo the token has used, with the timestamp each was set. A changed logo is a common rebrand or impersonation signal. Costs 2 credits. */
   async tokenLogoHistory(params: TokenLogoHistoryParams): Promise<GetTokenLogoHistoryResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenLogoHistoryResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/logo-history`);
   }
 
-  /** Mcap Candles */
+  /** Market-cap OHLCV bars for a token, at the requested resolution. Costs 2 credits. */
   async mcapCandles(params: McapCandlesParams): Promise<GetTokenMcapCandlesResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenMcapCandlesResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/mcap-candles`, query);
   }
 
-  /** Pool Fee Info */
+  /** Fee setup of every pool trading the token: exchange, liquidity, fee ratio and whether the fee is dynamic. Costs 2 credits. */
   async poolFeeInfo(params: PoolFeeInfoParams): Promise<GetTokenPoolFeeInfoResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenPoolFeeInfoResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/pool-fee-info`);
   }
 
-  /** Recommend Slippage */
+  /** Slippage GMGN recommends for buying and for selling a token, with its tax flag and volatility score. Costs 2 credits. */
   async recommendSlippage(params: RecommendSlippageParams): Promise<GetRecommendSlippageResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetRecommendSlippageResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/recommend-slippage`);
   }
 
-  /** Security */
+  /** Contract safety checks for a token, plus the launchpad it was created on. Costs 2 credits. */
   async security(params: SecurityParams): Promise<GetTokenSecurityResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenSecurityResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/security`);
   }
 
-  /** Socials */
+  /** A token's social links, community vote tally and rug check. Costs 2 credits. */
   async socials(params: SocialsParams): Promise<GetTokenSocialsResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenSocialsResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/socials`);
   }
 
-  /** Stats */
+  /** Holder-quality breakdown for a token: blue-chip overlap, insider and sniper concentration, bot activity and how much the creator still holds. Costs 2 credits. */
   async stats(params: StatsParams): Promise<GetTokenStatsResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenStatsResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/stats`);
   }
 
-  /** Top Buyers */
+  /** The token's earliest large buyers and what they did since: still holding, sold part, sold out or bought more. Costs 2 credits. */
   async topBuyers(params: TopBuyersParams): Promise<GetTopBuyersResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTopBuyersResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/top-buyers`);
   }
 
-  /** Trader Stat */
+  /** How many of a token's traders fall into each wallet cohort: smart money, snipers, insiders, bundlers and the rest. Costs 2 credits. */
   async traderStat(params: TraderStatParams): Promise<GetTokenTraderStatResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenTraderStatResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/trader-stat`);
   }
 
-  /** Traders */
+  /** Wallets trading a token, ranked by profit or another field and filterable by cohort. Paginate with the `next` cursor. Costs 2 credits. */
   async traders(params: TradersParams): Promise<GetTokenTradersResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenTradersResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/traders`, query);
   }
 
-  /** Trades */
+  /** Individual trades in a token, newest first. Paginate with the `next` cursor; the upstream page size is fixed. Costs 2 credits. */
   async trades(params: TradesParams): Promise<GetTokenTradesResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenTradesResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/trades`, query);
   }
 
-  /** Trade history from GMGN's multi-region feed, with maker tags on every fill. Serves a fixed 50-trade page; paginate with `cursor` from the previous page's `data.next`. */
+  /** Trade history from GMGN's multi-region feed, with maker tags on every fill. Serves a fixed 50-trade page; paginate with `cursor` from the previous page's `data.next`. Costs 2 credits. */
   async tokenTradesV2(params: TokenTradesV2Params): Promise<GetTokenTradesV2Response> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenTradesV2Response>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/trades-v2`, query);
   }
 
-  /** Holder-structure time series. One series is returned per requested `trends_type`. */
+  /** Holder-structure time series. One series is returned per requested `trends_type`. Costs 2 credits. */
   async tokenTrends(params: TokenTrendsParams): Promise<GetTokenTrendsResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenTrendsResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/trends`, query);
   }
 
-  /** Wallet Tags Stat */
+  /** Count of each wallet cohort holding a token: smart, fresh, renowned, sniper, whale, bundler and more. Costs 2 credits. */
   async walletTagsStat(params: WalletTagsStatParams): Promise<GetTokenWalletTagsStatResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenWalletTagsStatResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/wallet-tags-stat`);
   }
 
-  /** The token's declared website, its resolved IP, and when the site was first seen. */
+  /** The token's declared website, its resolved IP, and when the site was first seen. Costs 2 credits. */
   async websiteInfo(params: WebsiteInfoParams): Promise<GetWebsiteInfoResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetWebsiteInfoResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/website-info`);
   }
 
-  /** Wallets ranked by the multiple their public token calls returned, with the tokens they called. */
+  /** Wallets ranked by the multiple their public token calls returned, with the tokens they called. Costs 2 credits. */
   async topCallers(params: TopCallersParams): Promise<GetTopCallersResponse> {
     const { chain, ...query } = params;
     return this.base.get<GetTopCallersResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/top-callers`, query);
   }
 
-  /** A wallet's swap and liquidity events with token, quote token, USD cost, gas and launchpad per event. Cursor-paginated via the `next` field. */
+  /** A wallet's swap and liquidity events with token, quote token, USD cost, gas and launchpad per event. Cursor-paginated via the `next` field. Costs 2 credits. */
   async walletActivity(params: WalletActivityParams): Promise<GetWalletActivityResponse> {
     const { chain, wallet_address, ...query } = params;
     return this.base.get<GetWalletActivityResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/wallet-activity/${encodeURIComponent(wallet_address)}`, query);
   }
 
-  /** Native balance and held-token count per chain. GMGN ignores the chain segment and answers for every chain it indexes, so one call covers all of them. */
+  /** Native balance and held-token count per chain. GMGN ignores the chain segment and answers for every chain it indexes, so one call covers all of them. Costs 2 credits. */
   async walletChainBalances(params: WalletChainBalancesParams): Promise<GetWalletChainBalancesResponse> {
     const { chain, wallet_address } = params;
     return this.base.get<GetWalletChainBalancesResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/wallet-chain-balances/${encodeURIComponent(wallet_address)}`);
   }
 
-  /** Wallet identity and provenance: labels, tag ranks, socials, follower and rename counts, and the funding wallet that first sent it native currency. */
+  /** Wallet identity and provenance: labels, tag ranks, socials, follower and rename counts, and the funding wallet that first sent it native currency. Costs 2 credits. */
   async walletCommonStat(params: WalletCommonStatParams): Promise<GetWalletCommonStatResponse> {
     const { chain, wallet_address } = params;
     return this.base.get<GetWalletCommonStatResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/wallet-common-stat/${encodeURIComponent(wallet_address)}`);
   }
 
-  /** Full wallet P&L analytics: realized and unrealized profit, win rate, holding periods and risk flags. GMGN's smart-money backend does not cover arbitrum, arc, robinhood, stable or xlayer; use /wallet-stat for those. */
+  /** Full wallet P&L analytics: realized and unrealized profit, win rate, holding periods and risk flags. GMGN's smart-money backend does not cover arbitrum, arc, robinhood, stable or xlayer; use /wallet-stat for those. Costs 2 credits. */
   async walletPnl(params: WalletPnlParams): Promise<GetSmartMoneyWalletResponse> {
     const { chain, wallet_address, ...query } = params;
     return this.base.get<GetSmartMoneyWalletResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/wallet-pnl/${encodeURIComponent(wallet_address)}`, query);
   }
 
-  /** Smart-money wallet leaderboard with per-window PnL, win rate, volume and daily profit history. */
+  /** Smart-money wallet leaderboard with per-window PnL, win rate, volume and daily profit history. Costs 2 credits. */
   async walletRankings(params: WalletRankingsParams): Promise<GetWalletRankingsResponse> {
     const { chain, ...query } = params;
     return this.base.get<GetWalletRankingsResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/wallet-rankings`, query);
   }
 
-  /** Wallet P&L for the window: realized profit, cost basis, buy/sell counts, win rate and the P&L multiple distribution. Served on every GMGN chain, including the ones /wallet-pnl cannot reach. */
+  /** Wallet P&L for the window: realized profit, cost basis, buy/sell counts, win rate and the P&L multiple distribution. Served on every GMGN chain, including the ones /wallet-pnl cannot reach. Costs 2 credits. */
   async walletStat(params: WalletStatParams): Promise<GetWalletStatResponse> {
     const { chain, wallet_address, ...query } = params;
     return this.base.get<GetWalletStatResponse>(`/api/v1/gmgn/${encodeURIComponent(chain)}/wallet-stat/${encodeURIComponent(wallet_address)}`, query);

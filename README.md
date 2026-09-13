@@ -1,8 +1,8 @@
 # @tapline/client
 
 The official TypeScript client for the [Tapline](https://tapline.sh) API:
-parsed, versioned JSON from live Airbnb, YouTube and GMGN, one API key, one
-credit pool.
+parsed, versioned JSON from live Airbnb, YouTube, GMGN and GeckoTerminal, one
+API key, one credit pool.
 
 ```sh
 npm install @tapline/client
@@ -21,6 +21,9 @@ const video = await tapline.youtube.getMetadata({ video_id: 'dQw4w9WgXcQ' });
 const comments = await tapline.youtube.getComments({ video_id: 'dQw4w9WgXcQ' });
 
 const token = await tapline.gmgn.search({ chain: 'sol', q: 'bonk' });
+
+const pools = await tapline.geckoterminal.networkLatestPools({ network: 'solana' });
+const stats = await tapline.geckoterminal.globalStats();
 ```
 
 `TaplineClient` reads `TAPLINE_API_KEY` and `TAPLINE_BASE_URL` from the
@@ -30,11 +33,12 @@ names, and resolves to the documented response type. Types are exported per
 service:
 
 ```ts
-import type { airbnb, youtube, gmgn } from '@tapline/client';
+import type { airbnb, youtube, gmgn, geckoterminal } from '@tapline/client';
 
 let listing: airbnb.ParsedListing;
 let channel: youtube.ChannelResponse;
 let trending: gmgn.TrendingToken;
+let pool: geckoterminal.PoolResponse;
 ```
 
 Failed requests throw `TaplineError` with `status`, `code`, `requestId` and the
