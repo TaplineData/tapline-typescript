@@ -20,6 +20,7 @@ export interface ErrorResponse {
   domain?: string | null;
   message: string;
   request_id: string;
+  upgrade_url?: string | null;
 }
 
 export interface GetCalendarRequest {
@@ -83,6 +84,12 @@ export interface ParsedAutocompleteSuggestion {
   place_id: string | null;
   subtitle: string | null;
   title: string;
+}
+
+export interface ParsedBreakdownItem {
+  nights: number | null;
+  total: Money;
+  unit_price: Money;
 }
 
 export interface ParsedCalendarDay {
@@ -278,6 +285,7 @@ export interface ParsedPagination {
 
 export interface ParsedPriceResponse {
   available?: boolean | null;
+  breakdown?: ParsedBreakdownItem[];
   can_instant_book?: boolean | null;
   currency?: string | null;
   display_price?: Money | null;
