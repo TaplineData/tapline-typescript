@@ -1,7 +1,7 @@
 {
   "name": "@tapline/client",
   "version": "0.2.3",
-  "description": "Typed TypeScript SDK for Tapline's web scraping APIs for YouTube, Airbnb, GMGN and GeckoTerminal.",
+  "description": "Typed TypeScript SDK for Tapline's web scraping APIs for YouTube, Airbnb, GMGN, GeckoTerminal and GoPlus Security.",
   "license": "MIT",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -18,6 +18,7 @@
     "airbnb",
     "gmgn",
     "geckoterminal",
+    "goplus",
     "api",
     "client",
     "sdk",
@@ -30,6 +31,7 @@
     "airbnb-scraper",
     "gmgn-api",
     "geckoterminal-api",
+    "goplus-api",
     "crypto-data",
     "dex-data"
   ],

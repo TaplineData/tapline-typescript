@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 
 import type { TaplineClient } from '../src/index.js';
-import type { GetEvmTokenSecurityParams, GetSolanaTokenSecurityParams } from '../src/services/goplus/types.js';
+import type { GetEvmTokenSecurityParams, GetSolanaTokenSecurityParams, GetTronTokenSecurityParams } from '../src/services/goplus/types.js';
 import { TaplineError } from '../src/errors.js';
 import { typeAt, unknownKeys } from './schema-walk.js';
 
@@ -30,6 +30,7 @@ interface Method {
 const METHODS: Record<string, Method> = {
   get_evm_token_security: { response: 'GetEvmTokenSecurityResponse', isArray: false, call: (c, i) => c.goplus.getEvmTokenSecurity(i.params as unknown as GetEvmTokenSecurityParams) },
   get_solana_token_security: { response: 'GetSolanaTokenSecurityResponse', isArray: false, call: (c, i) => c.goplus.getSolanaTokenSecurity(i.params as unknown as GetSolanaTokenSecurityParams) },
+  get_tron_token_security: { response: 'GetTronTokenSecurityResponse', isArray: false, call: (c, i) => c.goplus.getTronTokenSecurity(i.params as unknown as GetTronTokenSecurityParams) },
 };
 
 const ajv = new Ajv2020({ strict: false, allErrors: true });

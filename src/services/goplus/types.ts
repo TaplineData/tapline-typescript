@@ -20,7 +20,7 @@ export interface ErrorResponse {
 export interface GetEvmTokenSecurityParams {
   /** Token contract address: 0x plus 40 hex characters, any case. */
   address: string;
-  /** EVM chain id: 1 Ethereum, 56 BNB Chain, 8453 Base, 4663 Robinhood Chain. */
+  /** EVM chain id as GoPlus numbers it, such as 1 Ethereum, 56 BNB Chain or 8453 Base. The enum lists every EVM chain GoPlus token security supports. */
   chain_id: GoplusChainId;
 }
 
@@ -41,7 +41,18 @@ export interface GetSolanaTokenSecurityResponse {
   result?: Record<string, GoplusSolanaTokenSecurity>;
 }
 
-export type GoplusChainId = "1" | "56" | "8453" | "4663";
+export interface GetTronTokenSecurityParams {
+  /** TRC-20 token contract address, base58 starting with T. */
+  address: string;
+}
+
+export interface GetTronTokenSecurityResponse {
+  code?: number;
+  message?: string;
+  result?: Record<string, GoplusEvmTokenSecurity>;
+}
+
+export type GoplusChainId = "1" | "10" | "25" | "56" | "100" | "130" | "137" | "143" | "146" | "169" | "177" | "196" | "204" | "321" | "324" | "480" | "988" | "1030" | "1514" | "1625" | "1672" | "1868" | "2741" | "2818" | "4200" | "4663" | "5000" | "5042" | "8453" | "9745" | "42161" | "42766" | "43114" | "48900" | "59144" | "80094" | "81457" | "200901" | "201022" | "534352" | "688688" | "810180" | "5734951";
 
 export interface GoplusEvmCexListing {
   cex_list?: string[];
@@ -126,6 +137,7 @@ export interface GoplusEvmTokenSecurity {
   trading_cooldown?: string;
   transfer_pausable?: string;
   transfer_tax?: string;
+  trust_list?: string;
 }
 
 export interface GoplusSolanaAddress {
