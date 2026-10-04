@@ -6,6 +6,7 @@ import { AirbnbClient } from './services/airbnb/client.js';
 import { YoutubeClient } from './services/youtube/client.js';
 import { GmgnClient } from './services/gmgn/client.js';
 import { GeckoterminalClient } from './services/geckoterminal/client.js';
+import { PonsfamilyClient } from './services/ponsfamily/client.js';
 import { GoplusClient } from './services/goplus/client.js';
 
 export class TaplineClient {
@@ -13,6 +14,7 @@ export class TaplineClient {
   readonly youtube: YoutubeClient;
   readonly gmgn: GmgnClient;
   readonly geckoterminal: GeckoterminalClient;
+  readonly ponsfamily: PonsfamilyClient;
   readonly goplus: GoplusClient;
 
   constructor(config: TaplineClientConfig = {}) {
@@ -21,6 +23,7 @@ export class TaplineClient {
     this.youtube = new YoutubeClient(base);
     this.gmgn = new GmgnClient(base);
     this.geckoterminal = new GeckoterminalClient(base);
+    this.ponsfamily = new PonsfamilyClient(base);
     this.goplus = new GoplusClient(base);
   }
 }

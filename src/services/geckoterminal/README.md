@@ -62,7 +62,7 @@ If you omit `apiKey`, the client reads `TAPLINE_API_KEY` in Node.js. Keep the ke
 | `pool` | `PoolParams`: `network`, `address`; optional `base_token` | `PoolResponse`: price, reserves, GT score, security, tokens, DEX, developer |
 | `poolRelatedPools` | `PoolRelatedPoolsParams`: `network`, `address` | `PoolRelatedPoolsResponse`: same-base-token pools and liquidity |
 | `poolSenderSwaps` | `PoolSenderSwapsParams`: `network`, `address`, `from_timestamp`, `to_timestamp`; optional `pair_id`, `sender`, `include_developer`, `inverted` | `PoolSenderSwapsResponse`: swaps grouped by sender |
-| `poolSwaps` | `PoolSwapsParams`: `network`, `address`, `pair_id`; `page_after` or `page_before`; optional `sender`, `inverted` | `PoolSwapsResponse`: individual swaps and cursors |
+| `poolSwaps` | `PoolSwapsParams`: `network`, `address`, `pair_id`; optional `page_after` or `page_before`, `sender`, `inverted` | `PoolSwapsResponse`: individual swaps and cursors |
 | `poolTokenInfoSnapshots` | `PoolTokenInfoSnapshotsParams`: `network`, `address` | `PoolTokenInfoSnapshotsResponse`: descriptions, socials, metadata for both tokens |
 
 ### Token, wallet, and developer data
@@ -122,7 +122,7 @@ for (const bar of candles.data) {
 console.log(swaps.data.length);
 ```
 
-Candlestick timestamps are Unix seconds. `poolSwaps` requires a cursor; start with the current Unix timestamp and continue with the response links.
+Candlestick timestamps are Unix seconds. `poolSwaps` returns the latest swaps when you pass neither cursor; pass a Unix timestamp or a cursor from the response links to page further.
 
 ## Inspect holders and traders
 

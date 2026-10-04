@@ -95,6 +95,7 @@ export interface ErrorResponse {
   domain?: string | null;
   message: string;
   request_id: string;
+  upgrade_url?: string | null;
 }
 
 export type Ext = "mp4" | "m4a" | "webm" | "mhtml";

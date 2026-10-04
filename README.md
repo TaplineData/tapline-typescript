@@ -1,6 +1,6 @@
 # @tapline/client
 
-Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerminal, and GoPlus Security in TypeScript or JavaScript.
+Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, and Pons Family in TypeScript or JavaScript.
 
 ## What you can do
 
@@ -11,8 +11,9 @@ Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerm
 | GMGN | Find tokens, check security and market data, inspect holders and traders, and analyze wallets | [GMGN guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/gmgn/README.md) |
 | GeckoTerminal | Find pools, read candlesticks and swaps, inspect holders and traders, and follow market trends | [GeckoTerminal guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/geckoterminal/README.md) |
 | GoPlus Security | Check EVM and Tron tokens and Solana mints for honeypots, taxes, owner and mint powers, holders, and liquidity | [GoPlus guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/goplus/README.md) |
+| Pons Family | Browse and search launches, read token markets, trades and holders, follow wallets and creator fees, and read the memestock forum | [Pons Family guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/ponsfamily/README.md) |
 
-One API key and credit balance work across all five services.
+One API key and credit balance work across all six services.
 
 ## Get started
 
@@ -124,6 +125,21 @@ if (token === undefined) {
 
 `chain_id` takes any of the 43 EVM chains GoPlus supports, such as `'56'` for BNB Chain or `'42161'` for Arbitrum. `result` is empty when GoPlus has no token at that address on that chain. Each call costs 3 credits, even one that comes back empty. `""` means GoPlus does not know a value, so do not read it as zero. See the [GoPlus guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/goplus/README.md) for Solana mints, Tron tokens, and how to read the response.
 
+## Browse Pons Family launches
+
+```ts
+import { TaplineClient } from '@tapline/client';
+
+const tapline = new TaplineClient();
+const board = await tapline.ponsfamily.listLaunches({ sort: 'volume', page_size: 5 });
+
+for (const launch of board.active?.items ?? []) {
+  console.log(launch.symbol, launch.token, launch.marketCapUsd);
+}
+```
+
+See the [Pons Family guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/ponsfamily/README.md) for token markets, charts, holders, wallets, creator fees, and the memestock forum.
+
 ## Go beyond the free tier
 
 Your free account starts with 500 credits and can use every live endpoint. When you need more credits or higher rate limits, choose a paid plan under [Billing](https://tapline.sh/dashboard?tab=billing&utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=main_readme). Your API key and code stay the same.
@@ -155,6 +171,7 @@ Use the [Tapline API reference](https://tapline.sh/docs?utm_source=typescript_cl
 - [GMGN](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/gmgn/README.md)
 - [GeckoTerminal](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/geckoterminal/README.md)
 - [GoPlus Security](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/goplus/README.md)
+- [Pons Family](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/ponsfamily/README.md)
 
 ## License
 

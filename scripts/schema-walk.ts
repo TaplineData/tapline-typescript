@@ -42,8 +42,9 @@ export function typeAt(defs: Record<string, Schema>, schema: Schema, value: unkn
       current = s.items;
       node = Array.isArray(node) ? node[Number(step.slice(1, -1))] : undefined;
     } else {
-      if (!s.properties || !(step in s.properties)) return owner;
-      current = s.properties[step];
+      if (s.properties && step in s.properties) current = s.properties[step];
+      else if (typeof s.additionalProperties === 'object') current = s.additionalProperties;
+      else return owner;
       node = typeof node === 'object' && node !== null ? (node as Record<string, unknown>)[step] : undefined;
     }
     if (current.$ref) owner = String(current.$ref).split('/').pop();
@@ -60,10 +61,13 @@ export function unknownKeys(defs: Record<string, Schema>, schema: Schema, value:
     s = resolve(defs, branch);
   }
   const found: string[] = [];
-  if (typeof value === 'object' && value !== null && !Array.isArray(value) && s.properties) {
+  const extra: Schema | undefined = typeof s.additionalProperties === 'object' ? s.additionalProperties : undefined;
+  if (typeof value === 'object' && value !== null && !Array.isArray(value) && (s.properties || extra)) {
+    const properties: Schema = s.properties ?? {};
     for (const [key, item] of Object.entries(value as Record<string, unknown>)) {
-      if (!(key in s.properties)) found.push(`${path}.${key}`);
-      else found.push(...unknownKeys(defs, s.properties[key], item, `${path}.${key}`));
+      if (key in properties) found.push(...unknownKeys(defs, properties[key], item, `${path}.${key}`));
+      else if (extra) found.push(...unknownKeys(defs, extra, item, `${path}.${key}`));
+      else found.push(`${path}.${key}`);
     }
   } else if (Array.isArray(value) && s.items) {
     value.forEach((item, i) => found.push(...unknownKeys(defs, s.items, item, `${path}[${i}]`)));
