@@ -62,7 +62,7 @@ export class GeckoterminalClient {
     return this.base.get<PoolSenderSwapsResponse>(`/api/v1/gecko-terminal/networks/${encodeURIComponent(network)}/pools/${encodeURIComponent(address)}/sender-swaps`, query);
   }
 
-  /** Individual swaps in a pool. Requires a cursor: pass a unix timestamp to start from. Costs 2 credits. */
+  /** Individual swaps in a pool. Defaults to the latest swaps when neither cursor is supplied. Pass a unix timestamp or a returned cursor to paginate. Costs 2 credits. */
   async poolSwaps(params: PoolSwapsParams): Promise<PoolSwapsResponse> {
     const { network, address, ...query } = params;
     return this.base.get<PoolSwapsResponse>(`/api/v1/gecko-terminal/networks/${encodeURIComponent(network)}/pools/${encodeURIComponent(address)}/swaps`, query);

@@ -271,6 +271,7 @@ export interface ErrorResponse {
   domain?: string | null;
   message: string;
   request_id: string;
+  upgrade_url?: string | null;
 }
 
 export interface FeeDistributionCharity {

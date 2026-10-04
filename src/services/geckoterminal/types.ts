@@ -134,6 +134,7 @@ export interface ErrorResponse {
   domain?: string | null;
   message: string;
   request_id: string;
+  upgrade_url?: string | null;
 }
 
 export interface ExplorerAttributes {
@@ -866,7 +867,7 @@ export interface PoolSwapsParams {
   inverted?: boolean;
   /** GeckoTerminal network identifier. */
   network: string;
-  /** Return swaps older than this cursor. */
+  /** Return swaps older than this cursor. Defaults to the current unix timestamp when neither cursor is supplied. */
   page_after?: string | null;
   /** Return swaps newer than this cursor. */
   page_before?: string | null;
