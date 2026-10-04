@@ -1,6 +1,6 @@
 # @tapline/client
 
-Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, and GeckoTerminal in TypeScript or JavaScript.
+Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerminal, and Pons Family in TypeScript or JavaScript.
 
 ## What you can do
 
@@ -10,8 +10,9 @@ Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, and Gecko
 | Airbnb | Find locations and listings, check prices and availability, and read listing details and reviews | [Airbnb guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/airbnb/README.md) |
 | GMGN | Find tokens, check security and market data, inspect holders and traders, and analyze wallets | [GMGN guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/gmgn/README.md) |
 | GeckoTerminal | Find pools, read candlesticks and swaps, inspect holders and traders, and follow market trends | [GeckoTerminal guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/geckoterminal/README.md) |
+| Pons Family | Browse and search launches, read token markets, trades and holders, follow wallets and creator fees, and read the memestock forum | [Pons Family guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/ponsfamily/README.md) |
 
-One API key and credit balance work across all four services.
+One API key and credit balance work across all five services.
 
 ## Get started
 
@@ -104,6 +105,21 @@ for (const pool of pools.data.slice(0, 5)) {
 
 See the [GeckoTerminal guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/geckoterminal/README.md) for pool, token, trend, and developer history data.
 
+## Browse Pons Family launches
+
+```ts
+import { TaplineClient } from '@tapline/client';
+
+const tapline = new TaplineClient();
+const board = await tapline.ponsfamily.listLaunches({ sort: 'volume', page_size: 5 });
+
+for (const launch of board.active?.items ?? []) {
+  console.log(launch.symbol, launch.token, launch.marketCapUsd);
+}
+```
+
+See the [Pons Family guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/ponsfamily/README.md) for token markets, charts, holders, wallets, creator fees, and the memestock forum.
+
 ## Go beyond the free tier
 
 Your free account starts with 500 credits and can use every live endpoint. When you need more credits or higher rate limits, choose a paid plan under [Billing](https://tapline.sh/dashboard?tab=billing&utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=main_readme). Your API key and code stay the same.
@@ -134,6 +150,7 @@ Use the [Tapline API reference](https://tapline.sh/docs?utm_source=typescript_cl
 - [Airbnb](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/airbnb/README.md)
 - [GMGN](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/gmgn/README.md)
 - [GeckoTerminal](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/geckoterminal/README.md)
+- [Pons Family](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/ponsfamily/README.md)
 
 ## License
 

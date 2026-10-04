@@ -62,8 +62,9 @@ export function unknownKeys(defs: Record<string, Schema>, schema: Schema, value:
   const found: string[] = [];
   if (typeof value === 'object' && value !== null && !Array.isArray(value) && s.properties) {
     for (const [key, item] of Object.entries(value as Record<string, unknown>)) {
-      if (!(key in s.properties)) found.push(`${path}.${key}`);
-      else found.push(...unknownKeys(defs, s.properties[key], item, `${path}.${key}`));
+      if (key in s.properties) found.push(...unknownKeys(defs, s.properties[key], item, `${path}.${key}`));
+      else if (typeof s.additionalProperties === 'object') found.push(...unknownKeys(defs, s.additionalProperties, item, `${path}.${key}`));
+      else found.push(`${path}.${key}`);
     }
   } else if (Array.isArray(value) && s.items) {
     value.forEach((item, i) => found.push(...unknownKeys(defs, s.items, item, `${path}[${i}]`)));
