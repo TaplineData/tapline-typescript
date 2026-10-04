@@ -1,6 +1,6 @@
 # @tapline/client
 
-Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, and GeckoTerminal in TypeScript or JavaScript.
+Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerminal, and GoPlus Security in TypeScript or JavaScript.
 
 ## What you can do
 
@@ -10,8 +10,9 @@ Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, and Gecko
 | Airbnb | Find locations and listings, check prices and availability, and read listing details and reviews | [Airbnb guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/airbnb/README.md) |
 | GMGN | Find tokens, check security and market data, inspect holders and traders, and analyze wallets | [GMGN guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/gmgn/README.md) |
 | GeckoTerminal | Find pools, read candlesticks and swaps, inspect holders and traders, and follow market trends | [GeckoTerminal guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/geckoterminal/README.md) |
+| GoPlus Security | Check EVM tokens and Solana mints for honeypots, taxes, owner and mint powers, holders, and liquidity | [GoPlus guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/goplus/README.md) |
 
-One API key and credit balance work across all four services.
+One API key and credit balance work across all five services.
 
 ## Get started
 
@@ -104,6 +105,21 @@ for (const pool of pools.data.slice(0, 5)) {
 
 See the [GeckoTerminal guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/geckoterminal/README.md) for pool, token, trend, and developer history data.
 
+## Check token security with GoPlus
+
+```ts
+import { TaplineClient } from '@tapline/client';
+
+const tapline = new TaplineClient();
+const address = '0x6982508145454ce325ddbe47a25d4ec3d2311933';
+const security = await tapline.goplus.getEvmTokenSecurity({ chain_id: '1', address });
+const token = security.result?.[address];
+
+console.log(token?.token_symbol, token?.is_honeypot, token?.buy_tax, token?.sell_tax);
+```
+
+`""` means GoPlus does not know a value, so do not read it as zero. Each call costs 3 credits. See the [GoPlus guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/goplus/README.md) for Solana mints and how to read the response.
+
 ## Go beyond the free tier
 
 Your free account starts with 500 credits and can use every live endpoint. When you need more credits or higher rate limits, choose a paid plan under [Billing](https://tapline.sh/dashboard?tab=billing&utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=main_readme). Your API key and code stay the same.
@@ -134,6 +150,7 @@ Use the [Tapline API reference](https://tapline.sh/docs?utm_source=typescript_cl
 - [Airbnb](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/airbnb/README.md)
 - [GMGN](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/gmgn/README.md)
 - [GeckoTerminal](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/geckoterminal/README.md)
+- [GoPlus Security](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/goplus/README.md)
 
 ## License
 

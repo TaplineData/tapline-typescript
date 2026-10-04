@@ -1,37 +1,76 @@
 # GoPlus Security with the Tapline TypeScript SDK
 
-Token security checks from GoPlus Security for one EVM token or one Solana mint. These routes answer only admin API keys; any other key gets `403 forbidden`.
+Use the GoPlus client to check a token before you trade or list it: honeypot and tax flags, owner and mint powers, top holders, and liquidity for EVM tokens and Solana mints.
 
-[Package guide](../../../README.md)
+[Package guide](../../../README.md) · [GoPlus API reference](https://tapline.sh/docs?utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=goplus_readme#/goplus)
 
-## What you can do
+## Get started
 
-| Method | Parameter type and key fields | Returns |
-| --- | --- | --- |
-| `getEvmTokenSecurity` | `GetEvmTokenSecurityParams`: `chain_id` (`'1'` Ethereum, `'56'` BNB Chain, `'8453'` Base, `'4663'` Robinhood Chain), `address` | `GetEvmTokenSecurityResponse`: honeypot, tax, owner, mint and proxy flags, top holders, LP holders, DEX pools |
-| `getSolanaTokenSecurity` | `GetSolanaTokenSecurityParams`: `mint` | `GetSolanaTokenSecurityResponse`: mint, freeze, close and metadata authorities, Token-2022 transfer fee and hook, top holders, DEX pools |
+[Create a Tapline account](https://tapline.sh/sign-up?utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=goplus_readme) and create an API key on the [API keys page](https://tapline.sh/dashboard?tab=api-keys&utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=goplus_readme).
+
+Install the package and save your key in `TAPLINE_API_KEY`:
+
+```sh
+npm install @tapline/client
+export TAPLINE_API_KEY="your-api-key"
+```
 
 ```ts
 import { TaplineClient } from '@tapline/client';
 
-const tapline = new TaplineClient({ apiKey: process.env.TAPLINE_ADMIN_API_KEY });
-
-const evm = await tapline.goplus.getEvmTokenSecurity({
-  chain_id: '56',
-  address: '0x9c39e4b2c74bdc4454f6397f0ae3771c0b12ffff',
+const tapline = new TaplineClient({
+  apiKey: process.env.TAPLINE_API_KEY,
 });
-const token = evm.result?.['0x9c39e4b2c74bdc4454f6397f0ae3771c0b12ffff'];
 ```
 
-## Reading the response
+If you omit `apiKey`, the client reads `TAPLINE_API_KEY` in Node.js. Keep the key on your server. Do not put it in browser code.
 
-The GoPlus envelope comes back unchanged:
+## What you can do
 
-- `code` is `1` for complete data, `2` for partial data (GoPlus suggests retrying in about 15 seconds), and `3` when the address has no contract code.
-- `result` is keyed by the lowercased EVM address or the Solana mint.
+Each call costs 3 credits.
+
+| Method | Parameter type and key fields | Returns |
+| --- | --- | --- |
+| `getEvmTokenSecurity` | `GetEvmTokenSecurityParams`: `chain_id` (`'1'` Ethereum, `'56'` BNB Chain, `'8453'` Base, `'4663'` Robinhood Chain), `address` | `GetEvmTokenSecurityResponse`: honeypot, tax, owner, mint and proxy flags, top holders, LP holders, DEX pools, CEX listings |
+| `getSolanaTokenSecurity` | `GetSolanaTokenSecurityParams`: `mint` | `GetSolanaTokenSecurityResponse`: mint, freeze, close and metadata authorities, Token-2022 transfer fee and hook, top holders, DEX pools |
+
+## Check an EVM token
+
+```ts
+import { TaplineClient } from '@tapline/client';
+
+const tapline = new TaplineClient();
+const address = '0x6982508145454ce325ddbe47a25d4ec3d2311933';
+const security = await tapline.goplus.getEvmTokenSecurity({ chain_id: '1', address });
+const token = security.result?.[address];
+
+console.log(token?.token_symbol, token?.is_honeypot, token?.buy_tax, token?.sell_tax);
+```
+
+## Check a Solana mint
+
+```ts
+import { TaplineClient } from '@tapline/client';
+
+const tapline = new TaplineClient();
+const mint = '66UokDvAUWuT8DiX1JxAyisx3uo4nErZYQocXTowQm2G';
+const security = await tapline.goplus.getSolanaTokenSecurity({ mint });
+const token = security.result?.[mint];
+
+console.log(token?.metadata?.symbol, token?.mintable?.status, token?.freezable?.status);
+```
+
+## Read the response
+
+The response is GoPlus's own envelope:
+
+- `code` is `1` for complete data, `2` for partial data (retry in about 15 seconds for the rest), and `3` when the address has no contract code.
+- `result` is keyed by the lowercased EVM address or by the Solana mint.
 - Values are strings. `"0"` and `"1"` are flags, and `""` means GoPlus does not know. Do not read `""` as zero.
 - GoPlus leaves out fields it has no value for, so every field is optional.
 
-Each call leaves through a fresh proxy IP, and Tapline retries on a new IP when GoPlus rate-limits one. A `RateLimitError` means the last proxy IP was rate-limited too.
+## Handle errors and check costs
+
+Failed calls throw the errors described in the [package guide](../../../README.md#handle-errors). Calls that fail upstream are not charged. The [GoPlus API reference](https://tapline.sh/docs?utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=goplus_readme#/goplus) lists the inputs, response fields, and credit cost for each method.
 
 Powered by GoPlus Security.
