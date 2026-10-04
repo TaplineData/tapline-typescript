@@ -207,7 +207,7 @@ export class PonsfamilyClient {
     return this.base.get<GetWalletPositionsResponse>(`/api/v1/ponsfamily/wallets/${encodeURIComponent(address)}/positions`);
   }
 
-  /** The launches a wallet created, alongside the ETH/USD rate pons priced them with. Costs 2 credits. */
+  /** The launches a wallet deployed or earns fees from, with its claimed and claimable fees on each, alongside the ETH/USD rate pons priced them with. Costs 2 credits. */
   async getProfile(params: GetProfileParams): Promise<GetProfileResponse> {
     const { address } = params;
     return this.base.get<GetProfileResponse>(`/api/v1/ponsfamily/wallets/${encodeURIComponent(address)}/profile`);
