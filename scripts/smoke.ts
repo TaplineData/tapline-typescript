@@ -5,6 +5,7 @@ import { run as runAirbnb } from './smoke-airbnb.js';
 import { run as runYoutube } from './smoke-youtube.js';
 import { run as runGmgn } from './smoke-gmgn.js';
 import { run as runGeckoterminal } from './smoke-geckoterminal.js';
+import { run as runGoplus } from './smoke-goplus.js';
 
 const client = new TaplineClient();
 let failures = 0;
@@ -12,6 +13,7 @@ failures += await runAirbnb(client);
 failures += await runYoutube(client);
 failures += await runGmgn(client);
 failures += await runGeckoterminal(client);
+failures += await runGoplus(client);
 if (failures > 0) {
   console.error(`\n${failures} smoke check(s) failed`);
   process.exit(1);
