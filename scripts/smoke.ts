@@ -7,6 +7,7 @@ import { run as runGmgn } from './smoke-gmgn.js';
 import { run as runGeckoterminal } from './smoke-geckoterminal.js';
 import { run as runPonsfamily } from './smoke-ponsfamily.js';
 import { run as runGoplus } from './smoke-goplus.js';
+import { run as runTwitter } from './smoke-twitter.js';
 
 const client = new TaplineClient();
 let failures = 0;
@@ -16,6 +17,7 @@ failures += await runGmgn(client);
 failures += await runGeckoterminal(client);
 failures += await runPonsfamily(client);
 failures += await runGoplus(client);
+failures += await runTwitter(client);
 if (failures > 0) {
   console.error(`\n${failures} smoke check(s) failed`);
   process.exit(1);
