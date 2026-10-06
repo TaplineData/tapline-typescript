@@ -8,208 +8,208 @@ export class PonsfamilyClient {
 
   /** Protocol-wide launch, volume, trade and revenue totals plus the daily series behind them. Costs 2 credits. */
   async getAnalytics(): Promise<GetAnalyticsResponse> {
-    return this.base.get<GetAnalyticsResponse>('/api/v1/ponsfamily/analytics');
+    return this.base.get<GetAnalyticsResponse>('/v1/ponsfamily/analytics');
   }
 
   /** Community-takeover migrations: the old and new token, the deposit/claim schedule and how much has been migrated. Costs 2 credits. */
   async listCtoMigrations(): Promise<ListCtoMigrationsResponse> {
-    return this.base.get<ListCtoMigrationsResponse>('/api/v1/ponsfamily/cto-migrations');
+    return this.base.get<ListCtoMigrationsResponse>('/v1/ponsfamily/cto-migrations');
   }
 
   /** The ETH/USD rate pons prices every launch with. Costs 2 credits. */
   async getEthPrice(): Promise<GetEthPriceResponse> {
-    return this.base.get<GetEthPriceResponse>('/api/v1/ponsfamily/eth-price');
+    return this.base.get<GetEthPriceResponse>('/v1/ponsfamily/eth-price');
   }
 
   /** Token communities ranked by market cap, burn share or real market cap. Costs 2 credits. */
   async listForumCommunities(params: ListForumCommunitiesParams): Promise<ListForumCommunitiesResponse> {
-    return this.base.get<ListForumCommunitiesResponse>('/api/v1/ponsfamily/forum/communities', { ...params });
+    return this.base.get<ListForumCommunitiesResponse>('/v1/ponsfamily/forum/communities', { ...params });
   }
 
   /** One token community with its supply, burn and market-cap figures. Costs 2 credits. */
   async getForumCommunity(params: GetForumCommunityParams): Promise<GetForumCommunityResponse> {
     const { slug } = params;
-    return this.base.get<GetForumCommunityResponse>(`/api/v1/ponsfamily/forum/communities/${encodeURIComponent(slug)}`);
+    return this.base.get<GetForumCommunityResponse>(`/v1/ponsfamily/forum/communities/${encodeURIComponent(slug)}`);
   }
 
   /** A wallet's balance in a community token and the posting tier that balance earns it. Costs 2 credits. */
   async getForumHolding(params: GetForumHoldingParams): Promise<GetForumHoldingResponse> {
     const { token, wallet } = params;
-    return this.base.get<GetForumHoldingResponse>(`/api/v1/ponsfamily/forum/holdings/${encodeURIComponent(token)}/${encodeURIComponent(wallet)}`);
+    return this.base.get<GetForumHoldingResponse>(`/v1/ponsfamily/forum/holdings/${encodeURIComponent(token)}/${encodeURIComponent(wallet)}`);
   }
 
   /** The memestock board: US market session state, the community ticker rows and the equities they track. Costs 2 credits. */
   async getForumMarket(): Promise<GetForumMarketResponse> {
-    return this.base.get<GetForumMarketResponse>('/api/v1/ponsfamily/forum/market');
+    return this.base.get<GetForumMarketResponse>('/v1/ponsfamily/forum/market');
   }
 
   /** The memestock forum feed, optionally narrowed to one token community. Costs 2 credits. */
   async listForumPosts(params: ListForumPostsParams): Promise<ListForumPostsResponse> {
-    return this.base.get<ListForumPostsResponse>('/api/v1/ponsfamily/forum/posts', { ...params });
+    return this.base.get<ListForumPostsResponse>('/v1/ponsfamily/forum/posts', { ...params });
   }
 
   /** One forum post with its vote counts and community metadata. Costs 2 credits. */
   async getForumPost(params: GetForumPostParams): Promise<GetForumPostResponse> {
     const { post_id } = params;
-    return this.base.get<GetForumPostResponse>(`/api/v1/ponsfamily/forum/posts/${encodeURIComponent(post_id)}`);
+    return this.base.get<GetForumPostResponse>(`/v1/ponsfamily/forum/posts/${encodeURIComponent(post_id)}`);
   }
 
   /** The comment thread under a forum post. Costs 2 credits. */
   async getForumPostComments(params: GetForumPostCommentsParams): Promise<GetForumPostCommentsResponse> {
     const { post_id, ...query } = params;
-    return this.base.get<GetForumPostCommentsResponse>(`/api/v1/ponsfamily/forum/posts/${encodeURIComponent(post_id)}/comments`, query);
+    return this.base.get<GetForumPostCommentsResponse>(`/v1/ponsfamily/forum/posts/${encodeURIComponent(post_id)}/comments`, query);
   }
 
   /** The pons launchpad explore board: tokens still climbing the bonding curve plus a page of graduated tokens. Costs 2 credits. */
   async listLaunches(params: ListLaunchesParams): Promise<ListLaunchesResponse> {
-    return this.base.get<ListLaunchesResponse>('/api/v1/ponsfamily/launches', { ...params });
+    return this.base.get<ListLaunchesResponse>('/v1/ponsfamily/launches', { ...params });
   }
 
   /** The graduated tokens as full launch records, the catalog view of the graduations feed. Costs 2 credits. */
   async listGraduatedCatalog(): Promise<Launch[]> {
-    return this.base.get<Launch[]>('/api/v1/ponsfamily/launches/graduated');
+    return this.base.get<Launch[]>('/v1/ponsfamily/launches/graduated');
   }
 
   /** Every graduation event pons has observed, as token address and graduation block. Costs 2 credits. */
   async listGraduations(): Promise<Graduation[]> {
-    return this.base.get<Graduation[]>('/api/v1/ponsfamily/launches/graduations');
+    return this.base.get<Graduation[]>('/v1/ponsfamily/launches/graduations');
   }
 
   /** Live price and graduation-progress snapshot for the launches currently trading. Costs 2 credits. */
   async listLiveMarkets(params: ListLiveMarketsParams): Promise<LiveMarket[]> {
-    return this.base.get<LiveMarket[]>('/api/v1/ponsfamily/launches/live-markets', { ...params });
+    return this.base.get<LiveMarket[]>('/v1/ponsfamily/launches/live-markets', { ...params });
   }
 
   /** Search every pons launch by name, symbol or contract address. Costs 2 credits. */
   async searchLaunches(params: SearchLaunchesParams): Promise<SearchLaunchesResponse> {
-    return this.base.get<SearchLaunchesResponse>('/api/v1/ponsfamily/launches/search', { ...params });
+    return this.base.get<SearchLaunchesResponse>('/v1/ponsfamily/launches/search', { ...params });
   }
 
   /** Price, market cap, liquidity, recent trades and price points for one v1 token. Costs 2 credits. */
   async getMarket(params: GetMarketParams): Promise<GetMarketResponse> {
     const { token, ...query } = params;
-    return this.base.get<GetMarketResponse>(`/api/v1/ponsfamily/markets/${encodeURIComponent(token)}`, query);
+    return this.base.get<GetMarketResponse>(`/v1/ponsfamily/markets/${encodeURIComponent(token)}`, query);
   }
 
   /** All-time-high price for a token and the block it was set in. Costs 2 credits. */
   async getMarketAth(params: GetMarketAthParams): Promise<GetMarketAthResponse> {
     const { token } = params;
-    return this.base.get<GetMarketAthResponse>(`/api/v1/ponsfamily/markets/${encodeURIComponent(token)}/ath`);
+    return this.base.get<GetMarketAthResponse>(`/v1/ponsfamily/markets/${encodeURIComponent(token)}/ath`);
   }
 
   /** Supply burned for a token, in wei. Costs 2 credits. */
   async getMarketBurned(params: GetMarketBurnedParams): Promise<GetMarketBurnedResponse> {
     const { token } = params;
-    return this.base.get<GetMarketBurnedResponse>(`/api/v1/ponsfamily/markets/${encodeURIComponent(token)}/burned`);
+    return this.base.get<GetMarketBurnedResponse>(`/v1/ponsfamily/markets/${encodeURIComponent(token)}/burned`);
   }
 
   /** Bucketed price and volume points for a token, at the resolution the range implies. Costs 2 credits. */
   async getMarketChart(params: GetMarketChartParams): Promise<GetMarketChartResponse> {
     const { token, ...query } = params;
-    return this.base.get<GetMarketChartResponse>(`/api/v1/ponsfamily/markets/${encodeURIComponent(token)}/chart`, query);
+    return this.base.get<GetMarketChartResponse>(`/v1/ponsfamily/markets/${encodeURIComponent(token)}/chart`, query);
   }
 
   /** What the deployer did with its own allocation: buys, sells, transfers, burns, and the dumped/moved/burned verdicts. Costs 2 credits. */
   async getDeveloperTrades(params: GetDeveloperTradesParams): Promise<GetDeveloperTradesResponse> {
     const { token, ...query } = params;
-    return this.base.get<GetDeveloperTradesResponse>(`/api/v1/ponsfamily/markets/${encodeURIComponent(token)}/dev-trades`, query);
+    return this.base.get<GetDeveloperTradesResponse>(`/v1/ponsfamily/markets/${encodeURIComponent(token)}/dev-trades`, query);
   }
 
   /** Ranked token holders with balance, supply share and per-holder PnL where pons can compute it. Costs 2 credits. */
   async getMarketHolders(params: GetMarketHoldersParams): Promise<GetMarketHoldersResponse> {
     const { token } = params;
-    return this.base.get<GetMarketHoldersResponse>(`/api/v1/ponsfamily/markets/${encodeURIComponent(token)}/holders`);
+    return this.base.get<GetMarketHoldersResponse>(`/v1/ponsfamily/markets/${encodeURIComponent(token)}/holders`);
   }
 
   /** Resting limit-order depth around the current price, bucketed into price bands. Costs 2 credits. */
   async getMarketOrderDepth(params: GetMarketOrderDepthParams): Promise<GetMarketOrderDepthResponse> {
     const { token } = params;
-    return this.base.get<GetMarketOrderDepthResponse>(`/api/v1/ponsfamily/markets/${encodeURIComponent(token)}/order-depth`);
+    return this.base.get<GetMarketOrderDepthResponse>(`/v1/ponsfamily/markets/${encodeURIComponent(token)}/order-depth`);
   }
 
   /** The latest observed pool price, the cheap poll the launchpad UI uses. Costs 2 credits. */
   async getMarketTip(params: GetMarketTipParams): Promise<GetMarketTipResponse> {
     const { token } = params;
-    return this.base.get<GetMarketTipResponse>(`/api/v1/ponsfamily/markets/${encodeURIComponent(token)}/tip`);
+    return this.base.get<GetMarketTipResponse>(`/v1/ponsfamily/markets/${encodeURIComponent(token)}/tip`);
   }
 
   /** The most recent buys and sells against a token's pool. Costs 2 credits. */
   async getMarketTrades(params: GetMarketTradesParams): Promise<MarketTrade[]> {
     const { token } = params;
-    return this.base.get<MarketTrade[]>(`/api/v1/ponsfamily/markets/${encodeURIComponent(token)}/trades`);
+    return this.base.get<MarketTrade[]>(`/v1/ponsfamily/markets/${encodeURIComponent(token)}/trades`);
   }
 
   /** The share of supply each deployer still holds of the token it launched. Costs 2 credits. */
   async getCreatorHoldings(body: CreatorHoldingsRequest): Promise<GetCreatorHoldingsResponse> {
-    return this.base.post<GetCreatorHoldingsResponse>('/api/v1/ponsfamily/tokens/creator-holdings', body);
+    return this.base.post<GetCreatorHoldingsResponse>('/v1/ponsfamily/tokens/creator-holdings', body);
   }
 
   /** Whether each token routes its creator fees to holders. Costs 2 credits. */
   async getFeeSharing(params: GetFeeSharingParams): Promise<GetFeeSharingResponse> {
-    return this.base.get<GetFeeSharingResponse>('/api/v1/ponsfamily/tokens/fee-sharing', { ...params });
+    return this.base.get<GetFeeSharingResponse>('/v1/ponsfamily/tokens/fee-sharing', { ...params });
   }
 
   /** Resolved logo URLs keyed by lower-cased token address. Costs 2 credits. */
   async getTokenImages(params: GetTokenImagesParams): Promise<GetTokenImagesResponse> {
-    return this.base.get<GetTokenImagesResponse>('/api/v1/ponsfamily/tokens/images', { ...params });
+    return this.base.get<GetTokenImagesResponse>('/v1/ponsfamily/tokens/images', { ...params });
   }
 
   /** Static token metadata: supply, socials, pool wiring and the deployer that launched it. Costs 2 credits. */
   async getToken(params: GetTokenParams): Promise<GetTokenResponse> {
     const { token } = params;
-    return this.base.get<GetTokenResponse>(`/api/v1/ponsfamily/tokens/${encodeURIComponent(token)}`);
+    return this.base.get<GetTokenResponse>(`/v1/ponsfamily/tokens/${encodeURIComponent(token)}`);
   }
 
   /** Bucketed price and volume points for a v2 launch, with the quote asset's USD rate. Costs 2 credits. */
   async getV2MarketChart(params: GetV2MarketChartParams): Promise<GetV2MarketChartResponse> {
     const { token, ...query } = params;
-    return this.base.get<GetV2MarketChartResponse>(`/api/v1/ponsfamily/v2-markets/${encodeURIComponent(token)}/chart`, query);
+    return this.base.get<GetV2MarketChartResponse>(`/v1/ponsfamily/v2-markets/${encodeURIComponent(token)}/chart`, query);
   }
 
   /** Creator-fee escrow for a v2 launch: recipient, quote asset and what has been earned so far. Costs 2 credits. */
   async getV2CreatorFees(params: GetV2CreatorFeesParams): Promise<GetV2CreatorFeesResponse> {
     const { token } = params;
-    return this.base.get<GetV2CreatorFeesResponse>(`/api/v1/ponsfamily/v2-markets/${encodeURIComponent(token)}/creator-fees`);
+    return this.base.get<GetV2CreatorFeesResponse>(`/v1/ponsfamily/v2-markets/${encodeURIComponent(token)}/creator-fees`);
   }
 
   /** Holder fee-sharing distributor state for a v2 launch, including the latest payout epoch. Costs 2 credits. */
   async getV2Distributor(params: GetV2DistributorParams): Promise<GetV2DistributorResponse> {
     const { token } = params;
-    return this.base.get<GetV2DistributorResponse>(`/api/v1/ponsfamily/v2-markets/${encodeURIComponent(token)}/distributor`);
+    return this.base.get<GetV2DistributorResponse>(`/v1/ponsfamily/v2-markets/${encodeURIComponent(token)}/distributor`);
   }
 
   /** Ranked holders of a v2 launch. Costs 2 credits. */
   async getV2MarketHolders(params: GetV2MarketHoldersParams): Promise<GetV2MarketHoldersResponse> {
     const { token } = params;
-    return this.base.get<GetV2MarketHoldersResponse>(`/api/v1/ponsfamily/v2-markets/${encodeURIComponent(token)}/holders`);
+    return this.base.get<GetV2MarketHoldersResponse>(`/v1/ponsfamily/v2-markets/${encodeURIComponent(token)}/holders`);
   }
 
   /** Trades against a v2 (curve) launch, quoted in the launch's own quote asset. Costs 2 credits. */
   async getV2MarketTrades(params: GetV2MarketTradesParams): Promise<GetV2MarketTradesResponse> {
     const { token } = params;
-    return this.base.get<GetV2MarketTradesResponse>(`/api/v1/ponsfamily/v2-markets/${encodeURIComponent(token)}/trades`);
+    return this.base.get<GetV2MarketTradesResponse>(`/v1/ponsfamily/v2-markets/${encodeURIComponent(token)}/trades`);
   }
 
   /** Public pons profiles (username, avatar, bio) for the given wallets. Costs 2 credits. */
   async getWalletIdentities(params: GetWalletIdentitiesParams): Promise<GetWalletIdentitiesResponse> {
-    return this.base.get<GetWalletIdentitiesResponse>('/api/v1/ponsfamily/wallets/identities', { ...params });
+    return this.base.get<GetWalletIdentitiesResponse>('/v1/ponsfamily/wallets/identities', { ...params });
   }
 
   /** Portfolio value over time for a wallet, with the change over the requested window. Costs 2 credits. */
   async getPortfolioChart(params: GetPortfolioChartParams): Promise<GetPortfolioChartResponse> {
     const { address, ...query } = params;
-    return this.base.get<GetPortfolioChartResponse>(`/api/v1/ponsfamily/wallets/${encodeURIComponent(address)}/portfolio-chart`, query);
+    return this.base.get<GetPortfolioChartResponse>(`/v1/ponsfamily/wallets/${encodeURIComponent(address)}/portfolio-chart`, query);
   }
 
   /** A wallet's open and closed positions, its trade activity, and realized/unrealized PnL totals. Costs 2 credits. */
   async getWalletPositions(params: GetWalletPositionsParams): Promise<GetWalletPositionsResponse> {
     const { address } = params;
-    return this.base.get<GetWalletPositionsResponse>(`/api/v1/ponsfamily/wallets/${encodeURIComponent(address)}/positions`);
+    return this.base.get<GetWalletPositionsResponse>(`/v1/ponsfamily/wallets/${encodeURIComponent(address)}/positions`);
   }
 
   /** The launches a wallet deployed or earns fees from, with its claimed and claimable fees on each, alongside the ETH/USD rate pons priced them with. Costs 2 credits. */
   async getProfile(params: GetProfileParams): Promise<GetProfileResponse> {
     const { address } = params;
-    return this.base.get<GetProfileResponse>(`/api/v1/ponsfamily/wallets/${encodeURIComponent(address)}/profile`);
+    return this.base.get<GetProfileResponse>(`/v1/ponsfamily/wallets/${encodeURIComponent(address)}/profile`);
   }
 }

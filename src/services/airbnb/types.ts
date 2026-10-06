@@ -395,7 +395,7 @@ export interface SearchRequest {
   ne_lat?: number | null;
   /** Northeast longitude of bounding box */
   ne_long?: number | null;
-  /** Google Place ID for the search area, from the `GET /api/v1/airbnb/locations` endpoint (`suggestions[].place_id`). */
+  /** Google Place ID for the search area, from the `GET /v1/airbnb/locations` endpoint (`suggestions[].place_id`). */
   place_id?: string | null;
   /** Maximum price filter */
   price_max?: number | null;
