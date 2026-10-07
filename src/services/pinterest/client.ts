@@ -6,7 +6,7 @@ import type { GetBoardParams, GetPinParams, GetUserBoardsParams, PinterestBoardR
 export class PinterestClient {
   constructor(private readonly base: BaseClient) {}
 
-  /** The pins on a public Pinterest board, in board order: Pinterest's own pin objects with images, link, title, pinner, board and aggregated pin data. `id` is the numeric pin id, `link` is `null` on a pin uploaded without one, and Pinterest sends no `pin_join` for board pins. Up to 25 pins per page; pass `cursor` back for the next page, which is `null` on the last one. Costs 1 credit. */
+  /** The pins on a public Pinterest board, in board order: Pinterest's own pin objects with images, link, title, pinner, board and aggregated pin data. `id` is the numeric pin id, `link` is `null` on a pin uploaded without one, and Pinterest sends no `pin_join` for board pins. About 25 pins per page; pass `cursor` back for the next page, which is `null` on the last one. Costs 1 credit. */
   async getBoard(params: GetBoardParams): Promise<PinterestBoardResponse> {
     return this.base.get<PinterestBoardResponse>('/v1/pinterest/board', { ...params });
   }
@@ -21,7 +21,7 @@ export class PinterestClient {
     return this.base.get<PinterestSearchResponse>('/v1/pinterest/search', { ...params });
   }
 
-  /** A Pinterest user's public boards, most recently pinned to first: name, URL, description, pin and follower counts, owner and cover images. Up to 25 boards per page; pass `cursor` back for the next page, which is `null` on the last one. Costs 1 credit. */
+  /** A Pinterest user's public boards, most recently pinned to first: name, URL, description, pin and follower counts, owner and cover images. About 25 boards per page; pass `cursor` back for the next page, which is `null` on the last one. Costs 1 credit. */
   async getUserBoards(params: GetUserBoardsParams): Promise<PinterestUserBoardsResponse> {
     return this.base.get<PinterestUserBoardsResponse>('/v1/pinterest/user/boards', { ...params });
   }

@@ -44,34 +44,37 @@ export interface GetUserBoardsParams {
   trim?: boolean | null;
 }
 
-export interface PinterestAggregateRating {
-  best_rating?: string;
-  id?: string;
-  name?: unknown | null;
-  rating_count?: number;
-  rating_distribution?: unknown[];
-  rating_value?: string;
-  review_count?: number;
-  type?: string;
-}
-
 export interface PinterestAggregatedStats {
   done?: number;
   saves?: number;
 }
 
-export interface PinterestBlockImage {
-  dominant_color?: string;
-  images?: Record<string, PinterestImageValue>;
+export interface PinterestAudio {
+  artist_name?: string;
+  audio_url?: string;
+  description?: string;
+  duration?: number;
+  id?: string;
+  node_id?: string;
+  provider_recording_id?: string;
+  royalty_free?: boolean;
+  thumbnail_image_url?: string;
+  title?: string;
+  type?: string;
 }
 
-export interface PinterestBlockStyle {
-  corner_radius?: number;
-  height?: number;
-  rotation?: number;
+export interface PinterestBlockImage {
+  dominant_color?: string;
+  images?: Record<string, PinterestSearchStoryObjectImage>;
+}
+
+export interface PinterestBoardCoverImages {
+  "236x"?: PinterestBoardCoverImages236x;
+}
+
+export interface PinterestBoardCoverImages236x {
+  url?: string;
   width?: number;
-  x_coord?: number;
-  y_coord?: number;
 }
 
 export interface PinterestBoardFeedPin {
@@ -100,9 +103,9 @@ export interface PinterestBoardFeedPin {
   grid_title?: string;
   has_been_boost_promoted?: boolean;
   id?: string;
-  image_crop?: PinterestImageCrop;
+  image_crop?: PinterestSearchStoryObjectImageCrop;
   image_signature?: string;
-  images?: Record<string, PinterestImageValue>;
+  images?: Record<string, PinterestBoardFeedPinImage>;
   insertion_id?: unknown | null;
   is_downstream_promotion?: boolean;
   is_eligible_for_pdp?: boolean;
@@ -119,7 +122,7 @@ export interface PinterestBoardFeedPin {
   link?: string | null;
   link_domain?: PinterestLinkDomain | null;
   link_utm_applicable_and_replaced?: number;
-  native_creator?: PinterestBoardFeedPinGridAttribution | null;
+  native_creator?: PinterestNativeCreator | null;
   node_id?: string;
   pinner?: PinterestBoardFeedPinPinner;
   product_metadata?: PinterestProductMetadata | null;
@@ -184,6 +187,12 @@ export interface PinterestBoardFeedPinGridAttribution {
   verified_identity?: PinterestVerifiedIdentity;
 }
 
+export interface PinterestBoardFeedPinImage {
+  height?: number;
+  url?: string;
+  width?: number;
+}
+
 export interface PinterestBoardFeedPinPinner {
   full_name?: string;
   id?: string;
@@ -193,12 +202,12 @@ export interface PinterestBoardFeedPinPinner {
   is_verified_merchant?: boolean;
   node_id?: string;
   username?: string;
-  verified_identity?: PinterestBoardFeedStoryCopy;
+  verified_identity?: PinterestSearchStoryDynamicInsertionOption;
 }
 
 export interface PinterestBoardFeedPinRichSummary {
   actions?: unknown[];
-  aggregate_rating?: PinterestAggregateRating;
+  aggregate_rating?: PinterestBoardFeedPinRichSummaryAggregateRating;
   apple_touch_icon_images?: unknown | null;
   apple_touch_icon_link?: unknown | null;
   display_description?: string;
@@ -215,6 +224,16 @@ export interface PinterestBoardFeedPinRichSummary {
   url?: string;
 }
 
+export interface PinterestBoardFeedPinRichSummaryAggregateRating {
+  id?: string;
+  name?: unknown | null;
+  rating_count?: number;
+  rating_distribution?: unknown[];
+  rating_value?: string;
+  review_count?: number;
+  type?: string;
+}
+
 export interface PinterestBoardFeedPinRichSummaryProduct {
   additional_images?: unknown | null;
   additional_images_per_spec?: unknown | null;
@@ -222,11 +241,11 @@ export interface PinterestBoardFeedPinRichSummaryProduct {
   id?: string;
   item_id?: string;
   item_set_id?: string;
-  label_info?: PinterestBoardFeedStoryCopy;
+  label_info?: PinterestSearchStoryDynamicInsertionOption;
   name?: string;
   offer_summary?: PinterestBoardFeedPinRichSummaryProductOfferSummary;
   offers?: PinterestBoardFeedPinRichSummaryProductOffer[];
-  price_history_summary?: PinterestBoardFeedStoryCopy;
+  price_history_summary?: PinterestSearchStoryDynamicInsertionOption;
   purchase_url?: unknown | null;
   shipping_info?: PinterestShippingInfo;
   type?: string;
@@ -253,7 +272,6 @@ export interface PinterestBoardFeedPinRichSummaryProductOfferSummary {
   in_stock?: boolean;
   price?: string;
   price_val?: number;
-  standard_price?: string;
 }
 
 export interface PinterestBoardFeedPinStoryPinData {
@@ -298,69 +316,20 @@ export interface PinterestBoardFeedPinStoryPinDataPage {
 }
 
 export interface PinterestBoardFeedPinStoryPinDataPageBlock {
-  block_style?: PinterestBlockStyle;
+  block_style?: PinterestBoardFeedPinStoryPinDataPageBlockBlockStyle;
   block_type?: number;
   image?: PinterestBlockImage;
   image_signature?: string;
   type?: string;
 }
 
-export interface PinterestBoardFeedStoryCopy {
-}
-
-export interface PinterestBoardFeedStoryDisplayOptions {
-  action_button_location?: unknown | null;
-  ai_fwd_presentation_options?: PinterestBoardFeedStoryCopy;
-  align_image_bottom?: boolean;
-  allow_pin_height_trimming?: unknown | null;
-  background_colors?: unknown | null;
-  background_image_url?: unknown | null;
-  board_display_options?: unknown | null;
-  board_view_type?: unknown | null;
-  carousel_fade_ends?: unknown | null;
-  carousel_item_spacing?: unknown | null;
-  container_grid_span?: unknown | null;
-  content_display?: unknown | null;
-  corner_radius?: unknown | null;
-  cover_image_url?: unknown | null;
-  display_view_state?: unknown | null;
-  explore_article_display_options?: unknown | null;
-  extra_spacing_after?: number;
-  extra_spacing_before?: number;
-  footer_display?: unknown | null;
-  has_condensed_header?: boolean;
-  header_display?: unknown | null;
-  header_font?: unknown | null;
-  header_hidden?: boolean;
-  hide_education_in_stream?: unknown | null;
-  hide_search_guides_when_visible?: boolean;
-  hide_ui_in_stream?: unknown | null;
-  horizontal_full_bleed?: boolean;
-  ideas_card_hide_when_offscreen?: boolean;
-  identifier_icon_name?: unknown | null;
-  image_only?: unknown | null;
-  item_column_span?: number | null;
-  item_view_rep_style?: unknown | null;
-  module_header_alignment?: unknown | null;
-  num_columns_requested?: number;
-  pin_display_options?: unknown | null;
-  pin_image_ratio?: unknown | null;
-  scale_up?: unknown | null;
-  shopping_grid_display?: unknown | null;
-  show_bottom_divider?: boolean;
-  show_content_follow_buttons?: unknown | null;
-  show_dismiss_button?: unknown | null;
-  show_follow_buttons?: unknown | null;
-  show_product_indicator_overlay?: unknown | null;
-  show_separator?: boolean;
-  show_simplified_pin?: boolean;
-  show_top_divider?: boolean;
-  spacer_size?: unknown | null;
-  stacked_card_cover_shade_colors?: unknown | null;
-  subtitle_text_color?: unknown | null;
-  tiles_grid_layout?: unknown | null;
-  title_text_color?: unknown | null;
-  use_plain_text_display_mode?: boolean;
+export interface PinterestBoardFeedPinStoryPinDataPageBlockBlockStyle {
+  corner_radius?: number;
+  height?: number;
+  rotation?: number;
+  width?: number;
+  x_coord?: number;
+  y_coord?: number;
 }
 
 export interface PinterestBoardFeedStorySubtitle {
@@ -370,8 +339,15 @@ export interface PinterestBoardFeedStorySubtitle {
   text?: unknown | null;
 }
 
+export interface PinterestBoardImage474x {
+  dominant_color?: string;
+  height?: number;
+  url?: string;
+  width?: number;
+}
+
 export interface PinterestBoardImages {
-  "236x"?: PinterestImageValue[];
+  "236x"?: PinterestBoardImage474x[];
 }
 
 export interface PinterestBoardResponse {
@@ -388,40 +364,22 @@ export interface PinterestBoardVase {
   type?: string;
 }
 
-export interface PinterestCarouselDisplayOptions {
-  navigation_type?: number;
+export interface PinterestCollaboratingUser {
+  follower_count?: number;
+  full_name?: string;
+  id?: string;
+  image_large_url?: string;
+  image_medium_url?: string;
+  image_small_url?: string;
+  is_ads_only_profile?: boolean;
+  is_verified_merchant?: boolean;
+  node_id?: string;
+  username?: string;
+  verified_identity?: PinterestSearchStoryDynamicInsertionOption;
 }
 
 export interface PinterestCollectionPin {
   item_data?: PinterestItemData[];
-}
-
-export interface PinterestContentDisplay {
-  carousel_display_options?: PinterestCarouselDisplayOptions;
-  carousel_scrolling_mode?: number;
-  center_content?: boolean;
-  component_type?: number;
-  content_visible_item_count?: PinterestContentVisibleItemCount;
-  display_content_above_header?: boolean;
-  grid_layout?: PinterestGridLayout;
-  model_type?: number;
-  pins_display?: number;
-}
-
-export interface PinterestContentVisibleItemCount {
-  mobile?: number;
-  tablet_landscape?: number;
-  tablet_portrait?: number;
-  web?: number;
-}
-
-export interface PinterestCoverImages {
-  "236x"?: PinterestCoverImages236x;
-}
-
-export interface PinterestCoverImages236x {
-  url?: string;
-  width?: number;
 }
 
 export interface PinterestDidItData {
@@ -441,61 +399,23 @@ export interface PinterestFaviconImages {
   orig?: string;
 }
 
-export interface PinterestFooterDisplay {
-  bottom_corner_radius?: number;
-  bottom_padding?: number;
-  show_user?: boolean;
-}
-
 export interface PinterestGenAITopic {
   interest_id?: number;
   interest_id_str?: string;
   name?: string;
 }
 
-export interface PinterestGridLayout {
-  cols?: number;
-  rows?: number;
-}
-
-export interface PinterestHeaderDisplay {
-  description_alignment?: number;
-  expandable_thumbnails?: boolean;
-  header_size?: number;
-  padding?: PinterestPadding;
-  show_title_with_user?: boolean;
-  show_user?: boolean;
-  story_subtitle_position?: number;
-  subtitle_alignment?: number;
-  subtitle_size?: number;
-  subtitle_style?: number;
-  text_alignment?: number;
-  title_position?: number;
-  title_style?: number;
-  top_corner_radius?: number;
-}
-
-export interface PinterestImageCrop {
-  max_y?: number;
-  min_y?: number;
-}
-
-export interface PinterestImageValue {
-  dominant_color?: string;
-  height?: number | null;
-  url?: string;
-  width?: number;
-}
-
 export interface PinterestItemData {
   active?: boolean;
   dominant_color?: string;
   image_signature?: string;
-  images?: Record<string, PinterestImageValue>;
+  images?: Record<string, PinterestSearchStoryObjectImage>;
   is_editable?: boolean;
   item_id?: string;
   link?: string;
   pin_id?: string;
+  price_currency?: string;
+  price_value?: number;
   rich_metadata?: PinterestRichMetadata;
   rich_summary?: PinterestItemDataRichSummary;
   showcase_features_count?: number;
@@ -506,32 +426,53 @@ export interface PinterestItemData {
 
 export interface PinterestItemDataRichSummary {
   actions?: unknown[];
+  aggregate_rating?: PinterestRichMetadataAggregateRating;
   display_name?: string;
   id?: string;
-  products?: PinterestRichMetadataProduct[];
+  products?: PinterestItemDataRichSummaryProduct[];
   site_name?: string;
   type?: string;
   type_name?: string;
+}
+
+export interface PinterestItemDataRichSummaryProduct {
+  id?: string;
+  item_id?: string;
+  item_set_id?: string;
+  name?: string;
+  offer_summary?: PinterestRichMetadataProductOfferSummary;
+  offers?: PinterestObjectRichSummaryProductOffer[];
+  type?: string;
+  videos?: unknown[];
 }
 
 export interface PinterestLinkDomain {
   id?: string;
 }
 
-export interface PinterestObjectAggregatedPinData {
+export interface PinterestLinkUserWebsite {
   node_id?: string;
+  official_user?: PinterestPromoter;
 }
 
-export interface PinterestObjectRichSummary {
-  actions?: unknown[];
-  aggregate_rating?: PinterestAggregateRating;
-  display_name?: string;
+export interface PinterestMusicAttribution {
+  artist?: string;
+  is_embedded?: boolean;
+  provider_recording_id?: string;
+  thumbnail_image_url?: string;
+  title?: string;
+}
+
+export interface PinterestNativeCreator {
+  full_name?: string;
   id?: string;
-  products?: PinterestObjectRichSummaryProduct[];
-  site_name?: string;
-  type?: string;
-  type_name?: string;
-  url?: string;
+  image_medium_url?: string;
+  image_small_url?: string;
+  is_primary_website_verified?: boolean;
+  is_verified_merchant?: boolean;
+  node_id?: string;
+  username?: string;
+  verified_identity?: PinterestVerifiedIdentity;
 }
 
 export interface PinterestObjectRichSummaryProduct {
@@ -540,9 +481,19 @@ export interface PinterestObjectRichSummaryProduct {
   item_set_id?: string;
   name?: string;
   offer_summary?: PinterestObjectRichSummaryProductOfferSummary;
-  offers?: PinterestBoardFeedPinRichSummaryProductOffer[];
+  offers?: PinterestObjectRichSummaryProductOffer[];
   type?: string;
   videos?: unknown[];
+}
+
+export interface PinterestObjectRichSummaryProductOffer {
+  availability?: number;
+  condition?: number;
+  id?: string;
+  in_stock?: boolean;
+  price_currency?: string;
+  price_value?: number;
+  type?: string;
 }
 
 export interface PinterestObjectRichSummaryProductOfferSummary {
@@ -557,179 +508,170 @@ export interface PinterestObjectRichSummaryProductOfferSummary {
   standard_price?: string;
 }
 
-export interface PinterestPadding {
-  bottom?: number;
-  top?: number;
-}
-
-export interface PinterestPinAggregateRating {
-  __typename?: string;
-  bestRating: unknown | null;
-  ratingCount: number | null;
-  ratingValue: string;
-  reviewCount: number;
-}
-
 export interface PinterestPinAggregatedPinData {
-  aggregatedStats: PinterestPinAggregatedStats;
-  commentCount: number;
-  didItData: PinterestPinDidItData;
-  entityId: string;
-  id: string;
-  isShopTheLook: boolean;
+  aggregatedStats?: PinterestPinAggregatedStats;
+  commentCount?: number;
+  didItData?: PinterestPinDidItData;
+  entityId?: string;
+  id?: string;
+  isShopTheLook?: boolean;
 }
 
 export interface PinterestPinAggregatedStats {
-  saves: number;
+  saves?: number;
 }
 
 export interface PinterestPinAnnotationsWithLinksArray {
-  name: string;
-  url: string;
+  name?: string;
+  url?: string;
 }
 
 export interface PinterestPinBlockStyle {
-  height: number;
-  width: number;
-  xCoord: number;
-  yCoord: number;
+  height?: number;
+  width?: number;
+  xCoord?: number;
+  yCoord?: number;
 }
 
 export interface PinterestPinBoard {
-  boardOrderModifiedAt: string;
-  collaboratedByMe: boolean;
+  boardOrderModifiedAt?: string;
+  collaboratedByMe?: boolean;
   collaboratorPermissions?: unknown | null;
-  coverImageSpec_216x146: PinterestPinImageSpec136X136;
-  coverImageSpec_236x: PinterestPinImageSpec136X136;
-  coverImageSpec_400x300: PinterestPinImageSpec136X136;
-  entityId: string;
-  followedByMe: boolean;
-  id: string;
-  imageCoverHdUrl: string;
-  imageCoverUrl: string;
-  imageThumbnailUrl: string;
-  isCollaborative: boolean;
-  layout: string;
-  name: string;
-  owner: PinterestPinOwner;
-  pinCount: number;
-  privacy: string;
-  sectionCount: number;
-  url: string;
+  coverImageSpec_216x146?: PinterestPinImageSpec;
+  coverImageSpec_236x?: PinterestPinImageSpec;
+  coverImageSpec_400x300?: PinterestPinImageSpec;
+  entityId?: string;
+  followedByMe?: boolean;
+  id?: string;
+  imageCoverHdUrl?: string;
+  imageCoverUrl?: string;
+  imageThumbnailUrl?: string;
+  isCollaborative?: boolean;
+  layout?: string;
+  name?: string;
+  owner?: PinterestPinOwner;
+  pinCount?: number;
+  privacy?: string;
+  sectionCount?: number;
+  url?: string;
 }
 
 export interface PinterestPinCategorizedIngredient {
-  __typename: string;
-  category: string;
-  ingredients: PinterestPinIngredient[];
+  __typename?: string;
+  category?: string;
+  ingredients?: PinterestPinIngredient[];
 }
 
 export interface PinterestPinCloseupAttribution {
-  entityId: string;
-  firstName: string;
-  fullName: string;
-  id: string;
-  username: string;
+  entityId?: string;
+  firstName?: string;
+  fullName?: string;
+  id?: string;
+  username?: string;
 }
 
 export interface PinterestPinCloseupDataStoryPinDataPageStyle {
-  backgroundColor: string;
+  backgroundColor?: string;
 }
 
 export interface PinterestPinCloseupUnifiedAttribution {
-  __typename: string;
-  adsOnlyProfileSite: unknown | null;
-  entityId: string;
-  followedByMe: boolean;
-  followerCount: number;
-  fullName: string;
-  id: string;
-  imageMediumUrl: string;
-  isAdsOnlyProfile: boolean;
-  isVerifiedMerchant: boolean;
-  username: string;
-  verifiedIdentity: PinterestPinVerifiedIdentity;
+  __typename?: string;
+  adsOnlyProfileSite?: unknown | null;
+  entityId?: string;
+  followedByMe?: boolean;
+  followerCount?: number;
+  fullName?: string;
+  id?: string;
+  imageMediumUrl?: string;
+  isAdsOnlyProfile?: boolean;
+  isVerifiedMerchant?: boolean;
+  username?: string;
+  verifiedIdentity?: PinterestPinCloseupUnifiedAttributionVerifiedIdentity;
+}
+
+export interface PinterestPinCloseupUnifiedAttributionVerifiedIdentity {
+  verified?: boolean | null;
 }
 
 export interface PinterestPinCook {
-  h: unknown | null;
-  m: number;
+  h?: unknown | null;
+  m?: number;
 }
 
 export interface PinterestPinCookTimes {
-  cook: PinterestPinCook | null;
-  prep: PinterestPinCook | null;
-  total: unknown | null;
+  cook?: PinterestPinCook | null;
+  prep?: PinterestPinCook | null;
+  total?: unknown | null;
 }
 
 export interface PinterestPinDetailsDataRichMetadataRecipe {
-  __typename: string;
-  aggregateRating: PinterestPinAggregateRating;
-  categorizedIngredients: PinterestPinCategorizedIngredient[];
-  cookTimes: PinterestPinCookTimes;
-  diets: unknown[];
-  displayCookTime: number;
-  fromAggregatedData: boolean;
-  name: string;
-  servingsSummary: PinterestPinServingsSummary;
+  __typename?: string;
+  aggregateRating?: PinterestPinRecipeAggregateRating;
+  categorizedIngredients?: PinterestPinCategorizedIngredient[];
+  cookTimes?: PinterestPinCookTimes;
+  diets?: unknown[];
+  displayCookTime?: number;
+  fromAggregatedData?: boolean;
+  name?: string;
+  servingsSummary?: PinterestPinServingsSummary;
 }
 
 export interface PinterestPinDetailsDataStoryPinDataPageBlockVideoDataV2VideoList720P {
-  v720P: PinterestPinVideoVariant;
-}
-
-export interface PinterestPinDetailsDataVideosVideoList {
-  __typename: string;
-  v720P: PinterestPinVideoVariant;
-  vHLSV3MOBILE: PinterestPinImages136X136;
-  vHLSV4: PinterestPinVideoVariant;
+  v720P?: PinterestPinVideoVariant;
 }
 
 export interface PinterestPinDidItData {
-  imagesCount: number;
+  imagesCount?: number;
 }
 
 export interface PinterestPinGenAITopic {
-  interestIdStr: string;
-  name: string;
+  interestIdStr?: string;
+  name?: string;
 }
 
 export interface PinterestPinGridAttribution {
-  __typename?: string;
-  entityId: string;
-  fullName: string;
-  id: string;
-  imageMediumUrl: string;
-  imageSmallUrl: string;
+  entityId?: string;
+  fullName?: string;
+  id?: string;
+  imageMediumUrl?: string;
+  imageSmallUrl?: string;
   isVerifiedMerchant?: boolean;
-  username: string;
-  verifiedIdentity?: PinterestPinVerifiedIdentity;
+  username?: string;
+  verifiedIdentity?: PinterestPinCloseupUnifiedAttributionVerifiedIdentity;
 }
 
-export interface PinterestPinImageSpec136X136 {
-  url: string;
+export interface PinterestPinImageSpec {
+  url?: string;
 }
 
-export interface PinterestPinImages136X136 {
-  __typename?: string;
-  duration?: number;
-  height: number;
-  thumbnail?: string;
-  url: string;
-  width: number;
+export interface PinterestPinImageSpecOrig {
+  url?: string;
+}
+
+export interface PinterestPinImages {
+  height?: number;
+  url?: string;
+  width?: number;
 }
 
 export interface PinterestPinImages236X {
-  dominantColor: unknown | null;
-  height: number;
-  type: unknown | null;
-  url: string;
-  width: number;
+  dominantColor?: unknown | null;
+  height?: number;
+  type?: unknown | null;
+  url?: string;
+  width?: number;
+}
+
+export interface PinterestPinImagesOrig {
+  __typename?: string;
+  height?: number;
+  url?: string;
+  width?: number;
 }
 
 export interface PinterestPinIngredient {
-  amt: string;
-  name: string;
+  amt?: string;
+  name?: string;
 }
 
 export interface PinterestPinJoin {
@@ -737,335 +679,396 @@ export interface PinterestPinJoin {
 }
 
 export interface PinterestPinLinkDomain {
-  id: string;
-  name: string;
-  officialUser: PinterestPinNativeCreator | null;
+  id?: string;
+  name?: string;
+  officialUser?: PinterestPinLinkDomainOfficialUser | null;
+}
+
+export interface PinterestPinLinkDomainOfficialUser {
+  __typename?: string;
+  blockedByMe?: boolean;
+  entityId?: string;
+  explicitlyFollowedByMe?: boolean;
+  firstName?: string;
+  followerCount?: number;
+  fullName?: string;
+  id?: string;
+  imageLargeUrl?: string;
+  imageMediumUrl?: string;
+  imageSmallUrl?: string;
+  isVerifiedMerchant?: boolean;
+  username?: string;
+  verifiedIdentity?: PinterestPinCloseupUnifiedAttributionVerifiedIdentity;
 }
 
 export interface PinterestPinMetadata {
-  basics: unknown | null;
-  pinTitle: string;
-  templateType: unknown | null;
+  basics?: unknown | null;
+  pinTitle?: string;
+  templateType?: unknown | null;
 }
 
 export interface PinterestPinNativeCreator {
   __typename?: string;
-  blockedByMe: boolean;
-  entityId: string;
-  explicitlyFollowedByMe: boolean;
+  blockedByMe?: boolean;
+  entityId?: string;
+  explicitlyFollowedByMe?: boolean;
   firstName?: string;
-  followerCount: number;
-  fullName: string;
-  id: string;
-  imageLargeUrl: string;
-  imageMediumUrl: string;
-  imageSmallUrl: string;
+  followerCount?: number;
+  fullName?: string;
+  id?: string;
+  imageLargeUrl?: string;
+  imageMediumUrl?: string;
+  imageSmallUrl?: string;
   isDirectToSiteAllowed?: boolean;
   isPrimaryWebsiteVerified?: boolean;
-  isVerifiedMerchant: boolean;
+  isVerifiedMerchant?: boolean;
   profileUrl?: string;
-  username: string;
-  verifiedIdentity: PinterestPinVerifiedIdentity;
+  username?: string;
+  verifiedIdentity?: PinterestPinCloseupUnifiedAttributionVerifiedIdentity;
   websiteUrl?: string | null;
 }
 
+export interface PinterestPinOriginPinner {
+  blockedByMe?: boolean;
+  entityId?: string;
+  explicitlyFollowedByMe?: boolean;
+  followerCount?: number;
+  fullName?: string;
+  id?: string;
+  imageLargeUrl?: string;
+  imageMediumUrl?: string;
+  imageSmallUrl?: string;
+  isVerifiedMerchant?: boolean;
+  username?: string;
+  verifiedIdentity?: PinterestPinCloseupUnifiedAttributionVerifiedIdentity;
+}
+
 export interface PinterestPinOwner {
-  entityId: string;
-  id: string;
+  entityId?: string;
+  id?: string;
 }
 
 export interface PinterestPinPinJoin {
-  annotationsWithLinksArray: PinterestPinAnnotationsWithLinksArray[];
+  annotationsWithLinksArray?: PinterestPinAnnotationsWithLinksArray[];
   canonicalPin?: PinterestPinOwner | null;
-  interlinkEntries: unknown | null;
-  seoBreadcrumbs: PinterestPinSeoBreadcrumb[];
-  seoCanonicalDomain: string;
-  seoCanonicalUrl: string | null;
-  seoRelatedInterests: PinterestPinAnnotationsWithLinksArray[] | null;
-  shoppingKlpUrls: unknown | null;
-  visualAnnotation: string[];
+  interlinkEntries?: unknown | null;
+  seoBreadcrumbs?: PinterestPinSeoBreadcrumb[];
+  seoCanonicalDomain?: string;
+  seoCanonicalUrl?: string | null;
+  seoRelatedInterests?: PinterestPinAnnotationsWithLinksArray[] | null;
+  shoppingKlpUrls?: unknown | null;
+  visualAnnotation?: string[];
 }
 
 export interface PinterestPinPinner {
-  __typename: string;
-  blockedByMe: boolean;
+  __typename?: string;
+  blockedByMe?: boolean;
   connectionType?: string;
   domainUrl?: string | null;
   domainVerified?: boolean;
-  entityId: string;
-  explicitlyFollowedByMe: boolean;
-  followerCount: number;
-  fullName: string;
-  id: string;
-  imageLargeUrl: string;
-  imageMediumUrl: string;
-  imageSmallUrl: string;
-  isVerifiedMerchant: boolean;
-  username: string;
-  verifiedIdentity: PinterestPinVerifiedIdentity;
+  entityId?: string;
+  explicitlyFollowedByMe?: boolean;
+  followerCount?: number;
+  fullName?: string;
+  id?: string;
+  imageLargeUrl?: string;
+  imageMediumUrl?: string;
+  imageSmallUrl?: string;
+  isVerifiedMerchant?: boolean;
+  username?: string;
+  verifiedIdentity?: PinterestPinnerVerifiedIdentity;
+}
+
+export interface PinterestPinPromoter {
+  __typename?: string;
+  entityId?: string;
+  fullName?: string;
+  id?: string;
+  imageMediumUrl?: string;
+  imageSmallUrl?: string;
+  username?: string;
 }
 
 export interface PinterestPinReactionCountsData {
-  reactionCount: number;
-  reactionType: number;
+  reactionCount?: number;
+  reactionType?: number;
+}
+
+export interface PinterestPinRecipeAggregateRating {
+  __typename?: string;
+  bestRating?: unknown | null;
+  ratingCount?: number | null;
+  ratingValue?: string;
+  reviewCount?: number;
 }
 
 export interface PinterestPinResponse {
-  __typename: string;
-  adData: unknown | null;
-  adMatchReason: number;
-  adTargetingAttribution: unknown | null;
-  adTargetingAttributionReasons: unknown | null;
-  advertiserId: string | null;
-  affiliateDisclosure: string | null;
-  affiliateLink: unknown | null;
-  aggregatedPinData: PinterestPinAggregatedPinData;
-  attribution: unknown | null;
-  board: PinterestPinBoard;
-  boostAdsData: unknown | null;
-  campaignId: string | null;
-  canDeleteDidItAndComments: boolean;
-  carouselData: unknown | null;
-  category: string;
-  closeupAttribution: PinterestPinCloseupAttribution;
-  closeupUnifiedAttribution: PinterestPinCloseupUnifiedAttribution;
-  closeupUnifiedDescription: string;
-  closeupUnifiedTitle: string;
-  collectionPin: unknown | null;
-  commentsDisabled: boolean;
-  createdAt: string;
-  creativeOverlayImages: unknown | null;
-  creatorClass: unknown | null;
+  __typename?: string;
+  adData?: unknown | null;
+  adMatchReason?: number;
+  adTargetingAttribution?: unknown | null;
+  adTargetingAttributionReasons?: unknown | null;
+  advertiserId?: string | null;
+  affiliateDisclosure?: string | null;
+  affiliateLink?: unknown | null;
+  aggregatedPinData?: PinterestPinAggregatedPinData;
+  attribution?: unknown | null;
+  board?: PinterestPinBoard;
+  boostAdsData?: unknown | null;
+  campaignId?: string | null;
+  canDeleteDidItAndComments?: boolean;
+  carouselData?: unknown | null;
+  category?: string;
+  closeupAttribution?: PinterestPinCloseupAttribution;
+  closeupUnifiedAttribution?: PinterestPinCloseupUnifiedAttribution;
+  closeupUnifiedDescription?: string;
+  closeupUnifiedTitle?: string;
+  collectionPin?: unknown | null;
+  commentsDisabled?: boolean;
+  createdAt?: string;
+  creativeOverlayImages?: unknown | null;
+  creatorClass?: unknown | null;
   credits_charged: number;
   credits_remaining: number;
-  description: string;
-  descriptionHtml: string;
-  descriptionLinks: unknown[];
-  digitalMediaSourceType: number | null;
-  domain: string;
-  dominantColor: string;
-  doneByMe: boolean;
-  embed: unknown | null;
-  entityId: string;
-  genAiTopics: PinterestPinGenAITopic[] | null;
-  gridAttribution: PinterestPinGridAttribution | null;
-  gridDescription: string;
-  gridTitle: string;
-  hasActiveBoostAds: boolean;
-  hasBeenBoostPromoted: boolean;
-  hasHiddenInnerPin: boolean;
-  id: string;
-  imageLargeUrl: string;
-  imageSignature: string;
-  imageSpec_136x136: PinterestPinImageSpec136X136;
-  imageSpec_170x: PinterestPinImageSpec136X136;
-  imageSpec_236x: PinterestPinImageSpec136X136;
-  imageSpec_474x: PinterestPinImageSpec136X136;
-  imageSpec_564x: PinterestPinImageSpec136X136;
-  imageSpec_600x315: PinterestPinImageSpec136X136;
-  imageSpec_60x60: PinterestPinImageSpec136X136;
-  imageSpec_736x: PinterestPinImageSpec136X136;
-  imageSpec_orig: PinterestPinImageSpec136X136;
-  images_136x136: PinterestPinImages136X136;
-  images_170x: PinterestPinImages136X136;
-  images_236x: PinterestPinImages236X;
-  images_474x: PinterestPinImages136X136;
-  images_564x: PinterestPinImages136X136;
-  images_600x315: PinterestPinImageSpec136X136;
-  images_60x60: PinterestPinImageSpec136X136;
-  images_736x: PinterestPinImages136X136;
-  images_orig: PinterestPinImages136X136;
-  interestItemIdStr: unknown | null;
-  isActiveAd: boolean;
-  isDownstreamPromotion: boolean;
-  isEligibleForAggregatedComments: boolean;
-  isEligibleForImageDownload: boolean;
-  isEligibleForPdp: boolean;
-  isEligibleForPromotedPartnership: boolean;
-  isGoLinkless: boolean;
-  isHidden: boolean;
-  isInstagramApi: boolean;
-  isOosProduct: boolean;
-  isPromoted: boolean;
-  isQuickPromotableByPinner: boolean;
-  isRepin: boolean;
-  isStaleProduct: boolean;
-  isThirdPartyAd: boolean;
-  isUnsafe: boolean;
-  isUnsafeForAd: boolean;
-  isUnsafeForComments: boolean;
-  isV1IdeaPin: boolean | null;
-  isVideo: boolean;
-  isViewedByOwnerOrEmployeeOrPartnerOfBusiness: unknown | null;
-  isViewerRestricted: boolean;
-  link: string | null;
-  linkDomain: PinterestPinLinkDomain | null;
-  linkId: string | null;
-  linkUserWebsite: unknown | null;
-  linkUtmApplicableAndReplaced: number;
-  mediaAttribution: unknown | null;
-  method: string;
-  mobileLink: unknown | null;
-  musicAttributions: unknown[];
-  nativeCreator: PinterestPinNativeCreator | null;
-  originPinner: PinterestPinNativeCreator | null;
-  pinAdditionalNote: unknown | null;
-  pinJoin: PinterestPinPinJoin;
-  pinPromotionId: string | null;
-  pinnabilityMultiScoresStringified: unknown | null;
-  pinnedToBoard: unknown | null;
-  pinner: PinterestPinPinner;
-  priceCurrency: string;
-  productPinData: unknown | null;
-  promotedIsLeadAd: boolean;
-  promotedIsPersonalized: unknown | null;
-  promotedIsRemovable: boolean;
-  promotedLeadForm: unknown | null;
-  promotedPartnershipAdvertiserName: unknown | null;
-  promotedPartnershipAttributionName: unknown | null;
-  promoter: PinterestPinGridAttribution | null;
-  reactionByMe: number;
-  reactionCountsData: PinterestPinReactionCountsData[];
-  recommendationReason: unknown | null;
-  repinCount: number;
-  richMetadata: PinterestPinRichMetadata | null;
-  richSummary: PinterestPinRichSummary | null;
-  section: PinterestPinOwner | null;
-  seeMoreUserFeedback: unknown | null;
-  seoAltText: string;
-  seoDescription: string;
-  seoNoindexReason: string | null;
-  seoTitle: string;
-  seoUrl: string;
-  shareCount: number;
-  shipsToUserCountry: boolean;
-  shoppingFlags: number[];
-  shouldMute: boolean;
-  shouldOpenInStream: boolean;
-  shuffle: PinterestPinShuffle | null;
-  shuffleAsset: unknown | null;
-  sourceInterest: unknown | null;
-  sponsorship: unknown | null;
-  storyPinData: PinterestPinStoryPinData | null;
-  storyPinDataId: string | null;
+  description?: string;
+  descriptionHtml?: string;
+  descriptionLinks?: unknown[];
+  digitalMediaSourceType?: number | null;
+  domain?: string;
+  dominantColor?: string;
+  doneByMe?: boolean;
+  embed?: unknown | null;
+  entityId?: string;
+  genAiTopics?: PinterestPinGenAITopic[] | null;
+  gridAttribution?: PinterestPinGridAttribution | null;
+  gridDescription?: string;
+  gridTitle?: string;
+  hasActiveBoostAds?: boolean;
+  hasBeenBoostPromoted?: boolean;
+  hasHiddenInnerPin?: boolean;
+  id?: string;
+  imageLargeUrl?: string;
+  imageSignature?: string;
+  imageSpec_136x136?: PinterestPinImageSpec;
+  imageSpec_170x?: PinterestPinImageSpec;
+  imageSpec_236x?: PinterestPinImageSpec;
+  imageSpec_474x?: PinterestPinImageSpec;
+  imageSpec_564x?: PinterestPinImageSpec;
+  imageSpec_600x315?: PinterestPinImageSpec;
+  imageSpec_60x60?: PinterestPinImageSpec;
+  imageSpec_736x?: PinterestPinImageSpec;
+  imageSpec_orig?: PinterestPinImageSpecOrig;
+  images_136x136?: PinterestPinImages;
+  images_170x?: PinterestPinImages;
+  images_236x?: PinterestPinImages236X;
+  images_474x?: PinterestPinImages;
+  images_564x?: PinterestPinImages;
+  images_600x315?: PinterestPinImageSpec;
+  images_60x60?: PinterestPinImageSpec;
+  images_736x?: PinterestPinImages;
+  images_orig?: PinterestPinImagesOrig;
+  interestItemIdStr?: unknown | null;
+  isActiveAd?: boolean;
+  isDownstreamPromotion?: boolean;
+  isEligibleForAggregatedComments?: boolean;
+  isEligibleForImageDownload?: boolean;
+  isEligibleForPdp?: boolean;
+  isEligibleForPromotedPartnership?: boolean;
+  isGoLinkless?: boolean;
+  isHidden?: boolean;
+  isInstagramApi?: boolean;
+  isOosProduct?: boolean;
+  isPromoted?: boolean;
+  isQuickPromotableByPinner?: boolean;
+  isRepin?: boolean;
+  isStaleProduct?: boolean;
+  isThirdPartyAd?: boolean;
+  isUnsafe?: boolean;
+  isUnsafeForAd?: boolean;
+  isUnsafeForComments?: boolean;
+  isV1IdeaPin?: boolean | null;
+  isVideo?: boolean;
+  isViewedByOwnerOrEmployeeOrPartnerOfBusiness?: unknown | null;
+  isViewerRestricted?: boolean;
+  link?: string | null;
+  linkDomain?: PinterestPinLinkDomain | null;
+  linkId?: string | null;
+  linkUserWebsite?: unknown | null;
+  linkUtmApplicableAndReplaced?: number;
+  mediaAttribution?: unknown | null;
+  method?: string;
+  mobileLink?: unknown | null;
+  musicAttributions?: unknown[];
+  nativeCreator?: PinterestPinNativeCreator | null;
+  originPinner?: PinterestPinOriginPinner | null;
+  pinAdditionalNote?: unknown | null;
+  pinJoin?: PinterestPinPinJoin;
+  pinPromotionId?: string | null;
+  pinnabilityMultiScoresStringified?: unknown | null;
+  pinnedToBoard?: unknown | null;
+  pinner?: PinterestPinPinner;
+  priceCurrency?: string;
+  productPinData?: unknown | null;
+  promotedIsLeadAd?: boolean;
+  promotedIsPersonalized?: unknown | null;
+  promotedIsRemovable?: boolean;
+  promotedLeadForm?: unknown | null;
+  promotedPartnershipAdvertiserName?: unknown | null;
+  promotedPartnershipAttributionName?: unknown | null;
+  promoter?: PinterestPinPromoter | null;
+  reactionByMe?: number;
+  reactionCountsData?: PinterestPinReactionCountsData[];
+  recommendationReason?: unknown | null;
+  repinCount?: number;
+  richMetadata?: PinterestPinRichMetadata | null;
+  richSummary?: PinterestPinRichSummary | null;
+  section?: PinterestPinOwner | null;
+  seeMoreUserFeedback?: unknown | null;
+  seoAltText?: string;
+  seoDescription?: string;
+  seoNoindexReason?: string | null;
+  seoTitle?: string;
+  seoUrl?: string;
+  shareCount?: number;
+  shipsToUserCountry?: boolean;
+  shoppingFlags?: number[];
+  shouldMute?: boolean;
+  shouldOpenInStream?: boolean;
+  shuffle?: PinterestPinShuffle | null;
+  shuffleAsset?: unknown | null;
+  sourceInterest?: unknown | null;
+  sponsorship?: unknown | null;
+  storyPinData?: PinterestPinStoryPinData | null;
+  storyPinDataId?: string | null;
   success: boolean;
-  thirdPartyPinOwner: unknown | null;
-  title: string;
-  topInterest: number;
-  totalReactionCount: number;
-  trackedLink: string | null;
-  trackingParams: string;
-  translations: unknown | null;
-  unauthOnGridTitle: string | null;
-  unauthOnPageDescription: string;
-  unauthOnPageTitle: string;
-  userInterestCluster: unknown | null;
-  userMentionTags: unknown | null;
-  utmLink: string | null;
-  videoStatus: unknown | null;
-  videos: PinterestPinVideos | null;
-  visualObjects: PinterestPinVisualObject[];
+  thirdPartyPinOwner?: unknown | null;
+  title?: string;
+  topInterest?: number;
+  totalReactionCount?: number;
+  trackedLink?: string | null;
+  trackingParams?: string;
+  translations?: unknown | null;
+  unauthOnGridTitle?: string | null;
+  unauthOnPageDescription?: string;
+  unauthOnPageTitle?: string;
+  userInterestCluster?: unknown | null;
+  userMentionTags?: unknown | null;
+  utmLink?: string | null;
+  videoStatus?: unknown | null;
+  videos?: PinterestPinVideos | null;
+  visualObjects?: PinterestPinVisualObject[];
 }
 
 export interface PinterestPinRichMetadata {
-  __typename: string;
-  aggregateRating: PinterestPinAggregateRating | null;
-  article: PinterestPinRichMetadataArticle | null;
-  description: string;
-  products: unknown | null;
-  recipe: PinterestPinDetailsDataRichMetadataRecipe | null;
-  siteName: string;
-  title: string;
-  tutorial: unknown | null;
-  url: string;
+  __typename?: string;
+  aggregateRating?: PinterestPinRichMetadataAggregateRating | null;
+  article?: PinterestPinRichMetadataArticle | null;
+  description?: string;
+  products?: unknown | null;
+  recipe?: PinterestPinDetailsDataRichMetadataRecipe | null;
+  siteName?: string;
+  title?: string;
+  tutorial?: unknown | null;
+  url?: string;
+}
+
+export interface PinterestPinRichMetadataAggregateRating {
+  bestRating?: unknown | null;
+  ratingCount?: number | null;
+  ratingValue?: string;
+  reviewCount?: number;
 }
 
 export interface PinterestPinRichMetadataArticle {
-  __typename: string;
-  datePublished: string;
-  name: string;
+  __typename?: string;
+  datePublished?: string;
+  name?: string;
 }
 
 export interface PinterestPinRichSummary {
-  aggregateRating?: PinterestPinAggregateRating | null;
-  displayName: string;
-  products: unknown[];
+  aggregateRating?: PinterestPinRichMetadataAggregateRating | null;
+  displayName?: string;
+  products?: unknown[];
   typeName?: string;
 }
 
 export interface PinterestPinSeoBreadcrumb {
-  __typename: string;
-  name: string;
-  url: string;
+  __typename?: string;
+  name?: string;
+  url?: string;
 }
 
 export interface PinterestPinServingsSummary {
-  __typename: string;
-  serves: string | null;
-  summary: string | null;
+  __typename?: string;
+  serves?: string | null;
+  summary?: string | null;
 }
 
 export interface PinterestPinShuffle {
   __typename?: string;
-  entityId: string;
-  id: string;
+  entityId?: string;
+  id?: string;
   isRemixable?: boolean;
 }
 
 export interface PinterestPinStoryPinData {
-  __typename: string;
-  entityId: string;
-  hasAffiliateProducts: boolean;
-  id: string;
-  isDeleted: boolean;
-  metadata: PinterestPinMetadata;
-  pages: PinterestPinStoryPinDataPage[];
-  totalVideoDuration: number;
+  __typename?: string;
+  entityId?: string;
+  hasAffiliateProducts?: boolean;
+  id?: string;
+  isDeleted?: boolean;
+  metadata?: PinterestPinMetadata;
+  pages?: PinterestPinStoryPinDataPage[];
+  totalVideoDuration?: number;
 }
 
 export interface PinterestPinStoryPinDataPage {
-  __typename: string;
-  ad: unknown | null;
-  blocks: PinterestPinStoryPinDataPageBlock[];
-  imageAdjustedSpec_orig: unknown | null;
-  images_originals: unknown | null;
-  layout: number;
-  musicAttributions: unknown[];
-  pageId: string;
-  shouldMute: boolean;
-  storyPageId: string;
-  style: PinterestPinCloseupDataStoryPinDataPageStyle | null;
+  __typename?: string;
+  ad?: unknown | null;
+  blocks?: PinterestPinStoryPinDataPageBlock[];
+  imageAdjustedSpec_orig?: unknown | null;
+  images_originals?: unknown | null;
+  layout?: number;
+  musicAttributions?: unknown[];
+  pageId?: string;
+  shouldMute?: boolean;
+  storyPageId?: string;
+  style?: PinterestPinCloseupDataStoryPinDataPageStyle | null;
 }
 
 export interface PinterestPinStoryPinDataPageBlock {
-  __typename: string;
-  blockStyle: PinterestPinBlockStyle;
-  blockType: number;
-  images_750x?: PinterestPinImages136X136;
+  __typename?: string;
+  blockStyle?: PinterestPinBlockStyle;
+  blockType?: number;
+  images_750x?: PinterestPinImages;
   images_orig?: unknown | null;
   text?: string;
   videoDataV2?: PinterestPinStoryPinDataPageBlockVideoDataV2;
 }
 
 export interface PinterestPinStoryPinDataPageBlockVideoDataV2 {
-  seoViewCount: string;
-  v_hlsv4_video_list: PinterestPinVHlsv4VideoList;
-  videoList: PinterestPinVideoList;
-  videoList720P: PinterestPinDetailsDataStoryPinDataPageBlockVideoDataV2VideoList720P;
-  videoListEXP3: unknown | null;
-  videoListEXP4: unknown | null;
-  videoListEXP5: unknown | null;
-  videoListEXP6: unknown | null;
-  videoListEXP7: unknown | null;
-  videoListForCaptions: PinterestPinVideoListForCaptions;
-  videoListMobile: PinterestPinVideoList;
+  seoViewCount?: string;
+  v_hlsv4_video_list?: PinterestPinVHlsv4VideoList;
+  videoList?: PinterestPinStoryPinDataPageBlockVideoDataV2VideoList;
+  videoList720P?: PinterestPinDetailsDataStoryPinDataPageBlockVideoDataV2VideoList720P;
+  videoListEXP3?: unknown | null;
+  videoListEXP4?: unknown | null;
+  videoListEXP5?: unknown | null;
+  videoListEXP6?: unknown | null;
+  videoListEXP7?: unknown | null;
+  videoListForCaptions?: PinterestPinVideoListForCaptions;
+  videoListMobile?: PinterestPinVideoList;
+}
+
+export interface PinterestPinStoryPinDataPageBlockVideoDataV2VideoList {
+  vHLSV3MOBILE?: PinterestPinVideoVariant;
 }
 
 export interface PinterestPinTagsChip {
   dominant_color?: string;
   id?: string;
   image_signature?: string;
-  images?: Record<string, PinterestImageValue>;
+  images?: Record<string, PinterestPinTagsChipImage>;
   item_id?: string;
   link?: string;
   price_currency?: string;
@@ -1073,24 +1076,26 @@ export interface PinterestPinTagsChip {
   title?: string;
 }
 
-export interface PinterestPinVHlsv4VideoList {
-  vHLSV4: PinterestPinVideoVariant;
+export interface PinterestPinTagsChipImage {
+  height?: number;
+  url?: string;
+  width?: number;
 }
 
-export interface PinterestPinVerifiedIdentity {
-  verified: boolean | null;
+export interface PinterestPinVHlsv4VideoList {
+  vHLSV4?: PinterestPinVideoVariant;
 }
 
 export interface PinterestPinVideoList {
-  vHLSV3MOBILE: PinterestPinVideoVariant;
+  vHLSV3MOBILE?: PinterestPinVideoVariant;
 }
 
 export interface PinterestPinVideoListForCaption {
-  captionsUrls: Record<string, string> | null;
+  captionsUrls?: Record<string, string> | null;
 }
 
 export interface PinterestPinVideoListForCaptions {
-  v720P: PinterestPinVideoListForCaption;
+  v720P?: PinterestPinVideoVariant;
 }
 
 export interface PinterestPinVideoVariant {
@@ -1104,22 +1109,33 @@ export interface PinterestPinVideoVariant {
 }
 
 export interface PinterestPinVideos {
-  duration: number;
-  entityId: string;
-  id: string;
-  seoViewCount: string;
-  signature: string;
-  videoList: PinterestPinDetailsDataVideosVideoList;
-  videoListForCaptions: Record<string, PinterestPinVideoListForCaption>;
-  videoUrls: string[];
+  duration?: number;
+  entityId?: string;
+  id?: string;
+  seoViewCount?: string;
+  signature?: string;
+  videoList?: PinterestPinVideosVideoList;
+  videoListForCaptions?: Record<string, PinterestPinVideoListForCaption>;
+  videoUrls?: string[];
+}
+
+export interface PinterestPinVideosVideoList {
+  __typename?: string;
+  v720P?: PinterestPinVideoVariant;
+  vHLSV3MOBILE?: PinterestPinVideoVariant;
+  vHLSV4?: PinterestPinVideoVariant;
 }
 
 export interface PinterestPinVisualObject {
-  h: number;
-  isStela: unknown | null;
-  w: number;
-  x: number;
-  y: number;
+  h?: number;
+  isStela?: unknown | null;
+  w?: number;
+  x?: number;
+  y?: number;
+}
+
+export interface PinterestPinnerVerifiedIdentity {
+  verified?: unknown | null;
 }
 
 export interface PinterestProductMetadata {
@@ -1138,11 +1154,7 @@ export interface PinterestPromoter {
   is_verified_merchant?: boolean;
   node_id?: string;
   username?: string;
-  verified_identity?: PinterestBoardFeedStoryCopy;
-}
-
-export interface PinterestReactionCounts {
-  "1"?: number;
+  verified_identity?: PinterestSearchStoryDynamicInsertionOption;
 }
 
 export interface PinterestRecommendScore {
@@ -1151,30 +1163,55 @@ export interface PinterestRecommendScore {
 }
 
 export interface PinterestRichMetadata {
+  aggregate_rating?: PinterestRichMetadataAggregateRating;
+  amp_url?: string;
   amp_valid?: boolean;
+  canonical_url?: string;
   description?: string;
   has_price_drop?: boolean;
   id?: string;
+  link_status?: number;
+  locale?: string;
   products?: PinterestRichMetadataProduct[];
   site_name?: string;
   title?: string;
   type?: string;
 }
 
+export interface PinterestRichMetadataAggregateRating {
+  best_rating?: string;
+  id?: string;
+  rating_count?: number;
+  rating_distribution?: unknown[];
+  rating_value?: string;
+  review_count?: number;
+  type?: string;
+}
+
 export interface PinterestRichMetadataProduct {
+  additional_images?: unknown[];
   id?: string;
   item_id?: string;
   item_set_id?: string;
   name?: string;
-  offer_summary?: PinterestBoardFeedStoryCopy;
-  offers?: PinterestBoardFeedPinRichSummaryProductOffer[];
+  offer_summary?: PinterestRichMetadataProductOfferSummary;
+  offers?: PinterestObjectRichSummaryProductOffer[];
   type?: string;
   videos?: unknown[];
 }
 
+export interface PinterestRichMetadataProductOfferSummary {
+  availability?: number;
+  condition?: number;
+  currency?: string;
+  in_stock?: boolean;
+  price?: string;
+  price_val?: number;
+  standard_price?: string;
+}
+
 export interface PinterestSearchPin {
   access?: unknown[];
-  action?: PinterestSearchResultAction;
   ad_match_reason?: number;
   advertiser_id?: string;
   aggregated_pin_data?: PinterestSearchResultAggregatedPinData;
@@ -1183,26 +1220,19 @@ export interface PinterestSearchPin {
   board?: PinterestSearchResultBoard;
   campaign_id?: number;
   collection_pin?: PinterestCollectionPin;
-  container_type?: number;
-  content_ids?: string[];
-  copy?: PinterestBoardFeedStoryCopy;
   created_at?: string;
-  custom_properties?: PinterestBoardFeedStoryCopy;
   description?: string;
   did_its?: unknown[];
   digital_media_source_type?: number;
-  display_options?: PinterestSearchResultDisplayOptions;
   domain?: string;
   dominant_color?: string;
-  dynamic_insertion_options?: PinterestBoardFeedStoryCopy;
-  experience_extra_context?: PinterestBoardFeedStoryCopy;
   gen_ai_topics?: PinterestGenAITopic[];
-  grid_attribution?: PinterestSearchResultPinner;
+  grid_attribution?: PinterestSearchStoryObjectGridAttribution;
   grid_title?: string;
   id?: string;
-  image_crop?: PinterestImageCrop;
+  image_crop?: PinterestSearchResultImageCrop;
   image_signature?: string;
-  images?: Record<string, PinterestImageValue>;
+  images?: Record<string, PinterestSearchResultImage>;
   insertion_id?: string;
   is_downstream_promotion?: boolean;
   is_eligible_for_filters?: boolean;
@@ -1217,10 +1247,9 @@ export interface PinterestSearchPin {
   is_stale_product?: boolean;
   link?: string;
   link_domain?: PinterestLinkDomain;
+  link_user_website?: PinterestLinkUserWebsite;
   link_utm_applicable_and_replaced?: number;
-  mapped_display_options?: PinterestBoardFeedStoryCopy;
   node_id?: string;
-  objects?: PinterestSearchResultObject[];
   pin_join?: PinterestPinJoin;
   pin_promotion_id?: number;
   pinner?: PinterestSearchResultPinner;
@@ -1229,15 +1258,13 @@ export interface PinterestSearchPin {
   promoted_is_removable?: boolean;
   promoter?: PinterestPromoter;
   reaction_counts?: Record<string, number>;
-  relationships?: PinterestBoardFeedStoryCopy;
   rich_summary?: PinterestSearchResultRichSummary;
   seo_alt_text?: string;
   shopping_flags?: number[];
   should_open_in_stream?: boolean;
   story_pin_data?: PinterestSearchResultStoryPinData;
   story_pin_data_id?: string;
-  story_type?: string;
-  title?: PinterestBoardFeedStorySubtitle | string;
+  title?: string;
   tracking_params?: string;
   type?: string;
   url: string;
@@ -1253,18 +1280,6 @@ export interface PinterestSearchResponse {
   success: boolean;
 }
 
-export interface PinterestSearchResultAction {
-  end_card_images?: PinterestBoardFeedStoryCopy;
-  location?: number;
-  pins_display?: number;
-  quick_save_icon?: number;
-  request_params?: string;
-  show_landing_page_hero?: boolean;
-  style?: number;
-  text?: string;
-  url?: string;
-}
-
 export interface PinterestSearchResultAggregatedPinData {
   node_id?: string;
   pin_tags_chips?: PinterestPinTagsChip[];
@@ -1272,9 +1287,9 @@ export interface PinterestSearchResultAggregatedPinData {
 
 export interface PinterestSearchResultBoard {
   board_order_modified_at?: string;
-  collaborating_users?: PinterestPromoter[];
+  collaborating_users?: PinterestCollaboratingUser[];
   collaborator_count?: number;
-  cover_images?: PinterestCoverImages;
+  cover_images?: PinterestBoardCoverImages;
   id?: string;
   image_cover_hd_url?: string;
   image_cover_url?: string;
@@ -1290,76 +1305,15 @@ export interface PinterestSearchResultBoard {
   url?: string;
 }
 
-export interface PinterestSearchResultDisplayOptions {
-  ai_fwd_presentation_options?: PinterestBoardFeedStoryCopy;
-  align_image_bottom?: boolean;
-  carousel_fade_ends?: number;
-  container_grid_span?: number;
-  content_display?: PinterestContentDisplay;
-  corner_radius?: number;
-  extra_spacing_after?: number;
-  extra_spacing_before?: number;
-  footer_display?: PinterestFooterDisplay;
-  has_condensed_header?: boolean;
-  header_display?: PinterestHeaderDisplay;
-  header_hidden?: boolean;
-  hide_search_guides_when_visible?: boolean;
-  horizontal_full_bleed?: boolean;
-  ideas_card_hide_when_offscreen?: boolean;
-  num_columns_requested?: number;
-  shopping_grid_display?: PinterestShoppingGridDisplay;
-  show_bottom_divider?: boolean;
-  show_separator?: boolean;
-  show_simplified_pin?: boolean;
-  show_top_divider?: boolean;
-  use_plain_text_display_mode?: boolean;
+export interface PinterestSearchResultImage {
+  height?: number;
+  url?: string;
+  width?: number;
 }
 
-export interface PinterestSearchResultObject {
-  access?: unknown[];
-  ad_match_reason?: number;
-  aggregated_pin_data?: PinterestObjectAggregatedPinData;
-  auto_alt_text?: string;
-  board?: PinterestSearchResultBoard;
-  created_at?: string;
-  description?: string;
-  did_its?: unknown[];
-  domain?: string;
-  dominant_color?: string;
-  grid_attribution?: PinterestSearchResultPinner;
-  grid_title?: string;
-  id?: string;
-  image_crop?: PinterestImageCrop;
-  image_signature?: string;
-  images?: Record<string, PinterestImageValue>;
-  is_downstream_promotion?: boolean;
-  is_eligible_for_filters?: boolean;
-  is_eligible_for_pdp?: boolean;
-  is_eligible_for_pre_loved_goods_label?: boolean;
-  is_eligible_for_related_products?: boolean;
-  is_eligible_for_web_closeup?: boolean;
-  is_go_linkless?: boolean;
-  is_oos_product?: boolean;
-  is_prefetch_enabled?: boolean;
-  is_promoted?: boolean;
-  is_stale_product?: boolean;
-  link?: string;
-  link_utm_applicable_and_replaced?: number;
-  node_id?: string;
-  pin_join?: PinterestPinJoin;
-  pinner?: PinterestSearchResultPinner;
-  product_metadata?: PinterestProductMetadata;
-  promoted_is_lead_ad?: boolean;
-  promoted_is_removable?: boolean;
-  reaction_counts?: PinterestReactionCounts;
-  rich_summary?: PinterestObjectRichSummary;
-  seo_alt_text?: string;
-  shopping_flags?: number[];
-  should_open_in_stream?: boolean;
-  title?: string;
-  tracking_params?: string;
-  type?: string;
-  utm_link?: string;
+export interface PinterestSearchResultImageCrop {
+  max_y?: number;
+  min_y?: number;
 }
 
 export interface PinterestSearchResultPinner {
@@ -1379,27 +1333,16 @@ export interface PinterestSearchResultPinner {
 
 export interface PinterestSearchResultRichSummary {
   actions?: unknown[];
-  aggregate_rating?: PinterestAggregateRating;
+  aggregate_rating?: PinterestRichMetadataAggregateRating;
   display_cook_time?: number;
   display_name?: string;
   id?: string;
   is_hard_404?: boolean;
-  products?: PinterestSearchResultRichSummaryProduct[];
+  products?: PinterestObjectRichSummaryProduct[];
   site_name?: string;
   type?: string;
   type_name?: string;
   url?: string;
-}
-
-export interface PinterestSearchResultRichSummaryProduct {
-  id?: string;
-  item_id?: string;
-  item_set_id?: string;
-  name?: string;
-  offer_summary?: PinterestBoardFeedPinRichSummaryProductOfferSummary;
-  offers?: PinterestBoardFeedPinRichSummaryProductOffer[];
-  type?: string;
-  videos?: unknown[];
 }
 
 export interface PinterestSearchResultStoryPinData {
@@ -1434,7 +1377,7 @@ export interface PinterestSearchResultStoryPinDataPage {
   image_signature?: string;
   image_signature_adjusted?: string;
   layout?: number;
-  music_attributions?: unknown[];
+  music_attributions?: PinterestMusicAttribution[];
   should_mute?: boolean;
   style?: PinterestSearchResultStoryPinDataPageStyle;
   type?: string;
@@ -1442,17 +1385,28 @@ export interface PinterestSearchResultStoryPinDataPage {
 }
 
 export interface PinterestSearchResultStoryPinDataPageBlock {
-  block_style?: PinterestBlockStyle;
+  audio?: PinterestAudio;
+  block_style?: PinterestSearchResultStoryPinDataPageBlockBlockStyle;
   block_type?: number;
   image_signature?: string;
   is_removed?: boolean;
   pin?: PinterestLinkDomain;
   pin_id?: string;
+  provider_recording_id?: string;
   style_type?: number;
   text?: string;
   tracking_id?: string;
   type?: string;
   video?: PinterestSearchResultStoryPinDataPageBlockVideo;
+}
+
+export interface PinterestSearchResultStoryPinDataPageBlockBlockStyle {
+  corner_radius?: number;
+  height?: number;
+  rotation?: number;
+  width?: number;
+  x_coord?: number;
+  y_coord?: number;
 }
 
 export interface PinterestSearchResultStoryPinDataPageBlockVideo {
@@ -1464,20 +1418,37 @@ export interface PinterestSearchResultStoryPinDataPageStyle {
   background_color?: string;
 }
 
+export interface PinterestSearchStoryDynamicInsertionOption {
+}
+
+export interface PinterestSearchStoryObjectGridAttribution {
+  follower_count?: number;
+  full_name?: string;
+  id?: string;
+  image_large_url?: string;
+  image_medium_url?: string;
+  image_small_url?: string;
+  is_ads_only_profile?: boolean;
+  is_verified_merchant?: boolean;
+  node_id?: string;
+  username?: string;
+  verified_identity?: PinterestVerifiedIdentity;
+}
+
+export interface PinterestSearchStoryObjectImage {
+  height?: number;
+  url?: string;
+  width?: number;
+}
+
+export interface PinterestSearchStoryObjectImageCrop {
+  max_y?: number;
+  min_y?: number;
+}
+
 export interface PinterestShippingInfo {
   free_shipping_price?: string;
   free_shipping_value?: number;
-}
-
-export interface PinterestShoppingGridDisplay {
-  half_opacity_sale_price?: boolean;
-  show_direct_clickthrough_button?: boolean;
-  show_label?: boolean;
-  show_merchant_domain?: boolean;
-  show_price?: boolean;
-  show_ratings_and_count?: boolean;
-  show_shipping_info?: boolean;
-  show_title?: boolean;
 }
 
 export interface PinterestUserBoard {
@@ -1485,7 +1456,7 @@ export interface PinterestUserBoard {
   action?: PinterestUserBoardAction;
   allow_homefeed_recommendations?: boolean;
   archived_by_me_at?: unknown | null;
-  aux_fields?: PinterestBoardFeedStoryCopy;
+  aux_fields?: PinterestSearchStoryDynamicInsertionOption;
   background_colour?: unknown | null;
   board_order_modified_at?: string;
   board_vase?: PinterestBoardVase[] | null;
@@ -1493,24 +1464,24 @@ export interface PinterestUserBoard {
   button_text?: unknown | null;
   closeup_id?: unknown | null;
   collaborated_by_me?: boolean;
-  collaborating_users?: PinterestPromoter[];
+  collaborating_users?: PinterestCollaboratingUser[];
   collaborator_count?: number;
   collaborator_requests_enabled?: boolean;
   container_type?: number;
   content_ids?: string[];
-  copy?: PinterestBoardFeedStoryCopy;
-  cover_images?: Record<string, PinterestImageValue>;
+  copy?: PinterestSearchStoryDynamicInsertionOption;
+  cover_images?: PinterestUserBoardCoverImage;
   cover_pin?: PinterestUserBoardCoverPin;
   created_at?: string;
-  custom_properties?: PinterestBoardFeedStoryCopy;
+  custom_properties?: PinterestSearchStoryDynamicInsertionOption;
   description?: string | null;
-  display_options?: PinterestBoardFeedStoryDisplayOptions;
-  dynamic_insertion_options?: PinterestBoardFeedStoryCopy;
+  display_options?: PinterestUserBoardDisplayOption;
+  dynamic_insertion_options?: PinterestSearchStoryDynamicInsertionOption;
   event_date?: unknown | null;
   event_start_date?: unknown | null;
   expanded_viewport_objects?: unknown[];
   experience?: unknown | null;
-  experience_extra_context?: PinterestBoardFeedStoryCopy;
+  experience_extra_context?: PinterestSearchStoryDynamicInsertionOption;
   followed_by_me?: boolean;
   follower_count?: number;
   has_custom_cover?: boolean;
@@ -1521,7 +1492,7 @@ export interface PinterestUserBoard {
   is_ads_only?: boolean;
   is_collaborative?: boolean;
   item_actions?: unknown[];
-  mapped_display_options?: PinterestBoardFeedStoryCopy;
+  mapped_display_options?: PinterestSearchStoryDynamicInsertionOption;
   name?: string;
   node_id?: string;
   objects?: PinterestUserBoardObject[];
@@ -1530,7 +1501,7 @@ export interface PinterestUserBoard {
   place_saves_count?: number;
   privacy?: string;
   referring_source?: unknown | null;
-  relationships?: PinterestBoardFeedStoryCopy;
+  relationships?: PinterestSearchStoryDynamicInsertionOption;
   section_count?: number;
   seo_board_module?: unknown | null;
   shop_source?: unknown | null;
@@ -1553,6 +1524,17 @@ export interface PinterestUserBoardAction {
   url?: string;
 }
 
+export interface PinterestUserBoardCoverImage {
+  "200x150"?: PinterestSearchStoryObjectImage;
+  "236x"?: PinterestUserBoardCoverImage236x;
+}
+
+export interface PinterestUserBoardCoverImage236x {
+  height?: unknown | null;
+  url?: string;
+  width?: number;
+}
+
 export interface PinterestUserBoardCoverPin {
   crop?: number[];
   custom_cover?: boolean;
@@ -1563,6 +1545,61 @@ export interface PinterestUserBoardCoverPin {
   scale?: number;
   size?: number[];
   timestamp?: number;
+}
+
+export interface PinterestUserBoardDisplayOption {
+  action_button_location?: unknown | null;
+  ai_fwd_presentation_options?: PinterestSearchStoryDynamicInsertionOption;
+  align_image_bottom?: boolean;
+  allow_pin_height_trimming?: unknown | null;
+  background_colors?: unknown | null;
+  background_image_url?: unknown | null;
+  board_display_options?: unknown | null;
+  board_view_type?: unknown | null;
+  carousel_fade_ends?: unknown | null;
+  carousel_item_spacing?: unknown | null;
+  container_grid_span?: unknown | null;
+  content_display?: unknown | null;
+  corner_radius?: unknown | null;
+  cover_image_url?: unknown | null;
+  display_view_state?: unknown | null;
+  explore_article_display_options?: unknown | null;
+  extra_spacing_after?: number;
+  extra_spacing_before?: number;
+  footer_display?: unknown | null;
+  has_condensed_header?: boolean;
+  header_display?: unknown | null;
+  header_font?: unknown | null;
+  header_hidden?: boolean;
+  hide_education_in_stream?: unknown | null;
+  hide_search_guides_when_visible?: boolean;
+  hide_ui_in_stream?: unknown | null;
+  horizontal_full_bleed?: boolean;
+  ideas_card_hide_when_offscreen?: boolean;
+  identifier_icon_name?: unknown | null;
+  image_only?: unknown | null;
+  item_column_span?: number;
+  item_view_rep_style?: unknown | null;
+  module_header_alignment?: unknown | null;
+  num_columns_requested?: number;
+  pin_display_options?: unknown | null;
+  pin_image_ratio?: unknown | null;
+  scale_up?: unknown | null;
+  shopping_grid_display?: unknown | null;
+  show_bottom_divider?: boolean;
+  show_content_follow_buttons?: unknown | null;
+  show_dismiss_button?: unknown | null;
+  show_follow_buttons?: unknown | null;
+  show_product_indicator_overlay?: unknown | null;
+  show_separator?: boolean;
+  show_simplified_pin?: boolean;
+  show_top_divider?: boolean;
+  spacer_size?: unknown | null;
+  stacked_card_cover_shade_colors?: unknown | null;
+  subtitle_text_color?: unknown | null;
+  tiles_grid_layout?: unknown | null;
+  title_text_color?: unknown | null;
+  use_plain_text_display_mode?: boolean;
 }
 
 export interface PinterestUserBoardObject {
@@ -1587,7 +1624,7 @@ export interface PinterestUserBoardOwner {
   node_id?: string;
   type?: string;
   username?: string;
-  verified_identity?: PinterestBoardFeedStoryCopy;
+  verified_identity?: PinterestSearchStoryDynamicInsertionOption;
 }
 
 export interface PinterestUserBoardsResponse {

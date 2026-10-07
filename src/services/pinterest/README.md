@@ -58,7 +58,7 @@ const pin = await tapline.pinterest.getPin({ url: 'https://pin.it/2u9bHtUx6' });
 
 console.log(pin.entityId, pin.title, pin.link, pin.pinner?.username, pin.imageSpec_orig?.url);
 console.log(pin.aggregatedPinData?.aggregatedStats?.saves, pin.repinCount, pin.createdAt);
-const video = pin.videos?.videoList.v720P?.url ?? pin.videos?.videoList.vHLSV4?.url;
+const video = pin.videos?.videoList?.v720P?.url ?? pin.videos?.videoList?.vHLSV4?.url;
 if (video) {
   console.log('video', video, pin.videos?.duration);
 }
@@ -67,7 +67,7 @@ for (const page of pin.storyPinData?.pages ?? []) {
 }
 ```
 
-`entityId` is the numeric pin id; `id` is Pinterest's base64 node id, so join pins from `getPin` with search or board pins on `entityId`. Pinterest's `isVideo` is `false` on some video pins, so test `videos` instead. A `pin.it` link is followed to its pin before the lookup, at no extra charge.
+`entityId` is the numeric pin id, the same value search and board pins carry as `id`; the pin's own `id` is Pinterest's base64 node id. Pinterest leaves fields empty on many pins, so every field is optional. Pinterest's `isVideo` is `false` on some video pins, so test `videos` instead. A `pin.it` link is followed to its pin before the lookup, at no extra charge.
 
 ## List a user's boards, then read one
 
