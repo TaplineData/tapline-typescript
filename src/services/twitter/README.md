@@ -69,7 +69,7 @@ if (quoted) {
 }
 ```
 
-`legacy.full_text` keeps X's `t.co` links and HTML escapes, and holds X's shortened text for a long post; `note_tweet` carries the full text. `legacy.entities.urls` maps each `t.co` link to its expanded URL. `parent_tweets` holds the post a reply answers. Follow `legacy.in_reply_to_status_id_str` to walk further up. The author under `core.user_results.result` carries only the fields x.com embeds with posts, so call `getUserProfile` for the full profile.
+`legacy.full_text` keeps X's `t.co` links and HTML escapes, and holds X's shortened text for a long post; `note_tweet` carries the full text. `legacy.entities.urls` maps each `t.co` link to its expanded URL. `parent_tweets` holds the post a reply answers. Follow `legacy.in_reply_to_status_id_str` to walk further up. The author under `core.user_results.result` carries only what x.com embeds with posts, plus the join date (`core.created_at`) that Tapline adds. Call `getUserProfile` for the location, banner and bio link.
 
 ## Read a community
 

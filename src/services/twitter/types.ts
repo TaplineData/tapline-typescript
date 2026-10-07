@@ -118,6 +118,7 @@ export interface TwitterCardBindingValueData {
 }
 
 export interface TwitterCardImageValue {
+  alt?: string;
   height: number;
   url: string;
   width: number;
