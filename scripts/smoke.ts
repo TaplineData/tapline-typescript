@@ -9,15 +9,27 @@ import { run as runPonsfamily } from './smoke-ponsfamily.js';
 import { run as runGoplus } from './smoke-goplus.js';
 import { run as runTwitter } from './smoke-twitter.js';
 
+const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
+  'airbnb': runAirbnb,
+  'youtube': runYoutube,
+  'gmgn': runGmgn,
+  'geckoterminal': runGeckoterminal,
+  'ponsfamily': runPonsfamily,
+  'goplus': runGoplus,
+  'twitter': runTwitter,
+};
+
+const services = process.argv.slice(2);
+const unknown = services.filter((service) => !Object.hasOwn(RUNNERS, service));
+if (services.length === 0 || unknown.length > 0) {
+  if (unknown.length > 0) console.error(`unknown service(s): ${unknown.join(', ')}`);
+  console.error(`usage: npm run smoke -- <service> [<service> ...]; services: ${Object.keys(RUNNERS).join(', ')}`);
+  process.exit(2);
+}
+
 const client = new TaplineClient();
 let failures = 0;
-failures += await runAirbnb(client);
-failures += await runYoutube(client);
-failures += await runGmgn(client);
-failures += await runGeckoterminal(client);
-failures += await runPonsfamily(client);
-failures += await runGoplus(client);
-failures += await runTwitter(client);
+for (const service of services) failures += await RUNNERS[service]!(client);
 if (failures > 0) {
   console.error(`\n${failures} smoke check(s) failed`);
   process.exit(1);
