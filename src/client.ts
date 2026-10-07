@@ -9,6 +9,7 @@ import { GeckoterminalClient } from './services/geckoterminal/client.js';
 import { PonsfamilyClient } from './services/ponsfamily/client.js';
 import { GoplusClient } from './services/goplus/client.js';
 import { TwitterClient } from './services/twitter/client.js';
+import { PinterestClient } from './services/pinterest/client.js';
 
 export class TaplineClient {
   readonly airbnb: AirbnbClient;
@@ -18,6 +19,7 @@ export class TaplineClient {
   readonly ponsfamily: PonsfamilyClient;
   readonly goplus: GoplusClient;
   readonly twitter: TwitterClient;
+  readonly pinterest: PinterestClient;
 
   constructor(config: TaplineClientConfig = {}) {
     const base = new BaseClient(config);
@@ -28,5 +30,6 @@ export class TaplineClient {
     this.ponsfamily = new PonsfamilyClient(base);
     this.goplus = new GoplusClient(base);
     this.twitter = new TwitterClient(base);
+    this.pinterest = new PinterestClient(base);
   }
 }

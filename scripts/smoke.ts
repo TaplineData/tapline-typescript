@@ -8,6 +8,7 @@ import { run as runGeckoterminal } from './smoke-geckoterminal.js';
 import { run as runPonsfamily } from './smoke-ponsfamily.js';
 import { run as runGoplus } from './smoke-goplus.js';
 import { run as runTwitter } from './smoke-twitter.js';
+import { run as runPinterest } from './smoke-pinterest.js';
 
 const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'airbnb': runAirbnb,
@@ -17,6 +18,7 @@ const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'ponsfamily': runPonsfamily,
   'goplus': runGoplus,
   'twitter': runTwitter,
+  'pinterest': runPinterest,
 };
 
 const services = process.argv.slice(2);

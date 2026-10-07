@@ -1,6 +1,6 @@
 # @tapline/client
 
-Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, and Twitter (X) in TypeScript or JavaScript.
+Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, Twitter (X), and Pinterest in TypeScript or JavaScript.
 
 ## What you can do
 
@@ -13,8 +13,9 @@ Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerm
 | GoPlus Security | Check EVM and Tron tokens and Solana mints for honeypots, taxes, owner and mint powers, holders, and liquidity | [GoPlus guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/goplus/README.md) |
 | Pons Family | Browse and search launches, read token markets, trades and holders, follow wallets and creator fees, and read the memestock forum | [Pons Family guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/ponsfamily/README.md) |
 | Twitter (X) | Read public X profiles with their pinned and newest posts, single posts with media, quotes and top replies, and X Communities | [Twitter guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/twitter/README.md) |
+| Pinterest | Search pins, read one pin with every image size, its video and idea-pin pages, list a user's boards, and read the pins on a board | [Pinterest guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/pinterest/README.md) |
 
-One API key and credit balance work across all seven services.
+One API key and credit balance work across all eight services.
 
 ## Get started
 
@@ -174,6 +175,7 @@ Use the [Tapline API reference](https://tapline.sh/docs?utm_source=typescript_cl
 - [GoPlus Security](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/goplus/README.md)
 - [Pons Family](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/ponsfamily/README.md)
 - [Twitter (X)](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/twitter/README.md)
+- [Pinterest](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/pinterest/README.md)
 
 ## License
 
