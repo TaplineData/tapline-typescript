@@ -14,7 +14,7 @@ Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerm
 | Pons Family | Browse and search launches, read token markets, trades and holders, follow wallets and creator fees, and read the memestock forum | [Pons Family guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/ponsfamily/README.md) |
 | Twitter (X) | Read public X profiles with their pinned and newest posts, single posts with media, quotes and top replies, and X Communities | [Twitter guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/twitter/README.md) |
 
-One API key and credit balance work across all six services.
+One API key and credit balance work across all seven services.
 
 ## Get started
 

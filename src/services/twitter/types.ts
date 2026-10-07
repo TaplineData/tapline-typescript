@@ -39,127 +39,553 @@ export interface GetUserProfileParams {
 
 export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
 
+export interface TwitterAdditionalMediaInfo {
+  monetizable: boolean;
+}
+
+export interface TwitterAdvertisingDisclosure {
+  is_paid_promotion: boolean;
+}
+
+export interface TwitterAffiliatesHighlightedLabel {
+  label?: TwitterUserLabel;
+}
+
+export interface TwitterAiGeneratedDisclosure {
+  has_ai_generated_media: boolean;
+}
+
+export interface TwitterAllowDownloadStatus {
+  allow_download: boolean;
+}
+
+export interface TwitterApiImage {
+  __typename: string;
+  original_img_height: number;
+  original_img_url: string;
+  original_img_width: number;
+}
+
 export interface TwitterArticle {
-  cover_image_url: string | null;
+  article_results: TwitterArticleResults;
+}
+
+export interface TwitterArticleCoverMedia {
   id: string;
-  plain_text: string | null;
-  preview_text: string | null;
+  media_id?: string;
+  media_info: TwitterApiImage;
+  media_key?: string;
+}
+
+export interface TwitterArticleLifecycleState {
+  modified_at_secs: number;
+}
+
+export interface TwitterArticleMetadata {
+  first_published_at_secs: number;
+}
+
+export interface TwitterArticleResult {
+  cover_media: TwitterArticleCoverMedia;
+  id: string;
+  lifecycle_state?: TwitterArticleLifecycleState;
+  metadata?: TwitterArticleMetadata;
+  plain_text?: string;
+  preview_text: string;
+  rest_id: string;
   title: string;
 }
 
-export interface TwitterCommunity {
-  banner_url: string | null;
-  created_at: string;
-  creator: TwitterCommunityCreator | null;
-  description: string | null;
-  id: string;
-  is_nsfw: boolean;
-  join_policy: string | null;
-  member_count: number;
+export interface TwitterArticleResults {
+  result: TwitterArticleResult;
+}
+
+export interface TwitterCard {
+  legacy?: TwitterCardLegacy;
+  rest_id: string;
+}
+
+export interface TwitterCardBindingValue {
+  key: string;
+  value: TwitterCardBindingValueData;
+}
+
+export interface TwitterCardBindingValueData {
+  image_value?: TwitterCardImageValue;
+  string_value?: string;
+  type: string;
+  user_value?: TwitterCardUserValue;
+}
+
+export interface TwitterCardImageValue {
+  height: number;
+  url: string;
+  width: number;
+}
+
+export interface TwitterCardLegacy {
+  binding_values: TwitterCardBindingValue[];
   name: string;
-  rules: TwitterCommunityRule[];
-  topic: string | null;
   url: string;
 }
 
-export interface TwitterCommunityCreator {
+export interface TwitterCardUserValue {
+  id_str: string;
+}
+
+export interface TwitterCommunityActions {
   id: string;
-  is_blue_verified: boolean;
-  name: string | null;
-  screen_name: string;
+  join_action_result: TwitterUnavailableResult;
+}
+
+export interface TwitterCommunityBannerMedia {
+  id: string;
+  media_info: TwitterApiImage;
 }
 
 export interface TwitterCommunityResponse {
-  community: TwitterCommunity;
-  tweets: TwitterTweet[];
+  __typename: string;
+  actions: TwitterCommunityActions;
+  created_at: number;
+  creator_results?: TwitterCommunityUserResults;
+  credits_charged: number;
+  credits_remaining: number;
+  custom_banner_media?: TwitterCommunityBannerMedia;
+  default_banner_media: TwitterCommunityBannerMedia;
+  description?: string;
+  id: string;
+  invites_result: TwitterUnavailableResult;
+  is_member: boolean;
+  is_nsfw: boolean;
+  join_policy: string;
+  join_requests_result: TwitterUnavailableResult;
+  member_count: number;
+  members_facepile_results: TwitterCommunityUserResults[];
+  name: string;
+  primary_community_topic?: TwitterPrimaryCommunityTopic;
+  rest_id: string;
+  role: string;
+  rules: TwitterCommunityRule[];
+  success: boolean;
+  tweets: TwitterCommunityTweetsItem[];
 }
 
 export interface TwitterCommunityRule {
-  description: string | null;
+  description?: string;
+  id: string;
   name: string;
+  rest_id: string;
+}
+
+export interface TwitterCommunityTweetsItem {
+  bookmark_count?: number;
+  bookmarked: boolean;
+  conversation_id_str?: string;
+  created_at: string;
+  display_text_range: number[];
+  entities: TwitterTweetEntities;
+  extended_entities?: TwitterExtendedEntities;
+  favorite_count: number;
+  favorited: boolean;
+  full_text: string;
+  id: string;
+  id_str: string;
+  in_reply_to_screen_name?: string;
+  in_reply_to_status_id_str?: string;
+  in_reply_to_user_id_str?: string;
+  is_quote_status: boolean;
+  lang: string;
+  possibly_sensitive?: boolean;
+  quote_count: number;
+  quoted_status_id_str?: string;
+  quoted_status_permalink?: TwitterQuotedStatusPermalink;
+  reply_count: number;
+  retweet_count: number;
+  retweeted: boolean;
+  user: TwitterUser;
+  user_id_str: string;
+  view_count?: string;
+}
+
+export interface TwitterCommunityUser {
+  __typename: string;
+  avatar?: TwitterUserAvatar;
+  core?: TwitterUserCore;
+  id: string;
+  is_blue_verified?: boolean;
+  profile_image_shape?: string;
+  rest_id?: string;
+}
+
+export interface TwitterCommunityUserResults {
+  id: string;
+  result: TwitterCommunityUser;
+}
+
+export interface TwitterContentDisclosure {
+  advertising_disclosure?: TwitterAdvertisingDisclosure;
+  ai_generated_disclosure?: TwitterAiGeneratedDisclosure;
+}
+
+export interface TwitterDmPermissions {
+  can_dm: boolean;
+}
+
+export interface TwitterEditControl {
+  edit_control_initial?: TwitterEditControlInitial;
+  edit_tweet_ids?: string[];
+  initial_tweet_id?: string;
+}
+
+export interface TwitterEditControlInitial {
+  edit_tweet_ids: string[];
+}
+
+export interface TwitterExtendedEntities {
+  media: TwitterMedia[];
+}
+
+export interface TwitterHighlightsInfo {
+  can_highlight_tweets: boolean;
+  highlighted_tweets: string;
 }
 
 export interface TwitterMedia {
-  duration_ms: number | null;
-  expanded_url: string | null;
-  height: number | null;
-  id: string | null;
-  media_url: string;
+  additional_media_info?: TwitterAdditionalMediaInfo;
+  allow_download_status?: TwitterAllowDownloadStatus;
+  display_url?: string;
+  expanded_url?: string;
+  ext_media_availability?: TwitterMediaAvailability;
+  id_str: string;
+  indices: number[];
+  media_key?: string;
+  media_results?: TwitterMediaResults;
+  media_url_https: string;
+  original_info?: TwitterMediaOriginalInfo;
   type: string;
-  variants: TwitterVideoVariant[];
-  width: number | null;
+  url?: string;
+  video_info?: TwitterVideoInfo;
 }
 
-export interface TwitterMention {
-  id: string | null;
-  screen_name: string;
+export interface TwitterMediaAvailability {
+  status: string;
+}
+
+export interface TwitterMediaOriginalInfo {
+  height: number;
+  width: number;
+}
+
+export interface TwitterMediaPermissions {
+  can_media_tag: boolean;
+}
+
+export interface TwitterMediaResult {
+  media_key: string;
+}
+
+export interface TwitterMediaResults {
+  result: TwitterMediaResult;
+}
+
+export interface TwitterNoteTweet {
+  is_expandable: boolean;
+  note_tweet_results: TwitterNoteTweetResults;
+}
+
+export interface TwitterNoteTweetResult {
+  entity_set: TwitterTweetEntities;
+  id: string;
+  text: string;
+}
+
+export interface TwitterNoteTweetResults {
+  result: TwitterNoteTweetResult;
+}
+
+export interface TwitterPrimaryCommunityTopic {
+  topic_name: string;
+}
+
+export interface TwitterProfileBio {
+  description: string;
 }
 
 export interface TwitterProfileResponse {
-  pinned_tweet: TwitterTweet | null;
-  tweets: TwitterTweet[];
-  user: TwitterUser;
+  __typename: string;
+  affiliates_highlighted_label?: TwitterAffiliatesHighlightedLabel;
+  avatar?: TwitterUserAvatar;
+  core: TwitterUserCore;
+  creator_subscriptions_count?: number;
+  credits_charged: number;
+  credits_remaining: number;
+  dm_permissions: TwitterDmPermissions;
+  follow_request_sent: boolean;
+  has_hidden_subscriptions_on_profile?: boolean;
+  highlights_info?: TwitterHighlightsInfo;
+  id: string;
+  is_blue_verified?: boolean;
+  legacy: TwitterUserLegacy;
+  location: TwitterUserLocation;
+  media_permissions: TwitterMediaPermissions;
+  pinned_tweet: TwitterUserTweetsItem | null;
+  privacy?: TwitterUserPrivacy;
+  profile_bio?: TwitterProfileBio;
+  profile_image_shape?: string;
+  relationship_perspectives: TwitterRelationshipPerspectives;
+  rest_id: string;
+  success: boolean;
+  super_follow_eligible?: boolean;
+  super_followed_by: boolean;
+  super_following: boolean;
+  tweets: TwitterUserTweetsItem[];
+  user_seed_tweet_count?: number;
+  verification?: TwitterUserVerification;
+}
+
+export interface TwitterQuotedStatusPermalink {
+  display: string;
+  expanded: string;
+  url: string;
+}
+
+export interface TwitterQuotedStatusResult {
+  result: TwitterTweet;
+}
+
+export interface TwitterRelationshipPerspectives {
+  blocked_by: boolean;
+  blocking: boolean;
+  followed_by: boolean;
+  following: boolean;
+  muting: boolean;
+}
+
+export interface TwitterTextEntity {
+  indices: number[];
+  text: string;
 }
 
 export interface TwitterTweet {
-  article: TwitterArticle | null;
-  author: TwitterUser;
-  bookmark_count: number | null;
-  cashtags: string[];
-  created_at: string;
-  hashtags: string[];
-  id: string;
-  in_reply_to_screen_name: string | null;
-  in_reply_to_tweet_id: string | null;
-  lang: string | null;
-  like_count: number;
-  media: TwitterMedia[];
-  mentions: TwitterMention[];
-  quote_count: number;
-  quoted_tweet: TwitterTweet | null;
-  reply_count: number;
-  retweet_count: number;
-  text: string;
-  url: string;
-  urls: TwitterUrlEntity[];
-  view_count: number | null;
+  __typename: string;
+  article?: TwitterArticle;
+  card?: TwitterCard;
+  content_disclosure?: TwitterContentDisclosure;
+  core: TwitterTweetCore;
+  edit_control?: TwitterEditControl;
+  is_translatable?: boolean;
+  legacy: TwitterTweetLegacy;
+  note_tweet?: TwitterNoteTweet;
+  quoted_status_result?: TwitterQuotedStatusResult;
+  rest_id: string;
+  views: TwitterTweetViews;
+}
+
+export interface TwitterTweetCore {
+  user_results: TwitterTweetUserResults;
 }
 
 export interface TwitterTweetDetailResponse {
-  parent_tweets: TwitterTweet[];
-  replies: TwitterTweet[];
-  tweet: TwitterTweet;
+  __typename: string;
+  article?: TwitterArticle;
+  card?: TwitterCard;
+  content_disclosure?: TwitterContentDisclosure;
+  core: TwitterTweetCore;
+  credits_charged: number;
+  credits_remaining: number;
+  edit_control?: TwitterEditControl;
+  is_translatable?: boolean;
+  legacy: TwitterTweetLegacy;
+  note_tweet?: TwitterNoteTweet;
+  parent_tweets: TwitterUserTweetsItem[];
+  quoted_status_result?: TwitterQuotedStatusResult;
+  replies: TwitterUserTweetsItem[];
+  rest_id: string;
+  success: boolean;
+  views: TwitterTweetViews;
+}
+
+export interface TwitterTweetEntities {
+  hashtags?: TwitterTextEntity[];
+  media?: TwitterMedia[];
+  symbols?: TwitterTextEntity[];
+  urls?: TwitterUrlEntity[];
+  user_mentions?: TwitterUserMention[];
+}
+
+export interface TwitterTweetLegacy {
+  bookmark_count?: number;
+  bookmarked: boolean;
+  conversation_id_str?: string;
+  created_at: string;
+  display_text_range: number[];
+  entities: TwitterTweetEntities;
+  extended_entities?: TwitterExtendedEntities;
+  favorite_count: number;
+  favorited: boolean;
+  full_text: string;
+  id_str: string;
+  in_reply_to_screen_name?: string;
+  in_reply_to_status_id_str?: string;
+  in_reply_to_user_id_str?: string;
+  is_quote_status: boolean;
+  lang: string;
+  possibly_sensitive?: boolean;
+  quote_count: number;
+  quoted_status_id_str?: string;
+  quoted_status_permalink?: TwitterQuotedStatusPermalink;
+  reply_count: number;
+  retweet_count: number;
+  retweeted: boolean;
+  user_id_str: string;
+}
+
+export interface TwitterTweetUserResults {
+  result: TwitterUser;
+}
+
+export interface TwitterTweetViews {
+  count?: string;
+  state: string;
+}
+
+export interface TwitterUnavailableResult {
+  __typename: string;
 }
 
 export interface TwitterUrlEntity {
-  display_url: string | null;
+  display_url: string;
   expanded_url: string;
+  indices: number[];
   url: string;
 }
 
 export interface TwitterUser {
-  avatar_url: string | null;
-  banner_url: string | null;
-  bio_url: string | null;
-  created_at: string | null;
-  description: string | null;
-  description_mentions: TwitterMention[];
-  description_urls: TwitterUrlEntity[];
-  followers_count: number | null;
-  following_count: number | null;
+  __typename: string;
+  affiliates_highlighted_label?: TwitterAffiliatesHighlightedLabel;
+  avatar?: TwitterUserAvatar;
+  core: TwitterUserCore;
+  dm_permissions: TwitterDmPermissions;
+  follow_request_sent: boolean;
   id: string;
-  is_blue_verified: boolean;
-  is_protected: boolean;
-  location: string | null;
-  name: string | null;
-  profile_url: string;
+  is_blue_verified?: boolean;
+  legacy: TwitterUserLegacy;
+  media_permissions: TwitterMediaPermissions;
+  privacy?: TwitterUserPrivacy;
+  profile_bio?: TwitterProfileBio;
+  profile_image_shape?: string;
+  relationship_perspectives: TwitterRelationshipPerspectives;
+  rest_id: string;
+  super_follow_eligible?: boolean;
+  super_followed_by: boolean;
+  super_following: boolean;
+  verification?: TwitterUserVerification;
+}
+
+export interface TwitterUserAvatar {
+  image_url: string;
+}
+
+export interface TwitterUserCore {
+  created_at?: string;
+  name?: string;
   screen_name: string;
-  tweet_count: number | null;
-  verified_type: string | null;
+}
+
+export interface TwitterUserDescriptionEntities {
+  urls?: TwitterUrlEntity[];
+}
+
+export interface TwitterUserEntities {
+  description: TwitterUserDescriptionEntities;
+  url?: TwitterUserUrlEntities;
+}
+
+export interface TwitterUserLabel {
+  badge: TwitterUserLabelBadge;
+  description: string;
+  url: TwitterUserLabelUrl;
+  userLabelDisplayType: string;
+  userLabelType: string;
+}
+
+export interface TwitterUserLabelBadge {
+  url: string;
+}
+
+export interface TwitterUserLabelUrl {
+  url: string;
+}
+
+export interface TwitterUserLegacy {
+  created_at?: string;
+  default_profile_image?: boolean;
+  description?: string;
+  entities?: TwitterUserEntities;
+  follow_request_sent: boolean;
+  followers_count?: number;
+  friends_count?: number;
+  location?: string;
+  name?: string;
+  needs_phone_verification: boolean;
+  notifications: boolean;
+  pinned_tweet_ids_str?: string[];
+  possibly_sensitive?: boolean;
+  profile_banner_url?: string;
+  profile_image_url_https?: string;
+  screen_name?: string;
+  statuses_count?: number;
+  translator_type?: string;
+  url?: string;
+}
+
+export interface TwitterUserLocation {
+  location: string;
+}
+
+export interface TwitterUserMention {
+  id_str: string;
+  indices: number[];
+  screen_name: string;
+}
+
+export interface TwitterUserPrivacy {
+  protected: boolean;
+}
+
+export interface TwitterUserTweetsItem {
+  __typename: string;
+  article?: TwitterArticle;
+  card?: TwitterCard;
+  content_disclosure?: TwitterContentDisclosure;
+  core: TwitterTweetCore;
+  edit_control?: TwitterEditControl;
+  is_translatable?: boolean;
+  legacy: TwitterTweetLegacy;
+  note_tweet?: TwitterNoteTweet;
+  quoted_status_result?: TwitterQuotedStatusResult;
+  rest_id: string;
+  url: string;
+  views: TwitterTweetViews;
+}
+
+export interface TwitterUserUrlEntities {
+  urls: TwitterUrlEntity[];
+}
+
+export interface TwitterUserVerification {
+  verified?: boolean;
+  verified_type?: string;
+}
+
+export interface TwitterVideoInfo {
+  aspect_ratio?: number[];
+  duration_millis?: number;
+  variants: TwitterVideoVariant[];
 }
 
 export interface TwitterVideoVariant {
-  bitrate: number | null;
+  bitrate?: number;
   content_type: string;
   url: string;
 }
