@@ -42,7 +42,7 @@ Each body is X's own object in the layout Scrape Creators returns, with `success
 const profile = await tapline.twitter.getUserProfile({ screen_name: 'nasa' });
 
 console.log(profile.rest_id, profile.core.name, profile.core.created_at, profile.is_blue_verified);
-console.log(profile.legacy.followers_count, profile.legacy.statuses_count, profile.location.location);
+console.log(profile.legacy.followers_count, profile.legacy.statuses_count, profile.location?.location);
 for (const tweet of profile.tweets) {
   console.log(tweet.url, tweet.legacy.created_at, tweet.legacy.favorite_count, tweet.views.count);
 }
@@ -69,7 +69,7 @@ if (quoted) {
 }
 ```
 
-`legacy.full_text` keeps X's `t.co` links and HTML escapes, and holds X's shortened text for a long post; `note_tweet` carries the full text. `legacy.entities.urls` maps each `t.co` link to its expanded URL. `parent_tweets` holds the post a reply answers. Follow `legacy.in_reply_to_status_id_str` to walk further up. The author under `core.user_results.result` carries only what x.com embeds with posts, plus the join date (`core.created_at`) that Tapline adds. Call `getUserProfile` for the location, banner and bio link.
+`legacy.full_text` keeps X's `t.co` links and HTML escapes, and holds X's shortened text for a long post; `note_tweet` carries the full text. `legacy.entities.urls` maps each `t.co` link to its expanded URL. `parent_tweets` holds the post a reply answers. Follow `legacy.in_reply_to_status_id_str` to walk further up. The author under `core.user_results.result` also carries what x.com shows only on profile pages, such as `location`, the join date, the bio, the bio link and the banner. Tapline reads these from the author's profile page at no extra charge, so they can be up to 2 minutes old. It is best-effort, and an author whose profile page fails or is slow keeps only what x.com embeds with posts.
 
 ## Read a community
 
@@ -92,6 +92,6 @@ Failed calls throw the errors described in the [package guide](../../../README.m
 - An account, post, or community x.com does not show throws with status 404 and code `not_found`. x.com answers the same way for deleted accounts and for live accounts it hides from logged-out visitors. The call is charged.
 - A suspended account throws with status 403 and code `resource_forbidden` when looked up by handle, and 404 when looked up by id. A post x.com withholds from logged-out visitors, such as one by a protected author, also throws 403. The call is charged.
 - A malformed handle or id, or one of x.com's own page names such as `explore`, throws with status 422 before any fetch, and is not charged.
-- Upstream failures and x.com's login wall throw with a 5xx status and are not charged.
+- Upstream failures and x.com's login wall throw with status 503 and are not charged.
 
 Every response reports `credits_charged` and `credits_remaining`, your balance after the call. The [Twitter API reference](https://tapline.sh/docs?utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=twitter_readme#/twitter) lists every field.

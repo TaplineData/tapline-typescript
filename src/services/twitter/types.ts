@@ -327,7 +327,7 @@ export interface TwitterProfileResponse {
   id: string;
   is_blue_verified?: boolean;
   legacy: TwitterUserLegacy;
-  location: TwitterUserLocation;
+  location?: TwitterUserLocation;
   media_permissions: TwitterMediaPermissions;
   pinned_tweet: TwitterUserTweetsItem | null;
   privacy?: TwitterUserPrivacy;
@@ -471,6 +471,7 @@ export interface TwitterUser {
   id: string;
   is_blue_verified?: boolean;
   legacy: TwitterUserLegacy;
+  location?: TwitterUserLocation;
   media_permissions: TwitterMediaPermissions;
   privacy?: TwitterUserPrivacy;
   profile_bio?: TwitterProfileBio;
