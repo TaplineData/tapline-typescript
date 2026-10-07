@@ -76,13 +76,14 @@ if (quoted) {
 ```ts
 const community = await tapline.twitter.getCommunity({ community_id: '1493446837214187523' });
 
-console.log(community.name, community.member_count, community.creator_results?.result.core?.screen_name);
+const creator = community.creator_results?.result;
+console.log(community.name, community.member_count, creator && 'id' in creator ? creator.core?.screen_name : undefined);
 for (const tweet of community.tweets) {
   console.log(tweet.user.core.screen_name, tweet.favorite_count, tweet.view_count, tweet.full_text.slice(0, 80));
 }
 ```
 
-Community posts come flattened the way Scrape Creators flattens them: a post's `legacy` fields sit at the top level next to `id`, `view_count` and the author as `user`. The community's `created_at` is in Unix milliseconds.
+Community posts come flattened the way Scrape Creators flattens them: a post's `legacy` fields sit at the top level next to `id`, `view_count` and the author as `user`. The community's `created_at` is in Unix milliseconds. x.com sends a suspended or deactivated member as a bare `UserUnavailable`, so `creator_results.result` and each `members_facepile_results[].result` is either a `TwitterCommunityUser` or a `TwitterUnavailableResult`. Check for `id` before reading profile fields.
 
 ## Handle errors and check costs
 

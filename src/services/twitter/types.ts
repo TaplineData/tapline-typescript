@@ -220,7 +220,7 @@ export interface TwitterCommunityUser {
 
 export interface TwitterCommunityUserResults {
   id: string;
-  result: TwitterCommunityUser;
+  result: TwitterCommunityUser | TwitterUnavailableResult;
 }
 
 export interface TwitterContentDisclosure {
