@@ -9,18 +9,18 @@ export class GoplusClient {
   /** GoPlus token security for one EVM token: honeypot, tax, owner and mint flags, top holders and liquidity. The GoPlus envelope comes back unchanged. `code` 1 means complete data and 2 partial, and code 3 also passes through. GoPlus keys `result` by the lowercased address and leaves it empty when it has no token at that address on that chain. Powered by GoPlus Security. Costs 3 credits. */
   async getEvmTokenSecurity(params: GetEvmTokenSecurityParams): Promise<GetEvmTokenSecurityResponse> {
     const { chain_id, address } = params;
-    return this.base.get<GetEvmTokenSecurityResponse>(`/api/v1/goplus/evm/${encodeURIComponent(chain_id)}/tokens/${encodeURIComponent(address)}/security`);
+    return this.base.get<GetEvmTokenSecurityResponse>(`/v1/goplus/evm/${encodeURIComponent(chain_id)}/tokens/${encodeURIComponent(address)}/security`);
   }
 
   /** GoPlus token security for one Solana mint: mint, freeze, close and metadata authorities, Token-2022 transfer fee and hook, top holders and liquidity. The GoPlus envelope comes back unchanged. `code` 1 means complete data and 2 partial, and code 3 also passes through. GoPlus keys `result` by the mint. Powered by GoPlus Security. Costs 3 credits. */
   async getSolanaTokenSecurity(params: GetSolanaTokenSecurityParams): Promise<GetSolanaTokenSecurityResponse> {
     const { mint } = params;
-    return this.base.get<GetSolanaTokenSecurityResponse>(`/api/v1/goplus/solana/tokens/${encodeURIComponent(mint)}/security`);
+    return this.base.get<GetSolanaTokenSecurityResponse>(`/v1/goplus/solana/tokens/${encodeURIComponent(mint)}/security`);
   }
 
   /** GoPlus token security for one Tron TRC-20 token: honeypot, tax, owner and mint flags, blacklist, top holders and CEX listings. The GoPlus envelope comes back unchanged. `code` 1 means complete data and 2 partial, and code 3 also passes through. GoPlus keys `result` by the base58 address in its original case. Powered by GoPlus Security. Costs 3 credits. */
   async getTronTokenSecurity(params: GetTronTokenSecurityParams): Promise<GetTronTokenSecurityResponse> {
     const { address } = params;
-    return this.base.get<GetTronTokenSecurityResponse>(`/api/v1/goplus/tron/tokens/${encodeURIComponent(address)}/security`);
+    return this.base.get<GetTronTokenSecurityResponse>(`/v1/goplus/tron/tokens/${encodeURIComponent(address)}/security`);
   }
 }
