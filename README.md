@@ -12,7 +12,7 @@ Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerm
 | GeckoTerminal | Find pools, read candlesticks and swaps, inspect holders and traders, and follow market trends | [GeckoTerminal guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/geckoterminal/README.md) |
 | GoPlus Security | Check EVM and Tron tokens and Solana mints for honeypots, taxes, owner and mint powers, holders, and liquidity | [GoPlus guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/goplus/README.md) |
 | Pons Family | Browse and search launches, read token markets, trades and holders, follow wallets and creator fees, and read the memestock forum | [Pons Family guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/ponsfamily/README.md) |
-| Twitter (X) | Read public X profiles with their pinned and newest posts, single posts with media, quotes and top replies, and X Communities | [Twitter guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/twitter/README.md) |
+| Twitter (X) | Read public X profiles by handle or id, an account's newest posts, single posts with media and quotes, and X Communities with their top posts | [Twitter guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/twitter/README.md) |
 | Pinterest | Search pins, read one pin with every image size, its video and idea-pin pages, list a user's boards, and read the pins on a board | [Pinterest guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/pinterest/README.md) |
 
 One API key and credit balance work across all eight services.

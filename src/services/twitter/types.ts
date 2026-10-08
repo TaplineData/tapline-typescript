@@ -18,23 +18,38 @@ export interface ErrorResponse {
 }
 
 export interface GetCommunityParams {
-  /** Numeric X Community id, the digits after /i/communities/ in a community URL. */
-  community_id: string;
+  /** Community URL on x.com, twitter.com, mobile.twitter.com or a www. host: /i/communities/<id>, optionally followed by more segments. */
+  url: string;
+}
+
+export interface GetCommunityTweetsParams {
+  /** Community URL on x.com, twitter.com, mobile.twitter.com or a www. host: /i/communities/<id>, optionally followed by more segments. */
+  url: string;
+}
+
+export interface GetProfileParams {
+  /** Accepted for Scrape Creators compatibility. It has no effect. Nothing Tapline answers is older than its 2-minute profile page cache, and every request is charged. */
+  cache_max_age?: "1d" | "3d" | "7d" | "14d" | "30d" | null;
+  /** X handle, with or without a leading @: 1 to 15 letters, digits or underscores. x.com's own page names (explore, home, search, ...) are rejected. Send `handle` or `user_id`, not both. */
+  handle?: string | null;
+  /** Numeric X user id (the account's `rest_id`). It still finds the account after the handle changes. Send `handle` or `user_id`, not both. */
+  user_id?: string | null;
 }
 
 export interface GetTweetParams {
-  /** Numeric post (tweet) id, the digits after /status/ in a post URL. */
-  tweet_id: string;
+  /** Accepted for Scrape Creators compatibility. It has no effect. Nothing Tapline answers is older than its 2-minute profile page cache, and every request is charged. */
+  cache_max_age?: "1d" | "3d" | "7d" | "14d" | "30d" | null;
+  /** Accepted for Scrape Creators compatibility. It has no effect: the body is the same either way. */
+  trim?: boolean | null;
+  /** Post URL on x.com, twitter.com, mobile.twitter.com or a www. host: /<handle>/status/<id>, /i/status/<id> or /i/web/status/<id>. Trailing segments such as /photo/1 and query strings such as ?s=20 are allowed. */
+  url: string;
 }
 
-export interface GetUserProfileByIdParams {
-  /** Numeric X user id (the account's rest_id). */
-  user_id: string;
-}
-
-export interface GetUserProfileParams {
-  /** X handle without the @: 1 to 15 letters, digits or underscores. x.com's own page names (explore, home, search, ...) are rejected. */
-  screen_name: string;
+export interface GetUserTweetsParams {
+  /** X handle, with or without a leading @: 1 to 15 letters, digits or underscores. x.com's own page names (explore, home, search, ...) are rejected. */
+  handle: string;
+  /** Accepted for Scrape Creators compatibility. It has no effect: the body is the same either way. */
+  trim?: boolean | null;
 }
 
 export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
@@ -111,6 +126,7 @@ export interface TwitterCardBindingValue {
 }
 
 export interface TwitterCardBindingValueData {
+  boolean_value?: boolean;
   image_value?: TwitterCardImageValue;
   string_value?: string;
   type: string;
@@ -168,7 +184,6 @@ export interface TwitterCommunityResponse {
   role: string;
   rules: TwitterCommunityRule[];
   success: boolean;
-  tweets: TwitterCommunityTweetsItem[];
 }
 
 export interface TwitterCommunityRule {
@@ -206,6 +221,13 @@ export interface TwitterCommunityTweetsItem {
   user: TwitterUser;
   user_id_str: string;
   view_count?: string;
+}
+
+export interface TwitterCommunityTweetsResponse {
+  credits_charged: number;
+  credits_remaining: number;
+  success: boolean;
+  tweets: TwitterCommunityTweetsItem[];
 }
 
 export interface TwitterCommunityUser {
@@ -329,7 +351,6 @@ export interface TwitterProfileResponse {
   legacy: TwitterUserLegacy;
   location?: TwitterUserLocation;
   media_permissions: TwitterMediaPermissions;
-  pinned_tweet: TwitterUserTweetsItem | null;
   privacy?: TwitterUserPrivacy;
   profile_bio?: TwitterProfileBio;
   profile_image_shape?: string;
@@ -339,7 +360,6 @@ export interface TwitterProfileResponse {
   super_follow_eligible?: boolean;
   super_followed_by: boolean;
   super_following: boolean;
-  tweets: TwitterUserTweetsItem[];
   user_seed_tweet_count?: number;
   verification?: TwitterUserVerification;
 }
@@ -386,26 +406,6 @@ export interface TwitterTweetCore {
   user_results: TwitterTweetUserResults;
 }
 
-export interface TwitterTweetDetailResponse {
-  __typename: string;
-  article?: TwitterArticle;
-  card?: TwitterCard;
-  content_disclosure?: TwitterContentDisclosure;
-  core: TwitterTweetCore;
-  credits_charged: number;
-  credits_remaining: number;
-  edit_control?: TwitterEditControl;
-  is_translatable?: boolean;
-  legacy: TwitterTweetLegacy;
-  note_tweet?: TwitterNoteTweet;
-  parent_tweets: TwitterUserTweetsItem[];
-  quoted_status_result?: TwitterQuotedStatusResult;
-  replies: TwitterUserTweetsItem[];
-  rest_id: string;
-  success: boolean;
-  views: TwitterTweetViews;
-}
-
 export interface TwitterTweetEntities {
   hashtags?: TwitterTextEntity[];
   media?: TwitterMedia[];
@@ -439,6 +439,24 @@ export interface TwitterTweetLegacy {
   retweet_count: number;
   retweeted: boolean;
   user_id_str: string;
+}
+
+export interface TwitterTweetResponse {
+  __typename: string;
+  article?: TwitterArticle;
+  card?: TwitterCard;
+  content_disclosure?: TwitterContentDisclosure;
+  core: TwitterTweetCore;
+  credits_charged: number;
+  credits_remaining: number;
+  edit_control?: TwitterEditControl;
+  is_translatable?: boolean;
+  legacy: TwitterTweetLegacy;
+  note_tweet?: TwitterNoteTweet;
+  quoted_status_result?: TwitterQuotedStatusResult;
+  rest_id: string;
+  success: boolean;
+  views: TwitterTweetViews;
 }
 
 export interface TwitterTweetUserResults {
@@ -569,6 +587,13 @@ export interface TwitterUserTweetsItem {
   rest_id: string;
   url: string;
   views: TwitterTweetViews;
+}
+
+export interface TwitterUserTweetsResponse {
+  credits_charged: number;
+  credits_remaining: number;
+  success: boolean;
+  tweets: TwitterUserTweetsItem[];
 }
 
 export interface TwitterUserUrlEntities {

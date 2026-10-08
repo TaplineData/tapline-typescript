@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 
 import type { TaplineClient } from '../src/index.js';
-import type { GetCommunityParams, GetTweetParams, GetUserProfileByIdParams, GetUserProfileParams } from '../src/services/twitter/types.js';
+import type { GetCommunityParams, GetCommunityTweetsParams, GetProfileParams, GetTweetParams, GetUserTweetsParams } from '../src/services/twitter/types.js';
 import { TaplineError } from '../src/errors.js';
 import { typeAt, unknownKeys } from './schema-walk.js';
 
@@ -29,9 +29,10 @@ interface Method {
 
 const METHODS: Record<string, Method> = {
   get_community: { response: 'TwitterCommunityResponse', isArray: false, call: (c, i) => c.twitter.getCommunity(i.params as unknown as GetCommunityParams) },
-  get_tweet: { response: 'TwitterTweetDetailResponse', isArray: false, call: (c, i) => c.twitter.getTweet(i.params as unknown as GetTweetParams) },
-  get_user_profile_by_id: { response: 'TwitterProfileResponse', isArray: false, call: (c, i) => c.twitter.getUserProfileById(i.params as unknown as GetUserProfileByIdParams) },
-  get_user_profile: { response: 'TwitterProfileResponse', isArray: false, call: (c, i) => c.twitter.getUserProfile(i.params as unknown as GetUserProfileParams) },
+  get_community_tweets: { response: 'TwitterCommunityTweetsResponse', isArray: false, call: (c, i) => c.twitter.getCommunityTweets(i.params as unknown as GetCommunityTweetsParams) },
+  get_profile: { response: 'TwitterProfileResponse', isArray: false, call: (c, i) => c.twitter.getProfile(i.params as unknown as GetProfileParams) },
+  get_tweet: { response: 'TwitterTweetResponse', isArray: false, call: (c, i) => c.twitter.getTweet(i.params as unknown as GetTweetParams) },
+  get_user_tweets: { response: 'TwitterUserTweetsResponse', isArray: false, call: (c, i) => c.twitter.getUserTweets(i.params as unknown as GetUserTweetsParams) },
 };
 
 const ajv = new Ajv2020({ strict: false, allErrors: true });
