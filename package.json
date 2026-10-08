@@ -1,6 +1,6 @@
 {
   "name": "@tapline/client",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Typed TypeScript SDK for Tapline's web scraping APIs for YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, Twitter (X) and Pinterest.",
   "license": "MIT",
   "type": "module",
