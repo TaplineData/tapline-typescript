@@ -10,6 +10,7 @@ import { run as runGoplus } from './smoke-goplus.js';
 import { run as runTwitter } from './smoke-twitter.js';
 import { run as runPinterest } from './smoke-pinterest.js';
 import { run as runPumpfun } from './smoke-pumpfun.js';
+import { run as runTiktok } from './smoke-tiktok.js';
 
 const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'airbnb': runAirbnb,
@@ -21,6 +22,7 @@ const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'twitter': runTwitter,
   'pinterest': runPinterest,
   'pumpfun': runPumpfun,
+  'tiktok': runTiktok,
 };
 
 const services = process.argv.slice(2);

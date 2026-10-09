@@ -11,6 +11,7 @@ import { GoplusClient } from './services/goplus/client.js';
 import { TwitterClient } from './services/twitter/client.js';
 import { PinterestClient } from './services/pinterest/client.js';
 import { PumpfunClient } from './services/pumpfun/client.js';
+import { TiktokClient } from './services/tiktok/client.js';
 
 export class TaplineClient {
   readonly airbnb: AirbnbClient;
@@ -22,6 +23,7 @@ export class TaplineClient {
   readonly twitter: TwitterClient;
   readonly pinterest: PinterestClient;
   readonly pumpfun: PumpfunClient;
+  readonly tiktok: TiktokClient;
 
   constructor(config: TaplineClientConfig = {}) {
     const base = new BaseClient(config);
@@ -34,5 +36,6 @@ export class TaplineClient {
     this.twitter = new TwitterClient(base);
     this.pinterest = new PinterestClient(base);
     this.pumpfun = new PumpfunClient(base);
+    this.tiktok = new TiktokClient(base);
   }
 }

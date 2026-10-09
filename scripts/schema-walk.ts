@@ -8,13 +8,23 @@ function resolve(defs: Record<string, Schema>, schema: Schema): Schema {
 
 function fits(defs: Record<string, Schema>, schema: Schema, value: unknown): boolean {
   const s = resolve(defs, schema);
-  if (s.anyOf) return (s.anyOf as Schema[]).some((m) => fits(defs, m, value));
+  const union = s.anyOf ?? s.oneOf;
+  if (union) return (union as Schema[]).some((m) => fits(defs, m, value));
   const kinds: string[] = Array.isArray(s.type) ? s.type : s.type ? [s.type] : [];
   if (kinds.length === 0) return true;
   return kinds.some((k) => {
     if (k === 'null') return value === null;
-    if (k === 'array') return Array.isArray(value);
-    if (k === 'object') return typeof value === 'object' && value !== null && !Array.isArray(value);
+    if (k === 'array') {
+      return Array.isArray(value) && (!s.items || value.every((item) => fits(defs, s.items, item)));
+    }
+    if (k === 'object') {
+      if (typeof value !== 'object' || value === null || Array.isArray(value)) return false;
+      const record = value as Record<string, unknown>;
+      if ((s.required as string[] | undefined)?.some((key) => !(key in record))) return false;
+      return Object.entries(s.properties ?? {}).every(
+        ([key, child]) => !(key in record) || fits(defs, child as Schema, record[key]),
+      );
+    }
     if (k === 'integer' || k === 'number') return typeof value === 'number' || typeof value === 'string';
     if (k === 'boolean') return typeof value === 'boolean';
     if (k === 'string') return typeof value === 'string';
