@@ -10,6 +10,7 @@ import { PonsfamilyClient } from './services/ponsfamily/client.js';
 import { GoplusClient } from './services/goplus/client.js';
 import { TwitterClient } from './services/twitter/client.js';
 import { PinterestClient } from './services/pinterest/client.js';
+import { InstagramClient } from './services/instagram/client.js';
 import { PumpfunClient } from './services/pumpfun/client.js';
 import { TiktokClient } from './services/tiktok/client.js';
 
@@ -22,6 +23,7 @@ export class TaplineClient {
   readonly goplus: GoplusClient;
   readonly twitter: TwitterClient;
   readonly pinterest: PinterestClient;
+  readonly instagram: InstagramClient;
   readonly pumpfun: PumpfunClient;
   readonly tiktok: TiktokClient;
 
@@ -35,6 +37,7 @@ export class TaplineClient {
     this.goplus = new GoplusClient(base);
     this.twitter = new TwitterClient(base);
     this.pinterest = new PinterestClient(base);
+    this.instagram = new InstagramClient(base);
     this.pumpfun = new PumpfunClient(base);
     this.tiktok = new TiktokClient(base);
   }

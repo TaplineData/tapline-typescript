@@ -9,6 +9,7 @@ import { run as runPonsfamily } from './smoke-ponsfamily.js';
 import { run as runGoplus } from './smoke-goplus.js';
 import { run as runTwitter } from './smoke-twitter.js';
 import { run as runPinterest } from './smoke-pinterest.js';
+import { run as runInstagram } from './smoke-instagram.js';
 import { run as runPumpfun } from './smoke-pumpfun.js';
 import { run as runTiktok } from './smoke-tiktok.js';
 
@@ -21,6 +22,7 @@ const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'goplus': runGoplus,
   'twitter': runTwitter,
   'pinterest': runPinterest,
+  'instagram': runInstagram,
   'pumpfun': runPumpfun,
   'tiktok': runTiktok,
 };
