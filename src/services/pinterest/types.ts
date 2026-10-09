@@ -351,11 +351,8 @@ export interface PinterestBoardImages {
 }
 
 export interface PinterestBoardResponse {
-  credits_charged: number;
-  credits_remaining: number;
   cursor: string | null;
   pins: PinterestBoardFeedPin[];
-  success: boolean;
 }
 
 export interface PinterestBoardVase {
@@ -828,8 +825,6 @@ export interface PinterestPinResponse {
   createdAt?: string;
   creativeOverlayImages?: unknown | null;
   creatorClass?: unknown | null;
-  credits_charged: number;
-  credits_remaining: number;
   description?: string;
   descriptionHtml?: string;
   descriptionLinks?: unknown[];
@@ -940,7 +935,6 @@ export interface PinterestPinResponse {
   sponsorship?: unknown | null;
   storyPinData?: PinterestPinStoryPinData | null;
   storyPinDataId?: string | null;
-  success: boolean;
   thirdPartyPinOwner?: unknown | null;
   title?: string;
   topInterest?: number;
@@ -1273,11 +1267,8 @@ export interface PinterestSearchPin {
 }
 
 export interface PinterestSearchResponse {
-  credits_charged: number;
-  credits_remaining: number;
   cursor: string | null;
   pins: PinterestSearchPin[];
-  success: boolean;
 }
 
 export interface PinterestSearchResultAggregatedPinData {
@@ -1629,10 +1620,7 @@ export interface PinterestUserBoardOwner {
 
 export interface PinterestUserBoardsResponse {
   boards: PinterestUserBoard[];
-  credits_charged: number;
-  credits_remaining: number;
   cursor: string | null;
-  success: boolean;
 }
 
 export interface PinterestVerifiedIdentity {

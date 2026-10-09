@@ -16,7 +16,7 @@ export class TiktokClient {
     return this.base.get<GetTrendingFeedResponse>('/v1/tiktok/get-trending-feed', { ...params });
   }
 
-  /** A TikTok profile by handle or numeric user id: `user` (nickname, signature, avatars, `secUid`, `verified`, `privateAccount`, bio link), `stats` and `statsV2` (followers, following, likes, videos) and an empty `itemList`, the body TikTok's profile page carries and Scrape Creators passes through. A private account answers its profile too. Costs 1 credit. */
+  /** A TikTok profile by handle or numeric user id: `user` (nickname, signature, avatars, `secUid`, `verified`, `privateAccount`, bio link), `stats` and `statsV2` (followers, following, likes, videos) and an empty `itemList`, the body TikTok's profile page carries and Scrape Creators passes through, without Scrape Creators' top-level status and credit metadata. A private account answers its profile too. Costs 1 credit. */
   async getProfile(params: GetProfileParams): Promise<TikTokProfileResponse> {
     return this.base.get<TikTokProfileResponse>('/v1/tiktok/profile', { ...params });
   }

@@ -4,6 +4,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import type { AnySchema } from 'ajv';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 
 import type { TaplineClient } from '../src/index.js';
@@ -35,8 +36,19 @@ const METHODS: Record<string, Method> = {
   get_user_tweets: { response: 'TwitterUserTweetsResponse', isArray: false, call: (c, i) => c.twitter.getUserTweets(i.params as unknown as GetUserTweetsParams) },
 };
 
+function acceptLosslessNumbers(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(acceptLosslessNumbers);
+  if (typeof value !== 'object' || value === null) return value;
+  const schema = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, acceptLosslessNumbers(item)]));
+  if (schema.type === 'integer' || schema.type === 'number') schema.type = [schema.type, 'string'];
+  else if (Array.isArray(schema.type) && schema.type.some((kind) => kind === 'integer' || kind === 'number')) {
+    schema.type = [...new Set([...schema.type, 'string'])];
+  }
+  return schema;
+}
+
 const ajv = new Ajv2020({ strict: false, allErrors: true });
-ajv.addSchema(SCHEMAS, 'service');
+ajv.addSchema(acceptLosslessNumbers(SCHEMAS) as AnySchema, 'service');
 
 function validator(name: string, isArray: boolean) {
   const ref = { $ref: `service#/$defs/${name}` };

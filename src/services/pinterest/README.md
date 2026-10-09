@@ -34,7 +34,7 @@ If you omit `apiKey`, the client reads `TAPLINE_API_KEY` in Node.js. Keep the ke
 | `getUserBoards` | `handle`, `cursor` | 1 | `PinterestUserBoardsResponse`: `boards` (name, relative `url`, counts, owner, cover images) and `cursor` |
 | `getBoard` | `url`: a board URL, or the relative `url` from `getUserBoards`; `cursor` | 1 | `PinterestBoardResponse`: `pins` in board order and `cursor` |
 
-Each body is Pinterest's own data in the layout Scrape Creators returns, with `success`, `credits_charged` and `credits_remaining` at the top level. `trim` and `cache_max_age` are accepted for Scrape Creators compatibility and change nothing: every call returns the full body and is charged.
+Each body is Pinterest's own data in the provider-data layout Scrape Creators returns. Tapline omits Scrape Creators' top-level status and credit metadata. `trim` and `cache_max_age` are accepted for Scrape Creators compatibility and change nothing: every call returns the full body and is charged.
 
 ## Search pins and page through the results
 
@@ -96,4 +96,4 @@ Failed calls throw the errors described in the [package guide](../../../README.m
 - A malformed URL or handle, a Pinterest page name such as `search` used as a handle, or a profile tab such as `/_created/` used as a board throws with status 422 before any fetch, and is not charged.
 - Upstream failures throw with status 503 and are not charged.
 
-Every response reports `credits_charged` and `credits_remaining`, your balance after the call. The [Pinterest API reference](https://tapline.sh/docs?utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=pinterest_readme#/pinterest) lists every field.
+The [Pinterest API reference](https://tapline.sh/docs?utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=pinterest_readme#/pinterest) lists every response field.

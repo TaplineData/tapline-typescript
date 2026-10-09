@@ -1514,13 +1514,10 @@ export interface TikTokClaInfo {
 
 export interface TikTokCollectionVideosResponse {
   collection_id: string;
-  credits_charged: number | string;
-  credits_remaining: number | string;
   has_more: boolean;
   max_cursor: string;
   status_code: number | string;
   status_msg: string;
-  success: boolean;
   videos: TikTokWebItem[];
 }
 
@@ -1578,15 +1575,12 @@ export interface TikTokCommentPageLogPb {
 
 export interface TikTokCommentRepliesResponse {
   comments: TikTokComment[];
-  credits_charged: number | string;
-  credits_remaining: number | string;
   cursor: number | string;
   extra: TikTokCommentReplyPageExtra;
   has_more: number | string;
   log_pb: TikTokCommentReplyPageLogPb;
   status_code: number | string;
   status_msg: string;
-  success: boolean;
   total: number | string;
 }
 
@@ -1679,8 +1673,6 @@ export interface TikTokCommentUserAvatarThumb {
 export interface TikTokCommentsResponse {
   alias_comment_deleted: boolean;
   comments: TikTokComment[];
-  credits_charged: number | string;
-  credits_remaining: number | string;
   cursor: number | string;
   extra: TikTokCommentPageExtra;
   has_filtered_comments: number | string;
@@ -1689,41 +1681,31 @@ export interface TikTokCommentsResponse {
   reply_style: number | string;
   status_code: number | string;
   status_msg: string;
-  success: boolean;
   top_gifts: string | null;
   total: number | string;
 }
 
 export interface TikTokFollowersResponse {
-  credits_charged: number | string;
-  credits_remaining: number | string;
   followers: TikTokUser[];
   has_more: boolean;
   min_time: number | string;
   status_code: number | string;
-  success: boolean;
   total: number | string;
 }
 
 export interface TikTokFollowingResponse {
-  credits_charged: number | string;
-  credits_remaining: number | string;
   followings: TikTokUser[];
   has_more: boolean;
   min_time: number | string;
   status_code: number | string;
-  success: boolean;
   total: number | string;
 }
 
 export interface TikTokHashtagSearchResponse {
   aweme_list: TikTokAweme[];
-  credits_charged: number | string;
-  credits_remaining: number | string;
   cursor: number | string;
   has_more: number | string;
   status_code: number | string;
-  success: boolean;
 }
 
 export interface TikTokImagePostImage {
@@ -1753,23 +1735,17 @@ export interface TikTokPlayAddr {
 }
 
 export interface TikTokProfileResponse {
-  credits_charged: number | string;
-  credits_remaining: number | string;
   itemList: string[];
   stats: TikTokUserInfoStats;
   statsV2: TikTokUserInfoStatsV2;
-  success: boolean;
   user: TikTokUserInfoUser;
 }
 
 export interface TikTokProfileVideosResponse {
   aweme_list: TikTokAweme[];
-  credits_charged: number | string;
-  credits_remaining: number | string;
   has_more: number | string;
   max_cursor: number | string;
   status_code: number | string;
-  success: boolean;
 }
 
 export interface TikTokSearchSuggestion {
@@ -1780,9 +1756,6 @@ export interface TikTokSearchSuggestion {
 }
 
 export interface TikTokSearchSuggestionsResponse {
-  credits_charged: number | string;
-  credits_remaining: number | string;
-  success: boolean;
   suggestions: TikTokSearchSuggestion[];
 }
 
@@ -1811,20 +1784,14 @@ export interface TikTokSongMusicInfo {
 }
 
 export interface TikTokSongResponse {
-  credits_charged: number | string;
-  credits_remaining: number | string;
   music_info: TikTokSongMusicInfo;
-  success: boolean;
 }
 
 export interface TikTokSongVideosResponse {
   aweme_list: TikTokAweme[];
-  credits_charged: number | string;
-  credits_remaining: number | string;
   cursor: number | string;
   has_more: number | string;
   status_code: number | string;
-  success: boolean;
 }
 
 export interface TikTokTextExtra {
@@ -1840,10 +1807,7 @@ export interface TikTokTextExtra {
 }
 
 export interface TikTokTranscriptResponse {
-  credits_charged: number | string;
-  credits_remaining: number | string;
   id: string;
-  success: boolean;
   transcript: string;
   url: string;
 }
@@ -1858,9 +1822,6 @@ export interface TikTokTrendingAuthor {
 
 export interface TikTokTrendingFeedResponse {
   aweme_list: TikTokTrendingItem[];
-  credits_charged: number | string;
-  credits_remaining: number | string;
-  success: boolean;
 }
 
 export interface TikTokTrendingItem {
@@ -1919,48 +1880,33 @@ export interface TikTokTrimmedComment {
 
 export interface TikTokTrimmedCommentsResponse {
   comments: TikTokTrimmedComment[];
-  credits_charged: number | string;
-  credits_remaining: number | string;
   cursor: number | string;
   end_of_pagination: boolean;
   has_more: number | string;
-  success: boolean;
   total: number | string;
 }
 
 export interface TikTokTrimmedFollowersResponse {
-  credits_charged: number | string;
-  credits_remaining: number | string;
   followers: TikTokTrimmedRelationUser[];
   min_time: number | string;
-  success: boolean;
   total: number | string;
 }
 
 export interface TikTokTrimmedFollowingResponse {
-  credits_charged: number | string;
-  credits_remaining: number | string;
   followings: TikTokTrimmedRelationUser[];
   min_time: number | string;
-  success: boolean;
   total: number | string;
 }
 
 export interface TikTokTrimmedHashtagSearchResponse {
   aweme_list: TikTokTrimmedAweme[];
-  credits_charged: number | string;
-  credits_remaining: number | string;
   cursor: number | string;
-  success: boolean;
 }
 
 export interface TikTokTrimmedProfileVideosResponse {
   aweme_list: TikTokTrimmedAweme[];
-  credits_charged: number | string;
-  credits_remaining: number | string;
   has_more: number | string;
   max_cursor: number | string;
-  success: boolean;
 }
 
 export interface TikTokTrimmedRelationUser {
@@ -1976,9 +1922,6 @@ export interface TikTokTrimmedRelationUser {
 
 export interface TikTokTrimmedTrendingFeedResponse {
   aweme_list: TikTokTrimmedTrendingItem[];
-  credits_charged: number | string;
-  credits_remaining: number | string;
-  success: boolean;
 }
 
 export interface TikTokTrimmedTrendingItem {
@@ -2009,9 +1952,6 @@ export interface TikTokTrimmedVideoAweme {
 
 export interface TikTokTrimmedVideoResponse {
   aweme_detail: TikTokTrimmedVideoAweme;
-  credits_charged: number | string;
-  credits_remaining: number | string;
-  success: boolean;
   transcript?: string | null;
 }
 
@@ -2265,9 +2205,6 @@ export interface TikTokVideoAweme {
 
 export interface TikTokVideoResponse {
   aweme_detail: TikTokVideoAweme;
-  credits_charged: number | string;
-  credits_remaining: number | string;
-  success: boolean;
   transcript?: string | null;
 }
 

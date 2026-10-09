@@ -11,12 +11,12 @@ export class PinterestClient {
     return this.base.get<PinterestBoardResponse>('/v1/pinterest/board', { ...params });
   }
 
-  /** One Pinterest pin: title, description, link, dominant color, pinner and origin pinner, board, images at every size (`images_<size>` and `imageSpec_<size>`), counts, video variants and annotations. The fields are Pinterest's own, in camelCase, merged from the two queries the pin page runs, as Scrape Creators returns them. `entityId` is the numeric pin id and `id` is Pinterest's node id. Pinterest's `isVideo` is `false` on some video pins; `videos` is set on every one. Accepts pin URLs on any Pinterest domain and pin.it share links. Costs 1 credit. */
+  /** One Pinterest pin: title, description, link, dominant color, pinner and origin pinner, board, images at every size (`images_<size>` and `imageSpec_<size>`), counts, video variants and annotations. The fields are Pinterest's own, in camelCase, merged from the two queries the pin page runs, matching Scrape Creators' provider-data fields but omitting its top-level status and credit metadata. `entityId` is the numeric pin id and `id` is Pinterest's node id. Pinterest's `isVideo` is `false` on some video pins; `videos` is set on every one. Accepts pin URLs on any Pinterest domain and pin.it share links. Costs 1 credit. */
   async getPin(params: GetPinParams): Promise<PinterestPinResponse> {
     return this.base.get<PinterestPinResponse>('/v1/pinterest/pin', { ...params });
   }
 
-  /** Searches Pinterest pins. Each pin is Pinterest's own search result object plus a `url`, the same body Scrape Creators returns. `id` is the numeric pin id; a pin uploaded without a link has no `link` key. Pinterest sends up to 25 pins per page and the count varies, so keep paging while `cursor` is not `null`; a pin can repeat across pages. Pinterest matches loosely, so most queries return related pins, but a query with no matches answers an empty page, which is charged. Costs 1 credit. */
+  /** Searches Pinterest pins. Each pin is Pinterest's own search result object plus a `url`, the same provider-data fields Scrape Creators returns, without Scrape Creators' top-level status and credit metadata. `id` is the numeric pin id; a pin uploaded without a link has no `link` key. Pinterest sends up to 25 pins per page and the count varies, so keep paging while `cursor` is not `null`; a pin can repeat across pages. Pinterest matches loosely, so most queries return related pins, but a query with no matches answers an empty page, which is charged. Costs 1 credit. */
   async searchPins(params: SearchPinsParams): Promise<PinterestSearchResponse> {
     return this.base.get<PinterestSearchResponse>('/v1/pinterest/search', { ...params });
   }

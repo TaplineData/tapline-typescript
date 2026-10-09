@@ -32,6 +32,6 @@ const transcript = await tapline.tiktok.getTranscript({ url: post, language: 'en
 const trending = await tapline.tiktok.getTrendingFeed({ region: 'US' });
 ```
 
-`getVideo`, `getTrendingFeed`, `getProfileVideos`, `getComments`, `getFollowers`, `getFollowing`, and `searchHashtag` accept `trim: true` for the smaller Scrape Creators-compatible branch. Use each response's `cursor`, `max_cursor`, or `min_time` in the next call while `has_more` is true. JavaScript integers that cannot be represented exactly arrive as strings.
+`getVideo`, `getTrendingFeed`, `getProfileVideos`, `getComments`, `getFollowers`, `getFollowing`, and `searchHashtag` accept `trim: true` for the smaller Scrape Creators-compatible provider-data branch. Tapline omits Scrape Creators' top-level status and credit metadata. Use each response's `cursor`, `max_cursor`, or `min_time` in the next call while `has_more` is true. JavaScript integers that cannot be represented exactly arrive as strings.
 
 Every method costs one credit. Missing or private targets return typed 404 or 403 errors and are charged; invalid input is rejected before charging; temporary upstream failures return 503 and are refunded. A transcript can return 404 when TikTok has no captions for that video.

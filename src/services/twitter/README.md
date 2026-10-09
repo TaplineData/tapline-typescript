@@ -35,7 +35,7 @@ If you omit `apiKey`, the client reads `TAPLINE_API_KEY` in Node.js. Keep the ke
 | `getCommunity` | `url` (a community URL) | 1 | `TwitterCommunityResponse`: X's Community object (`rest_id`, `name`, `member_count`, `rules`, `creator_results`) |
 | `getCommunityTweets` | `url` (a community URL) | 1 | `TwitterCommunityTweetsResponse`: `tweets`, the 20 posts x.com ranks by likes |
 
-Each body is X's own object in the layout Scrape Creators returns, with `success`, `credits_charged` and `credits_remaining` at the top level. The methods mirror Scrape Creators' Twitter endpoints, with the same paths, parameters and response shapes; the API reference lists where each one differs. `user_id` on `getProfile` is Tapline's addition. Each call returns a fixed window. x.com offers no further pages to logged-out visitors, so there is no cursor.
+Each body is X's own object in the provider-data layout Scrape Creators returns. Tapline omits Scrape Creators' top-level status and credit metadata. The methods mirror Scrape Creators' Twitter paths and parameters; the API reference lists where each one differs. `user_id` on `getProfile` is Tapline's addition. Each call returns a fixed window. x.com offers no further pages to logged-out visitors, so there is no cursor.
 
 ## Read a profile
 
@@ -111,4 +111,4 @@ Failed calls throw the errors described in the [package guide](../../../README.m
 - A malformed handle, id or URL, one of x.com's own page names such as `explore`, or a `getProfile` call with both or neither of `handle` and `user_id` throws with status 422 before any fetch, and is not charged.
 - Upstream failures and x.com's login wall throw with status 503 and are not charged.
 
-Every response reports `credits_charged` and `credits_remaining`, your balance after the call. The [Twitter API reference](https://tapline.sh/docs?utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=twitter_readme#/twitter) lists every field.
+The [Twitter API reference](https://tapline.sh/docs?utm_source=typescript_client&utm_medium=referral&utm_campaign=developer_acquisition&utm_content=twitter_readme#/twitter) lists every response field.

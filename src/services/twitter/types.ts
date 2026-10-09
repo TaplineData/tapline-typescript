@@ -165,8 +165,6 @@ export interface TwitterCommunityResponse {
   actions: TwitterCommunityActions;
   created_at: number;
   creator_results?: TwitterCommunityUserResults;
-  credits_charged: number;
-  credits_remaining: number;
   custom_banner_media?: TwitterCommunityBannerMedia;
   default_banner_media: TwitterCommunityBannerMedia;
   description?: string;
@@ -183,7 +181,6 @@ export interface TwitterCommunityResponse {
   rest_id: string;
   role: string;
   rules: TwitterCommunityRule[];
-  success: boolean;
 }
 
 export interface TwitterCommunityRule {
@@ -224,9 +221,6 @@ export interface TwitterCommunityTweetsItem {
 }
 
 export interface TwitterCommunityTweetsResponse {
-  credits_charged: number;
-  credits_remaining: number;
-  success: boolean;
   tweets: TwitterCommunityTweetsItem[];
 }
 
@@ -340,8 +334,6 @@ export interface TwitterProfileResponse {
   avatar?: TwitterUserAvatar;
   core: TwitterUserCore;
   creator_subscriptions_count?: number;
-  credits_charged: number;
-  credits_remaining: number;
   dm_permissions: TwitterDmPermissions;
   follow_request_sent: boolean;
   has_hidden_subscriptions_on_profile?: boolean;
@@ -356,7 +348,6 @@ export interface TwitterProfileResponse {
   profile_image_shape?: string;
   relationship_perspectives: TwitterRelationshipPerspectives;
   rest_id: string;
-  success: boolean;
   super_follow_eligible?: boolean;
   super_followed_by: boolean;
   super_following: boolean;
@@ -447,15 +438,12 @@ export interface TwitterTweetResponse {
   card?: TwitterCard;
   content_disclosure?: TwitterContentDisclosure;
   core: TwitterTweetCore;
-  credits_charged: number;
-  credits_remaining: number;
   edit_control?: TwitterEditControl;
   is_translatable?: boolean;
   legacy: TwitterTweetLegacy;
   note_tweet?: TwitterNoteTweet;
   quoted_status_result?: TwitterQuotedStatusResult;
   rest_id: string;
-  success: boolean;
   views: TwitterTweetViews;
 }
 
@@ -590,9 +578,6 @@ export interface TwitterUserTweetsItem {
 }
 
 export interface TwitterUserTweetsResponse {
-  credits_charged: number;
-  credits_remaining: number;
-  success: boolean;
   tweets: TwitterUserTweetsItem[];
 }
 
