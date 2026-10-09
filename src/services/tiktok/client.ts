@@ -21,6 +21,11 @@ export class TiktokClient {
     return this.base.get<TikTokProfileResponse>('/v1/tiktok/profile', { ...params });
   }
 
+  /** Videos a TikTok user posted, newest first or most popular first, 35 per page. Items follow Scrape Creators' app layout (`aweme_id`, `statistics`, `video.play_addr`, snake_case `author`), built from TikTok's logged-out web data: a key the web data has no source for is left out, never filled in, and TikTok rounds counts of 10,000 or more for logged-out viewers (1,041,184 plays reads 1,000,000). Pass `max_cursor` back for the next page while `has_more` is 1. Costs 1 credit. */
+  async getProfileVideos(params: GetProfileVideosParams): Promise<GetProfileVideosResponse> {
+    return this.base.get<GetProfileVideosResponse>('/v1/tiktok/profile/videos', { ...params });
+  }
+
   /** Videos under a TikTok hashtag, 30 per page. Items follow Scrape Creators' app layout (`aweme_id`, `statistics`, `video.play_addr`, snake_case `author`), built from TikTok's logged-out web data: a key the web data has no source for is left out, never filled in, and TikTok rounds counts of 10,000 or more for logged-out viewers (1,041,184 plays reads 1,000,000). Pass `cursor` back while `has_more` is 1; TikTok can repeat a video across pages. Costs 1 credit. */
   async searchHashtag(params: SearchHashtagParams): Promise<SearchHashtagResponse> {
     return this.base.get<SearchHashtagResponse>('/v1/tiktok/search/hashtag', { ...params });
@@ -51,6 +56,11 @@ export class TiktokClient {
     return this.base.get<GetFollowingResponse>('/v1/tiktok/user/following', { ...params });
   }
 
+  /** One TikTok video or photo post as `aweme_detail`, TikTok's own Android app object with exact counts, plus the `url` and `create_time_utc` Scrape Creators adds. It comes from the app's feed, which leaves out about a quarter of the keys the app's detail view has. With `get_transcript=true`, `transcript` holds the WEBVTT captions in the video's original language, or `null` when it has none. Costs 1 credit. */
+  async getVideo(params: GetVideoParams): Promise<GetVideoResponse> {
+    return this.base.get<GetVideoResponse>('/v1/tiktok/video', { ...params });
+  }
+
   /** Replies to one comment on a TikTok video, 20 per page, as TikTok's web API returns them. Pass `cursor` back while `has_more` is 1. Costs 1 credit. */
   async getCommentReplies(params: GetCommentRepliesParams): Promise<TikTokCommentRepliesResponse> {
     return this.base.get<TikTokCommentRepliesResponse>('/v1/tiktok/video/comment/replies', { ...params });
@@ -64,15 +74,5 @@ export class TiktokClient {
   /** A TikTok video's captions as one WEBVTT string, with the video `id` and `url`. Without `language` the captions are in the video's original language. Costs 1 credit. */
   async getTranscript(params: GetTranscriptParams): Promise<TikTokTranscriptResponse> {
     return this.base.get<TikTokTranscriptResponse>('/v1/tiktok/video/transcript', { ...params });
-  }
-
-  /** One TikTok video or photo post as `aweme_detail`, TikTok's own Android app object with exact counts, plus the `url` and `create_time_utc` Scrape Creators adds. It comes from the app's feed, which leaves out about a quarter of the keys the app's detail view has. With `get_transcript=true`, `transcript` holds the WEBVTT captions in the video's original language, or `null` when it has none. Costs 1 credit. */
-  async getVideo(params: GetVideoParams): Promise<GetVideoResponse> {
-    return this.base.get<GetVideoResponse>('/v2/tiktok/video', { ...params });
-  }
-
-  /** Videos a TikTok user posted, newest first or most popular first, 35 per page. Items follow Scrape Creators' app layout (`aweme_id`, `statistics`, `video.play_addr`, snake_case `author`), built from TikTok's logged-out web data: a key the web data has no source for is left out, never filled in, and TikTok rounds counts of 10,000 or more for logged-out viewers (1,041,184 plays reads 1,000,000). Pass `max_cursor` back for the next page while `has_more` is 1. Costs 1 credit. */
-  async getProfileVideos(params: GetProfileVideosParams): Promise<GetProfileVideosResponse> {
-    return this.base.get<GetProfileVideosResponse>('/v3/tiktok/profile/videos', { ...params });
   }
 }

@@ -32,18 +32,20 @@ const METHODS: Record<string, Method> = {
   get_collection_videos: { response: 'TikTokCollectionVideosResponse', isArray: false, call: (c, i) => c.tiktok.getCollectionVideos(i.params as unknown as GetCollectionVideosParams) },
   get_trending_feed: { response: 'GetTrendingFeedResponse', isArray: false, call: (c, i) => c.tiktok.getTrendingFeed(i.params as unknown as GetTrendingFeedParams) },
   get_profile: { response: 'TikTokProfileResponse', isArray: false, call: (c, i) => c.tiktok.getProfile(i.params as unknown as GetProfileParams) },
+  get_profile_videos: { response: 'GetProfileVideosResponse', isArray: false, call: (c, i) => c.tiktok.getProfileVideos(i.params as unknown as GetProfileVideosParams) },
   search_hashtag: { response: 'SearchHashtagResponse', isArray: false, call: (c, i) => c.tiktok.searchHashtag(i.params as unknown as SearchHashtagParams) },
   get_search_suggestions: { response: 'TikTokSearchSuggestionsResponse', isArray: false, call: (c, i) => c.tiktok.getSearchSuggestions(i.params as unknown as GetSearchSuggestionsParams) },
   get_song: { response: 'TikTokSongResponse', isArray: false, call: (c, i) => c.tiktok.getSong(i.params as unknown as GetSongParams) },
   get_song_videos: { response: 'TikTokSongVideosResponse', isArray: false, call: (c, i) => c.tiktok.getSongVideos(i.params as unknown as GetSongVideosParams) },
   get_followers: { response: 'GetFollowersResponse', isArray: false, call: (c, i) => c.tiktok.getFollowers(i.params as unknown as GetFollowersParams) },
   get_following: { response: 'GetFollowingResponse', isArray: false, call: (c, i) => c.tiktok.getFollowing(i.params as unknown as GetFollowingParams) },
+  get_video: { response: 'GetVideoResponse', isArray: false, call: (c, i) => c.tiktok.getVideo(i.params as unknown as GetVideoParams) },
   get_comment_replies: { response: 'TikTokCommentRepliesResponse', isArray: false, call: (c, i) => c.tiktok.getCommentReplies(i.params as unknown as GetCommentRepliesParams) },
   get_comments: { response: 'GetCommentsResponse', isArray: false, call: (c, i) => c.tiktok.getComments(i.params as unknown as GetCommentsParams) },
   get_transcript: { response: 'TikTokTranscriptResponse', isArray: false, call: (c, i) => c.tiktok.getTranscript(i.params as unknown as GetTranscriptParams) },
-  get_video: { response: 'GetVideoResponse', isArray: false, call: (c, i) => c.tiktok.getVideo(i.params as unknown as GetVideoParams) },
-  get_profile_videos: { response: 'GetProfileVideosResponse', isArray: false, call: (c, i) => c.tiktok.getProfileVideos(i.params as unknown as GetProfileVideosParams) },
 };
+
+const SUCCESS_UNAVAILABLE = new Set<string>();
 
 function acceptLosslessNumbers(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(acceptLosslessNumbers);
@@ -81,7 +83,7 @@ export async function run(client: TaplineClient): Promise<number> {
   let failures = 0;
   const seen = stems();
   for (const name of Object.keys(METHODS)) {
-    if (!seen.includes(`${name}.default`)) {
+    if (!SUCCESS_UNAVAILABLE.has(name) && !seen.includes(`${name}.default`)) {
       console.error(`[FAIL] tiktok.${name}.default: no captured request in ${FIXTURES}; run capture.py`);
       failures += 1;
     }

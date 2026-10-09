@@ -4,6 +4,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import type { AnySchema } from 'ajv';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 
 import type { TaplineClient } from '../src/index.js';
@@ -31,21 +32,32 @@ const METHODS: Record<string, Method> = {
   get_audio_reels: { response: 'InstagramAudioReelsResponse', isArray: false, call: (c, i) => c.instagram.getAudioReels(i.params as unknown as GetAudioReelsParams) },
   get_basic_profile: { response: 'InstagramBasicProfileResponse', isArray: false, call: (c, i) => c.instagram.getBasicProfile(i.params as unknown as GetBasicProfileParams) },
   get_post: { response: 'InstagramPostResponse', isArray: false, call: (c, i) => c.instagram.getPost(i.params as unknown as GetPostParams) },
+  get_post_comments: { response: 'InstagramCommentsResponse', isArray: false, call: (c, i) => c.instagram.getPostComments(i.params as unknown as GetPostCommentsParams) },
   get_profile: { response: 'InstagramProfileResponse', isArray: false, call: (c, i) => c.instagram.getProfile(i.params as unknown as GetProfileParams) },
   get_post_count: { response: 'InstagramPostCountResponse', isArray: false, call: (c, i) => c.instagram.getPostCount(i.params as unknown as GetPostCountParams) },
   search_popular: { response: 'InstagramPopularSearchResponse', isArray: false, call: (c, i) => c.instagram.searchPopular(i.params as unknown as SearchPopularParams) },
   get_embed: { response: 'InstagramEmbedResponse', isArray: false, call: (c, i) => c.instagram.getEmbed(i.params as unknown as GetEmbedParams) },
   get_highlight_detail: { response: 'InstagramHighlightDetailResponse', isArray: false, call: (c, i) => c.instagram.getHighlightDetail(i.params as unknown as GetHighlightDetailParams) },
   get_highlights: { response: 'InstagramHighlightsResponse', isArray: false, call: (c, i) => c.instagram.getHighlights(i.params as unknown as GetHighlightsParams) },
-  get_user_reels: { response: 'InstagramUserReelsResponse', isArray: false, call: (c, i) => c.instagram.getUserReels(i.params as unknown as GetUserReelsParams) },
-  get_post_comments: { response: 'InstagramCommentsResponse', isArray: false, call: (c, i) => c.instagram.getPostComments(i.params as unknown as GetPostCommentsParams) },
   get_user_posts: { response: 'InstagramUserPostsResponse', isArray: false, call: (c, i) => c.instagram.getUserPosts(i.params as unknown as GetUserPostsParams) },
+  get_user_reels: { response: 'InstagramUserReelsResponse', isArray: false, call: (c, i) => c.instagram.getUserReels(i.params as unknown as GetUserReelsParams) },
 };
 
 const SUCCESS_UNAVAILABLE = new Set<string>();
 
+function acceptLosslessNumbers(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(acceptLosslessNumbers);
+  if (typeof value !== 'object' || value === null) return value;
+  const schema = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, acceptLosslessNumbers(item)]));
+  if (schema.type === 'integer' || schema.type === 'number') schema.type = [schema.type, 'string'];
+  else if (Array.isArray(schema.type) && schema.type.some((kind) => kind === 'integer' || kind === 'number')) {
+    schema.type = [...new Set([...schema.type, 'string'])];
+  }
+  return schema;
+}
+
 const ajv = new Ajv2020({ strict: false, allErrors: true });
-ajv.addSchema(SCHEMAS, 'service');
+ajv.addSchema(acceptLosslessNumbers(SCHEMAS) as AnySchema, 'service');
 
 function validator(name: string, isArray: boolean) {
   const ref = { $ref: `service#/$defs/${name}` };

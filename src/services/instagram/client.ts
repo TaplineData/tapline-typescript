@@ -21,6 +21,11 @@ export class InstagramClient {
     return this.base.get<InstagramPostResponse>('/v1/instagram/post', { ...params });
   }
 
+  /** A page of up to 15 comments on a public post or reel: text, ISO 8601 `created_at`, like count and the commenter's id, username, verification and profile picture. Instagram does not show reply counts to logged-out visitors, so `child_comment_count` is null. Pass `cursor` back for the next page; it is null on the last one. Costs 1 credit. */
+  async getPostComments(params: GetPostCommentsParams): Promise<InstagramCommentsResponse> {
+    return this.base.get<InstagramCommentsResponse>('/v1/instagram/post/comments', { ...params });
+  }
+
   /** A public Instagram profile in Scrape Creators' `/v1/instagram/profile` shape: biography, bio links, follower and following counts, verification, profile pictures and the 12 newest posts under `data.user.edge_owner_to_timeline_media` (pinned first). `edge_owner_to_timeline_media.count` is the size of that batch, not the account's post total; use `/v1/instagram/profile/post-count` for the total. Fields the logged-out web does not show (business contact details, category, highlight count) carry Scrape Creators' defaults. A private account answers its profile with an empty timeline. With `trim=true` the user object keeps Scrape Creators' trimmed field set. Costs 1 credit. */
   async getProfile(params: GetProfileParams): Promise<InstagramProfileResponse> {
     return this.base.get<InstagramProfileResponse>('/v1/instagram/profile', { ...params });
@@ -51,18 +56,13 @@ export class InstagramClient {
     return this.base.get<InstagramHighlightsResponse>('/v1/instagram/user/highlights', { ...params });
   }
 
+  /** A page of 12 of a user's posts, newest first, as Instagram's feed returns them: media type, shortcode, caption, like, comment and play counts, image and video versions, tagged users, `url` and an ISO 8601 `created_at` (`taken_at` stays the Unix time). Pass `next_max_id` back for the next page while `more_available` is true. An unknown handle answers an empty page; a private account answers 404. `trim=true` keeps Scrape Creators' trimmed item fields. Costs 1 credit. */
+  async getUserPosts(params: GetUserPostsParams): Promise<InstagramUserPostsResponse> {
+    return this.base.get<InstagramUserPostsResponse>('/v1/instagram/user/posts', { ...params });
+  }
+
   /** A page of a user's reels: each `items[].media` is Instagram's media object with play, like and comment counts, video versions, thumbnails, `url` and an ISO 8601 `created_at`. Instagram leaves the caption out of this list. Pass `paging_info.max_id` back as `max_id` for the next page. Send `user_id` for a faster answer: `handle` costs one extra lookup. `trim=true` answers flat items and a top-level `max_id`. Costs 1 credit. */
   async getUserReels(params: GetUserReelsParams): Promise<InstagramUserReelsResponse> {
     return this.base.get<InstagramUserReelsResponse>('/v1/instagram/user/reels', { ...params });
-  }
-
-  /** A page of up to 15 comments on a public post or reel: text, ISO 8601 `created_at`, like count and the commenter's id, username, verification and profile picture. Instagram does not show reply counts to logged-out visitors, so `child_comment_count` is null. Pass `cursor` back for the next page; it is null on the last one. Costs 1 credit. */
-  async getPostComments(params: GetPostCommentsParams): Promise<InstagramCommentsResponse> {
-    return this.base.get<InstagramCommentsResponse>('/v2/instagram/post/comments', { ...params });
-  }
-
-  /** A page of 12 of a user's posts, newest first, as Instagram's feed returns them: media type, shortcode, caption, like, comment and play counts, image and video versions, tagged users, `url` and an ISO 8601 `created_at` (`taken_at` stays the Unix time). Pass `next_max_id` back for the next page while `more_available` is true. An unknown handle answers an empty page; a private account answers 404. `trim=true` keeps Scrape Creators' trimmed item fields. Costs 1 credit. */
-  async getUserPosts(params: GetUserPostsParams): Promise<InstagramUserPostsResponse> {
-    return this.base.get<InstagramUserPostsResponse>('/v2/instagram/user/posts', { ...params });
   }
 }

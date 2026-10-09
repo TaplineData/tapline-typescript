@@ -26,10 +26,12 @@ export interface GetAudioReelsParams {
 
 export interface GetBasicProfileParams {
   /** Accepted for Scrape Creators compatibility. It has no effect: every request fetches a live answer and is charged. */
-  cache_max_age?: "1d" | "3d" | "7d" | "14d" | "30d" | null;
+  cache_max_age?: GetBasicProfileParamsCacheMaxAge | null;
   /** Numeric Instagram user id. */
   userId: string;
 }
+
+export type GetBasicProfileParamsCacheMaxAge = "1d" | "3d" | "7d" | "14d" | "30d";
 
 export interface GetEmbedParams {
   /** Instagram handle, with or without a leading @. */
@@ -66,7 +68,7 @@ export interface GetPostCountParams {
 
 export interface GetPostParams {
   /** Accepted for Scrape Creators compatibility. It has no effect: every request fetches a live answer and is charged. */
-  cache_max_age?: "1d" | "3d" | "7d" | "14d" | "30d" | null;
+  cache_max_age?: GetPostParamsCacheMaxAge | null;
   /** Accepted for Scrape Creators compatibility only as false: Tapline does not re-host media. */
   download_media?: false | null;
   /** Set to false to omit `video_play_count` and skip the extra lookup it needs. Defaults to true. Only videos carry a play count. */
@@ -79,14 +81,18 @@ export interface GetPostParams {
   url: string;
 }
 
+export type GetPostParamsCacheMaxAge = "1d" | "3d" | "7d" | "14d" | "30d";
+
 export interface GetProfileParams {
   /** Accepted for Scrape Creators compatibility. It has no effect: every request fetches a live answer and is charged. */
-  cache_max_age?: "1d" | "3d" | "7d" | "14d" | "30d" | null;
+  cache_max_age?: GetProfileParamsCacheMaxAge | null;
   /** Instagram handle, with or without a leading @. */
   handle: string;
   /** Set to true for Scrape Creators' trimmed answer: fewer fields per item, same values. */
   trim?: boolean;
 }
+
+export type GetProfileParamsCacheMaxAge = "1d" | "3d" | "7d" | "14d" | "30d";
 
 export interface GetUserPostsParams {
   /** Instagram handle, with or without a leading @. */
