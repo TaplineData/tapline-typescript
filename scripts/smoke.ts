@@ -9,6 +9,7 @@ import { run as runPonsfamily } from './smoke-ponsfamily.js';
 import { run as runGoplus } from './smoke-goplus.js';
 import { run as runTwitter } from './smoke-twitter.js';
 import { run as runPinterest } from './smoke-pinterest.js';
+import { run as runPumpfun } from './smoke-pumpfun.js';
 
 const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'airbnb': runAirbnb,
@@ -19,6 +20,7 @@ const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'goplus': runGoplus,
   'twitter': runTwitter,
   'pinterest': runPinterest,
+  'pumpfun': runPumpfun,
 };
 
 const services = process.argv.slice(2);
