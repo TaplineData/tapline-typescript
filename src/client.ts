@@ -13,6 +13,7 @@ import { PinterestClient } from './services/pinterest/client.js';
 import { InstagramClient } from './services/instagram/client.js';
 import { PumpfunClient } from './services/pumpfun/client.js';
 import { TiktokClient } from './services/tiktok/client.js';
+import { BirdeyeClient } from './services/birdeye/client.js';
 
 export class TaplineClient {
   readonly airbnb: AirbnbClient;
@@ -26,6 +27,7 @@ export class TaplineClient {
   readonly instagram: InstagramClient;
   readonly pumpfun: PumpfunClient;
   readonly tiktok: TiktokClient;
+  readonly birdeye: BirdeyeClient;
 
   constructor(config: TaplineClientConfig = {}) {
     const base = new BaseClient(config);
@@ -40,5 +42,6 @@ export class TaplineClient {
     this.instagram = new InstagramClient(base);
     this.pumpfun = new PumpfunClient(base);
     this.tiktok = new TiktokClient(base);
+    this.birdeye = new BirdeyeClient(base);
   }
 }
