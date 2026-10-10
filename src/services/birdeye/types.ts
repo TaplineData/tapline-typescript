@@ -2,8 +2,10 @@
 
 export type BirdeyeCandleInterval = "1s" | "5s" | "15s" | "30s" | "1m" | "3m" | "5m" | "15m" | "30m" | "1h" | "2h" | "4h" | "1d" | "1w" | "1mo";
 
+export type BirdeyeCursorCompletion = "exhausted" | "depth_limit";
+
 export interface BirdeyeCursorPagination {
-  completion: string | null;
+  completion: BirdeyeCursorCompletion | null;
   next_cursor: string | null;
 }
 
@@ -1370,7 +1372,7 @@ export interface GetTokenOhlcvParams {
   count?: number;
   /** Candle size. */
   interval?: BirdeyeCandleInterval;
-  /** Last candle's unix time in seconds. */
+  /** Return bars strictly before this unix time, in seconds. */
   to?: number | null;
 }
 
@@ -1394,15 +1396,6 @@ export interface GetWalletPnlSummaryParams {
   /** Window the summary covers. */
   period?: BirdeyePnlPeriod;
   /** Wallet address on the chosen chain: base58 on Solana, 0x plus 40 hex characters on an EVM chain. */
-  wallet: string;
-}
-
-export interface GetWalletPortfolioParams {
-  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
-  cursor?: string;
-  /** Holdings per page. */
-  limit?: number;
-  /** Solana wallet address, base58. */
   wallet: string;
 }
 
@@ -1480,6 +1473,15 @@ export interface ListTopTradersParams {
 export interface ListTrendingTokensParams {
   /** Chain to rank tokens on, or `all` for birdeye's multichain ranking. */
   chain: BirdeyeTrendingChain;
+}
+
+export interface ListWalletPortfolioParams {
+  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
+  cursor?: string;
+  /** Holdings per page. */
+  limit?: number;
+  /** Solana wallet address, base58. */
+  wallet: string;
 }
 
 export interface ListWalletTokensParams {

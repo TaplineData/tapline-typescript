@@ -8,7 +8,7 @@ import type { AnySchema } from 'ajv';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 
 import type { TaplineClient } from '../src/index.js';
-import type { GetNetWorthHistoryParams, GetTokenOhlcvParams, GetTokenOverviewParams, GetTokenSecurityParams, GetWalletPnlSummaryParams, GetWalletPortfolioParams, ListFirstBuyersParams, ListLeaderboardParams, ListNewListingsParams, ListTokenHoldersParams, ListTokenMarketsParams, ListTokenTradesParams, ListTopTradersParams, ListTrendingTokensParams, ListWalletTokensParams, ListWalletTransactionsParams } from '../src/services/birdeye/types.js';
+import type { GetNetWorthHistoryParams, GetTokenOhlcvParams, GetTokenOverviewParams, GetTokenSecurityParams, GetWalletPnlSummaryParams, ListFirstBuyersParams, ListLeaderboardParams, ListNewListingsParams, ListTokenHoldersParams, ListTokenMarketsParams, ListTokenTradesParams, ListTopTradersParams, ListTrendingTokensParams, ListWalletPortfolioParams, ListWalletTokensParams, ListWalletTransactionsParams } from '../src/services/birdeye/types.js';
 import { TaplineError } from '../src/errors.js';
 import { typeAt, unknownKeys } from './schema-walk.js';
 
@@ -44,7 +44,7 @@ const METHODS: Record<string, Method> = {
   list_first_buyers: { response: 'BirdeyeFirstBuyers', isArray: false, call: (c, i) => c.birdeye.listFirstBuyers(i.params as unknown as ListFirstBuyersParams) },
   list_token_holders: { response: 'BirdeyeTokenHolders', isArray: false, call: (c, i) => c.birdeye.listTokenHolders(i.params as unknown as ListTokenHoldersParams) },
   get_net_worth_history: { response: 'BirdeyeNetWorthHistory', isArray: false, call: (c, i) => c.birdeye.getNetWorthHistory(i.params as unknown as GetNetWorthHistoryParams) },
-  get_wallet_portfolio: { response: 'BirdeyeWalletPortfolioPage', isArray: false, call: (c, i) => c.birdeye.getWalletPortfolio(i.params as unknown as GetWalletPortfolioParams) },
+  list_wallet_portfolio: { response: 'BirdeyeWalletPortfolioPage', isArray: false, call: (c, i) => c.birdeye.listWalletPortfolio(i.params as unknown as ListWalletPortfolioParams) },
 };
 
 const SUCCESS_UNAVAILABLE = new Set<string>();
