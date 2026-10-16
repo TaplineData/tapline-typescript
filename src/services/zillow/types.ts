@@ -22,18 +22,18 @@ export interface GetPropertyHistoryParams {
   metric?: ZillowHistoryMetric;
   /** How far back the series goes. */
   period?: ZillowHistoryPeriod;
-  /** Zillow property id, the digits before `_zpid` in a home's Zillow URL. */
-  zpid: string;
+  /** Zillow property id: the digits before `_zpid` in a home's Zillow URL, or the `zpid` of a property, comparable or address suggestion. Search listings carry it as a string. */
+  zpid: number;
 }
 
 export interface GetPropertyParams {
-  /** Zillow property id, the digits before `_zpid` in a home's Zillow URL. */
-  zpid: string;
+  /** Zillow property id: the digits before `_zpid` in a home's Zillow URL, or the `zpid` of a property, comparable or address suggestion. Search listings carry it as a string. */
+  zpid: number;
 }
 
 export interface ListComparablesParams {
-  /** Zillow property id, the digits before `_zpid` in a home's Zillow URL. */
-  zpid: string;
+  /** Zillow property id: the digits before `_zpid` in a home's Zillow URL, or the `zpid` of a property, comparable or address suggestion. Search listings carry it as a string. */
+  zpid: number;
 }
 
 export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
@@ -147,7 +147,7 @@ export interface ZillowComparable {
   miniCardPhotos: ZillowComparablePhoto[];
   newConstructionType: string | null;
   parentRegion: ZillowComparableParentRegion | null;
-  price: number;
+  price: number | null;
   propertyTypeDimension: string;
   providerListingID: string | null;
   state: string;
@@ -205,7 +205,7 @@ export interface ZillowComparablePhoto {
 
 export interface ZillowComparables {
   items: ZillowComparable[];
-  zpid: string;
+  zpid: number;
 }
 
 export type ZillowCursorCompletion = "exhausted" | "depth_limit";
@@ -421,8 +421,11 @@ export interface ZillowListingSubType {
   is_bankOwned?: boolean;
   is_comingSoon?: boolean;
   is_forAuction?: boolean;
+  is_foreclosure?: boolean;
   is_newHome?: boolean;
   is_openHouse?: boolean;
+  is_pending?: boolean;
+  is_roomForRent?: boolean;
 }
 
 export interface ZillowListingUnit {
@@ -589,7 +592,7 @@ export interface ZillowProperty {
   postingPresentationTypes?: unknown | null;
   postingProductType?: string;
   postingUrl?: string | null;
-  price: number;
+  price: number | null;
   priceChange?: number | null;
   priceChangeDate?: number | null;
   priceChangeDateString?: string | null;
@@ -799,7 +802,7 @@ export interface ZillowPropertyHistory {
   metric: ZillowHistoryMetric;
   period: ZillowHistoryPeriod;
   series: ZillowHomeValueChartSeries[];
-  zpid: string;
+  zpid: number;
 }
 
 export interface ZillowPropertyHomeInsight {
@@ -977,8 +980,8 @@ export interface ZillowPropertyNearbyHome {
   address: ZillowPropertyNearbyHomeAddress;
   attributionInfo: ZillowPropertyNearbyHomeAttributionInfo;
   baseRent: number | null;
-  bathrooms: number;
-  bedrooms: number;
+  bathrooms: number | null;
+  bedrooms: number | null;
   currency: string;
   formattedChip: ZillowPropertyFormattedChip;
   hdpTypeDimension: string;
@@ -1003,9 +1006,9 @@ export interface ZillowPropertyNearbyHome {
   miniCardPhotos: ZillowPropertyNeighborhoodMapThumb[];
   newConstructionType: string | null;
   parentRegion: unknown | null;
-  price: number;
+  price: number | null;
   propertyTypeDimension: string;
-  providerListingID: string;
+  providerListingID: string | null;
   resoFacts: ZillowPropertyNearbyHomeResoFacts;
   state: string;
   totalRequiredMonthlyMaxFee: number | null;
