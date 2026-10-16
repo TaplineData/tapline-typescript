@@ -6,7 +6,7 @@ import type { GetCompanyParams, GetCompanyPostsParams, GetJobParams, GetPostPara
 export class LinkedinClient {
   constructor(private readonly base: BaseClient) {}
 
-  /** A LinkedIn company, school or showcase page: numeric `id`, name, description, address, employee count, exact follower count, website, logo, cover image, slogan, industry, size, founding year, headquarters, type, specialties, similar and affiliated pages, featured employees and the latest posts. Field names match Scrape Creators' company endpoint, without its status and credit metadata. LinkedIn no longer shows guests the Crunchbase funding block, so there is no `funding` field, and it shows featured employees without a title, so `employees[].title` is `null`. Fields LinkedIn leaves out for a page are `null`. Costs 1 credit. */
+  /** A LinkedIn company, school or showcase page: `id` (LinkedIn's numeric company id, as a string), name, description, `location` (city, state, country), employee count, exact follower count, website, logo, cover image, slogan, industry, size, founding year, headquarters, type, specialties, similar and affiliated pages, featured employees (name, profile link and photo) and the latest posts. Field names match Scrape Creators' company endpoint, without its status and credit metadata. LinkedIn no longer shows guests the Crunchbase funding block or featured employees' titles, so neither is returned. Fields LinkedIn leaves out for a page are `null`. Costs 1 credit. */
   async getCompany(params: GetCompanyParams): Promise<LinkedinCompanyResponse> {
     return this.base.get<LinkedinCompanyResponse>('/v1/linkedin/company', { ...params });
   }

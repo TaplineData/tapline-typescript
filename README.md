@@ -1,6 +1,6 @@
 # @tapline/client
 
-Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, Twitter (X), Pinterest, Instagram, Pumpfun, TikTok, and Birdeye in TypeScript or JavaScript.
+Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, Twitter (X), Pinterest, Instagram, Pumpfun, TikTok, Birdeye, and LinkedIn in TypeScript or JavaScript.
 
 ## What you can do
 
@@ -17,8 +17,9 @@ Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerm
 | Instagram | Read profiles, posts, reels, comments, highlights, audio pages, popular topics, embeds, and exact post counts | [Instagram guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/instagram/README.md) |
 | TikTok | Read profiles and videos, comments and replies, followers, sounds, hashtags, captions, collections, suggestions, and regional trending feeds | [TikTok guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/tiktok/README.md) |
 | Birdeye | Read token overviews, security checks, trades, candles, pools, trending tokens and launchpad listings on Solana and seven EVM chains, plus trader leaderboards and wallet PnL | [Birdeye guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/birdeye/README.md) |
+| LinkedIn | Read public member profiles, company, school and showcase pages with their posts, posts and Pulse articles with video transcripts, and job search and postings | [LinkedIn guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/linkedin/README.md) |
 
-One API key and credit balance work across all eleven services.
+One API key and credit balance work across all thirteen services.
 
 ## Get started
 
@@ -182,6 +183,7 @@ Use the [Tapline API reference](https://tapline.sh/docs?utm_source=typescript_cl
 - [Instagram](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/instagram/README.md)
 - [TikTok](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/tiktok/README.md)
 - [Birdeye](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/birdeye/README.md)
+- [LinkedIn](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/linkedin/README.md)
 
 ## License
 
