@@ -127,7 +127,7 @@ export interface ImovelwebDevelopmentUnit {
   title: string;
   unsafe: boolean;
   url: string;
-  whatsApp: string;
+  whatsApp: string | null;
 }
 
 export interface ImovelwebDuplicate {
@@ -162,10 +162,11 @@ export interface ImovelwebGeneralFeature {
 /**
  * One search result in imovelweb's own keys (some are Spanish, from the Navent platform).
  * `whatsApp` is the advertiser's WhatsApp number with country code, when shown. `url` is a
- * path on https://www.imovelweb.com.br.
+ * path on https://www.imovelweb.com.br. `slot` numbers a paid placement. Fields that accept
+ * any JSON were null in every answer imovelweb gave us, so their shape is unknown.
  */
 export interface ImovelwebListing {
-  action: string | null;
+  action: unknown | null;
   alphanumeric_key: string;
   alt: boolean;
   antiquity: string | null;
@@ -175,7 +176,7 @@ export interface ImovelwebListing {
   duplicated: ImovelwebDuplicate | null;
   earlyDemandCronut: boolean;
   expenses: ImovelwebPrice | null;
-  features: string | null;
+  features: unknown | null;
   flagsFeatures: (ImovelwebFeature | null)[];
   generalFeatures: Record<string, Record<string, ImovelwebGeneralFeature>>;
   generatedTitle: string;
@@ -183,14 +184,14 @@ export interface ImovelwebListing {
   hasTour: boolean;
   hasVideos: boolean;
   highlightedFeatures: string[];
-  house: string | null;
+  house: unknown | null;
   iadescription: string | null;
-  iptu: string | null;
+  iptu: unknown | null;
   leadWhatsappDevelopmentRequestData: boolean;
   leadWhatsappPostingRequestData: boolean;
   mainFeatures: Record<string, ImovelwebFeature>;
   modified_date: string;
-  ownerDomain: string | null;
+  ownerDomain: unknown | null;
   pixelPlus: boolean;
   postingCode: string;
   postingId: string;
@@ -206,9 +207,9 @@ export interface ImovelwebListing {
   realEstateType: ImovelwebRealEstateType;
   requestVisit5A: ImovelwebRequestVisit;
   reserved: boolean;
-  slot: string | null;
-  slotColor: string | null;
-  sponsor: string | null;
+  slot: number | null;
+  slotColor: unknown | null;
+  sponsor: unknown | null;
   status: string;
   title: string;
   triggerPill: string | null;
@@ -285,10 +286,11 @@ export interface ImovelwebListingPublisher {
 }
 
 /**
- * The advertiser of a search result. `publisherTypeId`: 1 owner selling directly, 2 agency,
- * 4 QuintoAndar, 6 developer, 3 other professional. `license` is the CRECI registration.
- * `mainPhone` is filled only when the agency publishes one; `/publishers/{publisherId}`
- * has every number.
+ * The advertiser of a search result. `publisherTypeId` is a string here: "1" owner selling
+ * directly, "2" agency, "4" QuintoAndar, "6" developer, "3" other professional. `license` is
+ * the CRECI registration. `mainPhone` is filled only when the agency publishes one;
+ * `/publishers/{publisherId}` has every number. Fields that accept any JSON were null in
+ * every answer imovelweb gave us, so their shape is unknown.
  */
 export interface ImovelwebListingPublisherSummary {
   amountPostingActive: number | null;
@@ -299,15 +301,15 @@ export interface ImovelwebListingPublisherSummary {
   license: string | null;
   mainPhone: string | null;
   name: string;
-  parentPublisher: string | null;
+  parentPublisher: unknown | null;
   partialPhone: string | null;
   premier: boolean;
   publisherId: string;
-  publisherStatistics: string | null;
+  publisherStatistics: unknown | null;
   publisherTags: number[];
   publisherTypeId: string;
-  quantity_posting_by_operation_type: string | null;
-  slotFilterUrl: string | null;
+  quantity_posting_by_operation_type: unknown | null;
+  slotFilterUrl: unknown | null;
   slug: string | null;
   url: string;
   urlChat: string | null;
@@ -379,7 +381,7 @@ export interface ImovelwebMapArea {
   idsubzonaciudad: number;
   idzonaciudad: number;
   nombre: string;
-  solr_geometry: string | null;
+  solr_geometry: unknown | null;
   tipoN: string;
 }
 
@@ -489,7 +491,7 @@ export type ImovelwebPublishedWithin = "today" | "since_yesterday" | "7_days" | 
 /**
  * An agency or developer profile. `phone` is the free text the agency publishes;
  * `phoneNumbers` holds each number in it as +55, area code and number. `publisherTypeId`
- * as on listings; `amountPostingActive` counts its live listings.
+ * is the listings' code as a number; `amountPostingActive` counts its live listings.
  */
 export interface ImovelwebPublisher {
   aboutUs: string | null;

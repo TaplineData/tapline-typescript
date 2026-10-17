@@ -39,7 +39,7 @@ export class ImovelwebClient {
     return this.base.get<ImovelwebLocations>('/v1/imovelweb/locations', { ...params });
   }
 
-  /** An agency's or developer's profile: name, phone numbers as the agency writes them (`phone`) and parsed into +55 numbers (`phoneNumbers`), office address, year joined, active listing count, logo, and the ratings buyers gave it (`ratings` is null when imovelweb keeps no statistics for the publisher; an unrated one has null `respondedCount` and `ratings` and an `average` of 0). List its listings with `/listings?publisher_id=`. Owners selling directly (`publisherTypeId` 1 on a listing) have no profile page: their ids answer 404, and the listing's `whatsApp` is their contact. An id imovelweb does not know answers 404. Costs 2 credits. */
+  /** An agency's or developer's profile: name, phone numbers as the agency writes them (`phone`) and parsed into +55 numbers (`phoneNumbers`), office address, year joined, active listing count, logo, and the ratings buyers gave it (`ratings` is null when imovelweb keeps no statistics for the publisher; an unrated one has null `respondedCount` and `ratings` and an `average` of 0). List its listings with `/listings?publisher_id=`. Owners selling directly (`publisherTypeId` "1" on a search listing) have no profile page: their ids answer 404, and the listing's `whatsApp` is their contact. An id imovelweb does not know answers 404. Costs 2 credits. */
   async getPublisher(params: GetPublisherParams): Promise<ImovelwebPublisher> {
     const { publisher_id } = params;
     return this.base.get<ImovelwebPublisher>(`/v1/imovelweb/publishers/${encodeURIComponent(publisher_id)}`);
