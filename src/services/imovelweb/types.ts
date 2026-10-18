@@ -386,7 +386,8 @@ export interface ImovelwebListingLocation {
 /**
  * The publisher of a search result. `creci` is the CRECI licence; `main_phone` is filled
  * only when the publisher publishes one, and `/publishers/{publisher_id}` has every number.
- * An owner selling directly has no profile page.
+ * An owner selling directly has no profile page, so its `url` is null; `logo_url` is null
+ * where imovelweb shows its placeholder image.
  */
 export interface ImovelwebListingPublisher {
   active_listing_count: number | null;
@@ -403,7 +404,7 @@ export interface ImovelwebListingPublisher {
   raw: ImovelwebListingPublisherRaw;
   slug: string | null;
   type: ImovelwebPublisherKind | null;
-  url: string;
+  url: string | null;
 }
 
 /** `mainPhone` is here only when this API could not read a phone number in it. */
@@ -705,14 +706,14 @@ export type ImovelwebPublisherKind = "owner" | "agency" | "developer" | "broker"
 
 /**
  * What buyers rated the publisher, from 1 to 5. An unrated publisher has a null
- * `review_count`, no questions and an average of 0.
+ * `review_count`, `average` and `recommend_percent`, and no questions.
  */
 export interface ImovelwebPublisherRatings {
-  average: number;
+  average: number | null;
   is_new_publisher: boolean;
   questions: ImovelwebRatingQuestion[];
   raw: ImovelwebPublisherRatingsRaw;
-  recommend_percent: number;
+  recommend_percent: number | null;
   review_count: number | null;
 }
 

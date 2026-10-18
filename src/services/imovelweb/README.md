@@ -86,10 +86,10 @@ Take the id from `publisher.id` on a search listing.
 - Each record keeps the fields this API does not decode under `raw`, in imovelweb's own names. Fields typed `unknown` there were null in every answer imovelweb gave us, so their shape is unknown.
 - `pagination.completion` is `exhausted` at the end, or `depth_limit` at page 1,000 (30,000 listings). Narrow the filters to reach the rest.
 - About a fifth of search listings hide their map position (`location.latitude` is null). `getListing` usually still has coordinates.
-- `publisher.type` is `'owner'` for an owner selling directly. Owners have no profile, so `getPublisher` answers 404 for them and the listing's `whatsapp` is their contact.
+- `publisher.type` is `'owner'` for an owner selling directly. Owners have no profile, so their `publisher.url` is null, `getPublisher` answers 404 for them, and the listing's `whatsapp` is their contact.
 - `getListing` gives only the first digits of the agency's phone (`publisher.partial_phone`). `getPublisher` has every number.
 - An amenity this API does not name comes back with `amenity` set to null, plus imovelweb's `id` and `label`.
-- `ratings` is null when imovelweb keeps no statistics for an agency. An unrated agency has a null `review_count`, no `questions` and an `average` of 0.
+- `ratings` is null when imovelweb keeps no statistics for an agency. An unrated agency has a null `review_count`, `average` and `recommend_percent`, and no `questions`.
 
 ## Handle errors and check costs
 
