@@ -23,24 +23,75 @@ export interface GetListingParams {
 }
 
 export interface GetPublisherParams {
-  /** imovelweb publisher (agency, developer or owner) id: `publisher.publisherId` on a listing. */
+  /** imovelweb publisher (agency, developer or owner) id: `publisher.id` on a listing. */
   publisher_id: string;
 }
 
-export interface ImovelwebAddress {
-  name: string | null;
-  visibility: string;
+/**
+ * The paid placement a listing bought, as imovelweb's listing page names it; `free` is an
+ * unpaid listing.
+ */
+export type ImovelwebAdTier = "simple" | "simple_plus" | "highlighted" | "highlighted_plus" | "super_highlighted" | "exclusive" | "free";
+
+/**
+ * An amenity of the condominium or the unit. Those outside the search's `features` filter
+ * appear on listings, but imovelweb does not filter by them.
+ */
+export type ImovelwebAmenity = "wheelchair_access" | "central_heating" | "green_area" | "toy_library" | "security_cameras" | "football_field" | "golf_course" | "barbecue" | "elevator" | "generator" | "jogging_track" | "playground" | "electronic_gate" | "doorman_24h" | "near_metro" | "tennis_court" | "pool" | "furnished" | "balcony" | "air_conditioning" | "bar" | "closet" | "open_kitchen" | "maid_room" | "home_office" | "accepts_swap" | "sea_front" | "hot_tub" | "garden" | "fireplace" | "suites" | "rental_pool" | "pets_allowed" | "backyard" | "alarm_system" | "service_area" | "gym" | "laundry" | "sauna" | "party_room" | "games_room" | "heated_pool" | "covered_pool" | "guardhouse" | "bike_rack" | "paved_access" | "pantry" | "leisure_area" | "pet_care" | "gourmet_balcony";
+
+/**
+ * Where an amenity is: the condominium's `common` areas, the `private` unit, or `other`
+ * details such as the building's floor count.
+ */
+export type ImovelwebAmenityArea = "common" | "private" | "other";
+
+/**
+ * One amenity on a listing page. `amenity` is null for ids this API does not name; `id`
+ * and `label` are imovelweb's. `quantity` is the number imovelweb attaches to a few
+ * entries, such as the floor count of 30001 "Andares".
+ */
+export interface ImovelwebAmenityEntry {
+  amenity: ImovelwebAmenity | null;
+  area: ImovelwebAmenityArea | null;
+  id: string;
+  label: string;
+  quantity: number | null;
 }
 
-export interface ImovelwebCoordinates {
-  latitude: number;
-  longitude: number;
+/**
+ * A filter imovelweb says it applied, as this API's query parameter and values: compare
+ * it with the request to spot a filter imovelweb dropped. Numbers and flags are strings,
+ * as in a query string.
+ */
+export interface ImovelwebAppliedFilter {
+  filter: string;
+  values: string[];
+}
+
+/** A GeoJSON geometry. */
+export interface ImovelwebAreaOutline {
+  coordinates: number[][][][];
+  type: string;
+}
+
+/** Square metres. */
+export interface ImovelwebAreaRange {
+  max: number | null;
+  min: number | null;
+}
+
+export interface ImovelwebCountRange {
+  max: number | null;
+  min: number | null;
 }
 
 export interface ImovelwebCoverPicture {
   size: string;
   url: string;
 }
+
+/** An ISO 4217 currency code. */
+export type ImovelwebCurrency = "BRL" | "USD";
 
 export type ImovelwebCursorCompletion = "exhausted" | "depth_limit";
 
@@ -49,321 +100,415 @@ export interface ImovelwebCursorPagination {
   next_cursor: string | null;
 }
 
-export interface ImovelwebDetailPicture {
-  height: number | null;
-  multimediaTypeId: number;
-  order: number;
-  resizeUrl1200x1200: string;
-  resizeUrl720x532: string;
-  title: string;
-  url100x75: string;
-  url1200x1200: string;
-  url215x159: string;
-  url360x266: string;
-  url730x532: string;
-  width: number | null;
-}
-
-export interface ImovelwebDetailPublisher {
-  license: string | null;
-  name: string | null;
-  partialPhone: string | null;
-  premium: boolean | null;
-  publisherId: string | null;
-  publisherTypeId: number | null;
-  url: string | null;
-  urlChat: string | null;
-  urlLogo: string | null;
-}
-
-export interface ImovelwebDevelopmentData {
-  ambientes: ImovelwebNumberRange;
-  bathrooms: ImovelwebNumberRange;
-  coveredArea: ImovelwebNumberRange;
-  delivery: string;
-  garages: ImovelwebNumberRange;
-  majorPrices: ImovelwebPriceRange;
-  minorPrices: ImovelwebPriceRange;
-  numberOfUnits: number;
-  prices?: ImovelwebPriceRange;
-  pricesByOperationType?: ImovelwebPricesByOperationType[];
-  rooms: ImovelwebNumberRange;
+/**
+ * A new development: its stage, delivery date and the ranges across its units. A unit
+ * carries only the stage, delivery and unit count.
+ */
+export interface ImovelwebDevelopment {
+  bathrooms: ImovelwebCountRange | null;
+  bedrooms: ImovelwebCountRange | null;
+  delivery: ImovelwebDevelopmentDelivery | null;
+  parking_spaces: ImovelwebCountRange | null;
+  price: ImovelwebMoneyRange | null;
+  prices_by_operation: ImovelwebDevelopmentPrice[];
+  raw: ImovelwebDevelopmentRaw;
+  stage: ImovelwebDevelopmentStage | null;
   steps: ImovelwebDevelopmentStep[];
-  totalArea: ImovelwebNumberRange;
-  unitGroupsData: Record<string, Record<string, ImovelwebUnitGroup>>;
+  total_area_m2: ImovelwebAreaRange | null;
+  unit_count: number | null;
+  unit_groups: ImovelwebUnitGroup[];
+  usable_area_m2: ImovelwebAreaRange | null;
 }
+
+/** When the developer hands over the units: immediately, or in a month and year. */
+export interface ImovelwebDevelopmentDelivery {
+  is_immediate: boolean;
+  month: number | null;
+  year: number | null;
+}
+
+export interface ImovelwebDevelopmentPrice {
+  operation: ImovelwebOperation | null;
+  price: ImovelwebMoney | null;
+}
+
+export interface ImovelwebDevelopmentRaw {
+  ambientes?: ImovelwebRawNumberRange;
+}
+
+/**
+ * A development's stage: about to launch (breve lançamento), on sale before building (na
+ * planta), under construction (em obra), or ready to move into (mude já).
+ */
+export type ImovelwebDevelopmentStage = "launching_soon" | "off_plan" | "under_construction" | "ready_to_move";
 
 export interface ImovelwebDevelopmentStep {
-  stage: string;
-  status: string;
-}
-
-export interface ImovelwebDevelopmentUnit {
-  alt: boolean;
-  createdDate: number;
-  description: string;
-  descriptionNormalized: string;
-  developmentFeatures: Record<string, Record<string, ImovelwebFeature>>;
-  enableBannerFicha: boolean;
-  generalFeatures: Record<string, Record<string, ImovelwebGeneralFeature>>;
-  generatedTitle: string;
-  highlightedFeatures: string[];
-  mainFeatures: Record<string, ImovelwebFeature>;
-  pictures: ImovelwebDetailPicture[];
-  pixelPlus: boolean;
-  postingCode: string;
-  postingId: string;
-  postingLocation: ImovelwebPostingLocation;
-  postingType: string;
-  premier: boolean;
-  priceOperationTypes: ImovelwebPriceOperationType[];
-  publicationAreaId: string;
-  realEstateSubtype: ImovelwebRealEstateSubtype;
-  realEstateType: ImovelwebRealEstateType;
-  requestVisit5A: ImovelwebRequestVisit;
-  reserved: boolean;
-  showFirst360: boolean;
-  status: string;
-  title: string;
-  unsafe: boolean;
-  url: string;
-  whatsApp: string | null;
-}
-
-export interface ImovelwebDuplicate {
-  id: string;
-  url: string;
-  whatsApp: boolean;
+  stage: ImovelwebDevelopmentStage | null;
+  status: ImovelwebStepStatus | null;
 }
 
 /**
- * A listing attribute keyed by imovelweb's code: CFT100 total area, CFT101 usable area,
- * CFT2 bedrooms, CFT3 bathrooms, CFT4 suites, CFT5 building age in years, CFT7 parking
- * spaces, CFT200 development stage, CFT201 delivery, CFT202 number of units. `value` is a
- * string as imovelweb sends it; `measure` is the unit (m²).
+ * One unit of a development, a listing of its own. `created_at` is when the unit was
+ * listed.
  */
-export interface ImovelwebFeature {
-  featureCategoryId?: string | null;
-  featureId: string;
-  icon: string | null;
-  label: string;
-  maxValue?: string | null;
-  measure?: string | null;
-  minValue?: string | null;
-  value: string | null;
-}
-
-export interface ImovelwebGeneralFeature {
-  featureId: string;
-  label: string;
-  value?: string;
+export interface ImovelwebDevelopmentUnit {
+  ad_tier: ImovelwebAdTier | null;
+  amenities: ImovelwebAmenityEntry[];
+  bathrooms: number | null;
+  bedrooms: number | null;
+  building_age_years: number | null;
+  code: string | null;
+  created_at: string | null;
+  description: string | null;
+  development: ImovelwebDevelopment | null;
+  generated_title: string | null;
+  highlighted_amenities: ImovelwebAmenity[];
+  id: string;
+  is_premier: boolean;
+  is_reserved: boolean;
+  location: ImovelwebListingLocation;
+  operations: ImovelwebOperationPrice[];
+  parking_spaces: number | null;
+  photos: ImovelwebPicture[];
+  posting_type: ImovelwebPostingType | null;
+  property_subtype: ImovelwebPropertySubtype | null;
+  property_type: ImovelwebPropertyKind | null;
+  quintoandar_network: ImovelwebNetworkRole | null;
+  raw: ImovelwebDevelopmentUnitRaw;
+  status: ImovelwebPostingStatus | null;
+  suites: number | null;
+  title: string | null;
+  total_area_m2: number | null;
+  url: string;
+  usable_area_m2: number | null;
+  visit_booking_url: string | null;
+  whatsapp: string | null;
 }
 
 /**
- * One search result in imovelweb's own keys (some are Spanish, from the Navent platform).
- * `whatsApp` is the advertiser's WhatsApp number with country code, when shown. `url` is a
- * path on https://www.imovelweb.com.br. `slot` numbers a paid placement. Fields that accept
- * any JSON were null in every answer imovelweb gave us, so their shape is unknown.
+ * Feature codes and highlight names this API does not know, and `whatsApp` when this API
+ * could not read a number in it.
+ */
+export interface ImovelwebDevelopmentUnitRaw {
+  alt: boolean;
+  developmentFeatures: Record<string, Record<string, ImovelwebRawFeature>>;
+  enableBannerFicha: boolean;
+  highlightedFeatures: string[];
+  mainFeatures: Record<string, ImovelwebRawFeature>;
+  pixelPlus: boolean;
+  publicationAreaId: string;
+  requestVisit5A: ImovelwebRequestVisitRaw;
+  showFirst360: boolean;
+  unsafe: boolean;
+  whatsApp?: string;
+}
+
+/** A publisher advertising the same property, with its own listing of it. */
+export interface ImovelwebDuplicatePublisher {
+  ad_tier: ImovelwebAdTier | null;
+  is_premier: boolean;
+  listing_id: string;
+  listing_url: string;
+  logo_url: string | null;
+  name: string;
+  raw: ImovelwebDuplicatePublisherRaw;
+}
+
+export interface ImovelwebDuplicatePublisherRaw {
+  publicationAreaId: string;
+}
+
+/**
+ * One search result. `description` is plain text, imovelweb's markup removed;
+ * `photo_count` counts every photo, beyond the few a search card carries;
+ * `ai_description` is imovelweb's own generated summary, when it wrote one; `logo_url` is a
+ * development's own logo. `published_days_ago` is 0 for today; a listing without a date has
+ * null. `units` lists a development's units when imovelweb sends them with the search.
  */
 export interface ImovelwebListing {
-  action: unknown | null;
-  alphanumeric_key: string;
-  alt: boolean;
-  antiquity: string | null;
-  avisoDuplicado: string | null;
-  descriptionNormalized: string;
-  developmentFeatures: Record<string, Record<string, ImovelwebFeature>>;
-  duplicated: ImovelwebDuplicate | null;
-  earlyDemandCronut: boolean;
-  expenses: ImovelwebPrice | null;
-  features: unknown | null;
-  flagsFeatures: (ImovelwebFeature | null)[];
-  generalFeatures: Record<string, Record<string, ImovelwebGeneralFeature>>;
-  generatedTitle: string;
-  hasPlans: boolean;
-  hasTour: boolean;
-  hasVideos: boolean;
-  highlightedFeatures: string[];
-  house: unknown | null;
-  iadescription: string | null;
-  iptu: unknown | null;
-  leadWhatsappDevelopmentRequestData: boolean;
-  leadWhatsappPostingRequestData: boolean;
-  mainFeatures: Record<string, ImovelwebFeature>;
-  modified_date: string;
-  ownerDomain: unknown | null;
-  pixelPlus: boolean;
-  postingCode: string;
-  postingId: string;
-  postingLocation: ImovelwebPostingLocation;
-  postingType: string;
-  premier: boolean;
-  priceOperationTypes: ImovelwebPriceOperationType[];
-  promotionTitle: string | null;
-  publication: ImovelwebPublication | null;
-  publicationAreaId: string;
-  publisher: ImovelwebListingPublisherSummary;
-  publisherSlot: string;
-  realEstateType: ImovelwebRealEstateType;
-  requestVisit5A: ImovelwebRequestVisit;
-  reserved: boolean;
-  slot: number | null;
-  slotColor: unknown | null;
-  sponsor: unknown | null;
-  status: string;
-  title: string;
-  triggerPill: string | null;
-  trigger_pills: string[];
-  units: ImovelwebDevelopmentUnit[] | null;
-  url: string;
-  urlLogo: string | null;
-  viewPhoneAnonymousLead: boolean;
-  visiblePictures: ImovelwebVisiblePictures | null;
-  whatsApp: string | null;
-}
-
-/**
- * A listing page. `expenses` is the monthly condo fee; `publisher.partialPhone` is the
- * first digits imovelweb shows before its lead form; `latitude`/`longitude` are null when
- * the advertiser hides the position.
- */
-export interface ImovelwebListingDetail {
-  address: ImovelwebAddress | null;
+  ad_tier: ImovelwebAdTier | null;
+  ai_description: string | null;
+  bathrooms: number | null;
+  bedrooms: number | null;
+  building_age_years: number | null;
+  code: string | null;
+  condo_fee: ImovelwebMoney | null;
   description: string | null;
-  developmentData: ImovelwebDevelopmentData | null;
-  duplicated: boolean;
-  expenses: ImovelwebPrice | null;
-  featuresWithIcon: number[];
-  flagsFeatures: ImovelwebFeature[];
-  generalFeatures: Record<string, Record<string, ImovelwebGeneralFeature>>;
-  generatedTitle: string | null;
-  latitude: number | null;
-  location: ImovelwebLocationNode | null;
-  longitude: number | null;
-  mainFeatures: Record<string, ImovelwebFeature>;
-  partialPhone: string | null;
-  pictures: ImovelwebDetailPicture[];
-  plans: ImovelwebDetailPicture[];
-  postingCode: string | null;
-  postingId: string;
-  postingType: string;
-  premier: boolean;
-  priceOperationTypes: ImovelwebPriceOperationType[];
-  publicationAge: string | null;
-  publicationAreaId: string | null;
-  publishedAt: string | null;
-  publisher: ImovelwebDetailPublisher | null;
-  realEstateType: ImovelwebRealEstateType | null;
-  reserved: boolean;
-  status: string;
+  development: ImovelwebDevelopment | null;
+  duplicate: ImovelwebListingDuplicate | null;
+  generated_title: string | null;
+  has_floor_plans: boolean;
+  has_tour: boolean;
+  has_video: boolean;
+  highlighted_amenities: ImovelwebAmenity[];
+  id: string;
+  is_foreclosure_auction: boolean;
+  is_premier: boolean;
+  is_reserved: boolean;
+  location: ImovelwebListingLocation;
+  logo_url: string | null;
+  modified_at: string | null;
+  operations: ImovelwebOperationPrice[];
+  parking_spaces: number | null;
+  photo_count: number;
+  photos: ImovelwebPicture[];
+  posting_type: ImovelwebPostingType | null;
+  promotion_title: string | null;
+  property_type: ImovelwebPropertyKind | null;
+  published_days_ago: number | null;
+  publisher: ImovelwebListingPublisher;
+  quintoandar_network: ImovelwebNetworkRole | null;
+  raw: ImovelwebListingRaw;
+  status: ImovelwebPostingStatus | null;
+  suites: number | null;
   title: string | null;
+  total_area_m2: number | null;
   units: ImovelwebDevelopmentUnit[];
   url: string;
-  visibility: string | null;
-  whatsApp: string | null;
-}
-
-export type ImovelwebListingFeature = "wheelchair_access" | "central_heating" | "green_area" | "toy_library" | "security_cameras" | "football_field" | "golf_course" | "barbecue" | "elevator" | "generator" | "jogging_track" | "playground" | "electronic_gate" | "doorman_24h" | "near_metro" | "tennis_court" | "pool" | "furnished" | "balcony" | "air_conditioning" | "bar" | "closet" | "open_kitchen" | "maid_room" | "home_office" | "accepts_swap" | "sea_front" | "hot_tub" | "garden" | "fireplace" | "suites" | "rental_pool" | "pets_allowed" | "backyard" | "alarm_system";
-
-export interface ImovelwebListingPicture {
-  height: number | null;
-  multimediaTypeId: string;
-  order: number;
-  title: string;
-  url130x70: string | null;
-  url360x266: string;
-  url730x532: string;
-  width: number | null;
-}
-
-export interface ImovelwebListingPublisher {
-  logoUrl: string;
-  name: string;
-  postingId: string;
-  postingUrl: string;
-  premier: boolean;
-  publicationAreaId: string;
+  usable_area_m2: number | null;
+  visit_booking_url: string | null;
+  whatsapp: string | null;
 }
 
 /**
- * The advertiser of a search result. `publisherTypeId` is a string here: "1" owner selling
- * directly, "2" agency, "4" QuintoAndar, "6" developer, "3" other professional. `license` is
- * the CRECI registration. `mainPhone` is filled only when the agency publishes one;
- * `/publishers/{publisherId}` has every number. Fields that accept any JSON were null in
- * every answer imovelweb gave us, so their shape is unknown.
+ * A listing page. `description` is plain text with line breaks kept; `has_duplicates`
+ * is true when other publishers list the same property, which
+ * `/listings/{posting_id}/publishers` lists. `view_count` and `popularity_message` are
+ * imovelweb's own counters, when it shows them.
  */
-export interface ImovelwebListingPublisherSummary {
-  amountPostingActive: number | null;
-  approved: boolean;
-  createdYear: string | null;
-  created_date: string;
-  id_portal: string | null;
-  license: string | null;
-  mainPhone: string | null;
+export interface ImovelwebListingDetail {
+  ad_tier: ImovelwebAdTier | null;
+  amenities: ImovelwebAmenityEntry[];
+  bathrooms: number | null;
+  bedrooms: number | null;
+  building_age_years: number | null;
+  code: string | null;
+  condo_fee: ImovelwebMoney | null;
+  description: string | null;
+  development: ImovelwebDevelopment | null;
+  floor_plans: ImovelwebPicture[];
+  generated_title: string | null;
+  has_duplicates: boolean;
+  id: string;
+  is_development_unit: boolean;
+  is_foreclosure_auction: boolean;
+  is_premier: boolean;
+  is_reserved: boolean;
+  location: ImovelwebListingLocation;
+  operations: ImovelwebOperationPrice[];
+  parking_spaces: number | null;
+  photos: ImovelwebPicture[];
+  popularity_message: string | null;
+  posting_type: ImovelwebPostingType | null;
+  property_type: ImovelwebPropertyKind | null;
+  published_at: string | null;
+  published_days_ago: number | null;
+  publisher: ImovelwebListingDetailPublisher | null;
+  quintoandar_network: ImovelwebNetworkRole | null;
+  raw: ImovelwebListingDetailRaw;
+  status: ImovelwebPostingStatus | null;
+  suites: number | null;
+  title: string | null;
+  total_area_m2: number | null;
+  units: ImovelwebDevelopmentUnit[];
+  url: string;
+  usable_area_m2: number | null;
+  view_count: number | null;
+  visit_booking_url: string | null;
+  whatsapp: string | null;
+}
+
+/**
+ * The publisher on a listing page. `partial_phone` is the first digits imovelweb shows
+ * before its contact form; `/publishers/{publisher_id}` has the full numbers.
+ */
+export interface ImovelwebListingDetailPublisher {
+  chat_url: string | null;
+  creci: string | null;
+  id: string | null;
+  is_premium: boolean | null;
+  logo_url: string | null;
+  name: string | null;
+  partial_phone: string | null;
+  type: ImovelwebPublisherKind | null;
+  url: string | null;
+}
+
+/**
+ * Feature codes and flags this API does not know, and `whatsApp` when this API could not
+ * read a number in it. `requestVisit5A` is false, or on a QuintoAndar-network listing the
+ * visit booking URL that `visit_booking_url` also carries.
+ */
+export interface ImovelwebListingDetailRaw {
+  cronut5A: ImovelwebRequestVisitRaw;
+  enableBannerFicha: boolean;
+  featuresWithIcon: number[];
+  flagsFeatures: ImovelwebRawFeature[];
+  mainFeatures: Record<string, ImovelwebRawFeature>;
+  pixelPlus: boolean;
+  publicationAreaId: string | null;
+  requestVisit5A: boolean | string;
+  whatsApp?: string;
+}
+
+/**
+ * Another publisher's listing of the same property; `/listings/{posting_id}/publishers`
+ * lists them all.
+ */
+export interface ImovelwebListingDuplicate {
+  has_whatsapp: boolean;
+  listing_id: string;
+  url: string;
+}
+
+/** An amenity the search filters by: the amenities imovelweb honours as a filter. */
+export type ImovelwebListingFeature = "wheelchair_access" | "central_heating" | "green_area" | "toy_library" | "security_cameras" | "football_field" | "golf_course" | "barbecue" | "elevator" | "generator" | "jogging_track" | "playground" | "electronic_gate" | "doorman_24h" | "near_metro" | "tennis_court" | "pool" | "furnished" | "balcony" | "air_conditioning" | "bar" | "closet" | "open_kitchen" | "maid_room" | "home_office" | "accepts_swap" | "sea_front" | "hot_tub" | "garden" | "fireplace" | "suites" | "rental_pool" | "pets_allowed" | "backyard" | "alarm_system";
+
+/**
+ * Where the listing is. Coordinates are null when the advertiser hides the map position;
+ * `static_map_url` is imovelweb's own map image of it.
+ */
+export interface ImovelwebListingLocation {
+  address: string | null;
+  address_visibility: ImovelwebVisibility | null;
+  city: ImovelwebPlace | null;
+  coordinates_visibility: ImovelwebVisibility | null;
+  country: ImovelwebPlace | null;
+  district: ImovelwebPlace | null;
+  latitude: number | null;
+  longitude: number | null;
+  neighbourhood: ImovelwebPlace | null;
+  state: ImovelwebPlace | null;
+  static_map_url: string | null;
+  sub_district: ImovelwebPlace | null;
+}
+
+/**
+ * The publisher of a search result. `creci` is the CRECI licence; `main_phone` is filled
+ * only when the publisher publishes one, and `/publishers/{publisher_id}` has every number.
+ * An owner selling directly has no profile page.
+ */
+export interface ImovelwebListingPublisher {
+  active_listing_count: number | null;
+  chat_url: string | null;
+  creci: string | null;
+  id: string;
+  is_premier: boolean;
+  joined_at: string | null;
+  joined_year: number | null;
+  logo_url: string | null;
+  main_phone: string | null;
   name: string;
+  partial_phone: string | null;
+  raw: ImovelwebListingPublisherRaw;
+  slug: string | null;
+  type: ImovelwebPublisherKind | null;
+  url: string;
+}
+
+/** `mainPhone` is here only when this API could not read a phone number in it. */
+export interface ImovelwebListingPublisherRaw {
+  approved: boolean;
+  id_portal: string | null;
+  mainPhone?: string;
   parentPublisher: unknown | null;
-  partialPhone: string | null;
-  premier: boolean;
-  publisherId: string;
   publisherStatistics: unknown | null;
   publisherTags: number[];
-  publisherTypeId: string;
   quantity_posting_by_operation_type: unknown | null;
   slotFilterUrl: unknown | null;
-  slug: string | null;
-  url: string;
-  urlChat: string | null;
-  urlLogo: string;
 }
 
 export interface ImovelwebListingPublishers {
-  publishers: ImovelwebListingPublisher[];
+  publishers: ImovelwebDuplicatePublisher[];
+}
+
+/**
+ * Feature codes, flags and highlight names this API does not know, `triggerPill` when it
+ * names no amenity this API knows, and `whatsApp` when this API could not read a number in
+ * it.
+ */
+export interface ImovelwebListingRaw {
+  action: unknown | null;
+  alphanumeric_key: string;
+  alt: boolean;
+  avisoDuplicado: string | null;
+  developmentFeatures: Record<string, Record<string, ImovelwebRawFeature>>;
+  earlyDemandCronut: boolean;
+  features: unknown | null;
+  flagsFeatures: ImovelwebRawFeature[];
+  highlightedFeatures: string[];
+  house: unknown | null;
+  iptu: unknown | null;
+  leadWhatsappDevelopmentRequestData: boolean;
+  leadWhatsappPostingRequestData: boolean;
+  mainFeatures: Record<string, ImovelwebRawFeature>;
+  ownerDomain: unknown | null;
+  pixelPlus: boolean;
+  publicationAreaId: string;
+  publisherSlot: string;
+  requestVisit5A: ImovelwebRequestVisitRaw;
+  slot: number | null;
+  slotColor: unknown | null;
+  sponsor: unknown | null;
+  triggerPill?: string;
+  trigger_pills: string[];
+  viewPhoneAnonymousLead: boolean;
+  whatsApp?: string;
 }
 
 export type ImovelwebListingSort = "relevance" | "lowest_price" | "highest_price" | "newest" | "most_viewed" | "price_dropped";
 
 export interface ImovelwebListingsMap {
+  applied_filters: ImovelwebAppliedFilter[];
   area: ImovelwebMapArea | null;
-  boundary: ImovelwebMapBoundary | null;
   markers: ImovelwebMapMarker[];
+  raw: ImovelwebListingsMapRaw;
   total: number;
+  viewport: ImovelwebViewport | null;
+}
+
+/** `appliedFilters` is imovelweb's echo as it sent it. */
+export interface ImovelwebListingsMapRaw {
+  appliedFilters: ImovelwebRawAppliedFilter[];
 }
 
 export interface ImovelwebListingsPage {
-  developments: Record<string, ImovelwebDevelopmentData>;
+  applied_filters: ImovelwebAppliedFilter[];
   listings: ImovelwebListing[];
   pagination: ImovelwebCursorPagination;
+  raw: ImovelwebListingsPageRaw;
   title: string;
   total: number;
 }
 
 /**
- * A place imovelweb can search. `level` is read from the id: `V1-B-` state, `V1-C-` city,
- * `V1-D-` district, `V1-E-` sub-district, `V1-Z-` neighbourhood.
+ * `appliedFilters` is imovelweb's echo as it sent it; `developmentData` holds development
+ * data for listings not on this page.
  */
+export interface ImovelwebListingsPageRaw {
+  appliedFilters: ImovelwebRawAppliedFilter[];
+  developmentData: Record<string, ImovelwebRawDevelopmentData>;
+  total5A: number | null;
+}
+
+/** A place the search can filter by: send `id` as `location_id`. */
 export interface ImovelwebLocation {
   id: string;
   label: string;
-  labelSuggest: string;
   level: ImovelwebLocationLevel | null;
   name: string;
-  tokens: string[];
+  raw: ImovelwebLocationRaw;
 }
 
-export type ImovelwebLocationLevel = "province" | "city" | "zone" | "subZone" | "valueZone";
+/**
+ * The level of a place: `country`, `state`, `city`, `district` (a zone of a city),
+ * `sub_district`, or `neighbourhood`.
+ */
+export type ImovelwebLocationLevel = "country" | "state" | "city" | "district" | "sub_district" | "neighbourhood";
 
-export interface ImovelwebLocationMetadata {
-  preposition: string;
-}
-
-export interface ImovelwebLocationNode {
-  acronym?: string | null;
-  depth: number;
+export interface ImovelwebLocationRaw {
   label: string;
-  locationId: string;
-  metadata?: ImovelwebLocationMetadata | null;
-  name: string;
-  parent?: ImovelwebLocationNode | null;
+  tokens: string[];
 }
 
 export interface ImovelwebLocations {
@@ -371,82 +516,309 @@ export interface ImovelwebLocations {
 }
 
 export interface ImovelwebMapArea {
-  cenLAT: number;
-  cenLON: number;
-  geometry: ImovelwebMapGeometry;
+  center: ImovelwebPoint;
   id: string;
+  level: ImovelwebLocationLevel | null;
+  name: string;
+  outline: ImovelwebAreaOutline;
+  raw: ImovelwebMapAreaRaw;
+}
+
+export interface ImovelwebMapAreaRaw {
   idciudad: number;
   idpais: number;
   idprovincia: number;
   idsubzonaciudad: number;
   idzonaciudad: number;
-  nombre: string;
   solr_geometry: unknown | null;
   tipoN: string;
 }
 
-export interface ImovelwebMapBoundary {
-  east: string;
-  north: string;
-  south: string;
-  west: string;
-}
-
-export interface ImovelwebMapGeolocation {
-  geolocation: ImovelwebCoordinates;
-  visibility: string | null;
-}
-
-export interface ImovelwebMapGeometry {
-  coordinates: number[][][][];
-  type: string;
-}
-
-/** A listing on the map with its first listed price and coordinates. */
+/**
+ * A listing on the map with its first listed price. `development_id` is the development
+ * a unit belongs to.
+ */
 export interface ImovelwebMapMarker {
-  geolocation: ImovelwebMapGeolocation;
-  parentId: string | null;
-  postingId: string;
-  premier: boolean;
-  price: ImovelwebPriceOperationType | null;
+  coordinates_visibility: ImovelwebVisibility | null;
+  development_id: string | null;
+  id: string;
+  is_premier: boolean;
+  latitude: number;
+  longitude: number;
+  operation: ImovelwebOperation | null;
+  price: ImovelwebMoney | null;
+  price_drop_percent: number | null;
   title: string;
 }
 
 export type ImovelwebMaxAge = "under_construction" | "launching_soon" | "5_years" | "10_years" | "20_years" | "50_years" | "over_50_years";
 
-export type ImovelwebMultimedia = "tour_360" | "video" | "floor_plans";
+/**
+ * A kind of media. Pictures are photos or floor plans; videos and 360° tours exist only as
+ * the search's `has_video` and `has_tour` flags.
+ */
+export type ImovelwebMediaKind = "photo" | "video" | "tour_360" | "floor_plan";
 
-export interface ImovelwebNumberRange {
-  tuple0?: number | null;
-  tuple1?: number | null;
+/**
+ * An amount and its currency. `display` is the amount as imovelweb formats it
+ * ("2.990.000", or "R$ 1.2M" on map markers).
+ */
+export interface ImovelwebMoney {
+  amount: number;
+  currency: ImovelwebCurrency | null;
+  display: string | null;
 }
 
+/**
+ * The lowest and highest price of a development's units. `min` is null when imovelweb
+ * shows no starting price, as its site then asks you to enquire.
+ */
+export interface ImovelwebMoneyRange {
+  currency: ImovelwebCurrency | null;
+  max: number | null;
+  min: number | null;
+}
+
+/** Media a search can require. */
+export type ImovelwebMultimedia = "tour_360" | "video" | "floor_plan";
+
+/**
+ * How imovelweb marks a listing in QuintoAndar's network (its `ownershipRede`, 1P or 3P);
+ * QuintoAndar books visits to these listings at `visit_booking_url`.
+ */
+export type ImovelwebNetworkRole = "first_party" | "third_party";
+
+/**
+ * How a listing is offered: `sale`, `rent` (long term), `season` (short stays), `auction`,
+ * or `development` (new developments sold by their developer). `development` is a search
+ * filter; a development's own prices carry `sale`.
+ */
 export type ImovelwebOperation = "sale" | "rent" | "season" | "auction" | "development";
 
-export interface ImovelwebOperationType {
-  name: string;
-  operationTypeId: string;
+/**
+ * The price of one operation the listing is offered for. `price` is null when imovelweb
+ * shows no amount (developments ask for contact); `price_drop_percent` is how far the price
+ * fell, when imovelweb flags a drop.
+ */
+export interface ImovelwebOperationPrice {
+  operation: ImovelwebOperation | null;
+  price: ImovelwebMoney | null;
+  price_drop_percent: number | null;
 }
 
 export type ImovelwebParkingSpaces = "none" | "1" | "2" | "3" | "4";
 
-export interface ImovelwebPostingGeolocation {
-  geolocation: ImovelwebCoordinates;
-  urlStaticMap: string;
-  visibility: string | null;
+/**
+ * One picture in every size imovelweb serves it; a size the route does not carry is
+ * null. `url_720x532` is imovelweb's `url730x532`, named after the size its path holds;
+ * the `resized_` URLs are imovelweb's resize service. `width` and `height` are the
+ * original's.
+ */
+export interface ImovelwebPicture {
+  caption: string | null;
+  height: number | null;
+  kind: ImovelwebMediaKind | null;
+  resized_url_1200x1200: string | null;
+  resized_url_720x532: string | null;
+  url_100x75: string | null;
+  url_1200x1200: string | null;
+  url_130x70: string | null;
+  url_215x159: string | null;
+  url_360x266: string;
+  url_720x532: string;
+  width: number | null;
 }
 
 /**
- * Where the listing is. `address.visibility` EXACT shows the street; `postingGeolocation` is
- * null when the advertiser hides the map position.
+ * One level of a listing's location. `id` is the `location_id` the search takes for
+ * every level except the country; `acronym` is the state's two letters.
  */
-export interface ImovelwebPostingLocation {
-  address: ImovelwebAddress | null;
-  location: ImovelwebLocationNode;
-  postingGeolocation: ImovelwebPostingGeolocation | null;
+export interface ImovelwebPlace {
+  acronym: string | null;
+  id: string;
+  name: string;
 }
 
-export interface ImovelwebPrice {
+export interface ImovelwebPoint {
+  latitude: number;
+  longitude: number;
+}
+
+/** Whether a listing is live; a development keeps its sold or withdrawn units, `offline`. */
+export type ImovelwebPostingStatus = "online" | "offline";
+
+/** A single `property`, a new `development`, or one `unit` of a development. */
+export type ImovelwebPostingType = "property" | "development" | "unit";
+
+/**
+ * A listing's property type: the five the search filters by, and the kinds of new
+ * development: towers (`new_development_vertical`), houses (`new_development_horizontal`),
+ * both (`new_development_mixed`), lots (`land_subdivision`) and whole buildings
+ * (`building`).
+ */
+export type ImovelwebPropertyKind = "apartment" | "house" | "land" | "commercial" | "rural" | "new_development_vertical" | "new_development_horizontal" | "new_development_mixed" | "land_subdivision" | "building";
+
+/** A property subtype; each belongs to one property type (`penthouse` to `apartment`). */
+export type ImovelwebPropertySubtype = "standard_apartment" | "studio" | "penthouse" | "flat" | "garden" | "loft" | "duplex" | "standard_house" | "condo_house" | "townhouse" | "village_house" | "office" | "commercial_point" | "store" | "garage_box" | "commercial_house" | "warehouse" | "inn" | "whole_building" | "small_farm" | "farm";
+
+/** A property type the search filters by. */
+export type ImovelwebPropertyType = "apartment" | "house" | "land" | "commercial" | "rural";
+
+export type ImovelwebPublishedWithin = "today" | "since_yesterday" | "7_days" | "15_days" | "30_days" | "45_days";
+
+/**
+ * An agency's or developer's profile. `phone_text` is the free text the publisher
+ * writes; `phone_numbers` holds each number in it as +55, area code and number.
+ * `active_listing_count` is imovelweb's count of live listings and `listed_count` the
+ * count its profile page lists. `ratings` is null when imovelweb keeps no statistics.
+ */
+export interface ImovelwebPublisher {
+  about: string | null;
+  active_listing_count: number | null;
+  address: string | null;
+  cover_picture_url: string | null;
+  cover_pictures: ImovelwebCoverPicture[];
+  description: string | null;
+  has_main_phone: boolean;
+  has_microsite: boolean;
+  id: string;
+  is_premier: boolean;
+  joined_year: number | null;
+  listed_count: number | null;
+  logo_url: string | null;
+  name: string;
+  phone_numbers: string[];
+  phone_text: string | null;
+  ratings: ImovelwebPublisherRatings | null;
+  raw: ImovelwebPublisherRaw;
+  type: ImovelwebPublisherKind | null;
+  video_url: string | null;
+}
+
+/**
+ * Who publishes a listing, in imovelweb's own words where its code has them: an `owner`
+ * selling directly (Particular), an `agency` (Inmobiliaria), a `developer` (Desarrollador)
+ * or a `broker` (Corredor), a firm or a single agent. `builder` is the kind imovelweb's code
+ * leaves unnamed; most of its publishers are construction and development companies.
+ */
+export type ImovelwebPublisherKind = "owner" | "agency" | "developer" | "broker" | "builder";
+
+/**
+ * What buyers rated the publisher, from 1 to 5. An unrated publisher has a null
+ * `review_count`, no questions and an average of 0.
+ */
+export interface ImovelwebPublisherRatings {
+  average: number;
+  is_new_publisher: boolean;
+  questions: ImovelwebRatingQuestion[];
+  raw: ImovelwebPublisherRatingsRaw;
+  recommend_percent: number;
+  review_count: number | null;
+}
+
+export interface ImovelwebPublisherRatingsRaw {
+  scoreReputation: number;
+}
+
+export interface ImovelwebPublisherRaw {
+  isApproved: boolean;
+  isPublisher5A: boolean;
+}
+
+/**
+ * Which publishers a search returns: `all`, `company` for every publisher that is not an
+ * owner (agencies, developers, brokers and builders), or `owner` for owners selling
+ * directly.
+ */
+export type ImovelwebPublisherType = "all" | "company" | "owner";
+
+export interface ImovelwebRatingQuestion {
+  average: number;
+  question: string;
+  topic: string;
+}
+
+/** One filter imovelweb says it applied, in its own filter names and codes. */
+export interface ImovelwebRawAppliedFilter {
+  groups?: ImovelwebRawAppliedFilterGroup[];
+  idsArea?: ImovelwebRawAppliedFilterAreaKind;
+  options?: ImovelwebRawAppliedFilterOption[] | null;
+  renderType?: number;
+  type: string;
+  units?: ImovelwebRawAppliedFilterUnit[];
+}
+
+export interface ImovelwebRawAppliedFilterAreaKind {
+  id: string;
+  label: string;
+}
+
+export interface ImovelwebRawAppliedFilterGroup {
+  label: string;
+  options: ImovelwebRawAppliedFilterOption[];
+}
+
+export interface ImovelwebRawAppliedFilterOption {
+  label?: string | null;
+  max?: string | null;
+  maxLabel?: string;
+  min?: string | null;
+  minLabel?: string;
+  subtypes?: ImovelwebRawAppliedFilterSubtype[];
+  type?: string;
+}
+
+export interface ImovelwebRawAppliedFilterSubtype {
+  label: string;
+  min: string;
+}
+
+export interface ImovelwebRawAppliedFilterUnit {
+  id: string;
+  label?: string;
+  symbol: string;
+}
+
+export interface ImovelwebRawDevelopmentData {
+  ambientes: ImovelwebRawNumberRange;
+  bathrooms: ImovelwebRawNumberRange;
+  coveredArea: ImovelwebRawNumberRange;
+  delivery: string;
+  garages: ImovelwebRawNumberRange;
+  majorPrices?: ImovelwebRawPriceRange;
+  minorPrices?: ImovelwebRawPriceRange;
+  numberOfUnits: number;
+  prices?: ImovelwebRawPriceRange;
+  pricesByOperationType?: ImovelwebRawPricesByOperationType[];
+  rooms: ImovelwebRawNumberRange;
+  steps: ImovelwebRawDevelopmentStep[];
+  totalArea: ImovelwebRawNumberRange;
+  unitGroupsData: Record<string, Record<string, ImovelwebRawUnitGroup>>;
+}
+
+export interface ImovelwebRawDevelopmentStep {
+  stage: string;
+  status: string;
+}
+
+/** A listing attribute keyed by imovelweb's feature code, with its value as a string. */
+export interface ImovelwebRawFeature {
+  featureCategoryId?: string | null;
+  featureId: string;
+  icon?: string | null;
+  label: string;
+  maxValue?: string | null;
+  measure?: string | null;
+  minValue?: string | null;
+  value: string | null;
+}
+
+export interface ImovelwebRawNumberRange {
+  tuple0?: number | null;
+  tuple1?: number | null;
+}
+
+export interface ImovelwebRawPrice {
   amount: number | null;
   currency: string;
   currencyId: string | null;
@@ -454,159 +826,121 @@ export interface ImovelwebPrice {
   isoCode?: string;
 }
 
-/**
- * One price per operation. `operationType.operationTypeId`: 1 sale, 2 rent, 3 auction,
- * 4 season. `prices[].currencyId` 3 is R$; amounts are whole reais.
- */
-export interface ImovelwebPriceOperationType {
-  lowPricePercentage?: string | null;
-  operationType: ImovelwebOperationType;
-  prices: ImovelwebPrice[];
+export interface ImovelwebRawPriceRange {
+  tuple0?: ImovelwebRawPrice | null;
+  tuple1?: ImovelwebRawPrice | null;
 }
 
-export interface ImovelwebPriceRange {
-  tuple0: ImovelwebPrice | null;
-  tuple1?: ImovelwebPrice | null;
-}
-
-export interface ImovelwebPricesByOperationType {
+export interface ImovelwebRawPricesByOperationType {
   operationTypeName: string;
-  prices: ImovelwebPrice[];
+  prices: ImovelwebRawPrice[];
 }
 
-export type ImovelwebPropertySubtype = "standard_apartment" | "studio" | "penthouse" | "flat" | "garden" | "loft" | "duplex" | "standard_house" | "condo_house" | "townhouse" | "village_house" | "office" | "commercial_point" | "store" | "garage_box" | "commercial_house" | "warehouse" | "inn" | "whole_building" | "small_farm" | "farm";
-
-export type ImovelwebPropertyType = "apartment" | "house" | "land" | "commercial" | "rural";
-
-export interface ImovelwebPublication {
-  publicationPlan: ImovelwebPublicationPlan;
-}
-
-export interface ImovelwebPublicationPlan {
-  publicationAreaId: string;
-}
-
-export type ImovelwebPublishedWithin = "today" | "since_yesterday" | "7_days" | "15_days" | "30_days" | "45_days";
-
-/**
- * An agency or developer profile. `phone` is the free text the agency publishes;
- * `phoneNumbers` holds each number in it as +55, area code and number. `publisherTypeId`
- * is the listings' code as a number; `amountPostingActive` counts its live listings.
- */
-export interface ImovelwebPublisher {
-  aboutUs: string | null;
-  address: string | null;
-  amountPostingActive: number | null;
-  coverPictureUrl: string | null;
-  coverPictures: ImovelwebCoverPicture[] | null;
-  createdYear: string | null;
-  denomination: string;
-  description: string | null;
-  hasMainPhone: boolean;
-  idRealEstate: number;
-  isApproved: boolean;
-  isMicrositeActivated: boolean;
-  isPublisher5A: boolean;
-  phone: string | null;
-  phoneNumbers: string[];
-  premier: boolean;
-  publisherTypeId: number;
-  ratings: ImovelwebPublisherRatings | null;
-  urlLogo: string | null;
-  videoUrl: string | null;
-}
-
-export interface ImovelwebPublisherRatings {
-  average: number;
-  newPublisher: boolean;
-  ratings: ImovelwebRating[] | null;
-  recommendPercentage: number;
-  respondedCount: number | null;
-  scoreReputation: number;
-}
-
-export type ImovelwebPublisherType = "all" | "agency" | "owner";
-
-export interface ImovelwebRating {
-  average: number;
-  question: string;
-  title: string;
-}
-
-export interface ImovelwebRealEstateSubtype {
-  name: string;
-  realEstateSubTypeId: string;
-}
-
-export interface ImovelwebRealEstateType {
-  name: string;
-  realEstateTypeId: string;
-}
-
-export interface ImovelwebRequestVisit {
-  activeModal5A: boolean;
-  activeModalPostlead5A: boolean;
-  cronutEarlyDemand: boolean;
-  cronutRent: boolean;
-  cronutSell: boolean;
-  ownershipRede?: string | null;
-  requestVisit5AUrl?: string | null;
-  requestVisitUrl: ImovelwebRequestVisitUrl;
-  showWhatsapp: boolean;
-}
-
-export interface ImovelwebRequestVisitUrl {
+export interface ImovelwebRawRequestVisitUrl {
   urlControl?: string | null;
   urlEarlyDemand?: string | null;
   urlVariant?: string | null;
   urlWhatsappConcierge?: string | null;
 }
 
+export interface ImovelwebRawUnitGroup {
+  coveredArea: ImovelwebRawNumberRange;
+  majorPrices?: ImovelwebRawPriceRange;
+  minorPrices?: ImovelwebRawPriceRange;
+  numberOfUnits: number;
+  operationTypeId: string | null;
+  picture?: string | null;
+  prices?: ImovelwebRawPriceRange;
+  realEstateTypeId: string;
+  rooms: string;
+  title: string;
+  totalArea: ImovelwebRawNumberRange;
+}
+
+export interface ImovelwebRequestVisitRaw {
+  activeModal5A: boolean;
+  activeModalPostlead5A: boolean;
+  cronutEarlyDemand: boolean;
+  cronutRent: boolean;
+  cronutSell: boolean;
+  requestVisitUrl: ImovelwebRawRequestVisitUrl;
+  showWhatsapp: boolean;
+}
+
 /**
- * imovelweb's compact listing card: `price`, `operationType`, `realestateType` and
- * `location` are display strings.
+ * imovelweb's compact card for a similar listing. Its type, operation and price arrive
+ * as display text, which this API decodes; `location.label` is the card's own wording.
  */
 export interface ImovelwebSimilarListing {
-  address: string;
-  currency: string;
-  descripcionNormalized: string | null;
-  developmentData: ImovelwebDevelopmentData | null;
-  location: string;
-  mainFeatures: Record<string, ImovelwebFeature>;
-  operationType: string;
-  pictures: ImovelwebListingPicture[];
-  postingId: string;
-  postingType: string;
-  premier: boolean;
-  price: string;
-  publicationAreaId: string | null;
-  publisherLogo: string;
-  realestateType: string;
+  ad_tier: ImovelwebAdTier | null;
+  bathrooms: number | null;
+  bedrooms: number | null;
+  building_age_years: number | null;
+  id: string;
+  is_premier: boolean;
+  location: ImovelwebSimilarListingLocation;
+  operation: ImovelwebOperation | null;
+  parking_spaces: number | null;
+  photos: ImovelwebPicture[];
+  posting_type: ImovelwebPostingType | null;
+  price: ImovelwebMoney | null;
+  property_type: ImovelwebPropertyKind | null;
+  publisher_logo_url: string | null;
+  raw: ImovelwebSimilarListingRaw;
+  suites: number | null;
   title: string;
+  total_area_m2: number | null;
+  usable_area_m2: number | null;
+}
+
+export interface ImovelwebSimilarListingLocation {
+  address: string | null;
+  label: string | null;
+}
+
+export interface ImovelwebSimilarListingRaw {
+  descripcionNormalized: string | null;
+  developmentData: ImovelwebRawDevelopmentData | null;
+  mainFeatures: Record<string, ImovelwebRawFeature>;
+  publicationAreaId: string | null;
 }
 
 export interface ImovelwebSimilarListings {
   listings: ImovelwebSimilarListing[];
 }
 
+/** Whether a development has passed a stage, is at it, or has yet to reach it. */
+export type ImovelwebStepStatus = "done" | "in_progress" | "to_do";
+
+/** The development's units of one type and bedroom count. */
 export interface ImovelwebUnitGroup {
-  coveredArea: ImovelwebNumberRange;
-  majorPrices?: ImovelwebPriceRange;
-  minorPrices?: ImovelwebPriceRange;
-  numberOfUnits: number;
-  operationTypeId: string | null;
-  picture?: string | null;
-  prices?: ImovelwebPriceRange;
-  realEstateTypeId: string;
-  rooms: string;
+  bedrooms: number | null;
+  operation: ImovelwebOperation | null;
+  price: ImovelwebMoneyRange | null;
+  property_type: ImovelwebPropertyKind | null;
+  raw: ImovelwebUnitGroupRaw;
   title: string;
-  totalArea: ImovelwebNumberRange;
+  total_area_m2: ImovelwebAreaRange | null;
+  unit_count: number;
+  usable_area_m2: ImovelwebAreaRange | null;
 }
 
-export interface ImovelwebVisiblePictures {
-  additionalPicturesCount: number;
-  pictures: ImovelwebListingPicture[];
+export interface ImovelwebUnitGroupRaw {
+  picture?: string | null;
 }
+
+export interface ImovelwebViewport {
+  east: number;
+  north: number;
+  south: number;
+  west: number;
+}
+
+/**
+ * How precisely imovelweb shows an address or a map position: `exact`, or `approximate`
+ * (a circle of about 200 m on the map).
+ */
+export type ImovelwebVisibility = "exact" | "approximate";
 
 export interface ListListingPublishersParams {
   /** imovelweb listing id: the number at the end of a listing URL (`...-3047460005.html`). */
@@ -616,7 +950,9 @@ export interface ListListingPublishersParams {
 export interface ListListingsParams {
   /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a page number, so send it with the same filters and sort as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` at page 1,000 (30,000 listings), the deepest page imovelweb serves; narrow the filters to reach the rest. imovelweb's `relevance` order changes over minutes, so a long crawl that pages by relevance can skip or repeat listings. */
   cursor?: string;
-  /** Required amenities, such as `pool` or `pets_allowed`; repeat for several. A listing must have all of them. */
+  /** Development stage; repeat for several, a development at any of them matches. Only with `operation=development`. */
+  development_stage?: ImovelwebDevelopmentStage[];
+  /** Required amenities, such as `pool` or `pets_allowed`; repeat for several. A listing must have all of them. imovelweb's development search cannot filter by `garden`. */
   features?: ImovelwebListingFeature[];
   /** Free-text keyword matched against listing text, such as `piscina`. */
   keyword?: string | null;
@@ -624,7 +960,7 @@ export interface ListListingsParams {
   location_id?: string[];
   /** Building age: `under_construction`, `launching_soon`, at most `5_years` to `50_years`, or `over_50_years`. */
   max_age?: ImovelwebMaxAge | null;
-  /** Maximum bedrooms. imovelweb's top bucket is 5 or more, so 4 is the highest cap. */
+  /** Maximum bedrooms. imovelweb's top bucket is 5 or more, so 4 is the highest cap. Send the same number as `min_bedrooms` for an exact count. */
   max_bedrooms?: number | null;
   /** Maximum monthly condominium fee in R$. */
   max_condo_fee?: number | null;
@@ -652,18 +988,22 @@ export interface ListListingsParams {
   operation?: ImovelwebOperation;
   /** `none` for listings without parking, or `1` to `4` for at least that many spaces. */
   parking_spaces?: ImovelwebParkingSpaces | null;
+  /** Compare `min_price` and `max_price` with the rent plus the monthly condo fee. Only with `operation=rent` and a price bound. */
+  price_includes_condo_fee?: boolean;
   /** Property subtype, such as `penthouse` or `townhouse`; repeat for several. Send its type in `property_type` too (`penthouse` needs `apartment`). Not with `operation=development`. */
   property_subtype?: ImovelwebPropertySubtype[];
   /** Property type; repeat for several. Not with `operation=development`. */
   property_type?: ImovelwebPropertyType[];
   /** Only listings published within this window. */
   published_within?: ImovelwebPublishedWithin | null;
-  /** Only this publisher's listings (`publisher.publisherId` on a listing). */
+  /** Only this publisher's listings (`publisher.id` on a listing). */
   publisher_id?: string | null;
-  /** `agency` for agencies and developers, `owner` for owners selling directly. */
+  /** `company` for every publisher that is not an owner: agencies, developers, brokers and builders (imovelweb's Imobiliária option). `owner` for owners selling directly. `all` for both. */
   publisher_type?: ImovelwebPublisherType;
   /** `relevance`, `lowest_price`, `highest_price`, `newest`, `most_viewed` or `price_dropped`. imovelweb keeps its premier listings in their own ordered run, so prices on one page can step back where the two runs meet, and it sorts a development by its highest unit price while showing its lowest. `relevance` reshuffles over minutes, so a long crawl should sort by `newest`. */
   sort?: ImovelwebListingSort;
+  /** Only rentals that need no guarantor (imovelweb's Aluguel sem fiador). Only with `operation=rent`. */
+  without_guarantor?: boolean;
 }
 
 export interface ListLocationsParams {
@@ -681,7 +1021,9 @@ export interface ListSimilarListingsParams {
 }
 
 export interface MapListingsParams {
-  /** Required amenities, such as `pool` or `pets_allowed`; repeat for several. A listing must have all of them. */
+  /** Development stage; repeat for several, a development at any of them matches. Only with `operation=development`. */
+  development_stage?: ImovelwebDevelopmentStage[];
+  /** Required amenities, such as `pool` or `pets_allowed`; repeat for several. A listing must have all of them. imovelweb's development search cannot filter by `garden`. */
   features?: ImovelwebListingFeature[];
   /** Free-text keyword matched against listing text, such as `piscina`. */
   keyword?: string | null;
@@ -689,7 +1031,7 @@ export interface MapListingsParams {
   location_id?: string[];
   /** Building age: `under_construction`, `launching_soon`, at most `5_years` to `50_years`, or `over_50_years`. */
   max_age?: ImovelwebMaxAge | null;
-  /** Maximum bedrooms. imovelweb's top bucket is 5 or more, so 4 is the highest cap. */
+  /** Maximum bedrooms. imovelweb's top bucket is 5 or more, so 4 is the highest cap. Send the same number as `min_bedrooms` for an exact count. */
   max_bedrooms?: number | null;
   /** Maximum monthly condominium fee in R$. */
   max_condo_fee?: number | null;
@@ -717,16 +1059,20 @@ export interface MapListingsParams {
   operation?: ImovelwebOperation;
   /** `none` for listings without parking, or `1` to `4` for at least that many spaces. */
   parking_spaces?: ImovelwebParkingSpaces | null;
+  /** Compare `min_price` and `max_price` with the rent plus the monthly condo fee. Only with `operation=rent` and a price bound. */
+  price_includes_condo_fee?: boolean;
   /** Property subtype, such as `penthouse` or `townhouse`; repeat for several. Send its type in `property_type` too (`penthouse` needs `apartment`). Not with `operation=development`. */
   property_subtype?: ImovelwebPropertySubtype[];
   /** Property type; repeat for several. Not with `operation=development`. */
   property_type?: ImovelwebPropertyType[];
   /** Only listings published within this window. */
   published_within?: ImovelwebPublishedWithin | null;
-  /** Only this publisher's listings (`publisher.publisherId` on a listing). */
+  /** Only this publisher's listings (`publisher.id` on a listing). */
   publisher_id?: string | null;
-  /** `agency` for agencies and developers, `owner` for owners selling directly. */
+  /** `company` for every publisher that is not an owner: agencies, developers, brokers and builders (imovelweb's Imobiliária option). `owner` for owners selling directly. `all` for both. */
   publisher_type?: ImovelwebPublisherType;
+  /** Only rentals that need no guarantor (imovelweb's Aluguel sem fiador). Only with `operation=rent`. */
+  without_guarantor?: boolean;
 }
 
 export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
