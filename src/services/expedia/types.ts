@@ -199,68 +199,68 @@ export interface ExpediaRoom {
 }
 
 export interface GetHotelParams {
-  /** Expedia hotel id, 1 to 2147483647: the number after `.h` in a hotel's Expedia URL (`...Pod-Times-Square.h19681371.Hotel-Information`), or `id` on a `/hotels` result. */
+  /** Hotel ID from a `/hotels` result or the number after `.h` in an Expedia URL. */
   hotel_id: string;
 }
 
 export interface ListHotelReviewsParams {
-  /** `pagination.next_cursor` from the previous page; empty for the first page. The cursor holds only a position, so send it with the same parameters as the page it came from. */
+  /** Previous response's `pagination.next_cursor`. Keep all other parameters unchanged. */
   cursor?: string;
-  /** Expedia hotel id, 1 to 2147483647: the number after `.h` in a hotel's Expedia URL (`...Pod-Times-Square.h19681371.Hotel-Information`), or `id` on a `/hotels` result. */
+  /** Hotel ID from a `/hotels` result or the number after `.h` in an Expedia URL. */
   hotel_id: string;
   /** `most_recent`, `highest_rating` or `lowest_rating`. */
   sort?: ExpediaReviewSort;
 }
 
 export interface ListHotelRoomsParams {
-  /** Adults in the room. */
+  /** Number of adults. */
   adults?: number;
-  /** Arrival date, `YYYY-MM-DD`: today or later, at most 500 days ahead. */
+  /** Check-in date. Must be today or within 500 days. */
   check_in: string;
-  /** Departure date, `YYYY-MM-DD`: after `check_in`, at most 28 nights later. */
+  /** Check-out date. Stays can be up to 28 nights. */
   check_out: string;
-  /** Age of each child in the room, 0 to 17; repeat the parameter per child (`children_ages=4&children_ages=9`), at most 6. */
+  /** Child age, 0 to 17. Repeat once per child, up to 6. */
   children_ages?: number[] | null;
-  /** Expedia hotel id, 1 to 2147483647: the number after `.h` in a hotel's Expedia URL (`...Pod-Times-Square.h19681371.Hotel-Information`), or `id` on a `/hotels` result. */
+  /** Hotel ID from a `/hotels` result or the number after `.h` in an Expedia URL. */
   hotel_id: string;
 }
 
 export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
 
 export interface SearchHotelsParams {
-  /** Adults in the room. */
+  /** Number of adults. */
   adults?: number;
-  /** Keep hotels that have every one of these amenities; repeat the parameter for several. */
+  /** Required amenities. Hotels must have every selected value. */
   amenities?: ExpediaAmenity[] | null;
-  /** Arrival date, `YYYY-MM-DD`: today or later, at most 500 days ahead. */
+  /** Check-in date. Must be today or within 500 days. */
   check_in: string;
-  /** Departure date, `YYYY-MM-DD`: after `check_in`, at most 28 nights later. */
+  /** Check-out date. Stays can be up to 28 nights. */
   check_out: string;
-  /** Age of each child in the room, 0 to 17; repeat the parameter per child (`children_ages=4&children_ages=9`), at most 6. */
+  /** Child age, 0 to 17. Repeat once per child, up to 6. */
   children_ages?: number[] | null;
-  /** `pagination.next_cursor` from the previous page; empty for the first page. The cursor holds only a position, so send it with the same parameters as the page it came from. */
+  /** Previous response's `pagination.next_cursor`. Keep all other parameters unchanged. */
   cursor?: string;
-  /** Lowest guest rating: `good_7` (7+), `very_good_8` (8+) or `wonderful_9` (9+). */
+  /** Minimum guest rating. */
   guest_rating?: ExpediaGuestRatingFilter | null;
   /** Highest nightly price in USD. */
   max_price?: number | null;
-  /** Keep hotels offering every one of these meal plans; repeat the parameter for several. */
+  /** Required meal plans. Hotels must offer every selected value. */
   meal_plans?: ExpediaMealPlan[] | null;
   /** Lowest nightly price in USD. */
   min_price?: number | null;
-  /** Keep these property types; repeat the parameter for several. `vacation_home` selects private homes. */
+  /** Property types. `vacation_home` means private homes. */
   property_types?: ExpediaPropertyType[] | null;
-  /** Expedia region id: `region_id` of a city, neighborhood, airport or landmark from `/v1/expedia/locations` (`2621` is New York). */
+  /** `region_id` from `/v1/expedia/locations`. */
   region_id: string;
-  /** `recommended` is Expedia's default order; `star_rating` puts the highest-rated class first. Price sorts order by the stay's total with taxes. */
+  /** Sort order. Price sorts use the stay total, including taxes. */
   sort?: ExpediaHotelSort;
-  /** Keep hotels with these star ratings, 1 to 5; repeat the parameter for several (`star_ratings=4&star_ratings=5`). */
+  /** Hotel star ratings, 1 to 5. Repeat to include more than one. */
   star_ratings?: number[] | null;
 }
 
 export interface SearchLocationsParams {
   /** Suggestions to return. */
   limit?: number;
-  /** Place name as you would type it on Expedia, such as `new york` or `paris`. */
+  /** Place name, such as `new york`. */
   query: string;
 }
