@@ -17,6 +17,7 @@ import { BirdeyeClient } from './services/birdeye/client.js';
 import { ZillowClient } from './services/zillow/client.js';
 import { LinkedinClient } from './services/linkedin/client.js';
 import { ImovelwebClient } from './services/imovelweb/client.js';
+import { ExpediaClient } from './services/expedia/client.js';
 
 export class TaplineClient {
   readonly airbnb: AirbnbClient;
@@ -34,6 +35,7 @@ export class TaplineClient {
   readonly zillow: ZillowClient;
   readonly linkedin: LinkedinClient;
   readonly imovelweb: ImovelwebClient;
+  readonly expedia: ExpediaClient;
 
   constructor(config: TaplineClientConfig = {}) {
     const base = new BaseClient(config);
@@ -52,5 +54,6 @@ export class TaplineClient {
     this.zillow = new ZillowClient(base);
     this.linkedin = new LinkedinClient(base);
     this.imovelweb = new ImovelwebClient(base);
+    this.expedia = new ExpediaClient(base);
   }
 }

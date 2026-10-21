@@ -1,7 +1,7 @@
 {
   "name": "@tapline/client",
   "version": "0.2.9",
-  "description": "Typed TypeScript SDK for Tapline's web scraping APIs for YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, Twitter (X), Pinterest, Instagram, Pumpfun, TikTok, Birdeye, LinkedIn and imovelweb.",
+  "description": "Typed TypeScript SDK for Tapline's web scraping APIs for YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, Twitter (X), Pinterest, Instagram, Pumpfun, TikTok, Birdeye, LinkedIn, imovelweb and Expedia.",
   "license": "MIT",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -28,6 +28,8 @@
     "birdeye",
     "linkedin",
     "imovelweb",
+    "expedia",
+    "hotels",
     "api",
     "client",
     "sdk",

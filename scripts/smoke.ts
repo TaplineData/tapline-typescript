@@ -16,6 +16,7 @@ import { run as runBirdeye } from './smoke-birdeye.js';
 import { run as runZillow } from './smoke-zillow.js';
 import { run as runLinkedin } from './smoke-linkedin.js';
 import { run as runImovelweb } from './smoke-imovelweb.js';
+import { run as runExpedia } from './smoke-expedia.js';
 
 const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'airbnb': runAirbnb,
@@ -33,6 +34,7 @@ const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'zillow': runZillow,
   'linkedin': runLinkedin,
   'imovelweb': runImovelweb,
+  'expedia': runExpedia,
 };
 
 const services = process.argv.slice(2);
