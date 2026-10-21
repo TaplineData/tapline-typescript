@@ -29,9 +29,9 @@ export interface ExpediaAddress {
 export type ExpediaAmenity = "wifi" | "pets" | "gym" | "pool" | "kitchen" | "hot_tub" | "restaurant" | "spa" | "air_conditioning" | "outdoor_space" | "crib" | "washer_dryer" | "ev_charging" | "airport_shuttle";
 
 export interface ExpediaAmenityGroup {
-  category: string;
+  category: string | null;
   items: string[];
-  section: string;
+  section: string | null;
 }
 
 export interface ExpediaCoordinates {
@@ -61,7 +61,7 @@ export interface ExpediaHotel {
   guest_rating: ExpediaGuestRating;
   id: string;
   images: ExpediaImage[];
-  name: string;
+  name: string | null;
   neighborhood_description: string | null;
   policies: ExpediaHotelPolicies;
   star_rating: number | null;
@@ -75,7 +75,7 @@ export interface ExpediaHotelCard {
   guest_rating: ExpediaGuestRating;
   id: string;
   images: ExpediaImage[];
-  name: string;
+  name: string | null;
   price: ExpediaHotelPrice | null;
   subtitles: string[];
   url: string;
@@ -100,7 +100,7 @@ export interface ExpediaHotelReviews {
   hotel_id: string;
   pagination: ExpediaCursorPagination;
   reviews: ExpediaReview[];
-  total_count: number;
+  total_count: number | null;
 }
 
 export interface ExpediaHotelRooms {
@@ -120,7 +120,7 @@ export interface ExpediaHotelsPage {
   hotels: ExpediaHotelCard[];
   pagination: ExpediaCursorPagination;
   region_id: string;
-  total_count: number;
+  total_count: number | null;
 }
 
 export interface ExpediaImage {
@@ -133,10 +133,10 @@ export interface ExpediaLocation {
   coordinates: ExpediaCoordinates | null;
   country: string | null;
   country_code: string | null;
-  full_name: string;
-  name: string;
+  full_name: string | null;
+  name: string | null;
   region_id: string;
-  type: string;
+  type: string | null;
 }
 
 export interface ExpediaLocations {
@@ -154,7 +154,7 @@ export type ExpediaMealPlan = "breakfast" | "lunch" | "dinner" | "all_inclusive"
 export interface ExpediaMoney {
   amount: number;
   currency: string;
-  formatted: string;
+  formatted: string | null;
 }
 
 export type ExpediaPropertyType = "hotel" | "motel" | "hostel" | "aparthotel" | "bed_and_breakfast" | "resort" | "lodge" | "villa" | "guesthouse" | "vacation_home" | "cabin" | "cottage" | "farm" | "rv";
@@ -194,19 +194,19 @@ export interface ExpediaRoom {
   features: string[];
   id: string;
   images: ExpediaImage[];
-  name: string;
+  name: string | null;
   rate_plans: ExpediaRatePlan[];
 }
 
 export interface GetHotelParams {
-  /** Expedia hotel id: the number after `.h` in a hotel's Expedia URL (`...Pod-Times-Square.h19681371.Hotel-Information`), or `id` on a `/hotels` result. */
+  /** Expedia hotel id, 1 to 2147483647: the number after `.h` in a hotel's Expedia URL (`...Pod-Times-Square.h19681371.Hotel-Information`), or `id` on a `/hotels` result. */
   hotel_id: string;
 }
 
 export interface ListHotelReviewsParams {
   /** `pagination.next_cursor` from the previous page; empty for the first page. The cursor holds only a position, so send it with the same parameters as the page it came from. */
   cursor?: string;
-  /** Expedia hotel id: the number after `.h` in a hotel's Expedia URL (`...Pod-Times-Square.h19681371.Hotel-Information`), or `id` on a `/hotels` result. */
+  /** Expedia hotel id, 1 to 2147483647: the number after `.h` in a hotel's Expedia URL (`...Pod-Times-Square.h19681371.Hotel-Information`), or `id` on a `/hotels` result. */
   hotel_id: string;
   /** `most_recent`, `highest_rating` or `lowest_rating`. */
   sort?: ExpediaReviewSort;
@@ -221,7 +221,7 @@ export interface ListHotelRoomsParams {
   check_out: string;
   /** Age of each child in the room, 0 to 17; repeat the parameter per child (`children_ages=4&children_ages=9`), at most 6. */
   children_ages?: number[] | null;
-  /** Expedia hotel id: the number after `.h` in a hotel's Expedia URL (`...Pod-Times-Square.h19681371.Hotel-Information`), or `id` on a `/hotels` result. */
+  /** Expedia hotel id, 1 to 2147483647: the number after `.h` in a hotel's Expedia URL (`...Pod-Times-Square.h19681371.Hotel-Information`), or `id` on a `/hotels` result. */
   hotel_id: string;
 }
 
