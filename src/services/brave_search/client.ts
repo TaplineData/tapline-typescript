@@ -6,7 +6,7 @@ import type { BraveSearchAiAnswer, BraveSearchDirections, BraveSearchGoggle, Bra
 export class BraveSearchClient {
   constructor(private readonly base: BaseClient) {}
 
-  /** Get the AI-written answer to a search, with its cited sources. Costs 2 credits. */
+  /** Get the AI-written answer to a search, with its cited sources. Costs 5 credits. */
   async getAiAnswer(params: GetAiAnswerParams): Promise<BraveSearchAiAnswer> {
     return this.base.get<BraveSearchAiAnswer>('/v1/brave-search/ai-answer', { ...params });
   }
@@ -36,22 +36,22 @@ export class BraveSearchClient {
     return this.base.get<BraveSearchGoggleList>('/v1/brave-search/goggles/search', { ...params });
   }
 
-  /** Search images: up to 200 in one page. Costs 2 credits. */
+  /** Search images: up to 200 in one page. Costs 5 credits. */
   async searchImages(params: SearchImagesParams): Promise<BraveSearchImagesPage> {
     return this.base.get<BraveSearchImagesPage>('/v1/brave-search/images', { ...params });
   }
 
-  /** List images that look like an image result. Costs 2 credits. */
+  /** List images that look like an image result. Costs 5 credits. */
   async listSimilarImages(params: ListSimilarImagesParams): Promise<BraveSearchSimilarImages> {
     return this.base.get<BraveSearchSimilarImages>('/v1/brave-search/images/similar', { ...params });
   }
 
-  /** Search news articles. Results carry a relative age, not a timestamp; the source sends none. Costs 2 credits. */
+  /** Search news articles. Results carry a relative age, not a timestamp; the source sends none. Costs 5 credits. */
   async searchNews(params: SearchNewsParams): Promise<BraveSearchNewsPage> {
     return this.base.get<BraveSearchNewsPage>('/v1/brave-search/news', { ...params });
   }
 
-  /** Search places around a point: up to 100 businesses, addresses and areas within about 8 km. Costs 3 credits. */
+  /** Search places around a point: up to 100 businesses, addresses and areas within about 8 km. Costs 8 credits. */
   async searchPlaces(params: SearchPlacesParams): Promise<BraveSearchPlacesPage> {
     return this.base.get<BraveSearchPlacesPage>('/v1/brave-search/places', { ...params });
   }
@@ -61,7 +61,7 @@ export class BraveSearchClient {
     return this.base.get<BraveSearchPlaceSuggestions>('/v1/brave-search/places/suggestions', { ...params });
   }
 
-  /** Get one place with its contact details, hours, photos and reviews. Costs 2 credits. */
+  /** Get one place with its contact details, hours, photos and reviews. Costs 5 credits. */
   async getPlace(params: GetPlaceParams): Promise<BraveSearchPlace> {
     const { place_id } = params;
     return this.base.get<BraveSearchPlace>(`/v1/brave-search/places/${encodeURIComponent(place_id)}`);
@@ -73,7 +73,7 @@ export class BraveSearchClient {
     return this.base.get<BraveSearchPlaceDescription>(`/v1/brave-search/places/${encodeURIComponent(place_id)}/description`);
   }
 
-  /** Search the web: 20 ranked results per page with the news, videos, places, answers and cards shown beside them. Costs 2 credits. */
+  /** Search the web: 20 ranked results per page with the news, videos, places, answers and cards shown beside them. Costs 5 credits. */
   async search(params: SearchParams): Promise<BraveSearchWebPage> {
     return this.base.get<BraveSearchWebPage>('/v1/brave-search/search', { ...params });
   }
@@ -105,7 +105,7 @@ export class BraveSearchClient {
     return this.base.get<BraveSearchSuggestions>('/v1/brave-search/suggestions', { ...params });
   }
 
-  /** Search videos. Costs 2 credits. */
+  /** Search videos. Costs 5 credits. */
   async searchVideos(params: SearchVideosParams): Promise<BraveSearchVideosPage> {
     return this.base.get<BraveSearchVideosPage>('/v1/brave-search/videos', { ...params });
   }
