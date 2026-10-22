@@ -3521,7 +3521,7 @@ export interface ListSportsGamesParams {
 }
 
 export interface ListSuggestionsParams {
-  /** Search text. Operators such as `site:`, quotes and `-term` work; `intitle:` and `inurl:` don't. */
+  /** Search text. Operators such as `site:`, quotes and `-term` work; `intitle:`, `inurl:`, `intext:` and `inanchor:` don't. */
   query: string;
 }
 
@@ -3544,7 +3544,7 @@ export interface SearchGogglesParams {
 export interface SearchImagesParams {
   /** Country to search from. */
   country?: BraveSearchCountry;
-  /** Search text. Operators such as `site:`, quotes and `-term` work; `intitle:` and `inurl:` don't. */
+  /** Search text. Operators such as `site:`, quotes and `-term` work; `intitle:`, `inurl:`, `intext:` and `inanchor:` don't. */
   query: string;
   /** Adult-content filter. */
   safe_search?: BraveSearchSafeSearch;
@@ -3561,7 +3561,7 @@ export interface SearchNewsParams {
   date_to?: string | null;
   /** Only pages from the past day, week, month or year. */
   freshness?: BraveSearchFreshness;
-  /** Search text. Operators such as `site:`, quotes and `-term` work; `intitle:` and `inurl:` don't. */
+  /** Search text. Operators such as `site:`, quotes and `-term` work; `intitle:`, `inurl:`, `intext:` and `inanchor:` don't. */
   query: string;
   /** Adult-content filter. */
   safe_search?: BraveSearchSafeSearch;
@@ -3582,7 +3582,7 @@ export interface SearchParams {
   freshness?: BraveSearchFreshness;
   /** A Goggle's `url` from `/goggles` to re-rank results. A Goggle the search has not indexed is ignored; check one with `/goggles/profile`. */
   goggle_url?: string | null;
-  /** Search text. Operators such as `site:`, quotes and `-term` work; `intitle:` and `inurl:` don't. */
+  /** Search text. Operators such as `site:`, quotes and `-term` work; `intitle:`, `inurl:`, `intext:` and `inanchor:` don't. */
   query: string;
   /** Adult-content filter. */
   safe_search?: BraveSearchSafeSearch;
@@ -3608,7 +3608,7 @@ export interface SearchVideosParams {
   cursor?: string;
   /** Only videos from the past day, week, month or year. */
   freshness?: BraveSearchFreshness;
-  /** Search text. Operators such as `site:`, quotes and `-term` work; `intitle:` and `inurl:` don't. */
+  /** Search text. Operators such as `site:`, quotes and `-term` work; `intitle:`, `inurl:`, `intext:` and `inanchor:` don't. */
   query: string;
   /** Adult-content filter. */
   safe_search?: BraveSearchSafeSearch;
