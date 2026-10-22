@@ -26,6 +26,23 @@ export interface ExpediaAddress {
   street: string | null;
 }
 
+export interface ExpediaAirport {
+  code: string;
+  coordinates: ExpediaCoordinates | null;
+  country: string | null;
+  country_code: string | null;
+  metro_code: string | null;
+  name: string | null;
+  place: string | null;
+  region_id: string | null;
+  type: string | null;
+}
+
+export interface ExpediaAirports {
+  airports: ExpediaAirport[];
+  query: string;
+}
+
 export type ExpediaAmenity = "wifi" | "pets" | "gym" | "pool" | "kitchen" | "hot_tub" | "restaurant" | "spa" | "air_conditioning" | "outdoor_space" | "crib" | "washer_dryer" | "ev_charging" | "airport_shuttle";
 
 export interface ExpediaAmenityGroup {
@@ -44,6 +61,108 @@ export type ExpediaCursorCompletion = "exhausted" | "depth_limit";
 export interface ExpediaCursorPagination {
   completion: ExpediaCursorCompletion | null;
   next_cursor: string | null;
+}
+
+export interface ExpediaFareCalendar {
+  dates: ExpediaFareDate[];
+  departure_date: string;
+  destination: string;
+  origin: string;
+  prediction: ExpediaPricePrediction | null;
+  return_date: string | null;
+}
+
+export interface ExpediaFareDate {
+  departure_date: string;
+  label: ExpediaFareDateLabel;
+  price: ExpediaMoney;
+  return_date: string | null;
+}
+
+export type ExpediaFareDateLabel = "lowest" | "highest" | "searched" | "searched_lowest" | "regular";
+
+export interface ExpediaFareFeature {
+  availability: ExpediaFareFeatureAvailability;
+  fee: ExpediaMoney | null;
+  text: string;
+}
+
+export type ExpediaFareFeatureAvailability = "included" | "not_included" | "fee" | "unknown";
+
+export interface ExpediaFlight {
+  airlines: string[];
+  arrival: ExpediaFlightEndpoint;
+  departure: ExpediaFlightEndpoint;
+  duration_minutes: number | null;
+  emissions: string | null;
+  fares: ExpediaFlightFare[];
+  layovers: ExpediaFlightLayover[];
+  price: ExpediaMoney | null;
+  price_difference: ExpediaMoney | null;
+  seats_left: number | null;
+  segments: ExpediaFlightSegment[];
+  stops: number | null;
+}
+
+export type ExpediaFlightCabin = "economy" | "premium_economy" | "business" | "first";
+
+export interface ExpediaFlightEndpoint {
+  airport_code: string | null;
+  airport_name: string | null;
+  city: string | null;
+  local_time: string | null;
+  terminal: string | null;
+  timezone: string | null;
+}
+
+export interface ExpediaFlightFare {
+  cabin: string | null;
+  features: ExpediaFareFeature[];
+  name: string | null;
+  next_leg_token: string | null;
+  price: ExpediaMoney | null;
+  price_difference: ExpediaMoney | null;
+  total_price: ExpediaMoney | null;
+}
+
+export interface ExpediaFlightLayover {
+  airport_name: string | null;
+  change_planes: boolean | null;
+  city: string | null;
+  duration_minutes: number | null;
+}
+
+export interface ExpediaFlightLeg {
+  departure_date: string;
+  destination: string;
+  origin: string;
+}
+
+export interface ExpediaFlightSegment {
+  aircraft: string | null;
+  airline: string | null;
+  airline_code: string | null;
+  amenities: string[];
+  arrival: ExpediaFlightEndpoint;
+  booking_code: string | null;
+  cabin: string | null;
+  departure: ExpediaFlightEndpoint;
+  distance_miles: number | null;
+  duration_minutes: number | null;
+  emissions: string | null;
+  flight_number: string | null;
+  operated_by: string | null;
+}
+
+export type ExpediaFlightSort = "recommended" | "price_low_to_high" | "price_high_to_low" | "duration_shortest" | "duration_longest" | "departure_earliest" | "departure_latest" | "arrival_earliest" | "arrival_latest";
+
+export type ExpediaFlightTimeOfDay = "morning" | "afternoon" | "evening";
+
+export interface ExpediaFlights {
+  flights: ExpediaFlight[];
+  leg: number;
+  legs: ExpediaFlightLeg[];
+  trip_type: ExpediaTripType;
 }
 
 export interface ExpediaGuestRating {
@@ -157,6 +276,23 @@ export interface ExpediaMoney {
   formatted: string | null;
 }
 
+export interface ExpediaPricePoint {
+  date: string;
+  price: ExpediaMoney;
+}
+
+export interface ExpediaPricePrediction {
+  average_price: ExpediaMoney | null;
+  detail: string | null;
+  forecast: ExpediaPricePoint[];
+  headline: string | null;
+  history: ExpediaPricePoint[];
+  lowest_predicted_on: string | null;
+  lowest_predicted_price: ExpediaMoney | null;
+  summary: string | null;
+  trend: string | null;
+}
+
 export type ExpediaPropertyType = "hotel" | "motel" | "hostel" | "aparthotel" | "bed_and_breakfast" | "resort" | "lodge" | "villa" | "guesthouse" | "vacation_home" | "cabin" | "cottage" | "farm" | "rv";
 
 export interface ExpediaRatePlan {
@@ -198,6 +334,21 @@ export interface ExpediaRoom {
   rate_plans: ExpediaRatePlan[];
 }
 
+export type ExpediaTripType = "one_way" | "round_trip" | "multi_city";
+
+export interface GetFareCalendarParams {
+  /** Cabin class. */
+  cabin?: ExpediaFlightCabin;
+  /** Departure date. Must be today or within 330 days. */
+  departure_date: string;
+  /** IATA airport or city code from `/v1/expedia/flights/airports`, such as `JFK` or `NYC`. */
+  destination: string;
+  /** IATA airport or city code from `/v1/expedia/flights/airports`, such as `JFK` or `NYC`. */
+  origin: string;
+  /** Return date for a round trip, on or after the departure date. Leave out for one way. */
+  return_date?: string | null;
+}
+
 export interface GetHotelParams {
   /** Hotel ID from a `/hotels` result or the number after `.h` in an Expedia URL. */
   hotel_id: string;
@@ -226,6 +377,42 @@ export interface ListHotelRoomsParams {
 }
 
 export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
+
+export interface SearchAirportsParams {
+  /** Suggestions to return. */
+  limit?: number;
+  /** Place name, such as `new york`. */
+  query: string;
+}
+
+export interface SearchFlightsParams {
+  /** Number of adults. */
+  adults?: number;
+  /** Only flights marketed by this airline, a two-letter code such as `DL`. Repeat for up to 10. */
+  airlines?: string[] | null;
+  /** Cabin class. */
+  cabin?: ExpediaFlightCabin;
+  /** Child age, 2 to 17. Repeat once per child. */
+  children_ages?: number[] | null;
+  /** Departure date. Must be today or within 330 days. */
+  departure_date: string;
+  /** Departure time of day, in the origin's time zone. */
+  departure_time?: ExpediaFlightTimeOfDay | null;
+  /** IATA airport or city code from `/v1/expedia/flights/airports`, such as `JFK` or `NYC`. */
+  destination: string;
+  /** Infants under 2 on an adult's lap, at most one per adult. */
+  infants_in_lap?: number;
+  /** `0` for nonstop only, `1` for at most one stop. */
+  max_stops?: number | null;
+  /** IATA airport or city code from `/v1/expedia/flights/airports`, such as `JFK` or `NYC`. */
+  origin: string;
+  /** Only refundable fares. */
+  refundable?: boolean;
+  /** Return date for a round trip, on or after the departure date. Leave out for one way. */
+  return_date?: string | null;
+  /** Sort order. */
+  sort?: ExpediaFlightSort;
+}
 
 export interface SearchHotelsParams {
   /** Number of adults. */
@@ -263,4 +450,42 @@ export interface SearchLocationsParams {
   limit?: number;
   /** Place name, such as `new york`. */
   query: string;
+}
+
+export interface SearchMultiCityFlightsParams {
+  /** Number of adults. */
+  adults?: number;
+  /** Only flights marketed by this airline, a two-letter code such as `DL`. Repeat for up to 10. */
+  airlines?: string[] | null;
+  /** Cabin class. */
+  cabin?: ExpediaFlightCabin;
+  /** Child age, 2 to 17. Repeat once per child. */
+  children_ages?: number[] | null;
+  /** Departure time of day, in the origin's time zone. */
+  departure_time?: ExpediaFlightTimeOfDay | null;
+  /** Infants under 2 on an adult's lap, at most one per adult. */
+  infants_in_lap?: number;
+  /** A flight as `ORIGIN-DESTINATION-YYYY-MM-DD`, such as `JFK-CDG-2026-11-10`. Repeat once per flight, 2 to 5. */
+  legs: string[];
+  /** `0` for nonstop only, `1` for at most one stop. */
+  max_stops?: number | null;
+  /** Only refundable fares. */
+  refundable?: boolean;
+  /** Sort order. */
+  sort?: ExpediaFlightSort;
+}
+
+export interface SearchNextLegParams {
+  /** Only flights marketed by this airline, a two-letter code such as `DL`. Repeat for up to 10. */
+  airlines?: string[] | null;
+  /** Departure time of day, in the origin's time zone. */
+  departure_time?: ExpediaFlightTimeOfDay | null;
+  /** `0` for nonstop only, `1` for at most one stop. */
+  max_stops?: number | null;
+  /** Only refundable fares. */
+  refundable?: boolean;
+  /** Sort order. */
+  sort?: ExpediaFlightSort;
+  /** A fare's `next_leg_token` from the previous leg's results. */
+  token: string;
 }
