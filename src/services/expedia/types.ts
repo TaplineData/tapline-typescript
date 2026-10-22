@@ -17,6 +17,93 @@ export interface ErrorResponse {
   upgrade_url?: string | null;
 }
 
+export interface ExpediaAccessibilityGroup {
+  items: string[];
+  section: string | null;
+}
+
+export interface ExpediaActivitiesPage {
+  activities: ExpediaActivityCard[];
+  end_date: string;
+  pagination: ExpediaCursorPagination;
+  region_id: string;
+  start_date: string;
+  total_count: number | null;
+}
+
+export interface ExpediaActivity {
+  address: string | null;
+  available_dates: string[];
+  coordinates: ExpediaCoordinates | null;
+  description: string | null;
+  duration: string | null;
+  end_date: string | null;
+  guest_rating: ExpediaGuestRating;
+  id: string;
+  images: ExpediaImage[];
+  lead_price: ExpediaActivityPrice | null;
+  name: string | null;
+  offers: ExpediaActivityOffer[];
+  reviews: ExpediaActivityReviews;
+  sections: ExpediaActivitySection[];
+  start_date: string | null;
+}
+
+export interface ExpediaActivityCard {
+  coordinates: ExpediaCoordinates | null;
+  distance: string | null;
+  duration: string | null;
+  free_cancellation: boolean;
+  guest_rating: ExpediaGuestRating;
+  id: string;
+  image: ExpediaImage | null;
+  name: string | null;
+  partner: string | null;
+  price: ExpediaActivityPrice | null;
+  url: string | null;
+}
+
+export interface ExpediaActivityOffer {
+  description: string | null;
+  id: string;
+  name: string | null;
+  starts_at: string | null;
+  tickets: ExpediaActivityTicket[];
+}
+
+export interface ExpediaActivityPrice {
+  current: ExpediaMoney;
+  strikethrough: ExpediaMoney | null;
+  unit: string | null;
+}
+
+export interface ExpediaActivityReview {
+  activity_date: string | null;
+  author: string | null;
+  location: string | null;
+  published_on: string | null;
+  rating: number | null;
+  text: string | null;
+}
+
+export interface ExpediaActivityReviews {
+  items: ExpediaActivityReview[];
+  total_count: number | null;
+}
+
+export interface ExpediaActivitySection {
+  heading: string | null;
+  items: string[];
+}
+
+export type ExpediaActivitySort = "recommended" | "price_low_to_high" | "price_high_to_low" | "discount";
+
+export interface ExpediaActivityTicket {
+  label: string | null;
+  price: ExpediaMoney | null;
+  restriction: string | null;
+}
+
 export interface ExpediaAddress {
   city: string | null;
   country_code: string | null;
@@ -49,6 +136,17 @@ export interface ExpediaAmenityGroup {
   category: string | null;
   items: string[];
   section: string | null;
+}
+
+export interface ExpediaCalendarDay {
+  available: boolean | null;
+  check_in_status: string | null;
+  check_out_status: string | null;
+  date: string;
+  max_nights: number | null;
+  min_nights: number | null;
+  price: ExpediaMoney | null;
+  price_label: string | null;
 }
 
 export interface ExpediaCoordinates {
@@ -174,6 +272,7 @@ export interface ExpediaGuestRating {
 export type ExpediaGuestRatingFilter = "good_7" | "very_good_8" | "wonderful_9";
 
 export interface ExpediaHotel {
+  accessibility: ExpediaAccessibilityGroup[];
   address: ExpediaAddress;
   amenities: ExpediaAmenityGroup[];
   coordinates: ExpediaCoordinates | null;
@@ -183,14 +282,40 @@ export interface ExpediaHotel {
   name: string | null;
   neighborhood_description: string | null;
   policies: ExpediaHotelPolicies;
+  region_id: string | null;
+  region_name: string | null;
+  review_categories: ExpediaReviewCategory[];
+  review_summary: ExpediaReviewSummary | null;
   star_rating: number | null;
   tagline: string | null;
   top_amenities: string[];
   url: string;
 }
 
+export interface ExpediaHotelActivities {
+  activities: ExpediaActivityCard[];
+  end_date: string;
+  hotel_id: string;
+  pagination: ExpediaCursorPagination;
+  start_date: string;
+  total_count: number | null;
+}
+
+export interface ExpediaHotelCalendar {
+  check_in: string | null;
+  check_out: string | null;
+  days: ExpediaCalendarDay[];
+  first_date: string | null;
+  has_daily_availability: boolean | null;
+  hotel_id: string;
+  last_date: string | null;
+  notice: string | null;
+  price_note: string | null;
+}
+
 export interface ExpediaHotelCard {
   badges: string[];
+  coordinates: ExpediaCoordinates | null;
   guest_rating: ExpediaGuestRating;
   id: string;
   images: ExpediaImage[];
@@ -228,6 +353,8 @@ export interface ExpediaHotelRooms {
   check_out: string;
   children_ages: number[];
   hotel_id: string;
+  price_insight: ExpediaPriceInsight | null;
+  region_id: string | null;
   rooms: ExpediaRoom[];
 }
 
@@ -276,6 +403,14 @@ export interface ExpediaMoney {
   formatted: string | null;
 }
 
+export interface ExpediaPriceInsight {
+  label: string | null;
+  price_text: string | null;
+  summary: string | null;
+  typical_max: ExpediaMoney | null;
+  typical_min: ExpediaMoney | null;
+}
+
 export interface ExpediaPricePoint {
   date: string;
   price: ExpediaMoney;
@@ -297,6 +432,7 @@ export type ExpediaPropertyType = "hotel" | "motel" | "hostel" | "aparthotel" | 
 
 export interface ExpediaRatePlan {
   cancellation_policy: string[];
+  extras: string | null;
   id: string;
   prices: ExpediaRatePrice[];
   scarcity_message: string | null;
@@ -312,7 +448,9 @@ export interface ExpediaRatePrice {
 
 export interface ExpediaReview {
   author: string | null;
+  disliked: string[];
   id: string;
+  liked: string[];
   management_responses: ExpediaManagementResponse[];
   photos: ExpediaImage[];
   published_on: string | null;
@@ -324,7 +462,27 @@ export interface ExpediaReview {
   traveler_types: string[];
 }
 
-export type ExpediaReviewSort = "most_recent" | "highest_rating" | "lowest_rating";
+export interface ExpediaReviewCategory {
+  name: string;
+  score: number | null;
+}
+
+export type ExpediaReviewSort = "most_relevant" | "most_recent" | "highest_rating" | "lowest_rating";
+
+export interface ExpediaReviewSummary {
+  note: string | null;
+  sections: ExpediaReviewSummarySection[];
+}
+
+export interface ExpediaReviewSummarySection {
+  heading: string | null;
+  themes: ExpediaReviewTheme[];
+}
+
+export interface ExpediaReviewTheme {
+  review_count: number | null;
+  text: string;
+}
 
 export interface ExpediaRoom {
   features: string[];
@@ -334,7 +492,18 @@ export interface ExpediaRoom {
   rate_plans: ExpediaRatePlan[];
 }
 
+export type ExpediaTravelerType = "all" | "business" | "couples" | "families" | "families_with_young_children" | "groups" | "solo" | "with_pets";
+
 export type ExpediaTripType = "one_way" | "round_trip" | "multi_city";
+
+export interface GetActivityParams {
+  /** Activity ID from an activities result or the number after `.a` in an Expedia URL. */
+  activity_id: string;
+  /** Last day, on or after `start_date`. */
+  end_date?: string | null;
+  /** First day for availability and prices. Send with `end_date`. */
+  start_date?: string | null;
+}
 
 export interface GetFareCalendarParams {
   /** Cabin class. */
@@ -349,9 +518,31 @@ export interface GetFareCalendarParams {
   return_date?: string | null;
 }
 
+export interface GetHotelCalendarParams {
+  /** Start of a stay. Moves the window only when it lies past the default range. */
+  check_in?: string | null;
+  /** Check-out date, up to 28 nights later. */
+  check_out?: string | null;
+  /** Hotel ID from a `/hotels` result or the number after `.h` in an Expedia URL. */
+  hotel_id: string;
+}
+
 export interface GetHotelParams {
   /** Hotel ID from a `/hotels` result or the number after `.h` in an Expedia URL. */
   hotel_id: string;
+}
+
+export interface ListHotelActivitiesParams {
+  /** Previous response's `pagination.next_cursor`. Keep all other parameters unchanged. */
+  cursor?: string;
+  /** Last day, on or after `start_date`. */
+  end_date: string;
+  /** Hotel ID from a `/hotels` result or the number after `.h` in an Expedia URL. */
+  hotel_id: string;
+  /** Activity order. */
+  sort?: ExpediaActivitySort;
+  /** First day. Today or within 500 days. */
+  start_date: string;
 }
 
 export interface ListHotelReviewsParams {
@@ -359,8 +550,10 @@ export interface ListHotelReviewsParams {
   cursor?: string;
   /** Hotel ID from a `/hotels` result or the number after `.h` in an Expedia URL. */
   hotel_id: string;
-  /** `most_recent`, `highest_rating` or `lowest_rating`. */
+  /** Review order. */
   sort?: ExpediaReviewSort;
+  /** Only reviews from this kind of traveler. */
+  traveler_type?: ExpediaTravelerType;
 }
 
 export interface ListHotelRoomsParams {
@@ -374,9 +567,24 @@ export interface ListHotelRoomsParams {
   children_ages?: number[] | null;
   /** Hotel ID from a `/hotels` result or the number after `.h` in an Expedia URL. */
   hotel_id: string;
+  /** The hotel's `region_id`, from `/hotels/{hotel_id}`. Needed for `price_insight`. */
+  region_id?: string | null;
 }
 
 export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
+
+export interface SearchActivitiesParams {
+  /** Previous response's `pagination.next_cursor`. Keep all other parameters unchanged. */
+  cursor?: string;
+  /** Last day, on or after `start_date`. */
+  end_date: string;
+  /** `region_id` from `/v1/expedia/locations`. */
+  region_id: string;
+  /** Activity order. */
+  sort?: ExpediaActivitySort;
+  /** First day. Today or within 500 days. */
+  start_date: string;
+}
 
 export interface SearchAirportsParams {
   /** Suggestions to return. */

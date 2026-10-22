@@ -8,7 +8,7 @@ import type { AnySchema } from 'ajv';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 
 import type { TaplineClient } from '../src/index.js';
-import type { GetFareCalendarParams, GetHotelParams, ListHotelReviewsParams, ListHotelRoomsParams, SearchAirportsParams, SearchFlightsParams, SearchHotelsParams, SearchLocationsParams, SearchMultiCityFlightsParams, SearchNextLegParams } from '../src/services/expedia/types.js';
+import type { GetActivityParams, GetFareCalendarParams, GetHotelCalendarParams, GetHotelParams, ListHotelActivitiesParams, ListHotelReviewsParams, ListHotelRoomsParams, SearchActivitiesParams, SearchAirportsParams, SearchFlightsParams, SearchHotelsParams, SearchLocationsParams, SearchMultiCityFlightsParams, SearchNextLegParams } from '../src/services/expedia/types.js';
 import { TaplineError } from '../src/errors.js';
 import { typeAt, unknownKeys } from './schema-walk.js';
 
@@ -29,6 +29,8 @@ interface Method {
 }
 
 const METHODS: Record<string, Method> = {
+  search_activities: { response: 'ExpediaActivitiesPage', isArray: false, call: (c, i) => c.expedia.searchActivities(i.params as unknown as SearchActivitiesParams) },
+  get_activity: { response: 'ExpediaActivity', isArray: false, call: (c, i) => c.expedia.getActivity(i.params as unknown as GetActivityParams) },
   search_flights: { response: 'ExpediaFlights', isArray: false, call: (c, i) => c.expedia.searchFlights(i.params as unknown as SearchFlightsParams) },
   search_airports: { response: 'ExpediaAirports', isArray: false, call: (c, i) => c.expedia.searchAirports(i.params as unknown as SearchAirportsParams) },
   get_fare_calendar: { response: 'ExpediaFareCalendar', isArray: false, call: (c, i) => c.expedia.getFareCalendar(i.params as unknown as GetFareCalendarParams) },
@@ -36,6 +38,8 @@ const METHODS: Record<string, Method> = {
   search_next_leg: { response: 'ExpediaFlights', isArray: false, call: (c, i) => c.expedia.searchNextLeg(i.params as unknown as SearchNextLegParams) },
   search_hotels: { response: 'ExpediaHotelsPage', isArray: false, call: (c, i) => c.expedia.searchHotels(i.params as unknown as SearchHotelsParams) },
   get_hotel: { response: 'ExpediaHotel', isArray: false, call: (c, i) => c.expedia.getHotel(i.params as unknown as GetHotelParams) },
+  list_hotel_activities: { response: 'ExpediaHotelActivities', isArray: false, call: (c, i) => c.expedia.listHotelActivities(i.params as unknown as ListHotelActivitiesParams) },
+  get_hotel_calendar: { response: 'ExpediaHotelCalendar', isArray: false, call: (c, i) => c.expedia.getHotelCalendar(i.params as unknown as GetHotelCalendarParams) },
   list_hotel_reviews: { response: 'ExpediaHotelReviews', isArray: false, call: (c, i) => c.expedia.listHotelReviews(i.params as unknown as ListHotelReviewsParams) },
   list_hotel_rooms: { response: 'ExpediaHotelRooms', isArray: false, call: (c, i) => c.expedia.listHotelRooms(i.params as unknown as ListHotelRoomsParams) },
   search_locations: { response: 'ExpediaLocations', isArray: false, call: (c, i) => c.expedia.searchLocations(i.params as unknown as SearchLocationsParams) },
