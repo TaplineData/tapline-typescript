@@ -908,14 +908,14 @@ export interface BraveSearchSportsFixture {
   id: number;
   league: BraveSearchLeague;
   lineups?: BraveSearchSportsFixtureLineups;
-  penalty_score?: BraveSearchUnobservedObject | null;
+  penalty_score?: BraveSearchSportsFixturePenaltyScore | null;
   phase?: string;
   score: BraveSearchSportsFixtureScore;
   score_table?: BraveSearchSportsFixtureScoreTable;
   sport: string;
   start_time: string | null;
   start_time_as_sent?: boolean | number | string | BraveSearchUnobservedObject;
-  statistics: BraveSearchSportsFixtureStatistics | BraveSearchSportsFixtureStatisticsItem[];
+  statistics: BraveSearchSportsFixtureStatistics | BraveSearchSportsFixtureStatisticsItem[] | null;
   status: BraveSearchSportsFixtureStatus;
   teams: BraveSearchSportsFixtureTeams;
   type: string;
@@ -999,6 +999,11 @@ export interface BraveSearchSportsFixtureLineupsHomeSubstitutesItem {
   photo_url: string;
   pos: string;
   position: string | null;
+}
+
+export interface BraveSearchSportsFixturePenaltyScore {
+  away: number;
+  home: number;
 }
 
 export interface BraveSearchSportsFixtureScore {
@@ -3454,9 +3459,9 @@ export interface GetPlaceParams {
 export interface GetSportsFixtureParams {
   /** A game `id` from a games answer. */
   fixture_id: string;
-  /** League id: `39` Premier League, `12` NBA, `1` MLB, `57` NHL, `nfl` NFL. */
+  /** League id: `39` Premier League or another football league, `nfl` NFL. */
   league_id: string;
-  /** Season by its start year, `2026`. NBA and other basketball leagues that span two years take `2026-2027`. */
+  /** Season by its start year, `2026`. */
   season: string;
   /** The game's sport. */
   sport: BraveSearchFixtureSport;
