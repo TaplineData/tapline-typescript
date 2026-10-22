@@ -102,7 +102,6 @@ export interface ExpediaActivityTicket {
   label: string | null;
   price: ExpediaMoney | null;
   restriction: string | null;
-  strikethrough: ExpediaMoney | null;
 }
 
 export interface ExpediaAddress {

@@ -49,22 +49,19 @@ Paged methods cost their credits per page, not per item.
 const locations = await tapline.expedia.searchLocations({ query: 'new york' });
 const region = locations.locations.find((location) => location.type === 'CITY');
 
-let cursor = '';
-do {
-  const page = await tapline.expedia.searchHotels({
-    region_id: region?.region_id ?? '2621',
-    check_in: '2026-12-14',
-    check_out: '2026-12-16',
-    star_ratings: [4, 5],
-    sort: 'price_low_to_high',
-    cursor,
-  });
-  for (const hotel of page.hotels) {
-    console.log(hotel.id, hotel.name, hotel.price?.total.amount, hotel.guest_rating.score);
-  }
-  cursor = page.pagination.next_cursor ?? '';
-} while (cursor);
+const page = await tapline.expedia.searchHotels({
+  region_id: region?.region_id ?? '2621',
+  check_in: '2026-12-14',
+  check_out: '2026-12-16',
+  star_ratings: [4, 5],
+  sort: 'price_low_to_high',
+});
+for (const hotel of page.hotels) {
+  console.log(hotel.id, hotel.name, hotel.price?.total.amount, hotel.guest_rating.score);
+}
 ```
+
+`2621` is New York City. Pass `page.pagination.next_cursor` as `cursor`, with the same inputs, for the next 25; each page costs 4 credits.
 
 ## Price the rooms of one hotel
 
