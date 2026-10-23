@@ -17,6 +17,7 @@ import { BirdeyeClient } from './services/birdeye/client.js';
 import { ZillowClient } from './services/zillow/client.js';
 import { LinkedinClient } from './services/linkedin/client.js';
 import { ImovelwebClient } from './services/imovelweb/client.js';
+import { ExpediaClient } from './services/expedia/client.js';
 import { BraveSearchClient } from './services/brave_search/client.js';
 
 export class TaplineClient {
@@ -35,6 +36,7 @@ export class TaplineClient {
   readonly zillow: ZillowClient;
   readonly linkedin: LinkedinClient;
   readonly imovelweb: ImovelwebClient;
+  readonly expedia: ExpediaClient;
   readonly braveSearch: BraveSearchClient;
 
   constructor(config: TaplineClientConfig = {}) {
@@ -54,6 +56,7 @@ export class TaplineClient {
     this.zillow = new ZillowClient(base);
     this.linkedin = new LinkedinClient(base);
     this.imovelweb = new ImovelwebClient(base);
+    this.expedia = new ExpediaClient(base);
     this.braveSearch = new BraveSearchClient(base);
   }
 }
