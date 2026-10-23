@@ -73,7 +73,7 @@ export class BraveSearchClient {
     return this.base.get<BraveSearchPlaceDescription>(`/v1/brave-search/places/${encodeURIComponent(place_id)}/description`);
   }
 
-  /** Search the web: 20 ranked results per page with the news, videos, places, answers and cards shown beside them. Costs 5 credits. */
+  /** Search the web: 20 ranked results per page with the news, videos, places, answers and cards shown beside them. `site:linkedin.com/in` is refused upstream; send `site:www.linkedin.com/in`. Costs 5 credits. */
   async search(params: SearchParams): Promise<BraveSearchWebPage> {
     return this.base.get<BraveSearchWebPage>('/v1/brave-search/search', { ...params });
   }
