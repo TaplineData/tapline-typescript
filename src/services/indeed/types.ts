@@ -43,29 +43,17 @@ export interface GetSalariesParams {
 }
 
 /**
- * Indeed Apply, decoded from the token Indeed sends with the job; title, company and location are the text Indeed passes to the employer's apply system.
+ * Indeed Apply, decoded from the token Indeed sends with the job; every field is null when the token does not decode.
  *
- * `ats_job_id` is the job's id in that system, `post_url` the endpoint Indeed posts applications to and
- * `questions_ref` Indeed's reference to the screening questions (neither is for callers to open). `api_token`
- * and `job_meta` are opaque Indeed Apply values. `required_resume_fields` and `optional_resume_fields` list the
- * résumé sections the application requires or offers, comma-separated (`phone,education,skills`).
- * `key` holds the raw token only when part of it did not decode.
+ * `ats_job_id` is the job's id in the employer's applicant system. `required_resume_fields` and
+ * `optional_resume_fields` list the résumé sections the application requires or offers, comma-separated
+ * (`phone,education,skills`).
  */
 export interface IndeedApply {
   advertiser_number: string | null;
-  api_token: string | null;
   asks_for: IndeedApplyAsks | null;
   ats_job_id: string | null;
-  company_name: string | null;
-  finish_url: string | null;
-  is_mobile: boolean | null;
-  job_meta: string | null;
-  job_title: string | null;
-  key: string | null;
-  location_text: string | null;
   optional_resume_fields: string | null;
-  post_url: string | null;
-  questions_ref: string | null;
   required_resume_fields: string | null;
 }
 
@@ -276,7 +264,7 @@ export interface IndeedJob {
   attributes: IndeedJobAttributes;
   company: IndeedCompanySummary | null;
   company_name_as_posted: string | null;
-  description_html: string | null;
+  description: string | null;
   detailed_salary: string | null;
   employer_activity: IndeedEmployerActivity | null;
   employer_reference: string | null;
@@ -384,7 +372,7 @@ export interface IndeedJobSearchPage {
 
 export interface IndeedJobSearchResult {
   job: IndeedJob;
-  snippet: IndeedText | null;
+  snippet: string | null;
 }
 
 export type IndeedJobSort = "relevance" | "date";
@@ -497,11 +485,6 @@ export interface IndeedSalaries {
 
 export interface IndeedSuggestions {
   suggestions: string[];
-}
-
-export interface IndeedText {
-  html: string | null;
-  text: string | null;
 }
 
 export interface IndeedTitleFacet {
