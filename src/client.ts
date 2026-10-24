@@ -19,6 +19,7 @@ import { LinkedinClient } from './services/linkedin/client.js';
 import { ImovelwebClient } from './services/imovelweb/client.js';
 import { ExpediaClient } from './services/expedia/client.js';
 import { BraveSearchClient } from './services/brave_search/client.js';
+import { IndeedClient } from './services/indeed/client.js';
 
 export class TaplineClient {
   readonly airbnb: AirbnbClient;
@@ -38,6 +39,7 @@ export class TaplineClient {
   readonly imovelweb: ImovelwebClient;
   readonly expedia: ExpediaClient;
   readonly braveSearch: BraveSearchClient;
+  readonly indeed: IndeedClient;
 
   constructor(config: TaplineClientConfig = {}) {
     const base = new BaseClient(config);
@@ -58,5 +60,6 @@ export class TaplineClient {
     this.imovelweb = new ImovelwebClient(base);
     this.expedia = new ExpediaClient(base);
     this.braveSearch = new BraveSearchClient(base);
+    this.indeed = new IndeedClient(base);
   }
 }
