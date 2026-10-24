@@ -276,7 +276,7 @@ export interface IndeedJob {
   attributes: IndeedJobAttributes;
   company: IndeedCompanySummary | null;
   company_name_as_posted: string | null;
-  description: IndeedText | null;
+  description_html: string | null;
   detailed_salary: string | null;
   employer_activity: IndeedEmployerActivity | null;
   employer_reference: string | null;

@@ -31,10 +31,10 @@ Every method except `getSalaries` takes `country`, the Indeed site to read (`us`
 
 | Method | Key inputs | Returns | Credits |
 | --- | --- | --- | --- |
-| `searchJobs` | `query`, `location`, the filters, `cursor` | up to 25 jobs per page, each with its full record, plus the total and facets | 31 |
-| `getJob` | `job_key` | one job: description, pay, company, location, attributes, apply details and applicant count | 3 |
-| `listCompanyJobs` | `company_key`, the filters, `cursor` | up to 25 of a company's jobs per page | 31 |
-| `getCompany` | `company_key` | profile, employee ratings, happiness scores, CEO approval, average pay and similar companies | 2 |
+| `searchJobs` | `query`, `location`, the filters, `cursor` | up to 25 jobs per page, each with its full record, plus the total and facets | 13 |
+| `getJob` | `job_key` | one job: HTML description, pay, company, location, attributes, apply details and applicant count | 2 |
+| `listCompanyJobs` | `company_key`, the filters, `cursor` | up to 25 of a company's jobs per page | 13 |
+| `getCompany` | `company_key` | profile, employee ratings, happiness scores, CEO approval, average pay and similar companies | 1 |
 | `searchCompanies` | `query` | companies matching a name, with their keys | 1 |
 | `listCompanyDirectory` | `query`, `location` | companies by name, industry or the titles they hire for, with ratings | 1 |
 | `getSalaries` | `location`, `job_title`, `company_key` | average reported pay per year, month, week, day and hour | 1 |
