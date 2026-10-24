@@ -47,7 +47,9 @@ export interface GetSalariesParams {
  *
  * `ats_job_id` is the job's id in that system, `post_url` the endpoint Indeed posts applications to and
  * `questions_ref` Indeed's reference to the screening questions (neither is for callers to open). `api_token`
- * and `job_meta` are opaque Indeed Apply values. `key` holds the raw token only when part of it did not decode.
+ * and `job_meta` are opaque Indeed Apply values. `required_resume_fields` and `optional_resume_fields` list the
+ * résumé sections the application requires or offers, comma-separated (`phone,education,skills`).
+ * `key` holds the raw token only when part of it did not decode.
  */
 export interface IndeedApply {
   advertiser_number: string | null;
@@ -64,6 +66,7 @@ export interface IndeedApply {
   optional_resume_fields: string | null;
   post_url: string | null;
   questions_ref: string | null;
+  required_resume_fields: string | null;
 }
 
 /** `required`, `optional` or `hidden` per item; `name` is the name format asked: `first_and_last` or `full`. */
