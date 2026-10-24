@@ -526,7 +526,7 @@ export interface ListCompanyJobsParams {
   company_key: string;
   /** Indeed country site, as an ISO code (`gb` is the UK). */
   country?: IndeedCountry;
-  /** `pagination.next_cursor` or `previous_cursor` of the last page, URL-encoded; send the same search and `limit` with it. */
+  /** `pagination.next_cursor` or `previous_cursor` of the last page; send the same search and `limit` with it. */
   cursor?: string;
   /** Attribute `code` to leave out; jobs carrying any of them drop. */
   exclude_attribute?: string[];
@@ -607,7 +607,7 @@ export interface SearchJobsParams {
   attribute?: string[];
   /** Indeed country site, as an ISO code (`gb` is the UK). */
   country?: IndeedCountry;
-  /** `pagination.next_cursor` or `previous_cursor` of the last page, URL-encoded; send the same search and `limit` with it. */
+  /** `pagination.next_cursor` or `previous_cursor` of the last page; send the same search and `limit` with it. */
   cursor?: string;
   /** Attribute `code` to leave out; jobs carrying any of them drop. */
   exclude_attribute?: string[];
