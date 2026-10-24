@@ -36,7 +36,7 @@ export interface GetCommentRepliesParams {
 export interface GetCommentsParams {
   /** The `cursor` from the previous page. Omit it for the first page. */
   cursor?: number | null;
-  /** Set to `true` for the trimmed answer Scrape Creators returns: fewer keys per item. */
+  /** Set to `true` to return fewer fields per item. */
   trim?: boolean | null;
   /** A TikTok video or photo post URL: `https://www.tiktok.com/@<handle>/video/<id>`, `/photo/<id>`, or a `https://vm.tiktok.com/<code>/` share link. */
   url: string;
@@ -49,7 +49,7 @@ export interface GetFollowersParams {
   handle?: string | null;
   /** The `min_time` from the previous page. Omit it for the first page. */
   min_time?: number | null;
-  /** Set to `true` for the trimmed answer Scrape Creators returns: fewer keys per item. */
+  /** Set to `true` to return fewer fields per item. */
   trim?: boolean | null;
   /** The numeric TikTok user id (`user.id` from `/v1/tiktok/profile`). Send `handle` or `user_id`, not both. */
   user_id?: string | null;
@@ -62,14 +62,14 @@ export interface GetFollowingParams {
   handle: string;
   /** The `min_time` from the previous page. Omit it for the first page. */
   min_time?: number | null;
-  /** Set to `true` for the trimmed answer Scrape Creators returns: fewer keys per item. */
+  /** Set to `true` to return fewer fields per item. */
   trim?: boolean | null;
 }
 
 export type GetFollowingResponse = TikTokFollowingResponse | TikTokTrimmedFollowingResponse;
 
 export interface GetProfileParams {
-  /** Accepted for Scrape Creators compatibility. It has no effect: every request fetches a live answer and is charged. */
+  /** Ignored. Every request fetches a fresh response and is charged. */
   cache_max_age?: GetProfileParamsCacheMaxAge | null;
   /** The TikTok handle, with or without a leading @. Send `handle` or `user_id`, not both. */
   handle?: string | null;
@@ -88,7 +88,7 @@ export interface GetProfileVideosParams {
   region?: string | null;
   /** `latest` (default) or `popular`, most viewed first. */
   sort_by?: GetProfileVideosParamsSortBy | null;
-  /** Set to `true` for the trimmed answer Scrape Creators returns: fewer keys per item. */
+  /** Set to `true` to return fewer fields per item. */
   trim?: boolean | null;
   /** The numeric TikTok user id (`user.id` from `/v1/tiktok/profile`). Send `handle` or `user_id`, not both. */
   user_id?: string | null;
@@ -122,27 +122,27 @@ export interface GetTranscriptParams {
   language?: string | null;
   /** A TikTok video or photo post URL: `https://www.tiktok.com/@<handle>/video/<id>`, `/photo/<id>`, or a `https://vm.tiktok.com/<code>/` share link. */
   url: string;
-  /** Accepted for Scrape Creators compatibility. It has no effect: only captions TikTok already has are returned. */
+  /** Ignored. Only captions already available from TikTok are returned. */
   use_ai_as_fallback?: boolean | null;
 }
 
 export interface GetTrendingFeedParams {
   /** Two-letter country code, such as `US` or `GB`. The feed is what TikTok serves a viewer in that country, not only videos from it. */
   region: string;
-  /** Set to `true` for the trimmed answer Scrape Creators returns: fewer keys per item. */
+  /** Set to `true` to return fewer fields per item. */
   trim?: boolean | null;
 }
 
 export type GetTrendingFeedResponse = TikTokTrendingFeedResponse | TikTokTrimmedTrendingFeedResponse;
 
 export interface GetVideoParams {
-  /** Accepted for Scrape Creators compatibility. It has no effect: every request fetches a live answer and is charged. */
+  /** Ignored. Every request fetches a fresh response and is charged. */
   cache_max_age?: GetVideoParamsCacheMaxAge | null;
   /** Set to `true` to add `transcript`, the video's WEBVTT captions, or `null` when it has none. */
   get_transcript?: boolean | null;
   /** Two-letter country code for the proxy, such as `US`, `GB` or `PH`. TikTok answers as it does to a viewer in that country; it does not filter results to that country. */
   region?: string | null;
-  /** Set to `true` for the trimmed answer Scrape Creators returns: fewer keys per item. */
+  /** Set to `true` to return fewer fields per item. */
   trim?: boolean | null;
   /** A TikTok video or photo post URL: `https://www.tiktok.com/@<handle>/video/<id>`, `/photo/<id>`, or a `https://vm.tiktok.com/<code>/` share link. */
   url: string;
@@ -161,195 +161,11 @@ export interface SearchHashtagParams {
   hashtag: string;
   /** Two-letter country code for the proxy, such as `US`, `GB` or `PH`. TikTok answers as it does to a viewer in that country; it does not filter results to that country. */
   region?: string | null;
-  /** Set to `true` for the trimmed answer Scrape Creators returns: fewer keys per item. */
+  /** Set to `true` to return fewer fields per item. */
   trim?: boolean | null;
 }
 
 export type SearchHashtagResponse = TikTokHashtagSearchResponse | TikTokTrimmedHashtagSearchResponse;
-
-export interface SearchKeywordParams {
-  /** The `cursor` from the previous page of the same search. It expires 30 minutes after it is issued. Omit it for the first page. */
-  cursor?: number | null;
-  /** Only videos posted within this window. Omit it for any time. */
-  date_posted?: SearchKeywordParamsDatePosted | null;
-  /** What to search TikTok for. */
-  query: string;
-  /** Two-letter country code TikTok searches from, `US` by default. Supported: `AR`, `AT`, `AU`, `BD`, `BR`, `CA`, `CH`, `CL`, `DE`, `ES`, `FR`, `GB`, `IE`, `IT`, `JP`, `NL`, `PL`, `PT`, `SE`, `SG`, `TR`, `US`, `ZA`. */
-  region?: string | null;
-  /** `relevance` (default), `most-liked`, or `date-posted`, newest first. */
-  sort_by?: SearchKeywordParamsSortBy | null;
-  /** Set to `true` for the trimmed answer Scrape Creators returns: fewer keys per item. */
-  trim?: boolean | null;
-}
-
-export type SearchKeywordParamsDatePosted = "yesterday" | "this-week" | "this-month" | "last-3-months" | "last-6-months" | "all-time";
-
-export type SearchKeywordParamsSortBy = "relevance" | "most-liked" | "date-posted";
-
-export type SearchKeywordResponse = TikTokKeywordSearchResponse | TikTokTrimmedKeywordSearchResponse;
-
-export interface SearchTopParams {
-  /** The `cursor` from the previous page of the same search. It expires 30 minutes after it is issued. Omit it for the first page. */
-  cursor?: number | null;
-  /** Only videos posted within this window. Omit it for any time. */
-  publish_time?: SearchTopParamsPublishTime | null;
-  /** What to search TikTok for. */
-  query: string;
-  /** Two-letter country code TikTok searches from, `US` by default. Supported: `AR`, `AT`, `AU`, `BD`, `BR`, `CA`, `CH`, `CL`, `DE`, `ES`, `FR`, `GB`, `IE`, `IT`, `JP`, `NL`, `PL`, `PT`, `SE`, `SG`, `TR`, `US`, `ZA`. */
-  region?: string | null;
-  /** `relevance` (default), `most-liked`, or `date-posted`, newest first. */
-  sort_by?: SearchTopParamsSortBy | null;
-}
-
-export type SearchTopParamsPublishTime = "yesterday" | "this-week" | "this-month" | "last-3-months" | "last-6-months" | "all-time";
-
-export type SearchTopParamsSortBy = "relevance" | "most-liked" | "date-posted";
-
-export interface SearchUsersParams {
-  /** The `cursor` from the previous page of the same search. It expires 30 minutes after it is issued. Omit it for the first page. */
-  cursor?: number | null;
-  /** What to search TikTok for. */
-  query: string;
-  /** Two-letter country code TikTok searches from, `US` by default. Supported: `AR`, `AT`, `AU`, `BD`, `BR`, `CA`, `CH`, `CL`, `DE`, `ES`, `FR`, `GB`, `IE`, `IT`, `JP`, `NL`, `PL`, `PT`, `SE`, `SG`, `TR`, `US`, `ZA`. */
-  region?: string | null;
-  /** Set to `true` for the trimmed answer Scrape Creators returns: fewer keys per item. */
-  trim?: boolean | null;
-}
-
-export type SearchUsersResponse = TikTokUserSearchResponse | TikTokTrimmedUserSearchResponse;
-
-export interface TikTokAppAweme {
-  add_yours_recommendation?: Record<string, string>;
-  added_sound_music_info?: TikTokAppAwemeAddedSoundMusicInfo;
-  aigc_info?: TikTokAppAwemeAigcInfo;
-  anchors: TikTokAppAwemeAnchors[] | null;
-  animated_image_info?: TikTokAppAwemeAnimatedImageInfo;
-  author: TikTokAppAwemeAuthor;
-  author_user_id: number | string;
-  aweme_acl?: TikTokAppAwemeAwemeAcl;
-  aweme_id: string;
-  aweme_type?: number | string;
-  banners?: TikTokAppAwemeBanners[] | null;
-  batch_index?: number | string;
-  behind_the_song_music_ids?: string | null;
-  behind_the_song_video_music_ids?: string | null;
-  bodydance_score?: number | string;
-  bottom_products?: string | null;
-  branded_content_accounts?: string | null;
-  cha_list?: TikTokAppAwemeChaList[] | null;
-  challenge_position?: string | null;
-  cmt_swt?: boolean;
-  collect_stat?: number | string;
-  comment_config?: TikTokAppAwemeCommentConfig;
-  comment_topbar_info?: string | null;
-  commerce_config_data?: string | null;
-  commerce_info: TikTokAppAwemeCommerceInfo;
-  content_desc?: string;
-  content_desc_extra?: TikTokAppAwemeContentDescExtra[];
-  content_original_type?: number | string;
-  content_size_type?: number | string;
-  content_type?: string;
-  cover_labels?: string | null;
-  create_time: number | string;
-  desc: string;
-  desc_language?: string;
-  disable_search_trending_bar?: boolean;
-  distance?: string;
-  distribute_type?: number | string;
-  ecosystem_perception_enhancement?: string | null;
-  follow_up_first_item_id?: string;
-  follow_up_item_id_groups?: string;
-  follow_up_publish_from_id?: number | string;
-  geofencing?: string | null;
-  geofencing_regions?: string | null;
-  green_screen_materials?: string | null;
-  group_id?: string;
-  has_danmaku?: boolean;
-  has_vs_entry?: boolean;
-  hybrid_label?: string | null;
-  image_infos?: string | null;
-  image_post_info?: TikTokAppAwemeImagePostInfo;
-  interact_permission?: TikTokAppAwemeInteractPermission;
-  interaction_stickers?: TikTokAppAwemeInteractionStickers[] | null;
-  is_ad?: boolean;
-  is_ads?: boolean;
-  is_description_translatable?: boolean;
-  is_hash_tag?: number | string;
-  is_pgcshow?: boolean;
-  is_relieve?: boolean;
-  is_text_sticker_translatable?: boolean;
-  is_top?: number | string;
-  is_vr?: boolean;
-  item_comment_settings: number | string;
-  item_distribute_source?: string;
-  item_duet?: number | string;
-  item_react?: number | string;
-  item_source_category?: number | string;
-  label_top?: TikTokAppAwemeLabelTop;
-  label_top_text?: string | null;
-  log_info?: TikTokAppAwemeLogInfo;
-  long_video?: string | null;
-  main_arch_common?: string;
-  mask_infos?: TikTokAppAwemeMaskInfo[];
-  misc_info?: string;
-  muf_comment_info_v2?: string | null;
-  music?: TikTokAppAwemeMusic;
-  music_begin_time_in_ms?: number | string;
-  music_end_time_in_ms?: number | string;
-  music_selected_from?: string;
-  music_title_style?: number | string;
-  music_volume?: string;
-  need_vs_entry?: boolean;
-  nickname_position?: string | null;
-  operator_boost_info?: string | null;
-  origin_comment_ids?: string | null;
-  origin_volume?: string;
-  original_client_text?: TikTokAppAwemeOriginalClientText;
-  picked_users?: Record<string, unknown>[] | null;
-  playlist_blocked?: boolean;
-  playlist_info?: TikTokAppAwemePlaylistInfo;
-  poi_data?: TikTokAppAwemePoiData;
-  position?: string | null;
-  prevent_download?: boolean;
-  products_info?: string | null;
-  question_list?: string | null;
-  rate?: number | string;
-  reference_tts_voice_ids?: string | string[] | null;
-  reference_voice_filter_ids?: string | string[] | null;
-  region: string;
-  right_products?: string | null;
-  risk_infos?: TikTokAppAwemeRiskInfos;
-  search_highlight?: TikTokAppAwemeSearchHighlight[] | null;
-  share_info: TikTokAppAwemeShareInfo;
-  share_url?: string;
-  shoot_tab_name?: string;
-  smart_search_info?: TikTokAppAwemeSmartSearchInfo;
-  sort_label?: string;
-  sound_exemption?: number | string;
-  standard_component_info?: TikTokAppAwemeStandardComponentInfo;
-  statistics: TikTokAppAwemeStatistics;
-  status?: TikTokAppAwemeStatus;
-  sticker_detail?: TikTokAppAwemeStickerDetail;
-  stickers?: string;
-  suggest_words?: TikTokAppAwemeSuggestWords;
-  support_danmaku?: boolean;
-  survey_info?: string | null;
-  tako_bubble_info?: TikTokAppAwemeTakoBubbleInfo;
-  text_extra?: TikTokAppAwemeTextExtra[];
-  text_sticker_major_lang?: string;
-  ttec_suggest_words?: TikTokAppAwemeTtecSuggestWords;
-  tts_voice_ids?: string | string[] | null;
-  uniqid_position?: string | null;
-  user_digged?: number | string;
-  video: TikTokAppAwemeVideo;
-  video_control?: TikTokAppAwemeVideoControl;
-  video_labels?: string[];
-  video_text?: string[];
-  visual_search_info?: TikTokAppAwemeVisualSearchInfo;
-  voice_filter_ids?: string | string[] | null;
-  with_promotional_music?: boolean;
-  with_survey?: boolean;
-}
 
 export interface TikTokAppAwemeAddedSoundMusicInfo {
   album: string;
@@ -2799,16 +2615,6 @@ export interface TikTokImagePostInfo {
   title: string;
 }
 
-export interface TikTokKeywordSearchItem {
-  aweme_info: TikTokVideoAweme;
-}
-
-export interface TikTokKeywordSearchResponse {
-  cursor: number | string;
-  has_more: number | string;
-  search_item_list: TikTokKeywordSearchItem[];
-}
-
 export interface TikTokOriginalLanguageInfo {
   lang: string;
   language_code: string;
@@ -2896,37 +2702,6 @@ export interface TikTokTextExtra {
   sub_type: number | string;
   type: number | string;
   user_id?: string;
-}
-
-export interface TikTokTopItem {
-  author: TikTokAppAwemeAuthor;
-  content_type: string;
-  create_time: string;
-  desc: string;
-  desc_language?: string;
-  id: string;
-  images?: string[];
-  is_ad: boolean;
-  is_top: number | string;
-  music?: TikTokTopItemMusic;
-  region: string;
-  statistics: TikTokAppAwemeStatistics;
-  url: string;
-  video: TikTokAppAwemeVideo;
-}
-
-export interface TikTokTopItemMusic {
-  author: string;
-  duration: number | string;
-  id: number | string;
-  matched_song?: TikTokAppAwemeMusicMatchedSong;
-  play_url: string;
-  title: string;
-}
-
-export interface TikTokTopSearchResponse {
-  cursor: number | string;
-  items: TikTokTopItem[];
 }
 
 export interface TikTokTranscriptResponse {
@@ -3026,11 +2801,6 @@ export interface TikTokTrimmedHashtagSearchResponse {
   cursor: number | string;
 }
 
-export interface TikTokTrimmedKeywordSearchResponse {
-  cursor: number | string;
-  search_item_list: TikTokTrimmedSearchAweme[];
-}
-
 export interface TikTokTrimmedProfileVideosResponse {
   aweme_list: TikTokTrimmedAweme[];
   has_more: number | string;
@@ -3044,30 +2814,6 @@ export interface TikTokTrimmedRelationUser {
   nickname: string;
   sec_uid: string;
   signature: string;
-  uid: string;
-  unique_id: string;
-}
-
-export interface TikTokTrimmedSearchAweme {
-  author: TikTokAppAwemeAuthor;
-  aweme_id: string;
-  create_time: number | string;
-  create_time_utc: string;
-  desc: string;
-  desc_language?: string;
-  is_ad: boolean;
-  region: string;
-  statistics: TikTokAppAwemeStatistics;
-  url: string;
-  video: TikTokAppAwemeVideo;
-}
-
-export interface TikTokTrimmedSearchUser {
-  avatar_medium: TikTokAppAwemeAuthorAvatarMedium;
-  follower_count?: number | string;
-  following_count?: number | string;
-  nickname: string;
-  sec_uid?: string;
   uid: string;
   unique_id: string;
 }
@@ -3087,11 +2833,6 @@ export interface TikTokTrimmedTrendingItem {
   statistics: TikTokAppAwemeStatistics;
   url: string;
   video: TikTokTrendingVideo;
-}
-
-export interface TikTokTrimmedUserSearchResponse {
-  cursor: number | string;
-  users: TikTokTrimmedSearchUser[];
 }
 
 export interface TikTokTrimmedVideoAweme {
@@ -3223,79 +2964,6 @@ export interface TikTokUserInfoUserProfileTab {
   showMusicTab: boolean;
   showPlayListTab: boolean;
   showQuestionTab: boolean;
-}
-
-export interface TikTokUserSearchAnswerGlobalDoodleConfig {
-  ab_params?: TikTokUserSearchAnswerGlobalDoodleConfigAbParams;
-  display_filter_bar?: number | string;
-  feedback_survey?: TikTokUserSearchAnswerGlobalDoodleConfigFeedbackSurvey[];
-  feel_good?: TikTokUserSearchAnswerGlobalDoodleConfigFeelGood;
-  hide_results?: boolean;
-  hit_dolphin?: boolean;
-  hit_shark?: boolean;
-  keyword?: string;
-  new_source?: string;
-  search_channel?: string;
-  tns_search_result?: string;
-}
-
-export interface TikTokUserSearchAnswerGlobalDoodleConfigAbParams {
-  user_relation_ship?: string;
-}
-
-export interface TikTokUserSearchAnswerGlobalDoodleConfigFeedbackSurvey {
-  feedback_type?: string;
-  long_stress_info?: string | null;
-  multiple_choices?: TikTokUserSearchAnswerGlobalDoodleConfigFeedbackSurveyMultipleChoices[];
-  send_us_multiple_choices?: string | null;
-}
-
-export interface TikTokUserSearchAnswerGlobalDoodleConfigFeedbackSurveyMultipleChoices {
-  key?: string;
-  value?: string;
-}
-
-export interface TikTokUserSearchAnswerGlobalDoodleConfigFeelGood {
-  extra?: string;
-  token?: string;
-  token_type?: string;
-}
-
-export interface TikTokUserSearchEntry {
-  challenges: Record<string, string>[] | null;
-  effects: Record<string, string>[] | null;
-  items: TikTokAppAweme[] | null;
-  mix_list: Record<string, string>[] | null;
-  musics: Record<string, string>[] | null;
-  position: (Record<string, number | string>)[] | null;
-  uniqid_position: (Record<string, number | string>)[] | null;
-  user_info: TikTokAppAwemeAuthor;
-}
-
-export interface TikTokUserSearchExtra {
-  api_debug_info?: string | null;
-  fatal_item_ids?: string[];
-  logid: string;
-  now: number | string;
-  search_request_id?: string;
-  server_stream_time?: number | string;
-}
-
-export interface TikTokUserSearchResponse {
-  challenge_list?: Record<string, string>[] | null;
-  cursor: number | string;
-  extra?: TikTokUserSearchExtra;
-  feedback_type?: string;
-  global_doodle_config?: TikTokUserSearchAnswerGlobalDoodleConfig;
-  has_more: number | string;
-  input_keyword?: string;
-  log_pb?: Record<string, string>;
-  music_list?: Record<string, string>[] | null;
-  qc?: string;
-  rid: string;
-  status_code: number | string;
-  type: number | string;
-  user_list: TikTokUserSearchEntry[];
 }
 
 export interface TikTokVideoAweme {
