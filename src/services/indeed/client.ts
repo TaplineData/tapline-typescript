@@ -6,55 +6,55 @@ import type { GetCompanyParams, GetJobParams, GetSalariesParams, IndeedCompany, 
 export class IndeedClient {
   constructor(private readonly base: BaseClient) {}
 
-  /** List companies by name, industry or the job titles they hire for, optionally in one place, with their ratings. Costs 1 credit. */
+  /** List companies by name, industry or the job titles they hire for, optionally in one place, with their ratings. Costs 2 credits. */
   async listCompanyDirectory(params: ListCompanyDirectoryParams): Promise<IndeedCompanyDirectory> {
     return this.base.get<IndeedCompanyDirectory>('/v1/indeed/companies/directory', { ...params });
   }
 
-  /** Find companies by name, with the keys the company routes take. Costs 1 credit. */
+  /** Find companies by name, with the keys the company routes take. Costs 2 credits. */
   async searchCompanies(params: SearchCompaniesParams): Promise<IndeedCompanySuggestions> {
     return this.base.get<IndeedCompanySuggestions>('/v1/indeed/companies/search', { ...params });
   }
 
-  /** Get a company's profile, employee ratings, happiness scores and average pay in the country. Costs 1 credit. */
+  /** Get a company's profile, employee ratings, happiness scores and average pay in the country. Costs 2 credits. */
   async getCompany(params: GetCompanyParams): Promise<IndeedCompany> {
     const { company_key, ...query } = params;
     return this.base.get<IndeedCompany>(`/v1/indeed/companies/${encodeURIComponent(company_key)}`, query);
   }
 
-  /** List a company's job postings, up to 25 per call, with the filters job search takes. Costs 7 credits. */
+  /** List a company's job postings, up to 25 per call, with the filters job search takes. Costs 10 credits. */
   async listCompanyJobs(params: ListCompanyJobsParams): Promise<IndeedJobSearchPage> {
     const { company_key, ...query } = params;
     return this.base.get<IndeedJobSearchPage>(`/v1/indeed/companies/${encodeURIComponent(company_key)}/jobs`, query);
   }
 
-  /** Search job postings by keywords, place and filters, up to 25 per call; every result carries the full job record. Costs 7 credits. */
+  /** Search job postings by keywords, place and filters, up to 25 per call; every result carries the full job record. Costs 10 credits. */
   async searchJobs(params: SearchJobsParams): Promise<IndeedJobSearchPage> {
     return this.base.get<IndeedJobSearchPage>('/v1/indeed/jobs/search', { ...params });
   }
 
-  /** Get one job posting's full record by its key. Costs 1 credit. */
+  /** Get one job posting's full record by its key. Costs 2 credits. */
   async getJob(params: GetJobParams): Promise<IndeedJob> {
     const { job_key, ...query } = params;
     return this.base.get<IndeedJob>(`/v1/indeed/jobs/${encodeURIComponent(job_key)}`, query);
   }
 
-  /** List the searches run most on a country site. Costs 1 credit. */
+  /** List the searches run most on a country site. Costs 2 credits. */
   async listPopularSearches(params: ListPopularSearchesParams): Promise<IndeedPopularSearches> {
     return this.base.get<IndeedPopularSearches>('/v1/indeed/popular-searches', { ...params });
   }
 
-  /** Get average reported pay per pay period for a place, optionally one job title or company. Costs 1 credit. */
+  /** Get average reported pay per pay period for a place, optionally one job title or company. Costs 2 credits. */
   async getSalaries(params: GetSalariesParams): Promise<IndeedSalaries> {
     return this.base.get<IndeedSalaries>('/v1/indeed/salaries', { ...params });
   }
 
-  /** Suggest job searches for partly typed text. Costs 1 credit. */
+  /** Suggest job searches for partly typed text. Costs 2 credits. */
   async listJobTitleSuggestions(params: ListJobTitleSuggestionsParams): Promise<IndeedSuggestions> {
     return this.base.get<IndeedSuggestions>('/v1/indeed/suggestions/job-titles', { ...params });
   }
 
-  /** Suggest places for partly typed text. Costs 1 credit. */
+  /** Suggest places for partly typed text. Costs 2 credits. */
   async listLocationSuggestions(params: ListLocationSuggestionsParams): Promise<IndeedLocationSuggestions> {
     return this.base.get<IndeedLocationSuggestions>('/v1/indeed/suggestions/locations', { ...params });
   }
