@@ -31,9 +31,9 @@ Every method except `getSalaries` takes `country`, the Indeed site to read (`us`
 
 | Method | Key inputs | Returns | Credits |
 | --- | --- | --- | --- |
-| `searchJobs` | `query`, `location`, the filters, `cursor` | up to 25 jobs per page, each with its full record, plus the total and facets | 13 |
-| `getJob` | `job_key` | one job: HTML description, pay, company, location, attributes, apply details and applicant count | 2 |
-| `listCompanyJobs` | `company_key`, the filters, `cursor` | up to 25 of a company's jobs per page | 13 |
+| `searchJobs` | `query`, `location`, the filters, `cursor` | up to 25 jobs per page, each with its full record, plus the total and facets | 7 |
+| `getJob` | `job_key` | one job: HTML description, pay, company, location, attributes, apply details and applicant count | 1 |
+| `listCompanyJobs` | `company_key`, the filters, `cursor` | up to 25 of a company's jobs per page | 7 |
 | `getCompany` | `company_key` | profile, employee ratings, happiness scores, CEO approval, average pay and similar companies | 1 |
 | `searchCompanies` | `query` | companies matching a name, with their keys | 1 |
 | `listCompanyDirectory` | `query`, `location` | companies by name, industry or the titles they hire for, with ratings | 1 |

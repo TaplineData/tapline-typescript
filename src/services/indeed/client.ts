@@ -22,18 +22,18 @@ export class IndeedClient {
     return this.base.get<IndeedCompany>(`/v1/indeed/companies/${encodeURIComponent(company_key)}`, query);
   }
 
-  /** List a company's job postings, up to 25 per call, with the filters job search takes. Costs 13 credits. */
+  /** List a company's job postings, up to 25 per call, with the filters job search takes. Costs 7 credits. */
   async listCompanyJobs(params: ListCompanyJobsParams): Promise<IndeedJobSearchPage> {
     const { company_key, ...query } = params;
     return this.base.get<IndeedJobSearchPage>(`/v1/indeed/companies/${encodeURIComponent(company_key)}/jobs`, query);
   }
 
-  /** Search job postings by keywords, place and filters, up to 25 per call; every result carries the full job record. Costs 13 credits. */
+  /** Search job postings by keywords, place and filters, up to 25 per call; every result carries the full job record. Costs 7 credits. */
   async searchJobs(params: SearchJobsParams): Promise<IndeedJobSearchPage> {
     return this.base.get<IndeedJobSearchPage>('/v1/indeed/jobs/search', { ...params });
   }
 
-  /** Get one job posting's full record by its key. Costs 2 credits. */
+  /** Get one job posting's full record by its key. Costs 1 credit. */
   async getJob(params: GetJobParams): Promise<IndeedJob> {
     const { job_key, ...query } = params;
     return this.base.get<IndeedJob>(`/v1/indeed/jobs/${encodeURIComponent(job_key)}`, query);
