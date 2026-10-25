@@ -20,6 +20,9 @@ import { ImovelwebClient } from './services/imovelweb/client.js';
 import { ExpediaClient } from './services/expedia/client.js';
 import { BraveSearchClient } from './services/brave_search/client.js';
 import { IndeedClient } from './services/indeed/client.js';
+import { FacebookClient } from './services/facebook/client.js';
+import { FacebookAdLibraryClient } from './services/facebook_ad_library/client.js';
+import { FacebookMarketplaceClient } from './services/facebook_marketplace/client.js';
 
 export class TaplineClient {
   readonly airbnb: AirbnbClient;
@@ -40,6 +43,9 @@ export class TaplineClient {
   readonly expedia: ExpediaClient;
   readonly braveSearch: BraveSearchClient;
   readonly indeed: IndeedClient;
+  readonly facebook: FacebookClient;
+  readonly facebookAdLibrary: FacebookAdLibraryClient;
+  readonly facebookMarketplace: FacebookMarketplaceClient;
 
   constructor(config: TaplineClientConfig = {}) {
     const base = new BaseClient(config);
@@ -61,5 +67,8 @@ export class TaplineClient {
     this.expedia = new ExpediaClient(base);
     this.braveSearch = new BraveSearchClient(base);
     this.indeed = new IndeedClient(base);
+    this.facebook = new FacebookClient(base);
+    this.facebookAdLibrary = new FacebookAdLibraryClient(base);
+    this.facebookMarketplace = new FacebookMarketplaceClient(base);
   }
 }

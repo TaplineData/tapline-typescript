@@ -1,7 +1,7 @@
 {
   "name": "@tapline/client",
   "version": "0.2.13",
-  "description": "Typed TypeScript SDK for Tapline's web scraping APIs for YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, Twitter (X), Pinterest, Instagram, Pumpfun, TikTok, Birdeye, LinkedIn, imovelweb, Expedia, Brave Search and Indeed.",
+  "description": "Typed TypeScript SDK for Tapline's web scraping APIs for YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, Twitter (X), Pinterest, Instagram, Pumpfun, TikTok, Birdeye, LinkedIn, imovelweb, Expedia, Brave Search, Indeed, Facebook Ad Library, Facebook Marketplace and Facebook.",
   "license": "MIT",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -34,6 +34,9 @@
     "airfare",
     "brave-search",
     "indeed",
+    "facebook",
+    "facebook-ad-library",
+    "facebook-marketplace",
     "api",
     "client",
     "sdk",

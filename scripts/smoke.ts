@@ -19,6 +19,9 @@ import { run as runImovelweb } from './smoke-imovelweb.js';
 import { run as runExpedia } from './smoke-expedia.js';
 import { run as runBraveSearch } from './smoke-brave_search.js';
 import { run as runIndeed } from './smoke-indeed.js';
+import { run as runFacebook } from './smoke-facebook.js';
+import { run as runFacebookAdLibrary } from './smoke-facebook_ad_library.js';
+import { run as runFacebookMarketplace } from './smoke-facebook_marketplace.js';
 
 const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'airbnb': runAirbnb,
@@ -39,6 +42,9 @@ const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'expedia': runExpedia,
   'brave_search': runBraveSearch,
   'indeed': runIndeed,
+  'facebook': runFacebook,
+  'facebook_ad_library': runFacebookAdLibrary,
+  'facebook_marketplace': runFacebookMarketplace,
 };
 
 const services = process.argv.slice(2);

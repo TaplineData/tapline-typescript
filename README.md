@@ -1,6 +1,6 @@
 # @tapline/client
 
-Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, Twitter (X), Pinterest, Instagram, Pumpfun, TikTok, Birdeye, LinkedIn, imovelweb, Expedia, Brave Search, and Indeed in TypeScript or JavaScript.
+Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, Twitter (X), Pinterest, Instagram, Pumpfun, TikTok, Birdeye, LinkedIn, imovelweb, Expedia, Brave Search, Indeed, Facebook Ad Library, Facebook Marketplace, and Facebook in TypeScript or JavaScript.
 
 ## What you can do
 
@@ -22,8 +22,11 @@ Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerm
 | Expedia | Search hotels and vacation homes, read hotel details, reviews and price calendars, price every room and rate plan, find things to do, and search flights with their fares and a fare calendar | [Expedia guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/expedia/README.md) |
 | Brave Search | Search the web, news, videos and images, get Brave's AI answers with their sources, find places, get driving and transit directions, and read sports standings, games and box scores | [Brave Search guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/brave_search/README.md) |
 | Indeed | Search job postings with pay, attributes and apply details on 62 country sites, read companies with their ratings and jobs, look up reported pay, and get search suggestions | [Indeed guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/indeed/README.md) |
+| Facebook Ad Library | Search the Ad Library by keyword or advertiser, read ads with their versions and who paid for them, look up advertisers and their audiences, and read the political and issue ads report | [Facebook Ad Library guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/facebook_ad_library/README.md) |
+| Facebook Marketplace | Find Marketplace locations, search and browse listings around a point, read a listing with its seller, photos and videos, and map rentals | [Facebook Marketplace guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/facebook_marketplace/README.md) |
+| Facebook | Turn facebook.com URLs into ids, read pages and profiles, posts, photos, videos, reels and comments, search videos and events, and read public groups | [Facebook guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/facebook/README.md) |
 
-One API key and credit balance work across all sixteen services listed above.
+One API key and credit balance work across all nineteen services listed above.
 
 ## Get started
 
@@ -192,6 +195,9 @@ Use the [Tapline API reference](https://tapline.sh/docs?utm_source=typescript_cl
 - [Expedia](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/expedia/README.md)
 - [Brave Search](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/brave_search/README.md)
 - [Indeed](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/indeed/README.md)
+- [Facebook Ad Library](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/facebook_ad_library/README.md)
+- [Facebook Marketplace](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/facebook_marketplace/README.md)
+- [Facebook](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/facebook/README.md)
 
 ## License
 
