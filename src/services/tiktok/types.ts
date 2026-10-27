@@ -167,32 +167,6 @@ export interface SearchHashtagParams {
 
 export type SearchHashtagResponse = TikTokHashtagSearchResponse | TikTokTrimmedHashtagSearchResponse;
 
-export interface SearchKeywordParams {
-  /** Only all-time search is supported. */
-  date_posted?: "all-time" | null;
-  /** What to search TikTok for. */
-  query: string;
-  /** Search from the US. Other regions are not supported. */
-  region?: "US" | null;
-  /** Only relevance order is supported. */
-  sort_by?: "relevance" | null;
-  /** Set to `true` to return fewer fields per item. */
-  trim?: boolean | null;
-}
-
-export type SearchKeywordResponse = TikTokKeywordSearchResponse | TikTokTrimmedKeywordSearchResponse;
-
-export interface SearchTopParams {
-  /** Only all-time search is supported. */
-  publish_time?: "all-time" | null;
-  /** What to search TikTok for. */
-  query: string;
-  /** Search from the US. Other regions are not supported. */
-  region?: "US" | null;
-  /** Only relevance order is supported. */
-  sort_by?: "relevance" | null;
-}
-
 export interface TikTokAppAwemeAddedSoundMusicInfo {
   album: string;
   allow_offline_music_to_detail_page?: boolean;
@@ -473,7 +447,6 @@ export interface TikTokAppAwemeAddedSoundMusicInfoTtToDspSongInfos {
   button_type?: number | string;
   platform?: number | string;
   song_id?: string;
-  token?: TikTokAppAwemeMusicToken;
 }
 
 export interface TikTokAppAwemeAigcInfo {
@@ -530,10 +503,6 @@ export interface TikTokAppAwemeAnchorsThumbnail {
 export interface TikTokAppAwemeAnimatedImageInfo {
   effect: number | string;
   type: number | string;
-}
-
-export interface TikTokAppAwemeAppleMusicToken {
-  developer_token: string;
 }
 
 export interface TikTokAppAwemeAuthor {
@@ -893,52 +862,6 @@ export interface TikTokAppAwemeChaListShareInfo {
   share_title_myself: string;
   share_title_other: string;
   share_url: string;
-}
-
-export interface TikTokAppAwemeCollabInfo {
-  collaborators: TikTokAppAwemeCollaborator[];
-  should_display_tag: boolean;
-}
-
-export interface TikTokAppAwemeCollaborator {
-  collab_status: number | string;
-  user_info: TikTokAppAwemeCollaboratorUser;
-}
-
-export interface TikTokAppAwemeCollaboratorUser {
-  account_labels: null;
-  ad_cover_url: null;
-  advance_feature_item_order: null;
-  advanced_feature_info: null;
-  avatar_thumb: TikTokAppAwemeAuthorAvatarThumb;
-  bold_fields: null;
-  can_message_follow_status_list: null;
-  can_set_geofencing: null;
-  cha_list: null;
-  cover_url: null;
-  custom_verify: string;
-  enterprise_verify_reason: string;
-  events: null;
-  follow_status: number | string;
-  follower_count: number | string;
-  followers_detail: null;
-  geofencing: null;
-  homepage_bottom_toast: null;
-  item_list: null;
-  mutual_relation_avatars: null;
-  need_points: null;
-  nickname: string;
-  platform_sync_info: null;
-  relative_users: null;
-  search_highlight: null;
-  secret: number | string;
-  shield_edit_field_info: null;
-  type_label: null;
-  uid: string;
-  unique_id: string;
-  user_profile_guide: null;
-  user_tags: null;
-  white_cover_url: null;
 }
 
 export interface TikTokAppAwemeCommentConfig {
@@ -1684,15 +1607,10 @@ export interface TikTokAppAwemeMusicStrongBeatUrl {
   width: number | string;
 }
 
-export interface TikTokAppAwemeMusicToken {
-  apple_music_token: TikTokAppAwemeAppleMusicToken;
-}
-
 export interface TikTokAppAwemeMusicTtToDspSongInfos {
   button_type?: number | string;
   platform?: number | string;
   song_id?: string;
-  token?: TikTokAppAwemeMusicToken;
 }
 
 export interface TikTokAppAwemeOriginalClientText {
@@ -1860,12 +1778,7 @@ export interface TikTokAppAwemeSmartSearchInfo {
   ask_tako_intent_type: number | string;
   find_similar_intent_type: number | string;
   related_videos_intent_type: number | string;
-  tea_data?: TikTokAppAwemeSmartSearchTeaData;
   title_smart_search_panel_type: number | string;
-}
-
-export interface TikTokAppAwemeSmartSearchTeaData {
-  s_s_has_tako_stat: number | string;
 }
 
 export interface TikTokAppAwemeStandardComponentInfo {
@@ -1954,12 +1867,12 @@ export interface TikTokAppAwemeStickerDetailIconUrl {
 
 export interface TikTokAppAwemeSuggestWords {
   feed_query_enable_videosug?: boolean;
-  suggest_words: TikTokAppAwemeSuggestWordsSuggestWords[] | null;
+  suggest_words: TikTokAppAwemeSuggestWordsSuggestWords[];
 }
 
 export interface TikTokAppAwemeSuggestWordsSuggestWords {
   hint_text: string;
-  qrec_virtual_enable?: string;
+  qrec_virtual_enable: string;
   scene: string;
   words: TikTokAppAwemeSuggestWordsSuggestWordsWords[];
 }
@@ -2702,14 +2615,6 @@ export interface TikTokImagePostInfo {
   title: string;
 }
 
-export interface TikTokKeywordSearchItem {
-  aweme_info: TikTokVideoAweme;
-}
-
-export interface TikTokKeywordSearchResponse {
-  search_item_list: TikTokKeywordSearchItem[];
-}
-
 export interface TikTokOriginalLanguageInfo {
   lang: string;
   language_code: string;
@@ -2797,36 +2702,6 @@ export interface TikTokTextExtra {
   sub_type: number | string;
   type: number | string;
   user_id?: string;
-}
-
-export interface TikTokTopItem {
-  author: TikTokAppAwemeAuthor;
-  content_type: string;
-  create_time: string;
-  desc: string;
-  desc_language?: string;
-  id: string;
-  images?: string[];
-  is_ad: boolean;
-  is_top: number | string;
-  music?: TikTokTopItemMusic;
-  region: string;
-  statistics: TikTokAppAwemeStatistics;
-  url: string;
-  video: TikTokAppAwemeVideo;
-}
-
-export interface TikTokTopItemMusic {
-  author: string;
-  duration: number | string;
-  id: number | string;
-  matched_song?: TikTokAppAwemeMusicMatchedSong;
-  play_url: string;
-  title: string;
-}
-
-export interface TikTokTopSearchResponse {
-  items: TikTokTopItem[];
 }
 
 export interface TikTokTranscriptResponse {
@@ -2926,10 +2801,6 @@ export interface TikTokTrimmedHashtagSearchResponse {
   cursor: number | string;
 }
 
-export interface TikTokTrimmedKeywordSearchResponse {
-  search_item_list: TikTokTrimmedSearchAweme[];
-}
-
 export interface TikTokTrimmedProfileVideosResponse {
   aweme_list: TikTokTrimmedAweme[];
   has_more: number | string;
@@ -2945,20 +2816,6 @@ export interface TikTokTrimmedRelationUser {
   signature: string;
   uid: string;
   unique_id: string;
-}
-
-export interface TikTokTrimmedSearchAweme {
-  author: TikTokAppAwemeAuthor;
-  aweme_id: string;
-  create_time: number | string;
-  create_time_utc: string;
-  desc: string;
-  desc_language?: string;
-  is_ad: boolean;
-  region: string;
-  statistics: TikTokAppAwemeStatistics;
-  url: string;
-  video: TikTokAppAwemeVideo;
 }
 
 export interface TikTokTrimmedTrendingFeedResponse {
@@ -3136,7 +2993,6 @@ export interface TikTokVideoAweme {
   cha_list?: TikTokAppAwemeChaList[] | null;
   challenge_position?: string | null;
   cmt_swt?: boolean;
-  collab_info?: TikTokAppAwemeCollabInfo;
   collect_stat?: number | string;
   comment_at_tako_info?: TikTokVideoAwemeCommentAtTakoInfo;
   comment_config?: TikTokAppAwemeCommentConfig;

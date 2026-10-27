@@ -8,7 +8,7 @@ import type { AnySchema } from 'ajv';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 
 import type { TaplineClient } from '../src/index.js';
-import type { GetCollectionVideosParams, GetCommentRepliesParams, GetCommentsParams, GetFollowersParams, GetFollowingParams, GetProfileParams, GetProfileVideosParams, GetSearchSuggestionsParams, GetSongParams, GetSongVideosParams, GetTranscriptParams, GetTrendingFeedParams, GetVideoParams, SearchHashtagParams, SearchKeywordParams, SearchTopParams } from '../src/services/tiktok/types.js';
+import type { GetCollectionVideosParams, GetCommentRepliesParams, GetCommentsParams, GetFollowersParams, GetFollowingParams, GetProfileParams, GetProfileVideosParams, GetSearchSuggestionsParams, GetSongParams, GetSongVideosParams, GetTranscriptParams, GetTrendingFeedParams, GetVideoParams, SearchHashtagParams } from '../src/services/tiktok/types.js';
 import { TaplineError } from '../src/errors.js';
 import { typeAt, unknownKeys, valueAt } from './schema-walk.js';
 
@@ -35,9 +35,7 @@ const METHODS: Record<string, Method> = {
   get_profile: { response: 'TikTokProfileResponse', isArray: false, call: (c, i) => c.tiktok.getProfile(i.params as unknown as GetProfileParams) },
   get_profile_videos: { response: 'GetProfileVideosResponse', isArray: false, call: (c, i) => c.tiktok.getProfileVideos(i.params as unknown as GetProfileVideosParams) },
   search_hashtag: { response: 'SearchHashtagResponse', isArray: false, call: (c, i) => c.tiktok.searchHashtag(i.params as unknown as SearchHashtagParams) },
-  search_keyword: { response: 'SearchKeywordResponse', isArray: false, call: (c, i) => c.tiktok.searchKeyword(i.params as unknown as SearchKeywordParams) },
   get_search_suggestions: { response: 'TikTokSearchSuggestionsResponse', isArray: false, call: (c, i) => c.tiktok.getSearchSuggestions(i.params as unknown as GetSearchSuggestionsParams) },
-  search_top: { response: 'TikTokTopSearchResponse', isArray: false, call: (c, i) => c.tiktok.searchTop(i.params as unknown as SearchTopParams) },
   get_song: { response: 'TikTokSongResponse', isArray: false, call: (c, i) => c.tiktok.getSong(i.params as unknown as GetSongParams) },
   get_song_videos: { response: 'TikTokSongVideosResponse', isArray: false, call: (c, i) => c.tiktok.getSongVideos(i.params as unknown as GetSongVideosParams) },
   get_followers: { response: 'GetFollowersResponse', isArray: false, call: (c, i) => c.tiktok.getFollowers(i.params as unknown as GetFollowersParams) },
