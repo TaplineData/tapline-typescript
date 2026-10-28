@@ -12,33 +12,33 @@ export class PumpfunClient {
     return this.base.get<GetFeeSharingSharesResponse>(`/v1/pumpfun/accounts/${encodeURIComponent(address)}/fee-sharing/shares`, query);
   }
 
-  /** Deprecated: pump.fun retired this read. This route now answers what `/shareholders/{address}/fees` answers: per-coin fee-sharing earnings with wallet totals. Costs 1 credit. */
+  /** Deprecated: this read was retired. This route now answers what `/shareholders/{address}/fees` answers: per-coin fee-sharing earnings with wallet totals. Costs 1 credit. */
   async feeSharingTotals(params: FeeSharingTotalsParams): Promise<GetShareholderFeesResponse> {
     const { address, ...query } = params;
     return this.base.get<GetShareholderFeesResponse>(`/v1/pumpfun/accounts/${encodeURIComponent(address)}/fee-sharing/totals`, query);
   }
 
-  /** Every achievement pump.fun awards: family, tier, name, threshold and display data. Costs 1 credit. */
+  /** Every achievement with its family, tier, name, threshold, and display data. Costs 1 credit. */
   async achievementCatalog(): Promise<GetAchievementCatalogResponse> {
     return this.base.get<GetAchievementCatalogResponse>('/v1/pumpfun/achievements');
   }
 
-  /** The live movers board from pump.fun's advanced indexer, the most current trending signal. Costs 1 credit. */
+  /** Returns the live movers board with ranked coin, market, and activity data. Costs 1 credit. */
   async moversBoard(params: MoversBoardParams): Promise<GetMoversBoardResponse> {
     return this.base.get<GetMoversBoardResponse>('/v1/pumpfun/boards/movers', { ...params });
   }
 
-  /** The trending board from pump.fun's advanced indexer, in the movers board's compact entry format. pump.fun labels this body `board: movers` too. Costs 1 credit. */
+  /** Returns the trending board with ranked coin, market, and activity data. The body is labelled `board: movers`. Costs 1 credit. */
   async trendingBoard(params: TrendingBoardParams): Promise<GetTrendingBoardResponse> {
     return this.base.get<GetTrendingBoardResponse>('/v1/pumpfun/boards/trending', { ...params });
   }
 
-  /** The most recent submissions in the pump.fun go feed. Pass `cursor` from the previous page for more. Costs 1 credit. */
+  /** The most recent bounty submissions. Pass `cursor` from the previous page for more. Costs 1 credit. */
   async bountyFeedRecent(params: BountyFeedRecentParams): Promise<GetBountyFeedRecentResponse> {
     return this.base.get<GetBountyFeedRecentResponse>('/v1/pumpfun/bounties/feed/recent', { ...params });
   }
 
-  /** The trending tab of the pump.fun go feed. Costs 1 credit. */
+  /** Returns the trending bounty feed. Costs 1 credit. */
   async bountyFeedTrending(params: BountyFeedTrendingParams): Promise<GetBountyFeedTrendingResponse> {
     return this.base.get<GetBountyFeedTrendingResponse>('/v1/pumpfun/bounties/feed/trending', { ...params });
   }
@@ -58,12 +58,12 @@ export class PumpfunClient {
     return this.base.get<GetBountySubmissionsResponse>('/v1/pumpfun/bounties/submissions', { ...params });
   }
 
-  /** Total bounty submissions pump.fun has received. Costs 1 credit. */
+  /** Returns the total number of bounty submissions. Costs 1 credit. */
   async bountySubmissionCount(): Promise<GetBountySubmissionCountResponse> {
     return this.base.get<GetBountySubmissionCountResponse>('/v1/pumpfun/bounties/submissions/count');
   }
 
-  /** Bounty tasks posted on pump.fun go, with filters for phase, reward, expiry, engagement and distance. Sorting by `distance` needs `lat` and `lng`, which go together. Pass `cursor` from the previous page for more. Costs 1 credit. */
+  /** Bounty tasks with filters for phase, reward, expiry, engagement and distance. Sorting by `distance` needs `lat` and `lng`, which go together. Pass `cursor` from the previous page for more. Costs 1 credit. */
   async bountyTasks(params: BountyTasksParams): Promise<GetBountyTasksResponse> {
     return this.base.get<GetBountyTasksResponse>('/v1/pumpfun/bounties/tasks', { ...params });
   }
@@ -131,7 +131,7 @@ export class PumpfunClient {
     return this.base.get<GetCalloutRepostersResponse>(`/v1/pumpfun/callouts/${encodeURIComponent(callout_id)}/reposters`, query);
   }
 
-  /** OHLCV bars for a coin on any chain pump.fun trades, oldest first: Solana, the EVM chains, and HyperCore perps (`hypercore`, address = coin name such as `BTC`; perps serve `price_usd` and `price_quote` only). Prices are decimal strings. Costs 1 credit. */
+  /** OHLCV bars for a coin on any supported chain, oldest first: Solana, the EVM chains, and HyperCore perps (`hypercore`, address = coin name such as `BTC`; perps serve `price_usd` and `price_quote` only). Prices are decimal strings. Costs 1 credit. */
   async chainCandles(params: ChainCandlesParams): Promise<GetChainCandlesResponse> {
     const { chain, address, ...query } = params;
     return this.base.get<GetChainCandlesResponse>(`/v1/pumpfun/chains/${encodeURIComponent(chain)}/coins/${encodeURIComponent(address)}/candles`, query);
@@ -155,7 +155,7 @@ export class PumpfunClient {
     return this.base.get<GetChainTopHoldersResponse>(`/v1/pumpfun/chains/${encodeURIComponent(chain)}/coins/${encodeURIComponent(address)}/top-holders`);
   }
 
-  /** A coin's trade tape on any chain, newest first, with running buy and sell aggregates. Pass `cursor` from `nextCursor` for older trades, or page around one trade with `before`/`after` and its `ordinalKey`. A token queried on a chain it does not trade on answers 503 (not charged): pump.fun sends the same answer as a lane outage, so check the coin's `chain_id` on `/coins/{mint}` before retrying. Costs 1 credit. */
+  /** Returns a coin's trades, newest first, with running buy and sell totals. Pass `nextCursor` as `cursor`, or use `before` and `after` with a trade's `ordinalKey`. A token queried on a chain it does not trade on answers 503 (not charged). Costs 1 credit. */
   async chainTrades(params: ChainTradesParams): Promise<GetChainTradesResponse> {
     const { chain, address, ...query } = params;
     return this.base.get<GetChainTradesResponse>(`/v1/pumpfun/chains/${encodeURIComponent(chain)}/coins/${encodeURIComponent(address)}/trades`, query);
@@ -166,17 +166,17 @@ export class PumpfunClient {
     return this.base.post<ClipsById[]>('/v1/pumpfun/clips/batch', body);
   }
 
-  /** pump.fun's curated video feed of livestream clips, with each clip's coin. Costs 1 credit. */
+  /** Curated video feed of livestream clips, with each clip's coin. Costs 1 credit. */
   async videoFeed(): Promise<VideoFeed[]> {
     return this.base.get<VideoFeed[]>('/v1/pumpfun/clips/feed');
   }
 
-  /** Most watched clips across pump.fun in a window. Costs 1 credit. */
+  /** Most watched clips in a window. Costs 1 credit. */
   async topClips(params: TopClipsParams): Promise<TopVod[]> {
     return this.base.get<TopVod[]>('/v1/pumpfun/clips/top', { ...params });
   }
 
-  /** The paginated coin list behind pump.fun's board views. Costs 1 credit. */
+  /** The paginated coin list behind the board views. Costs 1 credit. */
   async coins(params: CoinsParams): Promise<ListedCoin[]> {
     return this.base.get<ListedCoin[]>('/v1/pumpfun/coins', { ...params });
   }
@@ -186,18 +186,18 @@ export class PumpfunClient {
     return this.base.post<GetAthBatchResponse>('/v1/pumpfun/coins/ath/batch', body);
   }
 
-  /** Resolve many mints to full coin records in one call. pump.fun leaves out addresses it cannot resolve. Today it answers the same records as `/coins/raw-batch`. Costs 1 credit. */
+  /** Resolve many mints to full coin records in one call. Unresolved addresses are omitted. Returns the same records as `/coins/raw-batch`. Costs 1 credit. */
   async coinsBatch(body: CoinsBatchRequest): Promise<CoinsBatch[]> {
     return this.base.post<CoinsBatch[]>('/v1/pumpfun/coins/batch', body);
   }
 
-  /** One of pump.fun's ranked coin boards (new, graduating, graduated, movers, charity), across every chain unless `chains` narrows it. Costs 1 credit. */
+  /** One ranked coin board (new, graduating, graduated, movers, or charity), across every chain unless `chains` narrows it. Costs 1 credit. */
   async coinBoard(params: CoinBoardParams): Promise<GetCoinBoardResponse> {
     const { board, ...query } = params;
     return this.base.get<GetCoinBoardResponse>(`/v1/pumpfun/coins/boards/${encodeURIComponent(board)}`, query);
   }
 
-  /** The coin pump.fun is surfacing as hot right now; `hotCoin` is `null` most of the time. Costs 1 credit. */
+  /** The coin currently surfaced as hot; `hotCoin` is usually `null`. Costs 1 credit. */
   async hotCoin(): Promise<GetHotCoinResponse> {
     return this.base.get<GetHotCoinResponse>('/v1/pumpfun/coins/hot');
   }
@@ -212,7 +212,7 @@ export class PumpfunClient {
     return this.base.post<GetMarketActivityBatchResponse>('/v1/pumpfun/coins/market-activity/batch', body);
   }
 
-  /** pump.fun's written narratives for trending, moving and new coins. Pass the answer's `cursor` back while `hasMore` is true. pump.fun answered an empty list for every source and locale in every capture since 2026-10-08. Costs 1 credit. */
+  /** Written narratives for trending, moving, and new coins. Pass the answer's `cursor` back while `hasMore` is true. The endpoint answered an empty list for every source and locale in every capture since 2026-10-08. Costs 1 credit. */
   async coinNarratives(params: CoinNarrativesParams): Promise<GetCoinNarrativesResponse> {
     return this.base.get<GetCoinNarrativesResponse>('/v1/pumpfun/coins/narratives', { ...params });
   }
@@ -222,17 +222,17 @@ export class PumpfunClient {
     return this.base.get<PerpMarket[]>('/v1/pumpfun/coins/perps', { ...params });
   }
 
-  /** Resolve many mints to their raw indexer records. Today pump.fun answers the same records as `/coins/batch`; this route needs at least one mint. Costs 1 credit. */
+  /** Resolve many mints to their raw indexer records. Returns the same records as `/coins/batch`; this route needs at least one mint. Costs 1 credit. */
   async coinsRawBatch(body: RawCoinsBatchRequest): Promise<CoinsBatch[]> {
     return this.base.post<CoinsBatch[]>('/v1/pumpfun/coins/raw-batch', body);
   }
 
-  /** Coins pump.fun considers similar to the given mint. Costs 1 credit. */
+  /** Coins similar to the given mint. Costs 1 credit. */
   async similarCoins(params: SimilarCoinsParams): Promise<SimilarCoinResult[]> {
     return this.base.get<SimilarCoinResult[]>('/v1/pumpfun/coins/similar', { ...params });
   }
 
-  /** Addresses of the coins pump.fun treats as top tokens, Solana mints and EVM tokens alike. `/coins/top-mints/chains` adds the chains each one was vetted on. Costs 1 credit. */
+  /** Addresses of the top tokens, including Solana mints and EVM tokens alike. `/coins/top-mints/chains` adds the chains each one was vetted on. Costs 1 credit. */
   async topTokenMints(params: TopTokenMintsParams): Promise<GetTopTokenMintsResponse> {
     return this.base.get<GetTopTokenMintsResponse>('/v1/pumpfun/coins/top-mints', { ...params });
   }
@@ -242,18 +242,18 @@ export class PumpfunClient {
     return this.base.get<GetTopTokenMintChainsResponse>('/v1/pumpfun/coins/top-mints/chains', { ...params });
   }
 
-  /** Trending coins, the `great-coins` ranking that powers the pump.fun trending rail. Costs 1 credit. */
+  /** Trending coins from the `great-coins` ranking. Costs 1 credit. */
   async trendingCoins(params: TrendingCoinsParams): Promise<TrendingCoin[]> {
     return this.base.get<TrendingCoin[]>('/v1/pumpfun/coins/trending', { ...params });
   }
 
-  /** Full record for a single coin on any chain pump.fun supports: a Solana mint or an EVM token address. `chain_id` in the answer is the coin's CAIP-2 chain. An address pump.fun cannot resolve answers 404. Costs 1 credit. */
+  /** Full record for a single coin on a supported chain: a Solana mint or an EVM token address. `chain_id` in the answer is the coin's CAIP-2 chain. An unresolved address answers 404. Costs 1 credit. */
   async coin(params: CoinParams): Promise<GetCoinResponse> {
     const { mint, ...query } = params;
     return this.base.get<GetCoinResponse>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}`, query);
   }
 
-  /** Whether the coin's creator is approved to livestream on pump.fun. Costs 1 credit. */
+  /** Whether the coin's creator is approved to livestream. Costs 1 credit. */
   async approvedCreator(params: ApprovedCreatorParams): Promise<GetApprovedCreatorResponse> {
     const { mint } = params;
     return this.base.get<GetApprovedCreatorResponse>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}/approved-creator`);
@@ -271,7 +271,7 @@ export class PumpfunClient {
     return this.base.get<GetCoinTopCalloutsResponse>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}/callouts/top`, query);
   }
 
-  /** OHLC candles for a coin from pump.fun's swap API, the newest `limit` bars ending now. For bars further back, or every chain and resolution in one shape, see `/chains/{chain}/coins/{address}/candles`, which pages back with `to`. Costs 1 credit. */
+  /** OHLC candles for a coin, the newest `limit` bars ending now. For bars further back, or every chain and resolution in one shape, see `/chains/{chain}/coins/{address}/candles`, which pages back with `to`. Costs 1 credit. */
   async candles(params: CandlesParams): Promise<Candle[]> {
     const { mint, ...query } = params;
     return this.base.get<Candle[]>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}/candles`, query);
@@ -295,7 +295,7 @@ export class PumpfunClient {
     return this.base.get<GetFirstTradeResponse>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}/first-trade`);
   }
 
-  /** Number of wallets currently holding the coin. pump.fun counts this in a different service from `/coins/{mint}/holder-stats` and the top-holder routes, so the figures can differ by a few percent at the same moment. Costs 1 credit. */
+  /** Number of wallets currently holding the coin. This is counted separately from `/coins/{mint}/holder-stats` and the top-holder routes, so the figures can differ by a few percent at the same moment. Costs 1 credit. */
   async tokenHolderCount(params: TokenHolderCountParams): Promise<GetTokenHolderCountResponse> {
     const { mint } = params;
     return this.base.get<GetTokenHolderCountResponse>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}/holder-count`);
@@ -361,31 +361,31 @@ export class PumpfunClient {
     return this.base.get<GetTopHoldersResponse>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}/top-holders`);
   }
 
-  /** A coin's trades by accounts ranked in the top 50 of any pump.fun PnL leaderboard, across all their wallets: the marks pump.fun draws on its chart. Pass `cursor` from `page.nextCursor` for older trades. Costs 1 credit. */
+  /** A coin's trades by accounts ranked in the top 50 of any PnL leaderboard, across all their wallets. Pass `cursor` from `page.nextCursor` for older trades. Costs 1 credit. */
   async topTraderTrades(params: TopTraderTradesParams): Promise<GetTopTraderTradesResponse> {
     const { mint, ...query } = params;
     return this.base.get<GetTopTraderTradesResponse>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}/top-trader-trades`, query);
   }
 
-  /** Recent trades for a Solana pump.fun coin, newest first. `baseAmount` and `quoteAmount` are decimal strings in whole units of the coin and its quote token. For any chain, see `/chains/{chain}/coins/{address}/trades`. Costs 1 credit. */
+  /** Recent trades for a Solana coin, newest first. `baseAmount` and `quoteAmount` are decimal strings in whole units of the coin and its quote token. For any chain, see `/chains/{chain}/coins/{address}/trades`. Costs 1 credit. */
   async trades(params: TradesParams): Promise<GetTradesResponse> {
     const { mint, ...query } = params;
     return this.base.get<GetTradesResponse>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}/trades`, query);
   }
 
-  /** Trades on one coin for several wallets at once. Amounts are raw integer strings, unlike `/coins/{mint}/trades`: `baseAmount` is in the coin's smallest unit (6 decimals on pump.fun coins) and `quoteAmount` in the quote token's smallest unit (lamports for SOL). Costs 1 credit. */
+  /** Trades on one coin for several wallets at once. Amounts are raw integer strings, unlike `/coins/{mint}/trades`: `baseAmount` is in the coin's smallest unit (6 decimals for these coins) and `quoteAmount` in the quote token's smallest unit (lamports for SOL). Costs 1 credit. */
   async tradesBatch(params: TradesBatchParams, body: TradesBatchRequest): Promise<GetTradesBatchResponse> {
     const { mint } = params;
     return this.base.post<GetTradesBatchResponse>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}/trades/batch`, body);
   }
 
-  /** Whether the mint's key came from pump.fun's vanity key pool (`true` or `false`). Costs 1 credit. */
+  /** Whether the mint's key came from the vanity key pool (`true` or `false`). Costs 1 credit. */
   async vanityCheck(params: VanityCheckParams): Promise<GetVanityCheckResponse> {
     const { mint } = params;
     return this.base.get<GetVanityCheckResponse>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}/vanity-check`);
   }
 
-  /** pump.fun's trading competitions in three buckets: upcoming, live (registration open or running, with the current top entries) and past (the 50 latest, with winners). Costs 1 credit. */
+  /** Trading competitions in three buckets: upcoming, live (registration open or running, with the current top entries) and past (the 50 latest, with winners). Costs 1 credit. */
   async competitions(): Promise<ListCompetitionsResponse> {
     return this.base.get<ListCompetitionsResponse>('/v1/pumpfun/competitions');
   }
@@ -414,24 +414,24 @@ export class PumpfunClient {
     return this.base.get<GetCompetitionResponse>(`/v1/pumpfun/competitions/${encodeURIComponent(competition)}`, query);
   }
 
-  /** A creator's fee earnings per quote token, whether any are claimable, and the earnings series over `period` in `interval` buckets. `5m` buckets allow period `1d`; `30m` buckets allow `1d` or `7d`; any other pairing answers 400, not charged. EVM wallets answer with no earnings. Costs 1 credit. */
+  /** Returns a creator's fee earnings per quote token, claimable status, and an earnings series grouped by `interval` over `period`. Costs 1 credit. */
   async creatorFees(params: CreatorFeesParams): Promise<GetCreatorFeesResponse> {
     const { address, ...query } = params;
     return this.base.get<GetCreatorFeesResponse>(`/v1/pumpfun/creators/${encodeURIComponent(address)}/fees`, query);
   }
 
-  /** Deprecated: pump.fun retired its lifetime-total read. This route now answers what `/creators/{address}/fees` answers for 30 days; `earned` holds the totals per quote token. Costs 1 credit. */
+  /** Deprecated: the lifetime-total read was retired. This route now answers what `/creators/{address}/fees` answers for 30 days; `earned` holds the totals per quote token. Costs 1 credit. */
   async creatorFeesTotal(params: CreatorFeesTotalParams): Promise<GetCreatorFeesResponse> {
     const { address } = params;
     return this.base.get<GetCreatorFeesResponse>(`/v1/pumpfun/creators/${encodeURIComponent(address)}/fees/total`);
   }
 
-  /** pump.fun's holder-rewards book: per coin, the fees accrued to its holder vault, the payouts made and the book totals. Page with `page`: pump.fun answered `next: null` in every probe since 2026-10-08, even with 141,934 matching coins. A `cursor` from `next` would continue a listing and replace every other parameter. Costs 1 credit. */
+  /** Returns holder-reward fees and payouts per coin, plus totals. Page with `page`, or pass a `cursor` from `next` to continue a previous result set. Costs 1 credit. */
   async holderRewards(params: HolderRewardsParams): Promise<GetHolderRewardsResponse> {
     return this.base.get<GetHolderRewardsResponse>('/v1/pumpfun/fees/holder-rewards', { ...params });
   }
 
-  /** Bonding-curve constants of the pump.fun program at a point in time. Costs 1 credit. */
+  /** Returns bonding-curve constants at a point in time. Costs 1 credit. */
   async globalParams(params: GlobalParamsParams): Promise<GetGlobalParamsResponse> {
     return this.base.get<GetGlobalParamsResponse>('/v1/pumpfun/global-params', { ...params });
   }
@@ -442,13 +442,13 @@ export class PumpfunClient {
     return this.base.get<GetGroupMembersResponse>(`/v1/pumpfun/groups/${encodeURIComponent(group_id)}/members`, query);
   }
 
-  /** A squad's active members ranked by PnL over the window. `rows` is empty until pump.fun publishes the window's ranking. Costs 1 credit. */
+  /** A squad's active members ranked by PnL over the window. `rows` is empty until the window's ranking is published. Costs 1 credit. */
   async groupMembersPnl(params: GroupMembersPnlParams): Promise<GetGroupMembersPnlResponse> {
     const { group_id, ...query } = params;
     return this.base.get<GetGroupMembersPnlResponse>(`/v1/pumpfun/groups/${encodeURIComponent(group_id)}/members/pnl`, query);
   }
 
-  /** The ranked feed on the pump.fun home page: trending coins with the callout position that put each one there, across Solana and the EVM chains. Page with `page`, from 0. Costs 1 credit. */
+  /** The ranked home feed: trending coins with the callout position that put each one there, across Solana and the EVM chains. Page with `page`, from 0. Costs 1 credit. */
   async homeFeed(params: HomeFeedParams): Promise<GetHomeFeedResponse> {
     return this.base.get<GetHomeFeedResponse>('/v1/pumpfun/home-feed', { ...params });
   }
@@ -458,7 +458,7 @@ export class PumpfunClient {
     return this.base.get<GetNewCalloutsFeedResponse>('/v1/pumpfun/home-feed/new', { ...params });
   }
 
-  /** How many new callouts arrived after `since` under the same filters. `capped` is true once the count reaches pump.fun's ceiling. Costs 1 credit. */
+  /** How many new callouts arrived after `since` under the same filters. `capped` is true once the count reaches the response limit. Costs 1 credit. */
   async newCalloutsCount(params: NewCalloutsCountParams): Promise<GetNewCalloutsCountResponse> {
     return this.base.get<GetNewCalloutsCountResponse>('/v1/pumpfun/home-feed/new/count', { ...params });
   }
@@ -468,12 +468,12 @@ export class PumpfunClient {
     return this.base.get<GetPayoutsLeaderboardResponse>('/v1/pumpfun/leaderboards/payouts', { ...params });
   }
 
-  /** Trader PnL leaderboard: the top 100 traders. pump.fun has no paging past them. Costs 1 credit. */
+  /** Trader PnL leaderboard with the top 100 traders and no further pages. Costs 1 credit. */
   async pnlLeaderboard(params: PnlLeaderboardParams): Promise<GetPnlLeaderboardResponse> {
     return this.base.get<GetPnlLeaderboardResponse>('/v1/pumpfun/leaderboards/pnl', { ...params });
   }
 
-  /** A random sample of traders from the PnL leaderboard, as pump.fun suggests them to follow. Costs 1 credit. */
+  /** A random sample of traders from the PnL leaderboard to follow. Costs 1 credit. */
   async followSuggestions(params: FollowSuggestionsParams): Promise<GetFollowSuggestionsResponse> {
     return this.base.get<GetFollowSuggestionsResponse>('/v1/pumpfun/leaderboards/pnl/follow-suggestions', { ...params });
   }
@@ -483,12 +483,12 @@ export class PumpfunClient {
     return this.base.get<GetGroupPnlLeaderboardResponse>('/v1/pumpfun/leaderboards/pnl/groups', { ...params });
   }
 
-  /** The scored traders pump.fun's mobile app suggests at onboarding. Costs 1 credit. */
+  /** The scored traders suggested during onboarding. Costs 1 credit. */
   async onboardingSuggestions(params: OnboardingSuggestionsParams): Promise<GetOnboardingSuggestionsResponse> {
     return this.base.get<GetOnboardingSuggestionsResponse>('/v1/pumpfun/leaderboards/pnl/onboarding-suggestions', { ...params });
   }
 
-  /** The positions behind each PnL leaderboard entry: the top 25 at most. pump.fun has no paging past them. Costs 1 credit. */
+  /** The positions behind each PnL leaderboard entry, limited to the top 25. Costs 1 credit. */
   async pnlLeaderboardPositions(params: PnlLeaderboardPositionsParams): Promise<GetPnlLeaderboardPositionsResponse> {
     return this.base.get<GetPnlLeaderboardPositionsResponse>('/v1/pumpfun/leaderboards/pnl/positions', { ...params });
   }
@@ -534,12 +534,12 @@ export class PumpfunClient {
     return this.base.get<GetMayhemTopTradersResponse>('/v1/pumpfun/mayhem/top-traders', { ...params });
   }
 
-  /** The ten top daily PnL profiles pump.fun shows on its follow screen. Costs 1 credit. */
+  /** The ten top daily PnL profiles from the follow screen. Costs 1 credit. */
   async topProfiles(): Promise<Liker[]> {
     return this.base.get<Liker[]>('/v1/pumpfun/profiles/top');
   }
 
-  /** Whether pump.fun shows its KOL badge for each wallet or user id. This is the badge other routes report as `verifiedBadgeVisible`, not `isVerified`. Costs 1 credit. */
+  /** Whether the KOL badge is shown for each wallet or user ID. This is the badge other routes report as `verifiedBadgeVisible`, not `isVerified`. Costs 1 credit. */
   async verifiedProfiles(body: ProfileIdsRequest): Promise<GetVerifiedProfilesResponse> {
     return this.base.post<GetVerifiedProfilesResponse>('/v1/pumpfun/profiles/verified', body);
   }
@@ -554,7 +554,7 @@ export class PumpfunClient {
     return this.base.get<GetSearchQuoteFacetsResponse>('/v1/pumpfun/search/coins/quote-facets', { ...params });
   }
 
-  /** Classify up to five identifiers in one call: whether each is a coin (by mint, bonding curve or pool), a Solana wallet, an EVM address or a pump.fun user id, which chain it is on, and its coin or account record. Costs 1 credit. */
+  /** Classify up to five identifiers in one call: whether each is a coin (by mint, bonding curve or pool), a Solana wallet, an EVM address, or a user ID, which chain it is on, and its coin or account record. Costs 1 credit. */
   async resolveIdentifiers(params: ResolveIdentifiersParams): Promise<ResolveIdentifiersResponse> {
     return this.base.get<ResolveIdentifiersResponse>('/v1/pumpfun/search/resolve', { ...params });
   }
@@ -570,18 +570,18 @@ export class PumpfunClient {
     return this.base.get<GetShareholderFeesResponse>(`/v1/pumpfun/shareholders/${encodeURIComponent(address)}/fees`, query);
   }
 
-  /** Current SOL price in USD as pump.fun quotes it. Costs 1 credit. */
+  /** Returns the current SOL price in USD. Costs 1 credit. */
   async solPrice(): Promise<GetSolPriceResponse> {
     return this.base.get<GetSolPriceResponse>('/v1/pumpfun/sol-price');
   }
 
-  /** Whether a pump.fun username is taken. Costs 1 credit. */
+  /** Whether a username is taken. Costs 1 credit. */
   async usernameExists(params: UsernameExistsParams): Promise<GetUsernameExistsResponse> {
     const { username } = params;
     return this.base.get<GetUsernameExistsResponse>(`/v1/pumpfun/usernames/${encodeURIComponent(username)}/exists`);
   }
 
-  /** pump.fun's profile directory, one page at a time. Costs 1 credit. */
+  /** Returns the profile directory one page at a time. Costs 1 credit. */
   async users(params: UsersParams): Promise<ListedUser[]> {
     return this.base.get<ListedUser[]>('/v1/pumpfun/users', { ...params });
   }
@@ -591,7 +591,7 @@ export class PumpfunClient {
     return this.base.post<UsersBatch[]>('/v1/pumpfun/users/batch', body);
   }
 
-  /** Profile for a single wallet (Solana or EVM), pump.fun user id or username. Costs 1 credit. */
+  /** Profile for a single wallet, user ID, or username. Costs 1 credit. */
   async user(params: UserParams): Promise<GetUserResponse> {
     const { address } = params;
     return this.base.get<GetUserResponse>(`/v1/pumpfun/users/${encodeURIComponent(address)}`);
@@ -639,13 +639,13 @@ export class PumpfunClient {
     return this.base.get<GetUserCalloutRepliesResponse>(`/v1/pumpfun/users/${encodeURIComponent(address)}/callouts/replies`, query);
   }
 
-  /** Coins a wallet has launched. pump.fun serves the first 250 at most. Costs 1 credit. */
+  /** Coins a wallet has launched, up to 250. Costs 1 credit. */
   async userCreatedCoins(params: UserCreatedCoinsParams): Promise<GetUserCreatedCoinsResponse> {
     const { address, ...query } = params;
     return this.base.get<GetUserCreatedCoinsResponse>(`/v1/pumpfun/users/${encodeURIComponent(address)}/created-coins`, query);
   }
 
-  /** Profiles following a wallet. Without `limit`, `offset` or `sort` this is pump.fun's legacy list, which stops at 50 profiles; set any of them to page through every profile (the same row shape). Costs 1 credit. */
+  /** Profiles following a wallet. Without `limit`, `offset`, or `sort`, this is the legacy list, which stops at 50 profiles; set any of them to page through every profile (the same row shape). Costs 1 credit. */
   async followers(params: FollowersParams): Promise<Follower[]> {
     const { address, ...query } = params;
     return this.base.get<Follower[]>(`/v1/pumpfun/users/${encodeURIComponent(address)}/followers`, query);
@@ -663,7 +663,7 @@ export class PumpfunClient {
     return this.base.get<UsersBatch[]>(`/v1/pumpfun/users/${encodeURIComponent(address)}/followers/search`, query);
   }
 
-  /** Profiles a wallet follows. Without `limit`, `offset` or `sort` this is pump.fun's legacy list, which stops at 50 profiles; set any of them to page through every profile (the same row shape). Costs 1 credit. */
+  /** Profiles a wallet follows. Without `limit`, `offset`, or `sort`, this is the legacy list, which stops at 50 profiles; set any of them to page through every profile (the same row shape). Costs 1 credit. */
   async following(params: FollowingParams): Promise<Follower[]> {
     const { address, ...query } = params;
     return this.base.get<Follower[]>(`/v1/pumpfun/users/${encodeURIComponent(address)}/following`, query);
@@ -681,7 +681,7 @@ export class PumpfunClient {
     return this.base.get<UsersBatch[]>(`/v1/pumpfun/users/${encodeURIComponent(address)}/following/search`, query);
   }
 
-  /** A profile header in one read: profile, follower and following counts, verified and achievement badges, ban state and created-coin count. Takes a Solana wallet or a pump.fun user id; a wallet with no account is served as an external wallet. Costs 1 credit. */
+  /** A profile header in one read: profile, follower and following counts, verified and achievement badges, ban state and created-coin count. Takes a Solana wallet or a user ID; a wallet with no account is served as an external wallet. Costs 1 credit. */
   async userOverview(params: UserOverviewParams): Promise<GetUserOverviewResponse> {
     const { address } = params;
     return this.base.get<GetUserOverviewResponse>(`/v1/pumpfun/users/${encodeURIComponent(address)}/overview`);
@@ -699,7 +699,7 @@ export class PumpfunClient {
     return this.base.get<GetPerpTradesResponse>(`/v1/pumpfun/users/${encodeURIComponent(address)}/perp-trades`, query);
   }
 
-  /** A wallet's open or closed positions with net PnL, across Solana and its linked EVM wallets. Takes a wallet, a pump.fun user id or a squad id. Costs 1 credit. */
+  /** A wallet's open or closed positions with net PnL, across Solana and its linked EVM wallets. Takes a wallet, user ID, or squad ID. Costs 1 credit. */
   async userPortfolio(params: UserPortfolioParams): Promise<GetUserPortfolioResponse> {
     const { address, ...query } = params;
     return this.base.get<GetUserPortfolioResponse>(`/v1/pumpfun/users/${encodeURIComponent(address)}/portfolio`, query);
@@ -729,7 +729,7 @@ export class PumpfunClient {
     return this.base.get<GetUserRepostsResponse>(`/v1/pumpfun/users/${encodeURIComponent(address)}/reposts`, query);
   }
 
-  /** An account's token trades, newest first. Takes a wallet or a pump.fun user id. pump.fun documents squad ids as the union of their members' trades, but a squad id answered no trades in our tests. Pass `cursor` from `nextCursor` for older trades. Costs 1 credit. */
+  /** An account's token trades, newest first. Takes a wallet or user ID. Squad IDs may return no trades. Pass `cursor` from `nextCursor` for older trades. Costs 1 credit. */
   async userTrades(params: UserTradesParams): Promise<GetUserTradesResponse> {
     const { address, ...query } = params;
     return this.base.get<GetUserTradesResponse>(`/v1/pumpfun/users/${encodeURIComponent(address)}/trades`, query);
@@ -764,13 +764,13 @@ export class PumpfunClient {
     return this.base.get<GetWalletTokenPnlResponse>(`/v1/pumpfun/wallets/${encodeURIComponent(address)}/pnl/${encodeURIComponent(mint)}`);
   }
 
-  /** pump.fun's blocklist screen for a Solana or EVM wallet. The verdict is in the body: `statusCode` 200 (`OK`) means the wallet passes, 405 (`Wallet not allowed`) means pump.fun blocks it. Costs 1 credit. */
+  /** Returns the blocklist result for a Solana or EVM wallet. The verdict is in the body: `statusCode` 200 (`OK`) means the wallet passes, 405 (`Wallet not allowed`) means the wallet is blocked. Costs 1 credit. */
   async walletScreening(params: WalletScreeningParams): Promise<GetWalletScreeningResponse> {
     const { address } = params;
     return this.base.get<GetWalletScreeningResponse>(`/v1/pumpfun/wallets/${encodeURIComponent(address)}/screening`);
   }
 
-  /** A wallet's trades in one coin from pump.fun's PnL service, each with its PnL effect. Pass `cursor` from `pagination.nextCursor` while `pagination.hasMore` is true. `chain` and `nativeUnit` appear for EVM wallets only. Costs 1 credit. */
+  /** A wallet's trades in one coin, each with its PnL effect. Pass `cursor` from `pagination.nextCursor` while `pagination.hasMore` is true. `chain` and `nativeUnit` appear for EVM wallets only. Costs 1 credit. */
   async walletTrades(params: WalletTradesParams): Promise<GetWalletTradesResponse> {
     const { address, ...query } = params;
     return this.base.get<GetWalletTradesResponse>(`/v1/pumpfun/wallets/${encodeURIComponent(address)}/trades`, query);

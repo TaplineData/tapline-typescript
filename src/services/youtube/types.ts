@@ -209,7 +209,9 @@ export interface GetSubtitleTracksParams {
 export interface GetSubtitlesParams {
   /** Optional ISO 3166-1 alpha-2 country code, normalized uppercase. */
   country?: string | null;
-  /** YouTube-compatible language tag with a registered two- or three-letter primary code and optional script/region, or orig (for example pt-BR, es-419, zh-Hans, en-orig). */
+  /** Languages to try, in order, if the requested language is unavailable. Use `*` to accept any language, defaulting to the video's spoken language. */
+  fallback_languages?: string[] | null;
+  /** YouTube-compatible language tag with a registered two- or three-letter primary code and optional script/region (for example pt-BR, es-419, zh-Hans, en-orig). Must exactly match a subtitle track the video has; YouTube auto-translation is not available. A track `id` from /subtitles/tracks (for example en.uYU-mmqFLq8) requests that exact track. */
   language?: string;
   /** Caption track to return: manual (human-authored) or auto (machine-generated). Defaults to any, which prefers manual and falls back to auto. */
   source?: SubtitleSource;
@@ -351,7 +353,9 @@ export interface SubtitleMetadata {
 
 export interface SubtitleResponse {
   is_auto_generated: boolean;
+  language: string;
   metadata: SubtitleMetadata;
+  track_id: string;
   transcript: string | Json3Transcript;
 }
 
@@ -359,6 +363,7 @@ export type SubtitleSource = "any" | "manual" | "auto";
 
 export interface SubtitleTrackItem {
   formats: string[];
+  id: string;
   language: string;
   language_name: string | null;
 }

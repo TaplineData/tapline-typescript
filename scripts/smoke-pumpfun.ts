@@ -4,12 +4,13 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import type { AnySchema } from 'ajv';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 
 import type { TaplineClient } from '../src/index.js';
 import type { ApprovedCreatorParams, AthBatchRequest, AthParams, BanStatusParams, BountyFeedRecentParams, BountyFeedTrendingParams, BountyRecentPayoutsParams, BountySubmissionsParams, BountyTasksParams, BountyTopCoinsParams, BountyTopEarnersParams, BountyTopSpendersParams, CalloutLeaderboardStatsParams, CalloutLikersParams, CalloutParams, CalloutQuotesParams, CalloutRepliesParams, CalloutRepostersParams, CalloutStatsParams, CandlesParams, ChainCandlesParams, ChainPriceLineParams, ChainTopHoldersParams, ChainTradesParams, ClipCountsParams, ClipsBatchRequest, CoinBoardParams, CoinClipsParams, CoinFeeEventsParams, CoinHolderPnlParams, CoinMayhemStateParams, CoinNarrativesParams, CoinParams, CoinTimelineParams, CoinTopCalloutsParams, CoinsBatchRequest, CoinsParams, CompetitionEntryHighlightsParams, CompetitionEntryParams, CompetitionHighlightsParams, CompetitionParams, CreatorFeesParams, CreatorFeesTotalParams, FeeSharingSharesParams, FeeSharingTotalsParams, FirstTradeParams, FollowSuggestionsParams, FollowersCountParams, FollowersParams, FollowingCountParams, FollowingParams, GlobalParamsParams, GroupMembersParams, GroupMembersPnlParams, GroupPnlLeaderboardParams, HolderListRequest, HolderRewardsParams, HolderStatsParams, HomeFeedParams, InMemoryCoinParams, LineChartParams, LiveCoinsParams, LivestreamHistoryParams, LivestreamParams, MarketActivityBatchRequest, MarketActivityParams, MayhemCoinTopTradersParams, MayhemCoinsParams, MayhemStatsParams, MayhemTopCoinsParams, MayhemTopTradersParams, MintPositionsParams, MoversBoardParams, NewCalloutsCountParams, NewCalloutsFeedParams, OnboardingSuggestionsParams, PayoutsLeaderboardParams, PerpOrdersParams, PerpTradesParams, PerpsParams, PlaylistMapRequest, PnlLeaderboardParams, PnlLeaderboardPositionsParams, PortfolioSummaryParams, PortfolioValueChartParams, ProfileIdsRequest, RawCoinsBatchRequest, ReplyLikersParams, ReplyRepostersParams, ReplyThreadParams, ResolveIdentifiersParams, SearchCoinsParams, SearchFollowersParams, SearchFollowingParams, SearchQuoteFacetsParams, SearchUsersParams, ShareholderFeesParams, SimilarCoinsParams, TokenHolderCountParams, TopClipsParams, TopHoldersParams, TopTokenMintChainsParams, TopTokenMintsParams, TopTraderTradesParams, TradesBatchParams, TradesBatchRequest, TradesParams, TrendingBoardParams, TrendingCoinsParams, UserAchievementsParams, UserCalloutRepliesParams, UserCalloutsParams, UserCoinCalloutParams, UserCreatedCoinsParams, UserOverviewParams, UserParams, UserPortfolioParams, UserPositionsParams, UserRepostsParams, UserTradesParams, UsernameExistsParams, UsersParams, VanityCheckParams, WalletAddressListRequest, WalletBalanceSummaryParams, WalletBalancesParams, WalletListRequest, WalletPnlBatchParams, WalletPnlBatchRequest, WalletScreeningParams, WalletTokenPnlParams, WalletTradesParams, WalletTransactionsParams } from '../src/services/pumpfun/types.js';
 import { TaplineError } from '../src/errors.js';
-import { typeAt, unknownKeys } from './schema-walk.js';
+import { typeAt, unknownKeys, valueAt } from './schema-walk.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FIXTURES = join(process.env.GENERATE_CLIENT_FIXTURES ?? join(HERE, '..', '..', 'fixtures'), 'pumpfun');
@@ -19,6 +20,7 @@ interface Input {
   params?: Record<string, unknown>;
   body?: unknown;
   expect?: { status: number; code: string | null };
+  derived?: Record<string, { $from: string; path: string }>;
 }
 
 interface Method {
@@ -169,8 +171,21 @@ const METHODS: Record<string, Method> = {
   wallet_transactions: { response: 'GetWalletTransactionsResponse', isArray: false, call: (c, i) => c.pumpfun.walletTransactions(i.params as unknown as WalletTransactionsParams) },
 };
 
+const SUCCESS_UNAVAILABLE = new Set<string>();
+
+function acceptLosslessNumbers(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(acceptLosslessNumbers);
+  if (typeof value !== 'object' || value === null) return value;
+  const schema = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, acceptLosslessNumbers(item)]));
+  if (schema.type === 'integer' || schema.type === 'number') schema.type = [schema.type, 'string'];
+  else if (Array.isArray(schema.type) && schema.type.some((kind) => kind === 'integer' || kind === 'number')) {
+    schema.type = [...new Set([...schema.type, 'string'])];
+  }
+  return schema;
+}
+
 const ajv = new Ajv2020({ strict: false, allErrors: true });
-ajv.addSchema(SCHEMAS, 'service');
+ajv.addSchema(acceptLosslessNumbers(SCHEMAS) as AnySchema, 'service');
 
 function validator(name: string, isArray: boolean) {
   const ref = { $ref: `service#/$defs/${name}` };
@@ -180,6 +195,22 @@ function validator(name: string, isArray: boolean) {
 function describe(e: unknown): string {
   if (e instanceof TaplineError) return `HTTP ${e.status} ${e.code}: ${e.message} (request_id=${e.requestId})`;
   return e instanceof Error ? `${e.name}: ${e.message}` : String(e);
+}
+
+function readCaptured(stem: string): Input {
+  return JSON.parse(readFileSync(join(FIXTURES, `${stem}.request.json`), 'utf8')) as Input;
+}
+
+/** Inputs taken from another case (a token, a cursor) come from calling that case now, not from the capture. */
+async function resolveDerived(client: TaplineClient, input: Input): Promise<Input> {
+  const params = { ...input.params };
+  for (const [name, source] of Object.entries(input.derived ?? {})) {
+    const producer = METHODS[source.$from.split('.', 1)[0]!]!;
+    const produced = await producer.call(client, await resolveDerived(client, readCaptured(source.$from)));
+    const value = valueAt(produced, source.path);
+    params[name] = typeof params[name] === 'string' ? String(value) : value;
+  }
+  return { ...input, params };
 }
 
 function stems(): string[] {
@@ -194,7 +225,7 @@ export async function run(client: TaplineClient): Promise<number> {
   let failures = 0;
   const seen = stems();
   for (const name of Object.keys(METHODS)) {
-    if (!seen.includes(`${name}.default`)) {
+    if (!SUCCESS_UNAVAILABLE.has(name) && !seen.includes(`${name}.default`)) {
       console.error(`[FAIL] pumpfun.${name}.default: no captured request in ${FIXTURES}; run capture.py`);
       failures += 1;
     }
@@ -203,9 +234,10 @@ export async function run(client: TaplineClient): Promise<number> {
     const name = stem.split('.', 1)[0]!;
     const method = METHODS[name];
     if (!method) continue;
-    const input = JSON.parse(readFileSync(join(FIXTURES, `${stem}.request.json`), 'utf8')) as Input;
+    let input = readCaptured(stem);
     const negative = stem.includes('.neg.');
     try {
+      input = await resolveDerived(client, input);
       const result = await method.call(client, input);
       if (negative) {
         console.error(`[FAIL] pumpfun.${stem}: expected HTTP ${input.expect?.status}, got a 200`);

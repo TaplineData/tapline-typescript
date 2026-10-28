@@ -10,7 +10,7 @@ import { Ajv2020 } from 'ajv/dist/2020.js';
 import type { TaplineClient } from '../src/index.js';
 import type { GetCompanyParams, GetCompanyPostsParams, GetJobParams, GetPostParams, GetPostTranscriptParams, GetProfileParams, SearchJobsParams } from '../src/services/linkedin/types.js';
 import { TaplineError } from '../src/errors.js';
-import { typeAt, unknownKeys } from './schema-walk.js';
+import { typeAt, unknownKeys, valueAt } from './schema-walk.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FIXTURES = join(process.env.GENERATE_CLIENT_FIXTURES ?? join(HERE, '..', '..', 'fixtures'), 'linkedin');
@@ -20,6 +20,7 @@ interface Input {
   params?: Record<string, unknown>;
   body?: unknown;
   expect?: { status: number; code: string | null };
+  derived?: Record<string, { $from: string; path: string }>;
 }
 
 interface Method {
@@ -64,6 +65,22 @@ function describe(e: unknown): string {
   return e instanceof Error ? `${e.name}: ${e.message}` : String(e);
 }
 
+function readCaptured(stem: string): Input {
+  return JSON.parse(readFileSync(join(FIXTURES, `${stem}.request.json`), 'utf8')) as Input;
+}
+
+/** Inputs taken from another case (a token, a cursor) come from calling that case now, not from the capture. */
+async function resolveDerived(client: TaplineClient, input: Input): Promise<Input> {
+  const params = { ...input.params };
+  for (const [name, source] of Object.entries(input.derived ?? {})) {
+    const producer = METHODS[source.$from.split('.', 1)[0]!]!;
+    const produced = await producer.call(client, await resolveDerived(client, readCaptured(source.$from)));
+    const value = valueAt(produced, source.path);
+    params[name] = typeof params[name] === 'string' ? String(value) : value;
+  }
+  return { ...input, params };
+}
+
 function stems(): string[] {
   if (!existsSync(FIXTURES)) return [];
   return readdirSync(FIXTURES)
@@ -85,9 +102,10 @@ export async function run(client: TaplineClient): Promise<number> {
     const name = stem.split('.', 1)[0]!;
     const method = METHODS[name];
     if (!method) continue;
-    const input = JSON.parse(readFileSync(join(FIXTURES, `${stem}.request.json`), 'utf8')) as Input;
+    let input = readCaptured(stem);
     const negative = stem.includes('.neg.');
     try {
+      input = await resolveDerived(client, input);
       const result = await method.call(client, input);
       if (negative) {
         console.error(`[FAIL] linkedin.${stem}: expected HTTP ${input.expect?.status}, got a 200`);

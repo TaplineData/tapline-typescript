@@ -6,66 +6,66 @@ import type { ChannelResponse, ChannelVideosResponse, CommentsResponse, FormatsR
 export class YoutubeClient {
   constructor(private readonly base: BaseClient) {}
 
-  /** Get a YouTube channel's profile and statistics. Costs 3 credits. */
+  /** Get a channel's profile and statistics. Costs 3 credits. */
   async getChannel(params: GetChannelParams): Promise<ChannelResponse> {
     const { channel_id } = params;
     return this.base.get<ChannelResponse>(`/v1/youtube/channels/${encodeURIComponent(channel_id)}`);
   }
 
-  /** Get recent videos from a YouTube channel. Costs 2 credits. */
+  /** Get recent videos from a channel. Costs 3 credits. */
   async getChannelVideos(params: GetChannelVideosParams): Promise<ChannelVideosResponse> {
     const { channel_id, ...query } = params;
     return this.base.get<ChannelVideosResponse>(`/v1/youtube/channels/${encodeURIComponent(channel_id)}/videos`, query);
   }
 
-  /** Get a YouTube playlist and its videos. Costs 2 credits. */
+  /** Get a playlist and its videos. Costs 2 credits. */
   async getPlaylist(params: GetPlaylistParams): Promise<PlaylistResponse> {
     const { playlist_id, ...query } = params;
     return this.base.get<PlaylistResponse>(`/v1/youtube/playlist/${encodeURIComponent(playlist_id)}`, query);
   }
 
-  /** Search YouTube for matching videos, channels, and playlists. Costs 2 credits. */
+  /** Search for matching videos, channels, and playlists. Costs 3 credits. */
   async search(params: SearchParams): Promise<SearchResponse> {
     return this.base.get<SearchResponse>('/v1/youtube/search', { ...params });
   }
 
-  /** Get comments for a YouTube video. Costs 2 credits. */
+  /** Get comments for a video. Costs 3 credits. */
   async getComments(params: GetCommentsParams): Promise<CommentsResponse> {
     const { video_id, ...query } = params;
     return this.base.get<CommentsResponse>(`/v1/youtube/videos/${encodeURIComponent(video_id)}/comments`, query);
   }
 
-  /** Get replies to a comment on a YouTube video. Costs 2 credits. */
+  /** Get replies to a comment on a video. Costs 2 credits. */
   async getCommentReplies(params: GetCommentRepliesParams): Promise<RepliesResponse> {
     const { video_id, comment_id, ...query } = params;
     return this.base.get<RepliesResponse>(`/v1/youtube/videos/${encodeURIComponent(video_id)}/comments/${encodeURIComponent(comment_id)}/replies`, query);
   }
 
-  /** List the video and audio formats available for a YouTube video. Costs 2 credits. */
+  /** List the available video and audio formats. Costs 2 credits. */
   async getFormats(params: GetFormatsParams): Promise<FormatsResponse> {
     const { video_id } = params;
     return this.base.get<FormatsResponse>(`/v1/youtube/videos/${encodeURIComponent(video_id)}/formats`);
   }
 
-  /** Get the replay heatmap for a YouTube video. Costs 2 credits. */
+  /** Get the replay heatmap for a video. Costs 2 credits. */
   async getHeatmap(params: GetHeatmapParams): Promise<HeatmapResponse> {
     const { video_id } = params;
     return this.base.get<HeatmapResponse>(`/v1/youtube/videos/${encodeURIComponent(video_id)}/heatmap`);
   }
 
-  /** Get metadata for a YouTube video. Costs 2 credits. */
+  /** Get metadata for a video. Costs 3 credits. */
   async getMetadata(params: GetMetadataParams): Promise<VideoMetadataResponse> {
     const { video_id, ...query } = params;
     return this.base.get<VideoMetadataResponse>(`/v1/youtube/videos/${encodeURIComponent(video_id)}/metadata`, query);
   }
 
-  /** Get subtitles for a YouTube video in the requested language and format. Costs 2 credits. */
+  /** Get subtitles for a video in the requested language and format. Costs 2 credits. */
   async getSubtitles(params: GetSubtitlesParams): Promise<SubtitleResponse> {
     const { video_id, ...query } = params;
     return this.base.get<SubtitleResponse>(`/v1/youtube/videos/${encodeURIComponent(video_id)}/subtitles`, query);
   }
 
-  /** List the subtitle tracks available for a YouTube video. Costs 2 credits. */
+  /** List the subtitle tracks available for a video. Costs 2 credits. */
   async getSubtitleTracks(params: GetSubtitleTracksParams): Promise<SubtitleTracksResponse> {
     const { video_id, ...query } = params;
     return this.base.get<SubtitleTracksResponse>(`/v1/youtube/videos/${encodeURIComponent(video_id)}/subtitles/tracks`, query);

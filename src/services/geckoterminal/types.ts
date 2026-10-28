@@ -970,11 +970,23 @@ export interface RevivalRadarPoolsResponseMetaSections {
 }
 
 export interface SearchAttributes {
-  dexes: string[];
+  dexes: SearchAttributesDexes[] | string[];
   networks: SearchAttributesNetworks[] | string[];
   pairs: string[];
   pools: SearchAttributesPools[] | string[];
   tags: SearchAttributesTags[] | string[];
+}
+
+export interface SearchAttributesDexes {
+  identifier: string;
+  image_url: string;
+  name: string;
+  network: TrendAttributesNewPoolsNetwork;
+  pools_count: number;
+  rank_by_volume_usd_24h: number;
+  swap_count_24h: number;
+  swap_volume_usd_24h: string;
+  type: string;
 }
 
 export interface SearchAttributesNetworks {
@@ -992,10 +1004,10 @@ export interface SearchAttributesPools {
   address: string;
   api_address: string;
   dex: TrendAttributesNewPoolsDex;
-  fdv_in_usd: string;
+  fdv_in_usd: string | null;
   from_volume_in_usd: string;
   gt_score: number;
-  market_cap_in_usd: string;
+  market_cap_in_usd: string | null;
   network: TrendAttributesNewPoolsNetwork;
   on_coingecko: boolean;
   pool_creation_date: string;
@@ -1011,7 +1023,7 @@ export interface SearchAttributesPools {
 
 export interface SearchAttributesPoolsTokens {
   address: string;
-  holder_count: number;
+  holder_count: number | null;
   image_url: string;
   is_base_token: boolean;
   is_verified: boolean;

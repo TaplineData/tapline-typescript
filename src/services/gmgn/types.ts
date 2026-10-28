@@ -2644,8 +2644,8 @@ export interface TokenSecurity {
   open_source: number;
   privileges: unknown | null;
   renounced: number | null;
-  renounced_freeze_account: boolean;
-  renounced_mint: boolean;
+  renounced_freeze_account?: boolean;
+  renounced_mint?: boolean;
   sell_tax: string;
   top_10_holder_rate: string;
   total_buy_tax?: string;

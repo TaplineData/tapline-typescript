@@ -11,7 +11,7 @@ export class GmgnClient {
     return this.base.get<GetGasPriceListResponse>('/v1/gmgn/gas-price-list');
   }
 
-  /** Most-searched tokens per chain, same ranking payload as trending but scored on GMGN search volume. Costs 2 credits. */
+  /** Most-searched tokens per chain, same ranking payload as trending but scored by search volume. Costs 2 credits. */
   async hotSearches(body: TrendingTokensRequest): Promise<GetHotSearchesResponse> {
     return this.base.post<GetHotSearchesResponse>('/v1/gmgn/hot-searches', body);
   }
@@ -26,7 +26,7 @@ export class GmgnClient {
     return this.base.post<GetMajorCoinPricesResponse>('/v1/gmgn/major-coin-prices', body);
   }
 
-  /** Trending token leaderboards. GMGN ranks every requested chain in one upstream call and returns one bucket per request entry, in the same order. Costs 2 credits. */
+  /** Trending token leaderboards. Returns one bucket per requested chain, in the same order. Costs 2 credits. */
   async trendingTokens(body: TrendingTokensRequest): Promise<GetTrendingTokensResponse> {
     return this.base.post<GetTrendingTokensResponse>('/v1/gmgn/trending-tokens', body);
   }
@@ -61,13 +61,13 @@ export class GmgnClient {
     return this.base.get<GetDexTradesPollingResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/dex-trades-polling`, query);
   }
 
-  /** Per-launchpad tax and trading-limit rules for the chain, with the localized warning text GMGN shows for each. Costs 2 credits. */
+  /** Per-launchpad tax and trading-limit rules for the chain, with the localized warning text for each. Costs 2 credits. */
   async launchpadTaxPolicy(params: LaunchpadTaxPolicyParams): Promise<GetLaunchpadTaxPolicyResponse> {
     const { chain } = params;
     return this.base.get<GetLaunchpadTaxPolicyResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/launchpad-tax-policy`);
   }
 
-  /** Everything GMGN knows about each token in one call: pool, security, rug check, creator stats, trade stats and all-time high. Costs 2 credits. */
+  /** Returns full records for each token in one call: pool, security, rug check, creator stats, trade stats and all-time high. Costs 2 credits. */
   async multiTokenFullInfo(params: MultiTokenFullInfoParams, body: AddressListRequest): Promise<GetMultiTokenFullInfoResponse> {
     const { chain } = params;
     return this.base.post<GetMultiTokenFullInfoResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/multi-token-full-info`, body);
@@ -115,7 +115,7 @@ export class GmgnClient {
     return this.base.get<GetSimilarCoinsResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/similar-coins`, query);
   }
 
-  /** Smart-money profile for a wallet: labels, socials and aggregate performance. GMGN's smart-money backend does not cover arbitrum, arc, robinhood, stable or xlayer; use /wallet-common-stat for those. Costs 2 credits. */
+  /** Smart-money profile for a wallet: labels, socials and aggregate performance. This data does not cover arbitrum, arc, robinhood, stable or xlayer; use /wallet-common-stat for those. Costs 2 credits. */
   async smartMoneyWalletInfo(params: SmartMoneyWalletInfoParams): Promise<GetSmartMoneyWalletInfoResponse> {
     const { chain, wallet_address } = params;
     return this.base.get<GetSmartMoneyWalletInfoResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/smart-money-wallet/${encodeURIComponent(wallet_address)}`);
@@ -139,7 +139,7 @@ export class GmgnClient {
     return this.base.post<GetTokenPricesResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token-prices`, body);
   }
 
-  /** Tokens currently firing GMGN surge signals, with the market-cap snapshot at each trigger. Costs 2 credits. */
+  /** Tokens currently firing surge signals, with the market-cap snapshot at each trigger. Costs 2 credits. */
   async tokenSignals(params: TokenSignalsParams, body: TokenSignalsRequest): Promise<GetTokenSignalsResponse> {
     const { chain } = params;
     return this.base.post<GetTokenSignalsResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token-signals`, body);
@@ -151,7 +151,7 @@ export class GmgnClient {
     return this.base.get<GetAggedTokenTradesResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/agged-trades`, query);
   }
 
-  /** GMGN's generated plain-language summary of what the token is, in English and both Chinese scripts. Costs 2 credits. */
+  /** Returns a generated plain-language summary of the token in English and both Chinese scripts. Costs 2 credits. */
   async tokenAiNarrative(params: TokenAiNarrativeParams): Promise<GetTokenAiNarrativeResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenAiNarrativeResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/ai-narrative`);
@@ -169,13 +169,13 @@ export class GmgnClient {
     return this.base.get<GetTokenCandlesResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/candles`, query);
   }
 
-  /** Messages posted to a token's GMGN community feed, with each author's wallet and X handle. Costs 2 credits. */
+  /** Messages posted to a token's community feed, with each author's wallet and social handle. Costs 2 credits. */
   async tokenCommunityMessages(params: TokenCommunityMessagesParams): Promise<GetTokenCommunityMessagesResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenCommunityMessagesResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/community-messages`, query);
   }
 
-  /** Creator wallet status and holdings, top-10 holder rate, DexScreener paid-promotion flags, and the creator's Twitter token-launch history. Costs 2 credits. */
+  /** Creator wallet status and holdings, top-10 holder rate, DexScreener paid-promotion flags, and the creator's token-launch history. Costs 2 credits. */
   async tokenDevInfo(params: TokenDevInfoParams): Promise<GetTokenDevInfoResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenDevInfoResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/dev-info`);
@@ -187,7 +187,7 @@ export class GmgnClient {
     return this.base.get<GetTokenFeeDistributionResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/fee-distribution`);
   }
 
-  /** Per-pool fee configuration plus the security and launchpad summary GMGN shows beside it. Costs 2 credits. */
+  /** Per-pool fee configuration plus its security and launchpad summary. Costs 2 credits. */
   async tokenFeeInfo(params: TokenFeeInfoParams): Promise<GetTokenFeeInfoResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenFeeInfoResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/fee-info`);
@@ -211,7 +211,7 @@ export class GmgnClient {
     return this.base.get<GetTokenHoldersResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/holders`, query);
   }
 
-  /** Add and remove liquidity events for the token, newest first. GMGN serves this on Solana only; every other chain answers HTTP 400. Use /liquidity-stats for the rest. Costs 2 credits. */
+  /** Add and remove liquidity events for the token, newest first. This endpoint is available on Solana only; every other chain answers HTTP 400. Use /liquidity-stats for the rest. Costs 2 credits. */
   async liquidity(params: LiquidityParams): Promise<GetTokenLiquidityResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenLiquidityResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/liquidity`, query);
@@ -223,7 +223,7 @@ export class GmgnClient {
     return this.base.get<GetTokenLiquidityStatsResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/liquidity-stats`);
   }
 
-  /** Aggregate pool size and pool count across the token's liquidity pools. GMGN serves this on Solana only; every other chain answers HTTP 400. Costs 2 credits. */
+  /** Aggregate pool size and pool count across the token's liquidity pools. This endpoint is available on Solana only; every other chain answers HTTP 400. Costs 2 credits. */
   async tokenLiquidityTrend(params: TokenLiquidityTrendParams): Promise<GetTokenLiquidityTrendResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetTokenLiquidityTrendResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/liquidity-trend`);
@@ -253,7 +253,7 @@ export class GmgnClient {
     return this.base.get<GetTokenPoolFeeInfoResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/pool-fee-info`);
   }
 
-  /** Slippage GMGN recommends for buying and for selling a token, with its tax flag and volatility score. Costs 2 credits. */
+  /** Recommended slippage for buying and selling a token, with its tax flag and volatility score. Costs 2 credits. */
   async recommendSlippage(params: RecommendSlippageParams): Promise<GetRecommendSlippageResponse> {
     const { chain, token_address } = params;
     return this.base.get<GetRecommendSlippageResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/recommend-slippage`);
@@ -295,13 +295,13 @@ export class GmgnClient {
     return this.base.get<GetTokenTradersResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/traders`, query);
   }
 
-  /** Individual trades in a token, newest first. Paginate with the `next` cursor; the upstream page size is fixed. Costs 2 credits. */
+  /** Individual trades in a token, newest first. Paginate with the `next` cursor; the page size is fixed. Costs 2 credits. */
   async trades(params: TradesParams): Promise<GetTokenTradesResponse> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenTradesResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/trades`, query);
   }
 
-  /** Trade history from GMGN's multi-region feed, with maker tags on every fill. Serves a fixed 50-trade page; paginate with `cursor` from the previous page's `data.next`. Costs 2 credits. */
+  /** Trade history from a multi-region feed, with maker tags on every fill. Serves a fixed 50-trade page; paginate with `cursor` from the previous page's `data.next`. Costs 2 credits. */
   async tokenTradesV2(params: TokenTradesV2Params): Promise<GetTokenTradesV2Response> {
     const { chain, token_address, ...query } = params;
     return this.base.get<GetTokenTradesV2Response>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/trades-v2`, query);
@@ -337,7 +337,7 @@ export class GmgnClient {
     return this.base.get<GetWalletActivityResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/wallet-activity/${encodeURIComponent(wallet_address)}`, query);
   }
 
-  /** Native balance and held-token count per chain. GMGN ignores the chain segment and answers for every chain it indexes, so one call covers all of them. Costs 2 credits. */
+  /** Native balance and held-token count per chain. The chain segment is ignored, so one call covers all indexed chains. Costs 2 credits. */
   async walletChainBalances(params: WalletChainBalancesParams): Promise<GetWalletChainBalancesResponse> {
     const { chain, wallet_address } = params;
     return this.base.get<GetWalletChainBalancesResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/wallet-chain-balances/${encodeURIComponent(wallet_address)}`);
@@ -349,7 +349,7 @@ export class GmgnClient {
     return this.base.get<GetWalletCommonStatResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/wallet-common-stat/${encodeURIComponent(wallet_address)}`);
   }
 
-  /** Full wallet P&L analytics: realized and unrealized profit, win rate, holding periods and risk flags. GMGN's smart-money backend does not cover arbitrum, arc, robinhood, stable or xlayer; use /wallet-stat for those. Costs 2 credits. */
+  /** Full wallet P&L analytics: realized and unrealized profit, win rate, holding periods and risk flags. This data does not cover arbitrum, arc, robinhood, stable or xlayer; use /wallet-stat for those. Costs 2 credits. */
   async walletPnl(params: WalletPnlParams): Promise<GetSmartMoneyWalletResponse> {
     const { chain, wallet_address, ...query } = params;
     return this.base.get<GetSmartMoneyWalletResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/wallet-pnl/${encodeURIComponent(wallet_address)}`, query);
@@ -361,7 +361,7 @@ export class GmgnClient {
     return this.base.get<GetWalletRankingsResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/wallet-rankings`, query);
   }
 
-  /** Wallet P&L for the window: realized profit, cost basis, buy/sell counts, win rate and the P&L multiple distribution. Served on every GMGN chain, including the ones /wallet-pnl cannot reach. Costs 2 credits. */
+  /** Wallet P&L for the window: realized profit, cost basis, buy/sell counts, win rate and the P&L multiple distribution. Served on every supported chain, including the ones /wallet-pnl cannot reach. Costs 2 credits. */
   async walletStat(params: WalletStatParams): Promise<GetWalletStatResponse> {
     const { chain, wallet_address, ...query } = params;
     return this.base.get<GetWalletStatResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/wallet-stat/${encodeURIComponent(wallet_address)}`, query);

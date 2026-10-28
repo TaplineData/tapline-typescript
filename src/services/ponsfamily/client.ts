@@ -6,7 +6,7 @@ import type { CreatorHoldingsRequest, GetAnalyticsResponse, GetCreatorHoldingsRe
 export class PonsfamilyClient {
   constructor(private readonly base: BaseClient) {}
 
-  /** Protocol-wide launch, volume, trade and revenue totals plus the daily series behind them. Costs 2 credits. */
+  /** Protocol-wide daily launches, volume, trades, fees and revenue, with today's running numbers, monthly fee flows, creator and protocol earnings, indexer counts, the top tokens by volume, and the stocks those coins trade against. Costs 2 credits. */
   async getAnalytics(): Promise<GetAnalyticsResponse> {
     return this.base.get<GetAnalyticsResponse>('/v1/ponsfamily/analytics');
   }
@@ -16,7 +16,7 @@ export class PonsfamilyClient {
     return this.base.get<ListCtoMigrationsResponse>('/v1/ponsfamily/cto-migrations');
   }
 
-  /** The ETH/USD rate pons prices every launch with. Costs 2 credits. */
+  /** Returns the ETH/USD rate used to price each launch. Costs 2 credits. */
   async getEthPrice(): Promise<GetEthPriceResponse> {
     return this.base.get<GetEthPriceResponse>('/v1/ponsfamily/eth-price');
   }
@@ -60,7 +60,7 @@ export class PonsfamilyClient {
     return this.base.get<GetForumPostCommentsResponse>(`/v1/ponsfamily/forum/posts/${encodeURIComponent(post_id)}/comments`, query);
   }
 
-  /** The pons launchpad explore board: tokens still climbing the bonding curve plus a page of graduated tokens. Costs 2 credits. */
+  /** Returns the launchpad explore board with tokens still climbing the bonding curve. The response fills `graduated.total` and `graduatedTotal` but sends `graduated.items` empty; use the graduated-launches endpoint for full records. Costs 2 credits. */
   async listLaunches(params: ListLaunchesParams): Promise<ListLaunchesResponse> {
     return this.base.get<ListLaunchesResponse>('/v1/ponsfamily/launches', { ...params });
   }
@@ -70,7 +70,7 @@ export class PonsfamilyClient {
     return this.base.get<Launch[]>('/v1/ponsfamily/launches/graduated');
   }
 
-  /** Every graduation event pons has observed, as token address and graduation block. Costs 2 credits. */
+  /** Every observed graduation event, as token address and graduation block. Costs 2 credits. */
   async listGraduations(): Promise<Graduation[]> {
     return this.base.get<Graduation[]>('/v1/ponsfamily/launches/graduations');
   }
@@ -80,7 +80,7 @@ export class PonsfamilyClient {
     return this.base.get<LiveMarket[]>('/v1/ponsfamily/launches/live-markets', { ...params });
   }
 
-  /** Search every pons launch by name, symbol or contract address. Costs 2 credits. */
+  /** Search launches by name, symbol, or contract address. Costs 2 credits. */
   async searchLaunches(params: SearchLaunchesParams): Promise<SearchLaunchesResponse> {
     return this.base.get<SearchLaunchesResponse>('/v1/ponsfamily/launches/search', { ...params });
   }
@@ -115,7 +115,7 @@ export class PonsfamilyClient {
     return this.base.get<GetDeveloperTradesResponse>(`/v1/ponsfamily/markets/${encodeURIComponent(token)}/dev-trades`, query);
   }
 
-  /** Ranked token holders with balance, supply share and per-holder PnL where pons can compute it. Costs 2 credits. */
+  /** Ranked token holders with balance, supply share, and per-holder PnL when available. Costs 2 credits. */
   async getMarketHolders(params: GetMarketHoldersParams): Promise<GetMarketHoldersResponse> {
     const { token } = params;
     return this.base.get<GetMarketHoldersResponse>(`/v1/ponsfamily/markets/${encodeURIComponent(token)}/holders`);
@@ -190,7 +190,7 @@ export class PonsfamilyClient {
     return this.base.get<GetV2MarketTradesResponse>(`/v1/ponsfamily/v2-markets/${encodeURIComponent(token)}/trades`);
   }
 
-  /** Public pons profiles (username, avatar, bio) for the given wallets. Costs 2 credits. */
+  /** Returns profiles with username, avatar, and bio for the given wallets. Costs 2 credits. */
   async getWalletIdentities(params: GetWalletIdentitiesParams): Promise<GetWalletIdentitiesResponse> {
     return this.base.get<GetWalletIdentitiesResponse>('/v1/ponsfamily/wallets/identities', { ...params });
   }
@@ -207,7 +207,7 @@ export class PonsfamilyClient {
     return this.base.get<GetWalletPositionsResponse>(`/v1/ponsfamily/wallets/${encodeURIComponent(address)}/positions`);
   }
 
-  /** The launches a wallet deployed or earns fees from, with its claimed and claimable fees on each, alongside the ETH/USD rate pons priced them with. Costs 2 credits. */
+  /** The launches a wallet deployed or earns fees from, with its claimed and claimable fees on each, alongside the ETH/USD rate used to price them. Costs 2 credits. */
   async getProfile(params: GetProfileParams): Promise<GetProfileResponse> {
     const { address } = params;
     return this.base.get<GetProfileResponse>(`/v1/ponsfamily/wallets/${encodeURIComponent(address)}/profile`);

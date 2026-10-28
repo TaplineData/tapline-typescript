@@ -24,55 +24,55 @@ export class BirdeyeClient {
     return this.base.get<BirdeyeOhlcv>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/tokens/${encodeURIComponent(address)}/ohlcv`, query);
   }
 
-  /** A token's market overview from birdeye: price, market cap, liquidity, supply, holder count, social links, and buy, sell, volume, wallet and view counts with change percentages over 30m to 24h windows. Some windows (6h, 12h) appear on Solana only. An address birdeye does not know answers 404. Costs 1 credit. */
+  /** Returns a token market overview with price, market cap, liquidity, supply, holders, social links, trading activity, and changes across available time windows. Costs 1 credit. */
   async getTokenOverview(params: GetTokenOverviewParams): Promise<BirdeyeTokenOverview> {
     const { chain, address } = params;
     return this.base.get<BirdeyeTokenOverview>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/tokens/${encodeURIComponent(address)}/overview`);
   }
 
-  /** birdeye's token security checklist. `groups` lists the checks by severity group (Critical, High risk, Medium risk, Neutral); each row's `index` keys its result in the `birdeye` and `goplus` maps (value, level, message). birdeye computes the checks on first request: if it has none yet the route answers 503 (not charged); retry in a minute. Costs 1 credit. */
+  /** Returns token security checks grouped by severity, with values, levels, and messages. Costs 1 credit. */
   async getTokenSecurity(params: GetTokenSecurityParams): Promise<BirdeyeTokenSecurity> {
     const { chain, address } = params;
     return this.base.get<BirdeyeTokenSecurity>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/tokens/${encodeURIComponent(address)}/security`);
   }
 
-  /** Wallets that traded the token ranked by PnL on it: realized and unrealized PnL, volumes, average buy and sell prices, current balance and birdeye's wallet tags. birdeye omits fields that are zero, false or empty. Costs 2 credits. */
+  /** Wallets that traded the token ranked by PnL on it: realized and unrealized PnL, volumes, average buy and sell prices, current balance, and wallet tags. Empty values may be omitted. Costs 2 credits. */
   async listTopTraders(params: ListTopTradersParams): Promise<BirdeyeTopTradersPage> {
     const { chain, address, ...query } = params;
     return this.base.get<BirdeyeTopTradersPage>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/tokens/${encodeURIComponent(address)}/top-traders`, query);
   }
 
-  /** A token's trades and liquidity events across every pool, newest first, with USD volume, price, wallet, venue and birdeye's wallet tags. The tape moves while you page, so a trade can repeat on the next page: dedupe by `id`. Pages stop after offset 9,000. An unknown token answers an empty page. Priced per page, not per trade. Costs 1 credit. */
+  /** Returns a token's trades and liquidity events across pools, newest first, with USD volume, price, wallet, venue, and wallet tags. Dedupe paged results by `id`. Costs 1 credit. */
   async listTokenTrades(params: ListTokenTradesParams): Promise<BirdeyeTokenTradesPage> {
     const { chain, address, ...query } = params;
     return this.base.get<BirdeyeTokenTradesPage>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/tokens/${encodeURIComponent(address)}/trades`, query);
   }
 
-  /** birdeye's trader leaderboard for a period: realized, unrealized and total PnL, volume, trade counts and wallet tags. birdeye omits fields that are zero, false or empty. Costs 2 credits. */
+  /** Returns a trader leaderboard for a period with realized, unrealized, and total PnL, volume, trade counts, and wallet tags. Empty values may be omitted. Costs 2 credits. */
   async listLeaderboard(params: ListLeaderboardParams): Promise<BirdeyeLeaderboardPage> {
     const { chain, ...query } = params;
     return this.base.get<BirdeyeLeaderboardPage>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/traders/leaderboard`, query);
   }
 
-  /** birdeye's 20 trending tokens on a chain, or across chains with `all`, with price, liquidity, volume and token metadata. `all` can include chains this API does not serve on other routes (such as `robinhood`); check each item's `network`. Costs 1 credit. */
+  /** Returns 20 trending tokens on a chain, or across chains with `all`, with price, liquidity, volume and token metadata. `all` can include chains this API does not serve on other routes (such as `robinhood`); check each item's `network`. Costs 1 credit. */
   async listTrendingTokens(params: ListTrendingTokensParams): Promise<BirdeyeTrendingTokens> {
     const { chain } = params;
     return this.base.get<BirdeyeTrendingTokens>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/trending`);
   }
 
-  /** A wallet's trading summary over `period`: realized, unrealized and total PnL, volumes, trade counts, average trade size, the distribution of returns per token and, when birdeye has them, win rate and average win and loss size. birdeye omits fields that are zero, false or empty. A wallet with no trades in the period answers 404. Costs 2 credits. */
+  /** Returns a wallet's realized, unrealized, and total PnL over `period`, plus volume, trade counts, average trade size, return distribution, and available win-rate data. Costs 2 credits. */
   async getWalletPnlSummary(params: GetWalletPnlSummaryParams): Promise<BirdeyeWalletPnlSummary> {
     const { chain, wallet, ...query } = params;
     return this.base.get<BirdeyeWalletPnlSummary>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/wallets/${encodeURIComponent(wallet)}/pnl-summary`, query);
   }
 
-  /** Per-token PnL for every token a wallet traded: trade counts, volumes, realized and unrealized PnL, average prices and holding. birdeye omits fields that are zero, false or empty. Costs 2 credits. */
+  /** Per-token PnL for every token a wallet traded: trade counts, volumes, realized and unrealized PnL, average prices, and holding. Empty values may be omitted. Costs 2 credits. */
   async listWalletTokens(params: ListWalletTokensParams): Promise<BirdeyeWalletTokensPage> {
     const { chain, wallet, ...query } = params;
     return this.base.get<BirdeyeWalletTokensPage>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/wallets/${encodeURIComponent(wallet)}/tokens`, query);
   }
 
-  /** A wallet's swaps, newest first, with both legs (token, amount, price) and USD value. A transaction that swaps through several tokens appears once per leg, so `tx_hash` can repeat. Pass `token` to keep swaps of one token. birdeye omits fields that are zero, false or empty. Costs 2 credits. */
+  /** A wallet's swaps, newest first, with both legs (token, amount, price) and USD value. A transaction that swaps through several tokens appears once per leg, so `tx_hash` can repeat. Pass `token` to keep swaps of one token. Empty values may be omitted. Costs 2 credits. */
   async listWalletTransactions(params: ListWalletTransactionsParams): Promise<BirdeyeWalletTransactionsPage> {
     const { chain, wallet, ...query } = params;
     return this.base.get<BirdeyeWalletTransactionsPage>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/wallets/${encodeURIComponent(wallet)}/transactions`, query);
@@ -90,7 +90,7 @@ export class BirdeyeClient {
     return this.base.get<BirdeyeTokenHolders>(`/v1/birdeye/solana/tokens/${encodeURIComponent(address)}/holders`);
   }
 
-  /** A Solana wallet's net worth over time, newest point first, one point per `interval` (at most 90). Points where birdeye has no value carry only `timestamp`. `net_worth_change_percent` is 999999 when the window starts at zero. An unknown wallet answers an empty `history` list. Costs 2 credits. */
+  /** A Solana wallet's net worth over time, newest point first, one point per `interval` (at most 90). Points without a value carry only `timestamp`. `net_worth_change_percent` is 999999 when the window starts at zero. An unknown wallet answers an empty `history` list. Costs 2 credits. */
   async getNetWorthHistory(params: GetNetWorthHistoryParams): Promise<BirdeyeNetWorthHistory> {
     const { wallet, ...query } = params;
     return this.base.get<BirdeyeNetWorthHistory>(`/v1/birdeye/solana/wallets/${encodeURIComponent(wallet)}/net-worth-history`, query);

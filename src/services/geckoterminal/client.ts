@@ -22,7 +22,7 @@ export class GeckoterminalClient {
     return this.base.get<GlobalStatsResponse>('/v1/gecko-terminal/global-stats');
   }
 
-  /** Every chain GeckoTerminal indexes, with its identifier, image and native currency. Costs 2 credits. */
+  /** Every indexed chain, with its identifier, image, and native currency. Costs 2 credits. */
   async networks(params: NetworksParams): Promise<NetworksResponse> {
     return this.base.get<NetworksResponse>('/v1/gecko-terminal/networks', { ...params });
   }
@@ -146,7 +146,7 @@ export class GeckoterminalClient {
     return this.base.get<WalletTokenResponse>(`/v1/gecko-terminal/tokens/${encodeURIComponent(token_id)}/wallets/${encodeURIComponent(wallet_address)}`);
   }
 
-  /** The curated shortcuts GeckoTerminal pins above its trending table. Costs 2 credits. */
+  /** Returns the curated shortcuts pinned above the trending table. Costs 2 credits. */
   async trendingLinks(): Promise<TrendingLinksResponse> {
     return this.base.get<TrendingLinksResponse>('/v1/gecko-terminal/trending-links');
   }

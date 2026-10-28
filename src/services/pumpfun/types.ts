@@ -60,9 +60,13 @@ export interface AthParams {
 
 export interface Attachment {
   contentType: string;
+  externalAssetId?: string;
   filename: string;
   key: string;
   kind: string;
+  playback?: Playback;
+  processingStatus?: string;
+  provider?: string;
   size: number;
   url: string;
 }
@@ -113,6 +117,7 @@ export interface Bounty {
   fundedAt: string;
   latestDisputePublishedAt?: string;
   likeCount: number;
+  location?: Location;
   onChainBountyId: string;
   publishedAt: string;
   pumpBountiesProgramId: string;
@@ -130,6 +135,15 @@ export interface Bounty {
   unbanInfo?: Baninfo;
   unbanRequest?: Unbanrequest;
   verification?: Verification;
+}
+
+export interface BountyDraftResolution {
+  decisionHashHex: string;
+  decisionVersion: number;
+  outcomeType: string;
+  recordedAt: string;
+  winnerCount?: number;
+  winners?: BountyResolutionHistoryWinner[];
 }
 
 export interface BountyFeedRecentParams {
@@ -158,8 +172,8 @@ export interface BountyResolution {
   outcomeType: string;
   payedOutAt?: string;
   recordedAt: string;
-  winnerCount: number;
-  winners: Winner[];
+  winnerCount?: number;
+  winners?: Winner[];
 }
 
 export interface BountyResolutionHistory {
@@ -167,8 +181,8 @@ export interface BountyResolutionHistory {
   disputeEndsAt: string;
   outcomeType: string;
   recordedAt: string;
-  winnerCount: number;
-  winners: BountyResolutionHistoryWinner[];
+  winnerCount?: number;
+  winners?: BountyResolutionHistoryWinner[];
 }
 
 export interface BountyResolutionHistoryWinner {
@@ -522,6 +536,7 @@ export interface Coin {
   cto_address?: string;
   depth?: number;
   description?: string;
+  fdv_usd?: number;
   graduated_pool?: string;
   hidden?: boolean;
   hide_banner: boolean;
@@ -539,9 +554,9 @@ export interface Coin {
   last_reply?: number;
   last_trade_timestamp?: number;
   livestream_ban_expiry: number;
-  market_cap: number;
+  market_cap?: number;
   market_cap_quote?: number;
-  market_cap_usd: number;
+  market_cap_usd?: number;
   mayhem?: Mayhem;
   mayhem_state?: string;
   metadata_uri?: string;
@@ -552,30 +567,33 @@ export interface Coin {
   num_participants?: number;
   platform?: string;
   pool_address: string;
+  price_usd?: number;
   program?: string;
-  protocol: string;
+  protocol?: string;
   pump_swap_pool?: string;
-  quote_decimals: number;
+  quote_decimals?: number;
   quote_mint?: string;
   quote_token_program?: string;
   real_quote_reserves?: number;
   real_sol_reserves?: number;
   real_token_reserves?: number;
-  reply_count: number;
+  reply_count?: number;
   security_verdict?: SecurityVerdict;
   show_name: boolean;
+  source?: string;
   symbol: string;
   telegram?: string;
   thumbnail?: string;
   thumbnail_updated_at?: number;
   token_program?: string;
+  tokenized_agent?: boolean;
   total_supply?: number | string;
   total_supply_str: string;
   transfer_fee_bps?: number;
   transfer_hook_program?: string;
   twitter?: string;
-  updated_at: number;
-  usd_market_cap: number;
+  updated_at?: number;
+  usd_market_cap?: number;
   verified: boolean;
   video_uri?: string;
   virtual_quote_reserves?: number;
@@ -659,19 +677,22 @@ export interface CoinParams {
 
 export interface CoinPosition {
   accountKind?: string;
-  amountBought: number;
-  amountBoughtUsd: number;
+  amountBought: number | null;
+  amountBoughtUsd: number | null;
   amountHeld: number;
   callout: PositionCallout;
   contentKind: string;
   costBasisAmount: number;
   costBasisUsd: number | string | null;
+  followerCount?: number;
   isVerified: boolean;
   pnlPercentage: number | string | null;
   pnlUsd: number;
   profileImage: string;
   quote: PositionQuote | null;
   realizedPnlUsd: number;
+  receiptBasisUsd?: number | null;
+  resolvedAvatarDecoration?: string | null;
   tokenPriceUsd: number | null;
   totalCallouts: number;
   userId: string;
@@ -726,17 +747,22 @@ export interface CoinsBatch {
   creator: string;
   depth?: number;
   description?: string;
+  fdv_usd?: number;
+  hidden?: boolean;
   hide_banner: boolean;
   image_uri: string;
+  indexed_by_pump?: boolean;
   initialized: boolean;
-  inverted: boolean;
+  inverted?: boolean;
+  is_backfill?: boolean;
   is_banned: boolean;
   is_cashback_enabled: boolean;
+  is_charity?: boolean;
   is_currently_live: boolean;
   is_holder_reward?: boolean;
   last_trade_timestamp?: number;
   livestream_ban_expiry: number;
-  market_cap: number;
+  market_cap?: number;
   market_cap_quote: number;
   market_cap_usd: number;
   metadata_uri: string;
@@ -745,32 +771,35 @@ export interface CoinsBatch {
   name: string;
   nsfw: boolean;
   pool_address: string;
+  price_usd?: number;
   program: string;
   protocol: string;
   pump_swap_pool: string;
   quote_decimals: number;
   quote_mint: string;
   quote_token_program?: string;
-  real_quote_reserves: number;
-  real_sol_reserves: number;
-  real_token_reserves: number;
-  reply_count: number;
+  real_quote_reserves?: number;
+  real_sol_reserves?: number;
+  real_token_reserves?: number;
+  reply_count?: number;
   security_verdict?: SecurityVerdict;
   show_name: boolean;
+  source?: string;
   symbol: string;
   telegram?: string;
   token_program: string;
+  tokenized_agent?: boolean;
   total_supply: number;
   total_supply_str: string;
   transfer_fee_bps?: number;
   transfer_hook_program?: string;
   twitter: string;
-  updated_at: number;
+  updated_at?: number;
   usd_market_cap?: number;
   verified: boolean;
-  virtual_quote_reserves: number;
-  virtual_sol_reserves: number;
-  virtual_token_reserves: number;
+  virtual_quote_reserves?: number;
+  virtual_sol_reserves?: number;
+  virtual_token_reserves?: number;
   volume_1h_usd?: number;
   website: string;
 }
@@ -938,6 +967,29 @@ export interface Daily {
   medianMultiple: number;
   onePointFiveXPercent: number;
   onePointTwoXPercent: number;
+  ranks?: TailRanks;
+  tailAth1hUsd?: number | null;
+  tailAth24hUsd?: number | null;
+  tailAth4hUsd?: number | null;
+  tailAthHist1h?: TailHistogram | null;
+  tailAthHist24h?: TailHistogram | null;
+  tailAthHist4h?: TailHistogram | null;
+  tailBuyers?: number | null;
+  tailCallouts?: number | null;
+  tailCallouts1h?: number | null;
+  tailCallouts24h?: number | null;
+  tailCallouts4h?: number | null;
+  tailCohort1h?: number | null;
+  tailCohort24h?: number | null;
+  tailCohort4h?: number | null;
+  tailPnl1hUsd?: number | null;
+  tailPnl24hUsd?: number | null;
+  tailPnl4hUsd?: number | null;
+  tailPnlHist1h?: TailHistogram | null;
+  tailPnlHist24h?: TailHistogram | null;
+  tailPnlHist4h?: TailHistogram | null;
+  tailUniqueBuyers?: number | null;
+  tailVolumeUsd?: number | null;
   totalCallouts: number;
   twoXPercent: number;
 }
@@ -970,9 +1022,9 @@ export interface DataToken {
   tokenPnL: Tokenpnl;
   token_image: string | null;
   token_mint: string;
-  token_name: string;
+  token_name: string | null;
   token_price: number;
-  token_symbol: string;
+  token_symbol: string | null;
   value: number;
 }
 
@@ -1126,6 +1178,7 @@ export interface Follower {
   followers: number;
   kind?: string;
   profile_image: string;
+  resolved_avatar_decoration?: string | null;
   timestamp: number | string | null;
   userId?: string;
   user_id?: string;
@@ -1374,6 +1427,7 @@ export interface GetCalloutStatsResponse {
   allTime: Daily;
   computedAt: string;
   daily: Daily;
+  lastRound?: Daily;
   monthly: Daily;
   weekly: Daily;
 }
@@ -1689,6 +1743,7 @@ export interface GetGroupMembersResponse {
 
 export interface GetGroupMembersResponseMember {
   createdAt: string;
+  inCompetition?: boolean;
   invitedBy: string;
   profile: Liker;
   role: string;
@@ -1741,7 +1796,7 @@ export interface GetHolderRewardsResponseCoin {
   athMarketCapUsd: number | null;
   createdAt: string;
   holderRewardsPda: string;
-  imageUri: string;
+  imageUri: string | null;
   isGraduated: boolean;
   isLive: boolean;
   isNsfw: boolean;
@@ -1775,18 +1830,18 @@ export interface GetHomeFeedResponseCoin {
   coinDescription: null;
   coinImage: string | null;
   coinMint: string;
-  coinName: string;
+  coinName: string | null;
   followedHolders: null;
-  marketCap: number;
+  marketCap: number | null;
   narrative: null;
   platform?: string | null;
   position: CoinPosition;
   positions?: HomeFeedLegacyPosition[];
   program?: string | null;
-  protocol?: string;
+  protocol?: string | null;
   recommendationId: string;
   recommendationRank: number;
-  symbol: string;
+  symbol: string | null;
 }
 
 export interface GetHotCoinResponse {
@@ -1994,8 +2049,10 @@ export interface GetMintPositionsResponsePosition {
   profile?: Liker;
   profileImage: string | null;
   realizedPnlUsd: number;
+  receiptBasisUsd?: number | null;
   recommendationId?: string;
   recommendationRank?: number;
+  resolvedAvatarDecoration?: string | null;
   userId: string;
   userName: string;
   verifiedBadgeVisible?: boolean;
@@ -2181,27 +2238,27 @@ export interface GetPnlLeaderboardPositionsResponse {
 }
 
 export interface GetPnlLeaderboardPositionsResponseEntry {
-  amountBought: number;
-  amountBoughtUsd: number;
-  amountHeld: number;
+  amountBought: number | null;
+  amountBoughtUsd: number | null;
+  amountHeld: number | null;
   avgEntryMcapUsd: number | null;
   callout: PositionCallout;
   coinMint: string;
-  costBasisAmount: number;
-  costBasisUsd: number;
+  costBasisAmount: number | null;
+  costBasisUsd: number | null;
   heldValueSol: number;
-  isExited: boolean;
+  isExited: boolean | null;
   isVerified: boolean;
   lastRefreshedAtMs: number;
   leaderboardPnlUsd: number;
-  pnlPercentage: number;
+  pnlPercentage: number | null;
   pnlUsd: number;
   profileImage: string;
   rank: number;
-  realizedPnlUsd: number;
+  realizedPnlUsd: number | null;
   userId?: string;
   username: string;
-  valueUsd: number;
+  valueUsd: number | null;
   verifiedBadgeVisible?: boolean;
   walletAddress: string;
   xUsername: string | null;
@@ -2215,7 +2272,10 @@ export interface GetPnlLeaderboardResponse {
 }
 
 export interface GetPortfolioSummaryResponse {
+  cache?: PortfolioSummaryCache;
+  computedAt?: number;
   equityAtWindowStart: CostBasis;
+  evmAddress?: string;
   from: number;
   heldOpenValue: CostBasis;
   maxCapitalDeployed: CostBasis;
@@ -2462,6 +2522,13 @@ export interface GetUserCalloutsResponseCallout {
   quotedCalloutId: null;
   replyCount: number;
   repostCount: number;
+  tailBuyers?: number | null;
+  tailCohort1h?: number | null;
+  tailCohort24h?: number | null;
+  tailCohort4h?: number | null;
+  tailPnl1hUsd?: number | null;
+  tailPnl24hUsd?: number | null;
+  tailPnl4hUsd?: number | null;
   thesis: string;
   updateCount: number;
   updates: Update[];
@@ -2497,12 +2564,16 @@ export interface GetUserCreatedCoinsResponseCoin {
   creator: string;
   depth?: number;
   description?: string;
+  hidden?: boolean;
   hide_banner: boolean;
   image_uri: string;
+  indexed_by_pump?: boolean;
   initialized: boolean;
   inverted?: boolean;
+  is_backfill?: boolean;
   is_banned: boolean;
   is_cashback_enabled?: boolean;
+  is_charity?: boolean;
   is_currently_live: boolean;
   is_holder_reward?: boolean;
   last_trade_timestamp?: number;
@@ -2523,14 +2594,15 @@ export interface GetUserCreatedCoinsResponseCoin {
   quote_decimals: number;
   quote_mint: string;
   quote_token_program?: string;
-  real_quote_reserves: number;
-  real_sol_reserves: number;
-  real_token_reserves: number;
-  reply_count: number;
+  real_quote_reserves?: number;
+  real_sol_reserves?: number;
+  real_token_reserves?: number;
+  reply_count?: number;
   security_verdict?: SecurityVerdict;
   show_name: boolean;
   symbol: string;
   token_program: string;
+  tokenized_agent?: boolean;
   total_supply: number;
   total_supply_str: string;
   transfer_fee_bps?: number;
@@ -2539,9 +2611,9 @@ export interface GetUserCreatedCoinsResponseCoin {
   updated_at?: number;
   usd_market_cap?: number;
   verified: boolean;
-  virtual_quote_reserves: number;
-  virtual_sol_reserves: number;
-  virtual_token_reserves: number;
+  virtual_quote_reserves?: number;
+  virtual_sol_reserves?: number;
+  virtual_token_reserves?: number;
   volume_1h_usd?: number;
   website?: string;
 }
@@ -2634,6 +2706,7 @@ export interface GetUserRepostsResponse {
 }
 
 export interface GetUserResponse {
+  active_competition_entry?: null;
   address: string;
   avatar_decoration?: string | null;
   bio: string | null;
@@ -2649,15 +2722,25 @@ export interface GetUserResponse {
   last_username_update_timestamp: number | null;
   member_count: number;
   profile_image: string;
+  resolved_avatar_decoration?: string | null;
   userId: string;
   username: string;
   x_username: string | null;
 }
 
 export interface GetUserTradesResponse {
+  coins?: GetUserTradesResponseCoin[];
   nextCursor: string | null;
   traders: GetUserTradesResponseTrader[];
   trades: GetUserTradesResponseTrade[];
+}
+
+export interface GetUserTradesResponseCoin {
+  chainId: number;
+  image: string | null;
+  mint: string;
+  name: string | null;
+  symbol: string | null;
 }
 
 export interface GetUserTradesResponseTrade {
@@ -2803,21 +2886,29 @@ export interface GetWalletTokenPnlResponseData {
   ui_fee_sol: number | null;
   ui_fee_usd: number | null;
   unrealized_pnl_sol: number | null;
-  unrealized_pnl_sol_mark: number | null;
+  unrealized_pnl_sol_mark?: number | null;
   unrealized_pnl_usd: number | null;
-  unrealized_pnl_usd_mark: number | null;
+  unrealized_pnl_usd_mark?: number | null;
 }
 
 export interface GetWalletTradesResponse {
   chain?: string;
   nativeUnit?: string;
   pagination: GetWalletTradesResponsePagination;
+  token?: GetWalletTradesResponseToken;
   trades: GetWalletTradesResponseTrade[];
 }
 
 export interface GetWalletTradesResponsePagination {
   hasMore: boolean;
   nextCursor: string | null;
+}
+
+export interface GetWalletTradesResponseToken {
+  image: string;
+  mint: string;
+  name: string;
+  symbol: string;
 }
 
 export interface GetWalletTradesResponseTrade {
@@ -3085,6 +3176,7 @@ export interface Legsbymint {
 }
 
 export interface Liker {
+  activeCompetitionEntry?: null;
   bio: string;
   createdAt: string;
   followerCount: number;
@@ -3098,6 +3190,7 @@ export interface Liker {
   memberCount: number;
   membershipPolicy: null;
   profileImageUrl: string;
+  resolvedAvatarDecoration?: string | null;
   socials: Social[];
   updatedAt: string;
   userId: string;
@@ -3204,6 +3297,7 @@ export interface ListedCoin {
 }
 
 export interface ListedUser {
+  active_competition_entry?: null;
   address: string;
   avatar_decoration: string | null;
   bio: string | null;
@@ -3218,6 +3312,7 @@ export interface ListedUser {
   last_username_update_timestamp: number | null;
   member_count: number;
   profile_image: string;
+  resolved_avatar_decoration?: string | null;
   userId: string;
   username: string;
   x_username: string | null;
@@ -3231,6 +3326,7 @@ export interface LiveCoin {
   base_decimals?: number;
   bonding_curve: string;
   boost_mode: string;
+  canonical_pool_liquidity_usd?: number;
   chain_id: string;
   complete: boolean;
   created_timestamp: number;
@@ -3238,12 +3334,16 @@ export interface LiveCoin {
   cto_address?: string;
   depth: number;
   description?: string;
+  hidden?: boolean;
   hide_banner: boolean;
   image_uri: string;
+  indexed_by_pump?: boolean;
   initialized: boolean;
   inverted?: boolean;
+  is_backfill?: boolean;
   is_banned: boolean;
   is_cashback_enabled: boolean;
+  is_charity?: boolean;
   is_currently_live: boolean;
   is_holder_reward: boolean;
   king_of_the_hill_timestamp?: number;
@@ -3274,10 +3374,10 @@ export interface LiveCoin {
   quote_decimals?: number;
   quote_mint?: string;
   quote_token_program?: string;
-  real_quote_reserves: number;
-  real_sol_reserves: number;
-  real_token_reserves: number;
-  reply_count: number;
+  real_quote_reserves?: number;
+  real_sol_reserves?: number;
+  real_token_reserves?: number;
+  reply_count?: number;
   security_verdict?: SecurityVerdict;
   show_name: boolean;
   symbol: string;
@@ -3285,17 +3385,19 @@ export interface LiveCoin {
   thumbnail: string;
   thumbnail_updated_at?: number;
   token_program?: string;
+  tokenized_agent?: boolean;
   total_supply: number;
   total_supply_str: string;
   transfer_fee_bps?: number;
   transfer_hook_program?: string;
   twitter?: string;
-  updated_at: number;
+  updated_at?: number;
   usd_market_cap?: number;
   verified: boolean;
-  virtual_quote_reserves: number;
-  virtual_sol_reserves: number;
-  virtual_token_reserves: number;
+  video_uri?: string;
+  virtual_quote_reserves?: number;
+  virtual_sol_reserves?: number;
+  virtual_token_reserves?: number;
   vod_playlist_url: string | null;
   website?: string;
 }
@@ -3353,7 +3455,7 @@ export interface Location {
 }
 
 export interface MapEntry {
-  endedAt: null;
+  endedAt: string | null;
   playlistKey: string | null;
   playlistKeyHigh: string | null;
   playlistKeyLow: string | null;
@@ -3370,12 +3472,12 @@ export interface MapEntry {
 }
 
 export interface MarketActivityBatchEntry {
-  "15m"?: GetMarketActivityResponse5m;
+  "15m"?: GetMarketActivityResponse5m | null;
   "1h": GetMarketActivityResponse5m;
-  "1m"?: GetMarketActivityResponse5m;
+  "1m"?: GetMarketActivityResponse5m | null;
   "24h": GetMarketActivityResponse5m;
   "30m"?: GetMarketActivityResponse5m;
-  "5m": GetMarketActivityResponse5m;
+  "5m": GetMarketActivityResponse5m | null;
   "6h": GetMarketActivityResponse5m;
 }
 
@@ -3403,7 +3505,7 @@ export type MarketChain = "solana" | "ethereum" | "bsc" | "base" | "monad" | "ro
 
 export interface Mayhem {
   complete_reason?: string;
-  mode: string;
+  mode?: string;
   pause_reason?: string;
   state: string;
 }
@@ -3433,6 +3535,7 @@ export interface MayhemCoin {
   inverted?: boolean;
   is_banned: boolean;
   is_cashback_enabled: boolean;
+  is_charity?: boolean;
   is_currently_live: boolean;
   is_holder_reward?: boolean;
   king_of_the_hill_timestamp?: number;
@@ -3535,6 +3638,7 @@ export interface Member {
 }
 
 export interface Meta {
+  coverageFrom?: number;
   walletsAnswered: number;
   walletsDegraded: unknown[];
   walletsRequested: number;
@@ -3576,6 +3680,10 @@ export interface MintPositionsParams {
 }
 
 export interface Monad {
+  dust_count?: number;
+  dust_value_usd?: number;
+  hidden_count?: number;
+  hidden_value_usd?: number;
   token_count: number;
   total_value: number;
   wallet_address: string | null;
@@ -3597,8 +3705,10 @@ export interface MultiChainBreakdown {
   ink?: Solana;
   megaeth?: Solana;
   monad?: Monad;
+  polygon?: Solana;
   robinhood: Solana;
   solana: Solana;
+  xlayer?: Solana;
 }
 
 export type NarrativeSource = "trending" | "movers" | "new";
@@ -3683,6 +3793,7 @@ export interface Parentbounty {
   createdAt: string;
   creatorAddress: string;
   criteria: Criteria[];
+  draftResolution?: BountyDraftResolution;
   expiresAt: string;
   fundedAt: string;
   latestDisputePublishedAt?: string;
@@ -3736,6 +3847,8 @@ export interface Perp {
 export interface PerpMarket {
   assetClass: string;
   chain: string;
+  description?: string;
+  image_backdrop?: string;
   image_uri?: string;
   mint: string;
   name: string;
@@ -3842,6 +3955,11 @@ export type PortfolioPeriod = "1d" | "1w" | "1m" | "all";
 
 export type PortfolioSort = "POSITION_SIZE" | "RECENCY" | "PNL";
 
+export interface PortfolioSummaryCache {
+  filledAtMs: number;
+  ttlSeconds: number;
+}
+
 export interface PortfolioSummaryParams {
   /** Wallet, username or squad id. */
   address: string;
@@ -3870,9 +3988,11 @@ export interface Position {
   costBasisAmount: number;
   costBasisUsd: number | null;
   isExited: boolean;
+  perp?: null;
   pnlPercentage: number;
   pnlUsd: number;
   realizedPnlUsd: number;
+  receiptBasisUsd?: number | null;
   valueUsd: number | null;
 }
 
@@ -3908,11 +4028,11 @@ export interface PositionCallout {
 export interface PositionCoin {
   imageUri: string | null;
   marketCapUsd: number | null;
-  name: string;
+  name: string | null;
   platform?: string | null;
   program?: string | null;
   protocol?: string | null;
-  symbol: string;
+  symbol: string | null;
   totalSupply: number | null;
 }
 
@@ -4156,6 +4276,7 @@ export interface RepostReposter {
 }
 
 export interface Reposter {
+  activeCompetitionEntry?: null;
   bio: string;
   createdAt: string;
   followerCount: number;
@@ -4170,6 +4291,7 @@ export interface Reposter {
   membershipPolicy: null;
   position: Position;
   profileImageUrl: string;
+  resolvedAvatarDecoration?: string | null;
   socials: Social[];
   updatedAt: string;
   userId: string;
@@ -4381,31 +4503,35 @@ export interface SearchedCoin {
   bonding_curve?: string;
   boost_mode?: string;
   canonical_pool_liquidity_usd?: number;
+  chain?: string;
   chain_id: string;
   circulating_supply_str?: string;
   complete?: boolean;
-  created_timestamp: number;
-  creator: string;
+  created_timestamp?: number;
+  creator?: string;
   cto_address?: string;
   depth?: number;
   description?: string;
+  exact_match?: boolean;
+  fdv_usd?: number;
   graduated_pool?: string;
   hidden?: boolean;
-  hide_banner: boolean;
+  hide_banner?: boolean;
   image_uri?: string;
   indexed_by_pump?: boolean;
-  initialized: boolean;
+  initialized?: boolean;
   inverted?: boolean;
   is_backfill?: boolean;
-  is_banned: boolean;
+  is_banned?: boolean;
   is_cashback_enabled?: boolean;
-  is_currently_live: boolean;
+  is_charity?: boolean;
+  is_currently_live?: boolean;
   is_holder_reward?: boolean;
   king_of_the_hill_timestamp?: number;
   last_reply?: number;
   last_trade_timestamp?: number;
-  livestream_ban_expiry: number;
-  market_cap: number;
+  livestream_ban_expiry?: number;
+  market_cap?: number;
   market_cap_quote?: number;
   market_cap_usd?: number;
   market_id?: string;
@@ -4413,13 +4539,15 @@ export interface SearchedCoin {
   mayhem_state?: string;
   metadata_uri?: string;
   mint: string;
-  multichain_family: number;
-  name: string;
-  nsfw: boolean;
+  multichain_family?: number;
+  name?: string;
+  nsfw?: boolean;
   platform?: string;
   pool_address?: string;
+  preview?: boolean;
+  price_usd?: number;
   program?: string;
-  protocol: string;
+  protocol?: string;
   pump_swap_pool?: string;
   quote_decimals?: number;
   quote_mint?: string;
@@ -4430,21 +4558,23 @@ export interface SearchedCoin {
   real_token_reserves?: number;
   recommendation_id?: string;
   recommendation_rank?: number;
-  reply_count: number;
+  reply_count?: number;
   search_priority?: boolean;
   security_verdict?: SecurityVerdict;
-  show_name: boolean;
-  symbol: string;
+  show_name?: boolean;
+  source?: string;
+  symbol?: string;
   telegram?: string;
   token_program?: string;
+  tokenized_agent?: boolean;
   total_supply?: number;
-  total_supply_str: string;
+  total_supply_str?: string;
   transfer_fee_bps?: number;
   transfer_hook_program?: string;
   twitter?: string;
   updated_at?: number;
   usd_market_cap?: number;
-  verified: boolean;
+  verified?: boolean;
   video_uri?: string;
   virtual_quote_reserves?: number;
   virtual_sol_reserves?: number;
@@ -4518,12 +4648,16 @@ export interface SimilarCoinResult {
   depth?: number;
   description?: string;
   graduated_pool?: string;
+  hidden?: boolean;
   hide_banner: boolean;
   image_uri: string;
+  indexed_by_pump?: boolean;
   initialized: boolean;
   inverted?: boolean;
+  is_backfill?: boolean;
   is_banned: boolean;
   is_cashback_enabled?: boolean;
+  is_charity?: boolean;
   is_currently_live: boolean;
   is_holder_reward?: boolean;
   last_trade_timestamp?: number;
@@ -4544,21 +4678,24 @@ export interface SimilarCoinResult {
   quote_decimals: number;
   quote_mint: string;
   quote_token_program?: string;
-  real_quote_reserves: number;
-  real_sol_reserves: number;
+  real_quote_reserves?: number;
+  real_sol_reserves?: number;
   real_token_reserves?: number;
-  reply_count: number;
+  recommendation_id?: string;
+  recommendation_rank?: number;
+  reply_count?: number;
   security_verdict?: SecurityVerdict;
   show_name: boolean;
   symbol: string;
   telegram?: string;
   token_program: string;
+  tokenized_agent?: boolean;
   total_supply: number | string;
   total_supply_str: string;
   transfer_fee_bps?: number;
   transfer_hook_program?: string;
   twitter?: string;
-  updated_at: number;
+  updated_at?: number;
   usd_market_cap: number;
   verified: boolean;
   virtual_quote_reserves?: number;
@@ -4646,6 +4783,35 @@ export interface Summary {
   totalValueUsd?: number;
 }
 
+export interface TailHistogram {
+  buckets: TailHistogramBucket[];
+  callouts: number;
+}
+
+export interface TailHistogramBucket {
+  max: number | null;
+  min: number | null;
+  pnlUsd: number;
+  tailers: number;
+}
+
+export interface TailRanks {
+  generatedAt: number;
+  population: number;
+  tailAth1hUsd: number | null;
+  tailAth24hUsd: number | null;
+  tailAth4hUsd: number | null;
+  tailBuyers: number | null;
+  tailCohort1h: number | null;
+  tailCohort24h: number | null;
+  tailCohort4h: number | null;
+  tailPnl1hUsd: number | null;
+  tailPnl24hUsd: number | null;
+  tailPnl4hUsd: number | null;
+  tailUniqueBuyers: number | null;
+  tailVolumeUsd: number | null;
+}
+
 export interface Token {
   buySpendUsd: number;
   chainId: number;
@@ -4704,13 +4870,13 @@ export interface Top {
   participantId: string;
   pnlUsd: number;
   positionsCount: number;
-  profileImageUrl: string;
+  profileImageUrl: string | null;
   rank: number;
   realizedPnlUsd: number;
   struck: boolean;
   topPositions: Topposition[];
   unrealizedPnlUsd: number;
-  username: string;
+  username: string | null;
   verifiedBadgeVisible: boolean;
   walletAddress: string | null;
 }
@@ -4896,8 +5062,8 @@ export interface TrendingBoardParams {
 
 export interface TrendingCoin {
   associated_bonding_curve?: string;
-  ath_market_cap: number;
-  ath_market_cap_timestamp: number;
+  ath_market_cap?: number;
+  ath_market_cap_timestamp?: number;
   banner_uri?: string;
   base_decimals: number;
   bonding_curve?: string;
@@ -4911,6 +5077,7 @@ export interface TrendingCoin {
   cto_address?: string;
   depth?: number;
   description?: string;
+  fdv_usd?: number;
   graduated_pool?: string;
   hidden?: boolean;
   hide_banner: boolean;
@@ -4924,10 +5091,11 @@ export interface TrendingCoin {
   is_charity?: boolean;
   is_currently_live: boolean;
   is_holder_reward?: boolean;
+  king_of_the_hill_timestamp?: number;
   last_reply?: number;
   last_trade_timestamp?: number;
   livestream_ban_expiry: number;
-  market_cap: number;
+  market_cap?: number;
   market_cap_quote?: number;
   market_cap_usd: number;
   metadata_uri?: string;
@@ -4938,8 +5106,9 @@ export interface TrendingCoin {
   num_participants?: number;
   platform?: string;
   pool_address?: string;
+  price_usd?: number;
   program?: string;
-  protocol: string;
+  protocol?: string;
   pump_swap_pool?: string;
   quote_decimals?: number;
   quote_mint?: string;
@@ -4947,20 +5116,24 @@ export interface TrendingCoin {
   real_quote_reserves?: number;
   real_sol_reserves?: number;
   real_token_reserves?: number;
-  reply_count: number;
+  recommendation_id?: string;
+  recommendation_rank?: number;
+  reply_count?: number;
   security_verdict?: SecurityVerdict;
   show_name: boolean;
+  source?: string;
   symbol: string;
   telegram?: string;
   thumbnail?: string;
   thumbnail_updated_at?: number;
   token_program?: string;
+  tokenized_agent?: boolean;
   total_supply?: number | string;
   total_supply_str: string;
   transfer_fee_bps?: number;
   transfer_hook_program?: string;
   twitter?: string;
-  updated_at: number;
+  updated_at?: number;
   usd_market_cap: number;
   verified: boolean;
   video_uri?: string;
@@ -4989,7 +5162,7 @@ export interface Unrealized {
   cost_basis: CostBasis;
   percentage: CostBasis;
   pnl: CostBasis;
-  pnl_mark: CostBasis;
+  pnl_mark?: CostBasis;
 }
 
 export interface Update {
@@ -5004,9 +5177,12 @@ export interface Update {
 }
 
 export interface User {
+  active_competition_entry?: null;
   address: string;
   avatar_decoration?: string | null;
   bio: string | null;
+  canonical_evm_wallet?: string;
+  canonical_svm_wallet?: string;
   followers: number;
   following: number;
   group_badges: unknown[];
@@ -5014,6 +5190,7 @@ export interface User {
   is_pump_user: boolean;
   kind?: string;
   profile_image: string;
+  resolved_avatar_decoration?: string | null;
   userId: string;
   username: string;
   x_username: string | null;
@@ -5146,15 +5323,19 @@ export interface UsernameExistsParams {
 }
 
 export interface UsersBatch {
+  active_competition_entry?: null;
   address: string;
   avatar_decoration?: string | null;
   bio: string | null;
+  canonical_evm_wallet?: string;
+  canonical_svm_wallet?: string;
   followers: number;
   following: number;
   group_badges: GroupBadge[];
   is_banned?: boolean;
   is_pump_user: boolean;
   profile_image: string;
+  resolved_avatar_decoration?: string | null;
   userId: string;
   username: string;
   x_username: string | null;
@@ -5191,6 +5372,7 @@ export interface VideoFeedCoin {
   base_decimals?: number;
   bonding_curve: string;
   boost_mode: string;
+  canonical_pool_liquidity_usd?: number;
   chain_id: string;
   complete: boolean;
   created_timestamp: number;
@@ -5199,10 +5381,13 @@ export interface VideoFeedCoin {
   depth: number;
   description?: string;
   downrank_score?: number;
+  hidden?: boolean;
   hide_banner: boolean;
   image_uri: string;
+  indexed_by_pump?: boolean;
   initialized: boolean;
   inverted?: boolean;
+  is_backfill?: boolean;
   is_banned: boolean;
   is_cashback_enabled: boolean;
   is_charity?: boolean;
@@ -5236,10 +5421,10 @@ export interface VideoFeedCoin {
   quote_decimals?: number;
   quote_mint?: string;
   quote_token_program?: string;
-  real_quote_reserves: number;
-  real_sol_reserves: number;
-  real_token_reserves: number;
-  reply_count: number;
+  real_quote_reserves?: number;
+  real_sol_reserves?: number;
+  real_token_reserves?: number;
+  reply_count?: number;
   security_verdict?: SecurityVerdict;
   show_name: boolean;
   symbol: string;
@@ -5247,17 +5432,18 @@ export interface VideoFeedCoin {
   thumbnail?: string;
   thumbnail_updated_at?: number;
   token_program?: string;
+  tokenized_agent?: boolean;
   total_supply: number;
   total_supply_str: string;
   transfer_fee_bps?: number;
   transfer_hook_program?: string;
   twitter?: string;
-  updated_at: number;
+  updated_at?: number;
   usd_market_cap?: number;
   verified: boolean;
-  virtual_quote_reserves: number;
-  virtual_sol_reserves: number;
-  virtual_token_reserves: number;
+  virtual_quote_reserves?: number;
+  virtual_sol_reserves?: number;
+  virtual_token_reserves?: number;
   vod_playlist_url?: string | null;
   website?: string;
 }
