@@ -325,10 +325,10 @@ export class GmgnClient {
     return this.base.get<GetWebsiteInfoResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/token/${encodeURIComponent(token_address)}/website-info`);
   }
 
-  /** Wallets ranked by the multiple their public token calls returned, with the tokens they called. Costs 2 credits. */
+  /** Wallets ranked by the multiple their public token calls returned over the last 24 hours, with the tokens they called. Costs 2 credits. */
   async topCallers(params: TopCallersParams): Promise<GetTopCallersResponse> {
-    const { chain, ...query } = params;
-    return this.base.get<GetTopCallersResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/top-callers`, query);
+    const { chain } = params;
+    return this.base.get<GetTopCallersResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/top-callers`);
   }
 
   /** A wallet's swap and liquidity events with token, quote token, USD cost, gas and launchpad per event. Cursor-paginated via the `next` field. Costs 2 credits. */

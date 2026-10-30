@@ -923,7 +923,7 @@ export interface PinterestPinResponse {
   canDeleteDidItAndComments?: boolean;
   isRepin?: boolean;
   productPinData?: unknown | null;
-  closeupUnifiedAttribution?: PinterestPinCloseupUnifiedAttribution;
+  closeupUnifiedAttribution?: PinterestPinCloseupUnifiedAttribution | null;
   creatorClass?: unknown | null;
   promotedLeadForm?: unknown | null;
   doneByMe?: boolean;

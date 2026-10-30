@@ -10,53 +10,53 @@ export interface AddressListRequest {
 
 export interface AggedTokenTradesParams {
   chain: Chain;
+  token_address: string;
   /** Bucket size. */
   period?: AggedTradePeriod;
   /** Wallet cohort to filter on. Omit for all wallets. */
   tag?: AggedTradeTag | null;
-  token_address: string;
 }
 
 export interface AggedTokenTransfersParams {
   chain: Chain;
-  /** Bucket size. */
-  period?: AggedTradePeriod;
   token_address: string;
   /** Wallet whose transfers are aggregated. */
   wallet_address: string;
+  /** Bucket size. */
+  period?: AggedTradePeriod;
 }
 
 export interface AggedTrade {
-  avatar: string;
-  buy_amount: string;
-  buy_count: number;
-  buy_quote_address: string;
-  buy_quote_amount: string;
-  buy_usd_amount: string;
-  claim_count: number;
-  claim_quote_address: string;
-  claim_quote_amount: string;
-  ens: string;
-  is_boost: boolean;
-  is_close: boolean;
-  is_open: boolean;
-  max_seq_index: string;
+  wallet_address: string;
   name: string;
   nickname: string;
-  platform: string;
-  platform_avatar: string;
-  platform_username: string;
-  pump_social_claim_count: number;
-  pump_social_claim_quote_address: string;
-  pump_social_claim_quote_amount: string;
-  sell_amount: string;
-  sell_count: number;
-  sell_quote_address: string;
-  sell_quote_amount: string;
-  sell_usd_amount: string;
-  twitter_name: string;
   twitter_username: string;
-  wallet_address: string;
+  twitter_name: string;
+  avatar: string;
+  platform: string;
+  platform_username: string;
+  platform_avatar: string;
+  ens: string;
+  buy_count: number;
+  sell_count: number;
+  claim_count: number;
+  pump_social_claim_count: number;
+  is_boost: boolean;
+  is_open: boolean;
+  is_close: boolean;
+  buy_amount: string;
+  sell_amount: string;
+  buy_usd_amount: string;
+  sell_usd_amount: string;
+  buy_quote_amount: string;
+  buy_quote_address: string;
+  sell_quote_amount: string;
+  sell_quote_address: string;
+  claim_quote_amount: string;
+  claim_quote_address: string;
+  pump_social_claim_quote_amount: string;
+  pump_social_claim_quote_address: string;
+  max_seq_index: string;
 }
 
 export interface AggedTradeBucket {
@@ -69,16 +69,16 @@ export type AggedTradePeriod = "1m" | "5m" | "1h" | "4h";
 export type AggedTradeTag = "dev_team" | "smart_degen" | "insider" | "sniper" | "bundler" | "fresh_wallet" | "bluechip_owner" | "renowned" | "rat_trader";
 
 export interface AggedTransfer {
-  max_seq_index: string;
-  transfer_in_amount: string;
-  transfer_in_avg_price: string;
-  transfer_in_count: number;
-  transfer_in_usd_amount: string;
-  transfer_out_amount: string;
-  transfer_out_avg_price: string;
-  transfer_out_count: number;
-  transfer_out_usd_amount: string;
   wallet_address: string;
+  transfer_in_count: number;
+  transfer_out_count: number;
+  transfer_in_amount: string;
+  transfer_out_amount: string;
+  transfer_in_usd_amount: string;
+  transfer_out_usd_amount: string;
+  transfer_in_avg_price: string;
+  transfer_out_avg_price: string;
+  max_seq_index: string;
 }
 
 export interface AggedTransferBucket {
@@ -88,131 +88,131 @@ export interface AggedTransferBucket {
 
 export interface BluechipRankParams {
   chain: Chain;
-  /** Security screens applied before ranking. */
-  filters?: TokenFilter[] | null;
   /** Ranking window. */
   interval?: TrendingInterval;
   /** Maximum tokens to return. */
   limit?: number;
+  /** Security screens applied before ranking. */
+  filters?: TokenFilter[] | null;
 }
 
 export interface BluechipSecurityInfo {
+  is_show_alert: boolean;
+  top_10_holder_rate: string;
+  renounced_mint?: number;
+  renounced_freeze_account?: number;
   burn_ratio: string;
   burn_status: string;
   dev_token_burn_amount: string;
   dev_token_burn_ratio: string;
-  is_show_alert: boolean;
-  renounced_freeze_account?: number;
-  renounced_mint?: number;
-  top_10_holder_rate: string;
 }
 
 export interface BluechipToken {
-  address: string;
-  at_least_one_link: boolean;
-  bluechip_rate: string;
-  bot_degen_count: number;
-  bot_degen_rate: number;
-  bundler_rate: string;
-  buys: number;
   chain: string;
+  address: string;
+  symbol: string;
   creator: string;
   creator_token_status: string;
+  launchpad_platform: string;
+  price: string;
+  price_change_percent_1m: string;
+  price_change_percent_5m: string;
+  price_change_percent_1h: string;
   cto_flag: number;
-  dev_team_hold_rate: number;
   dexscr_ad: number;
-  dexscr_ad_ts: number;
-  dexscr_boost_fee: number;
-  dexscr_boost_ts: number;
-  dexscr_trending_bar: number;
-  dexscr_trending_bar_ts: number;
   dexscr_update_link: number;
-  dexscr_update_link_ts: number;
-  entrapment_ratio: string;
-  history_highest_market_cap: number;
   holder_count: number;
   hot_level: number;
-  image_dup: string;
   is_show_alert: boolean;
-  is_wash_trading: boolean;
   launchpad: string;
-  launchpad_platform: string;
   launchpad_status: number;
   liquidity: string;
   logo: string;
+  at_least_one_link: boolean;
+  token_links: BluechipTokenLinks;
   market_cap: string;
   open_timestamp: number;
-  price: string;
-  price_change_percent_1h: string;
-  price_change_percent_1m: string;
-  price_change_percent_5m: string;
-  rat_trader_amount_rate: string;
-  security_info: BluechipSecurityInfo;
-  sells: number;
+  bluechip_rate: string;
+  buys: number;
   smart_buys_24h: number;
   smart_sells_24h: number;
+  sells: number;
   swaps: number;
-  symbol: string;
-  telegram_dup: number;
-  token_links: BluechipTokenLinks;
-  top70_sniper_hold_rate: number;
-  twitter_change_flag: number;
-  twitter_dup: number;
-  twitter_rename_count: number;
   volume: string;
+  rat_trader_amount_rate: string;
+  bundler_rate: string;
+  entrapment_ratio: string;
+  security_info: BluechipSecurityInfo;
+  twitter_change_flag: number;
+  twitter_rename_count: number;
+  is_wash_trading: boolean;
+  image_dup: string;
+  dev_team_hold_rate: number;
+  history_highest_market_cap: number;
+  top70_sniper_hold_rate: number;
+  bot_degen_count: number;
+  bot_degen_rate: number;
+  dexscr_trending_bar: number;
+  dexscr_boost_fee: number;
+  dexscr_ad_ts: number;
+  dexscr_update_link_ts: number;
+  dexscr_trending_bar_ts: number;
+  dexscr_boost_ts: number;
+  twitter_dup: number;
+  telegram_dup: number;
   website_dup: number;
 }
 
 export interface BluechipTokenLinks {
   address: string;
-  bitbucket: string;
-  description: string;
-  discord: string;
-  facebook: string;
-  fracaster: unknown | null;
-  geckoterminal: string;
-  github: string;
   gmgn: string;
+  geckoterminal: string;
+  twitter_username: string;
+  website: string;
+  telegram: string;
+  bitbucket: string;
+  discord: string;
+  description: string;
+  facebook: string;
+  github: string;
   instagram: string;
   linkedin: string;
   medium: string;
   reddit: string;
-  telegram: string;
   tiktok: string;
-  twitter_username: string;
-  verify_status: number;
-  website: string;
   youtube: string;
+  verify_status: number;
+  fracaster: unknown | null;
 }
 
 export type Chain = "sol" | "eth" | "bsc" | "base" | "tron" | "monad" | "megaeth" | "hyperevm" | "robinhood" | "arbitrum" | "arc" | "stable" | "xlayer";
 
 export interface DevCreatedToken {
-  biggest_pool: string;
-  bundler_rate: number;
+  token_address: string;
+  symbol: string;
   chain: string;
-  coin_creator_fee: number;
-  coin_creator_fee_token_address: string;
   create_timestamp: number;
-  cto_flag: boolean;
-  dexscr_ad: boolean;
-  dexscr_update_link: boolean;
-  holders: number;
   is_open: boolean;
-  is_pump: boolean;
-  launchpad_platform: string;
-  liquidity_less_4k: boolean;
-  logo: string;
   marcket_cap: string;
   market_cap: string;
+  biggest_pool: string;
   pool_liquidity: string;
+  holders: number;
   swap_1h: number;
-  symbol: string;
-  token_address: string;
-  token_ath_mc: string;
-  total_fee: string;
-  twitter_name_change_history: string[];
   volume_1h: string;
+  logo: string;
+  bundler_rate: number;
+  liquidity_less_4k: boolean;
+  cto_flag: boolean;
+  twitter_name_change_history: string[];
+  dexscr_ad: boolean;
+  dexscr_update_link: boolean;
+  is_pump: boolean;
+  launchpad_platform: string;
+  token_ath_mc: string;
+  coin_creator_fee: number;
+  coin_creator_fee_token_address: string;
+  total_fee: string;
 }
 
 export interface DevCreatedTokensParams {
@@ -221,35 +221,35 @@ export interface DevCreatedTokensParams {
 }
 
 export interface DevCreatorAthInfo {
-  ath_mc: string;
-  ath_token: string;
   creator: string;
+  ath_token: string;
+  ath_mc: string;
+  token_symbol: string;
   token_logo: string;
   token_name: string;
-  token_symbol: string;
 }
 
 export interface DexAggregationResult {
-  buyCount: number;
-  buyCountChangeRate: number;
-  buyVolume: number;
-  buyVolumeChangeRate: number;
-  chain: string;
   dexName: string;
-  sellCount: number;
-  sellCountChangeRate: number;
-  sellVolume: number;
-  sellVolumeChangeRate: number;
-  tokenStatsCreated: number;
-  tokenStatsCreatedChangeRate: number;
-  tokenStatsMigrations: number;
-  tokenStatsMigrationsChangeRate: number;
+  chain: string;
   tradeCount: number;
   tradeCountChangeRate: number;
   tradeVolume: number;
   tradeVolumeChangeRate: number;
   traderCount: number;
   traderCountChangeRate: number;
+  buyVolume: number;
+  buyVolumeChangeRate: number;
+  buyCount: number;
+  buyCountChangeRate: number;
+  sellVolume: number;
+  sellVolumeChangeRate: number;
+  sellCount: number;
+  sellCountChangeRate: number;
+  tokenStatsCreated: number;
+  tokenStatsCreatedChangeRate: number;
+  tokenStatsMigrations: number;
+  tokenStatsMigrationsChangeRate: number;
 }
 
 export interface DexTradesPollingParams {
@@ -258,27 +258,27 @@ export interface DexTradesPollingParams {
 }
 
 export interface ErrorDetail {
-  ctx?: Record<string, unknown> | null;
-  input?: unknown | null;
+  type?: string | null;
   loc?: (string | number)[] | null;
   msg?: string | null;
-  type?: string | null;
+  input?: unknown | null;
+  ctx?: Record<string, unknown> | null;
 }
 
 export interface ErrorResponse {
   code: PublicError;
-  details?: ErrorDetail[] | null;
-  domain?: string | null;
   message: string;
   request_id: string;
+  domain?: string | null;
+  details?: ErrorDetail[] | null;
   upgrade_url?: string | null;
 }
 
 export interface FeeDistributionCharity {
   id: string;
-  logo: string;
-  name: string;
   slug: string;
+  name: string;
+  logo: string;
   website: string;
   weight: string;
 }
@@ -293,7 +293,6 @@ export interface FeeDistributionPlatform {
 }
 
 export interface FeeDistributionRecipient {
-  charities?: FeeDistributionCharity[];
   has_claimed_fee: boolean;
   is_charity: boolean;
   is_creator: boolean;
@@ -302,134 +301,136 @@ export interface FeeDistributionRecipient {
   twitter_username: string;
   username: string;
   wallet: string;
+  charities?: FeeDistributionCharity[];
 }
 
 export interface FullTokenAthInfo {
-  ath_mc?: string;
   ath_token?: string;
+  ath_mc?: string;
   token: FullTokenAthToken;
 }
 
 export interface FullTokenAthToken {
   address?: string;
   avatar?: string;
-  name?: string;
   symbol?: string;
+  name?: string;
 }
 
 export interface FullTokenCreatorStat {
-  amount: string;
-  follow_count: number;
-  from_address: string;
-  fund_from: string;
-  fund_tx_hash: string;
-  inner_token_count: number;
-  nickname: string;
-  open_token_count: number;
   remark_count: number;
+  follow_count: number;
+  fund_from: string;
+  from_address: string;
+  amount: string;
   transfer_ts: number;
+  fund_tx_hash: string;
   twitter_username: string;
+  nickname: string;
+  inner_token_count: number;
+  open_token_count: number;
   wallet_create_at: number;
 }
 
 export interface FullTokenInfo {
-  address: string;
-  ath_info: FullTokenAthInfo;
-  ath_market_cap: string;
-  ath_price: number;
-  ath_ts: number;
-  banner: string;
-  biggest_pool_address: string;
-  bluechip_owner_count: number;
-  bluechip_owner_percentage: string;
-  bot_degen_count: number;
-  bot_degen_rate: string;
-  callout_declaration: boolean;
   chain: string;
+  address: string;
+  symbol: string;
+  name: string;
+  logo: string;
+  total_supply: number;
+  locked_ratio: number;
   creation_timestamp: number;
-  creation_tool?: string;
-  creator_address: string;
-  creator_created_count: number;
-  creator_hold_rate: string;
-  creator_open_count?: number;
-  creator_stat?: FullTokenCreatorStat;
-  creator_token_balance: string;
-  creator_token_status: string;
-  cto_flag: number;
-  decimals: number;
-  dev_team_hold_rate: string;
-  dexscr_boost_fee?: number;
-  dexscr_update_link: number;
-  dexscr_update_link_ts: number;
-  fresh_wallet_rate: string;
+  migrated_timestamp: number;
+  biggest_pool_address: string;
   holder_count: number;
-  image_dup_count?: number;
-  is_hidden: boolean;
-  launch_quote_address: string;
+  liquidity: number;
+  decimals: number;
+  tpool: Tpool;
+  standard: string;
   launchpad: string;
-  launchpad_platform: string;
   launchpad_progress: number;
   launchpad_status: number;
-  link: FullTokenLinks;
-  liquidity: number;
-  live_preview?: FullTokenLivePreview;
-  locked_ratio: number;
-  logo: string;
-  migrated_pool: string;
-  migrated_pool_exchange: string;
-  migrated_timestamp: number;
+  launchpad_platform: string;
   migration_market_cap: number;
   migration_market_cap_quote: string;
-  name: string;
-  og?: boolean;
+  creator_address: string;
+  trans_symbol: string;
+  trans_name: string;
+  trans_symbol_zhcn: string;
+  trans_name_zhcn: string;
+  migrated_pool: string;
+  migrated_pool_exchange: string;
+  launch_quote_address: string;
+  banner: string;
   open_timestamp?: number;
+  creator_token_status: string;
+  dexscr_update_link: number;
+  cto_flag: number;
+  dexscr_boost_fee?: number;
+  dexscr_update_link_ts: number;
+  twitter_rename_count?: number;
+  creator_open_count?: number;
   priority_fee: string;
-  private_vault_hold_rate: string;
-  rug: FullTokenRug;
-  rug_ratio: string;
-  security: FullTokenSecurity;
-  standard: string;
-  symbol: string;
-  tcid?: string;
   tip_fee: string;
-  top70_sniper_hold_rate: string;
-  top_10_holder_rate: string;
-  top_bot_degen_percentage: string;
+  trade_fee: string;
+  total_fee: string;
+  creation_tool?: string;
+  tcid?: string;
+  visiting_count?: number;
+  rug_ratio: string;
+  bluechip_owner_count: number;
+  bluechip_owner_percentage: string;
+  top_rat_trader_percentage: string;
   top_bundler_trader_percentage: string;
   top_entrapment_trader_percentage: string;
-  top_rat_trader_percentage: string;
-  total_fee: string;
-  total_supply: number;
-  tpool: Tpool;
-  trade_fee: string;
+  top_bot_degen_percentage: string;
+  creator_created_count: number;
+  bot_degen_count: number;
+  bot_degen_rate: string;
+  fresh_wallet_rate: string;
+  top_10_holder_rate: string;
+  dev_team_hold_rate: string;
+  creator_hold_rate: string;
+  creator_token_balance: string;
+  private_vault_hold_rate: string;
+  top70_sniper_hold_rate: string;
+  ath_price: number;
+  ath_ts: number;
+  ath_market_cap: string;
+  link: FullTokenLinks;
+  rug: FullTokenRug;
+  creator_stat?: FullTokenCreatorStat;
   trade_stat: FullTokenTradeStat;
-  trans_name: string;
-  trans_name_zhcn: string;
-  trans_symbol: string;
-  trans_symbol_zhcn: string;
+  live_preview?: FullTokenLivePreview;
+  security: FullTokenSecurity;
+  ath_info: FullTokenAthInfo;
+  is_hidden: boolean;
+  callout_declaration: boolean;
+  migration_market_cap_quote_address?: string;
   twitter_create_token_count?: number;
   twitter_created_count?: number;
+  image_dup_count?: number;
+  og?: boolean;
   twitter_del_post_count?: number;
   twitter_del_post_token_count?: number;
-  twitter_rename_count?: number;
-  visiting_count?: number;
 }
 
 export interface FullTokenLinks {
-  geckoterminal: string;
   gmgn: string;
-  telegram?: string;
+  geckoterminal: string;
   twitter_username: string;
   website: string;
+  telegram?: string;
 }
 
 export interface FullTokenLivePreview {
-  detail_url_pump: string;
-  end_live_timestamp: number;
-  is_token_live: boolean;
-  reply_count: number;
-  start_live_timestamp: number;
   thumbnail: string;
+  detail_url_pump: string;
+  reply_count: number;
+  is_token_live: boolean;
+  start_live_timestamp: number;
+  end_live_timestamp: number;
 }
 
 export interface FullTokenRug {
@@ -437,90 +438,90 @@ export interface FullTokenRug {
 }
 
 export interface FullTokenSecurity {
-  average_tax: string;
+  is_show_alert: boolean;
+  renounced_mint: boolean;
+  renounced_freeze_account: boolean;
   burn_ratio: string;
   burn_status: string;
-  buy_tax: string;
-  can_not_sell: number;
-  can_sell: number;
   dev_token_burn_amount: string;
   dev_token_burn_ratio: string;
-  flags: string[];
   hide_risk: boolean;
-  high_tax: string;
-  is_blacklist: boolean | null;
-  is_honeypot: boolean | null;
-  is_open_source: boolean | null;
-  is_renounced: boolean | null;
-  is_show_alert: boolean;
-  lock_info: unknown | null;
-  lock_summary: TokenFeeLockSummary;
-  privileges: string[];
-  renounced_freeze_account: boolean;
-  renounced_mint: boolean;
+  buy_tax: string;
   sell_tax: string;
-  top_10_holder_rate: string;
   total_buy_tax: string;
   total_sell_tax: string;
+  is_open_source: boolean | null;
+  is_blacklist: boolean | null;
+  is_honeypot: boolean | null;
+  is_renounced: boolean | null;
+  can_sell: number;
+  can_not_sell: number;
+  average_tax: string;
+  high_tax: string;
+  flags: string[];
+  lock_info: unknown | null;
+  lock_summary: TokenFeeLockSummary;
+  top_10_holder_rate: string;
+  privileges: string[];
 }
 
 export interface FullTokenTradeStat {
-  bundler_wallets: number;
-  creator_wallets: number;
-  following_wallets: number;
-  fresh_wallets: number;
-  rat_trader_wallets: number;
-  renowned_wallets: number;
   smart_wallets: number;
+  fresh_wallets: number;
+  renowned_wallets: number;
+  creator_wallets: number;
   sniper_wallets: number;
-  top_wallets: number;
-  updated_at: number;
+  rat_trader_wallets: number;
   whale_wallets: number;
+  top_wallets: number;
+  following_wallets: number;
+  bundler_wallets: number;
+  updated_at: number;
 }
 
 export interface GasPrice {
+  chain: string;
+  prio: string;
+  tip: string;
+  prio_mev: string;
+  tip_mev: string;
   auto: string;
   auto_mev: string;
-  average: string;
-  average_estimate_time: number;
-  average_orign: string;
-  average_prio_fee: string;
-  average_prio_fee_mixed: string;
-  base_fee?: string;
+  last_block: number;
   block_number?: number;
   block_timestamp?: number;
-  chain: string;
-  eth_usd_price: number;
+  base_fee?: string;
   high: string;
-  high_estimate_time: number;
-  high_orign: string;
-  high_prio_fee: string;
-  high_prio_fee_mixed: string;
-  last_block: number;
+  average: string;
   low: string;
-  low_estimate_time: number;
-  low_orign: string;
+  suggest_base_fee: string;
+  high_prio_fee: string;
+  average_prio_fee: string;
   low_prio_fee: string;
+  high_prio_fee_mixed: string;
+  average_prio_fee_mixed: string;
   low_prio_fee_mixed: string;
   native_token_usd_price: number;
-  prio: string;
-  prio_mev: string;
-  suggest_base_fee: string;
-  tip: string;
-  tip_mev: string;
+  eth_usd_price: number;
+  high_estimate_time: number;
+  average_estimate_time: number;
+  low_estimate_time: number;
+  high_orign: string;
+  average_orign: string;
+  low_orign: string;
 }
 
 export interface GetActivityRankInfoData {
+  list: unknown[];
   activity_begin: number;
   activity_end: number;
-  list: unknown[];
 }
 
 export interface GetActivityRankInfoResponse {
   code: number;
-  data: GetActivityRankInfoData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetActivityRankInfoData;
 }
 
 export interface GetAggedTokenTradesData {
@@ -529,9 +530,9 @@ export interface GetAggedTokenTradesData {
 
 export interface GetAggedTokenTradesResponse {
   code: number;
-  data: GetAggedTokenTradesData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetAggedTokenTradesData;
 }
 
 export interface GetAggedTokenTransfersData {
@@ -540,46 +541,46 @@ export interface GetAggedTokenTransfersData {
 
 export interface GetAggedTokenTransfersResponse {
   code: number;
-  data: GetAggedTokenTransfersData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetAggedTokenTransfersData;
 }
 
 export interface GetBluechipRankResponse {
   code: number;
-  data: BluechipToken[];
-  message: string;
   reason: string;
+  message: string;
+  data: BluechipToken[];
 }
 
 export interface GetDevCreatedTokensData {
-  creator_ath_info: DevCreatorAthInfo;
-  inner_count: number;
   last_create_timestamp: number;
+  inner_count: number;
   open_count: number;
   open_ratio: string;
+  creator_ath_info: DevCreatorAthInfo;
   tokens: DevCreatedToken[];
 }
 
 export interface GetDevCreatedTokensResponse {
   code: number;
-  data: GetDevCreatedTokensData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetDevCreatedTokensData;
 }
 
 export interface GetDexTradesPollingData {
   allAggregationResult: DexAggregationResult;
-  source: string;
   topLaunchpads: DexAggregationResult[];
   topProtocols: DexAggregationResult[];
+  source: string;
 }
 
 export interface GetDexTradesPollingResponse {
   code: number;
-  data: GetDexTradesPollingData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetDexTradesPollingData;
 }
 
 export interface GetGasPriceListData {
@@ -588,57 +589,57 @@ export interface GetGasPriceListData {
 
 export interface GetGasPriceListResponse {
   code: number;
-  data: GetGasPriceListData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetGasPriceListData;
 }
 
 export interface GetHotSearchesResponse {
   code: number;
-  data: TrendingChainBucket[];
   message: string;
+  data: TrendingChainBucket[];
 }
 
 export interface GetLaunchpadTaxPolicyData {
-  platforms: Record<string, LaunchpadTaxPlatform>;
   revision: string;
   tipsConfigs: LaunchpadTaxTipsConfigs;
+  platforms: Record<string, LaunchpadTaxPlatform>;
 }
 
 export interface GetLaunchpadTaxPolicyResponse {
   code: number;
-  data: GetLaunchpadTaxPolicyData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetLaunchpadTaxPolicyData;
 }
 
 export interface GetLiveTokenPreviewData {
   address: string;
-  create_timestamp: number;
-  creator: string;
+  thumbnail: string;
+  logo: string;
+  name: string;
+  symbol: string;
+  mc: string;
   description: string;
   detail_url_gmgn: string;
   detail_url_pump: string;
-  end_live_timestamp: number | null;
-  is_token_live: boolean;
-  logo: string;
-  mc: string;
-  name: string;
-  price_24_change: string;
-  reply_count: number;
-  start_live_timestamp: number;
-  symbol: string;
-  telegram: string;
-  thumbnail: string;
   twitter: string;
   website: string;
+  telegram: string;
+  price_24_change: string;
+  create_timestamp: number;
+  reply_count: number;
+  creator: string;
+  is_token_live: boolean;
+  start_live_timestamp: number;
+  end_live_timestamp: number | null;
 }
 
 export interface GetLiveTokenPreviewResponse {
   code: number;
-  data: GetLiveTokenPreviewData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetLiveTokenPreviewData;
 }
 
 export interface GetLiveTwitchKolData {
@@ -649,9 +650,9 @@ export interface GetLiveTwitchKolData {
 
 export interface GetLiveTwitchKolResponse {
   code: number;
-  data: GetLiveTwitchKolData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetLiveTwitchKolData;
 }
 
 export interface GetMajorCoinPricesData {
@@ -660,47 +661,47 @@ export interface GetMajorCoinPricesData {
 
 export interface GetMajorCoinPricesResponse {
   code: number;
-  data: GetMajorCoinPricesData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetMajorCoinPricesData;
 }
 
 export interface GetMultiTokenFullInfoResponse {
   code: number;
-  data: FullTokenInfo[];
-  message: string;
   reason: string;
+  message: string;
+  data: FullTokenInfo[];
 }
 
 export interface GetMultiTokenInfoResponse {
   code: number;
-  data: MultiTokenInfo[];
-  message: string;
   reason: string;
+  message: string;
+  data: MultiTokenInfo[];
 }
 
 export interface GetMultiWindowTokenInfoResponse {
   code: number;
-  data: MultiWindowTokenInfo[];
-  message: string;
   reason: string;
+  message: string;
+  data: MultiWindowTokenInfo[];
 }
 
 export interface GetNativeTransferData {
   address: string;
-  amount: string;
   from_address: string;
-  fund_tx_hash: string;
-  nickname: string;
+  amount: string;
   transfer_ts: number;
   twitter_username: string;
+  nickname: string;
+  fund_tx_hash: string;
 }
 
 export interface GetNativeTransferResponse {
   code: number;
-  data: GetNativeTransferData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetNativeTransferData;
 }
 
 export interface GetNewPairsData {
@@ -709,169 +710,169 @@ export interface GetNewPairsData {
 
 export interface GetNewPairsResponse {
   code: number;
-  data: GetNewPairsData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetNewPairsData;
 }
 
 export interface GetRecommendSlippageData {
-  display_slippage: string;
-  has_tax: boolean;
-  recommend_sell_slippage: string;
   recommend_slippage: string;
+  recommend_sell_slippage: string;
+  has_tax: boolean;
+  display_slippage: string;
   volatility: number;
 }
 
 export interface GetRecommendSlippageResponse {
   code: number;
-  data: GetRecommendSlippageData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetRecommendSlippageData;
 }
 
 export interface GetSimilarCoinExtremesData {
-  earliest: SimilarCoinExtreme | null;
   max_mcp: SimilarCoinExtreme | null;
+  earliest: SimilarCoinExtreme | null;
 }
 
 export interface GetSimilarCoinExtremesResponse {
   code: number;
-  data: GetSimilarCoinExtremesData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetSimilarCoinExtremesData;
 }
 
 export interface GetSimilarCoinsResponse {
   code: number;
-  data: SimilarCoin[];
-  message: string;
   reason: string;
+  message: string;
+  data: SimilarCoin[];
 }
 
 export interface GetSmartMoneyWalletData {
-  all_pnl: number;
-  avatar: string | null;
-  avg_holding_peroid: unknown | null;
-  balance: string;
-  bnb_balance: string;
-  buy: number;
-  buy_1d: number;
-  buy_30d: number;
-  buy_7d: number;
-  ens?: unknown | null;
-  eth_balance: string;
-  followers_count: number;
-  history_bought_cost: unknown | null;
-  is_contract: boolean;
-  last_active_timestamp: number;
-  name: string | null;
-  pnl: number;
-  pnl_1d: number;
-  pnl_2x_5x_num: unknown | null;
-  pnl_30d: number;
-  pnl_7d: number;
-  pnl_gt_5x_num: unknown | null;
-  pnl_lt_2x_num: unknown | null;
-  pnl_lt_minus_dot5_num: unknown | null;
-  pnl_minus_dot5_0x_num: unknown | null;
-  profit_num: unknown | null;
-  realized_profit: number;
-  realized_profit_1d: number;
-  realized_profit_30d: number;
-  realized_profit_7d: number;
-  refresh_requested_at: unknown | null;
-  risk?: WalletRiskProfile;
-  sell: number;
-  sell_1d: number;
-  sell_30d: number;
-  sell_7d: number;
-  sol_balance: string;
-  tag_rank: WalletTagRank;
-  tags: string[];
-  token_avg_cost: unknown | null;
-  token_num: unknown | null;
-  token_sold_avg_profit: unknown | null;
-  total_profit: number;
-  total_profit_pnl: number;
-  total_value: number;
-  trx_balance: string;
   twitter_bind: boolean;
   twitter_fans_num: number;
-  twitter_name: string | null;
   twitter_username?: string | null;
-  unrealized_pnl: number;
+  twitter_name: string | null;
+  ens?: unknown | null;
+  avatar: string | null;
+  name: string | null;
+  eth_balance: string;
+  sol_balance: string;
+  trx_balance: string;
+  bnb_balance: string;
+  balance: string;
+  total_value: number;
   unrealized_profit: number;
-  updated_at: number | null;
+  unrealized_pnl: number;
+  realized_profit: number;
+  pnl: number;
+  pnl_1d: number;
+  pnl_7d: number;
+  pnl_30d: number;
+  realized_profit_1d: number;
+  realized_profit_7d: number;
+  realized_profit_30d: number;
   winrate: unknown | null;
+  all_pnl: number;
+  total_profit: number;
+  total_profit_pnl: number;
+  buy_1d: number;
+  sell_1d: number;
+  buy_30d: number;
+  sell_30d: number;
+  buy_7d: number;
+  sell_7d: number;
+  buy: number;
+  sell: number;
+  history_bought_cost: unknown | null;
+  token_avg_cost: unknown | null;
+  token_sold_avg_profit: unknown | null;
+  token_num: unknown | null;
+  profit_num: unknown | null;
+  pnl_lt_minus_dot5_num: unknown | null;
+  pnl_minus_dot5_0x_num: unknown | null;
+  pnl_lt_2x_num: unknown | null;
+  pnl_2x_5x_num: unknown | null;
+  pnl_gt_5x_num: unknown | null;
+  last_active_timestamp: number;
+  tags: string[];
+  tag_rank: WalletTagRank;
+  followers_count: number;
+  is_contract: boolean;
+  updated_at: number | null;
+  refresh_requested_at: unknown | null;
+  avg_holding_peroid: unknown | null;
+  risk?: WalletRiskProfile;
 }
 
 export interface GetSmartMoneyWalletInfoData {
-  all_pnl: number;
-  avatar: string | null;
-  avg_holding_peroid: number | null;
-  balance: string;
-  bnb_balance: string;
-  buy: number;
-  buy_1d: number;
-  buy_30d: number;
-  buy_7d: number;
-  ens: string | null;
-  eth_balance: string;
-  followers_count: number;
-  history_bought_cost: number | null;
-  is_contract: boolean;
-  last_active_timestamp: number;
-  name: string | null;
-  pnl: number;
-  pnl_1d: number;
-  pnl_2x_5x_num: number | null;
-  pnl_30d: number;
-  pnl_7d: number;
-  pnl_gt_5x_num: number | null;
-  pnl_lt_2x_num: number | null;
-  pnl_lt_minus_dot5_num: number | null;
-  pnl_minus_dot5_0x_num: number | null;
-  profit_num: number | null;
-  realized_profit: number;
-  realized_profit_1d: number;
-  realized_profit_30d: number;
-  realized_profit_7d: number;
-  refresh_requested_at: number | null;
-  risk: SmartMoneyRisk;
-  sell: number;
-  sell_1d: number;
-  sell_30d: number;
-  sell_7d: number;
-  sol_balance: string;
-  tag_rank: Record<string, number | null>;
-  tags: string[];
-  token_avg_cost: number | null;
-  token_num: number | null;
-  token_sold_avg_profit: number | null;
-  total_profit: number;
-  total_profit_pnl: number;
-  total_value: number;
-  trx_balance: string;
   twitter_bind: boolean;
   twitter_fans_num: number;
-  twitter_name: string | null;
   twitter_username: string | null;
-  unrealized_pnl: number;
+  twitter_name: string | null;
+  ens: string | null;
+  avatar: string | null;
+  name: string | null;
+  eth_balance: string;
+  sol_balance: string;
+  trx_balance: string;
+  bnb_balance: string;
+  balance: string;
+  total_value: number;
   unrealized_profit: number;
-  updated_at: number;
+  unrealized_pnl: number;
+  realized_profit: number;
+  pnl: number;
+  pnl_1d: number;
+  pnl_7d: number;
+  pnl_30d: number;
+  realized_profit_1d: number;
+  realized_profit_7d: number;
+  realized_profit_30d: number;
   winrate: number | null;
+  all_pnl: number;
+  total_profit: number;
+  total_profit_pnl: number;
+  buy_1d: number;
+  sell_1d: number;
+  buy_30d: number;
+  sell_30d: number;
+  buy_7d: number;
+  sell_7d: number;
+  buy: number;
+  sell: number;
+  history_bought_cost: number | null;
+  token_avg_cost: number | null;
+  token_sold_avg_profit: number | null;
+  token_num: number | null;
+  profit_num: number | null;
+  pnl_lt_minus_dot5_num: number | null;
+  pnl_minus_dot5_0x_num: number | null;
+  pnl_lt_2x_num: number | null;
+  pnl_2x_5x_num: number | null;
+  pnl_gt_5x_num: number | null;
+  last_active_timestamp: number;
+  tags: string[];
+  tag_rank: Record<string, number | null>;
+  followers_count: number;
+  is_contract: boolean;
+  updated_at: number;
+  refresh_requested_at: number | null;
+  avg_holding_peroid: number | null;
+  risk: SmartMoneyRisk;
 }
 
 export interface GetSmartMoneyWalletInfoResponse {
   code: number;
-  data: GetSmartMoneyWalletInfoData;
   msg: string;
+  data: GetSmartMoneyWalletInfoData;
 }
 
 export interface GetSmartMoneyWalletResponse {
   code: number;
-  data: GetSmartMoneyWalletData;
   msg: string;
+  data: GetSmartMoneyWalletData;
 }
 
 export interface GetSwapRankingsData {
@@ -880,39 +881,39 @@ export interface GetSwapRankingsData {
 
 export interface GetSwapRankingsResponse {
   code: number;
-  data: GetSwapRankingsData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetSwapRankingsData;
 }
 
 export interface GetTokenAiNarrativeData {
   en: string;
-  source: number;
   zh_cn: string;
   zh_tw: string;
+  source: number;
 }
 
 export interface GetTokenAiNarrativeResponse {
   code: number;
-  data: GetTokenAiNarrativeData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenAiNarrativeData;
 }
 
 export interface GetTokenBundlerStatData {
   bundler_count: number;
+  bundler_swaps: number;
   bundler_hold_ratio: string;
   bundler_max_hold_ratio: string;
-  bundler_swap_quote_amount: string;
   bundler_swap_ratio: string;
-  bundler_swaps: number;
+  bundler_swap_quote_amount: string;
 }
 
 export interface GetTokenBundlerStatResponse {
   code: number;
-  data: GetTokenBundlerStatData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenBundlerStatData;
 }
 
 export interface GetTokenCandlesData {
@@ -923,60 +924,60 @@ export interface GetTokenCandlesData {
 
 export interface GetTokenCandlesResponse {
   code: number;
-  data: GetTokenCandlesData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenCandlesData;
 }
 
 export interface GetTokenCommunityMessagesData {
   chain: string;
   community: TokenCommunity;
-  declaration_level: string;
-  has_more: boolean;
   messages: TokenCommunityMessage[];
+  has_more: boolean;
   top_message?: TokenCommunityMessage;
+  declaration_level: string;
 }
 
 export interface GetTokenCommunityMessagesResponse {
   code: number;
-  data: GetTokenCommunityMessagesData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenCommunityMessagesData;
 }
 
 export interface GetTokenDevInfoData {
   address: string;
   creator_address: string;
-  creator_open_count: number;
   creator_token_balance: string;
   creator_token_status: string;
-  cto_flag: number;
+  twitter_name_change_history: unknown[];
+  top_10_holder_rate: string;
   dexscr_ad: number;
-  dexscr_ad_ts: number;
-  dexscr_boost_fee: number;
-  dexscr_boost_ts: number;
-  dexscr_trending_bar: number;
-  dexscr_trending_bar_ts: number;
   dexscr_update_link: number;
+  cto_flag: number;
+  dexscr_boost_fee: number;
+  dexscr_trending_bar: number;
+  dexscr_ad_ts: number;
   dexscr_update_link_ts: number;
+  dexscr_boost_ts: number;
+  dexscr_trending_bar_ts: number;
+  twitter_del_post_token_count: number;
+  twitter_create_token_count: number;
   fund_from: string;
   fund_from_ts: number;
+  creator_open_count: number;
   offchain: boolean;
-  top_10_holder_rate: string;
   twitter_change_flag: boolean;
-  twitter_create_token_count: number;
   twitter_created_count: number;
   twitter_del_post_count: number;
-  twitter_del_post_token_count: number;
-  twitter_name_change_history: unknown[];
   twitter_rename_count: number;
 }
 
 export interface GetTokenDevInfoResponse {
   code: number;
-  data: GetTokenDevInfoData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenDevInfoData;
 }
 
 export interface GetTokenFeeDistributionData {
@@ -986,23 +987,23 @@ export interface GetTokenFeeDistributionData {
 
 export interface GetTokenFeeDistributionResponse {
   code: number;
-  data: GetTokenFeeDistributionData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenFeeDistributionData;
 }
 
 export interface GetTokenFeeInfoData {
   address: string;
-  launchpad: TokenLaunchpad;
   pool_fee_info_list: TokenFeePool[];
   security: TokenFeeSecurity;
+  launchpad: TokenLaunchpad;
 }
 
 export interface GetTokenFeeInfoResponse {
   code: number;
-  data: GetTokenFeeInfoData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenFeeInfoData;
 }
 
 export interface GetTokenHolderExtraInfoData {
@@ -1011,16 +1012,16 @@ export interface GetTokenHolderExtraInfoData {
 
 export interface GetTokenHolderExtraInfoResponse {
   code: number;
-  data: GetTokenHolderExtraInfoData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenHolderExtraInfoData;
 }
 
 export interface GetTokenHolderStatResponse {
   code: number;
-  data: TagCounts;
-  message: string;
   reason: string;
+  message: string;
+  data: TagCounts;
 }
 
 export interface GetTokenHoldersData {
@@ -1030,9 +1031,9 @@ export interface GetTokenHoldersData {
 
 export interface GetTokenHoldersResponse {
   code: number;
-  data: GetTokenHoldersData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenHoldersData;
 }
 
 export interface GetTokenInfoBriefData {
@@ -1041,9 +1042,9 @@ export interface GetTokenInfoBriefData {
 
 export interface GetTokenInfoBriefResponse {
   code: number;
-  data: GetTokenInfoBriefData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenInfoBriefData;
 }
 
 export interface GetTokenLiquidityData {
@@ -1053,31 +1054,31 @@ export interface GetTokenLiquidityData {
 
 export interface GetTokenLiquidityResponse {
   code: number;
-  data: GetTokenLiquidityData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenLiquidityData;
 }
 
 export interface GetTokenLiquidityStatsData {
-  bundler_wallets: number;
   chain: string;
-  creator_wallets: number;
-  following_wallets: number;
-  fresh_wallets: number;
-  rat_trader_wallets: number;
-  renowned_wallets: number;
-  smart_wallets: number;
-  sniper_wallets: number;
   token_address: string;
-  top_wallets: number;
+  smart_wallets: number;
+  fresh_wallets: number;
+  renowned_wallets: number;
+  creator_wallets: number;
+  sniper_wallets: number;
+  rat_trader_wallets: number;
   whale_wallets: number;
+  top_wallets: number;
+  following_wallets: number;
+  bundler_wallets: number;
 }
 
 export interface GetTokenLiquidityStatsResponse {
   code: number;
-  data: GetTokenLiquidityStatsData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenLiquidityStatsData;
 }
 
 export interface GetTokenLiquidityTrendData {
@@ -1087,16 +1088,16 @@ export interface GetTokenLiquidityTrendData {
 
 export interface GetTokenLiquidityTrendResponse {
   code: number;
-  data: GetTokenLiquidityTrendData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenLiquidityTrendData;
 }
 
 export interface GetTokenLogoHistoryResponse {
   code: number;
-  data: TokenLogoHistoryEntry[];
-  message: string;
   reason: string;
+  message: string;
+  data: TokenLogoHistoryEntry[];
 }
 
 export interface GetTokenMcapCandlesData {
@@ -1106,9 +1107,9 @@ export interface GetTokenMcapCandlesData {
 
 export interface GetTokenMcapCandlesResponse {
   code: number;
-  data: GetTokenMcapCandlesData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenMcapCandlesData;
 }
 
 export interface GetTokenPoolFeeInfoData {
@@ -1117,9 +1118,9 @@ export interface GetTokenPoolFeeInfoData {
 
 export interface GetTokenPoolFeeInfoResponse {
   code: number;
-  data: GetTokenPoolFeeInfoData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenPoolFeeInfoData;
 }
 
 export interface GetTokenPricesData {
@@ -1128,29 +1129,29 @@ export interface GetTokenPricesData {
 
 export interface GetTokenPricesResponse {
   code: number;
-  data: GetTokenPricesData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenPricesData;
 }
 
 export interface GetTokenSecurityData {
   address: string;
-  launchpad: TokenLaunchpad;
   security: TokenSecurity;
+  launchpad: TokenLaunchpad;
 }
 
 export interface GetTokenSecurityResponse {
   code: number;
-  data: GetTokenSecurityData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenSecurityData;
 }
 
 export interface GetTokenSignalsResponse {
   code: number;
-  data: TokenSignal[];
-  message: string;
   reason: string;
+  message: string;
+  data: TokenSignal[];
 }
 
 export interface GetTokenSocialsData {
@@ -1162,45 +1163,45 @@ export interface GetTokenSocialsData {
 
 export interface GetTokenSocialsResponse {
   code: number;
-  data: GetTokenSocialsData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenSocialsData;
 }
 
 export interface GetTokenStatsData {
+  holder_count: number;
   bluechip_owner_count: number;
   bluechip_owner_percentage: string;
-  bot_degen_count: number;
-  bot_degen_rate: string;
-  creator_created_count: number;
-  creator_hold_rate: string;
-  creator_token_balance: string;
-  degen_call_count: number;
-  dev_team_hold_rate: string;
-  fresh_wallet_rate: string;
-  holder_count: number;
-  private_vault_hold_rate: string;
   signal_count: number;
-  top70_sniper_hold_rate: string;
-  top_10_holder_rate: string;
-  top_bot_degen_percentage: string;
+  degen_call_count: number;
+  top_rat_trader_percentage: string;
   top_bundler_trader_percentage: string;
   top_entrapment_trader_percentage: string;
-  top_rat_trader_percentage: string;
+  top_bot_degen_percentage: string;
+  creator_created_count: number;
+  bot_degen_count: number;
+  bot_degen_rate: string;
+  fresh_wallet_rate: string;
+  top_10_holder_rate: string;
+  dev_team_hold_rate: string;
+  creator_hold_rate: string;
+  creator_token_balance: string;
+  private_vault_hold_rate: string;
+  top70_sniper_hold_rate: string;
 }
 
 export interface GetTokenStatsResponse {
   code: number;
-  data: GetTokenStatsData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenStatsData;
 }
 
 export interface GetTokenTraderStatResponse {
   code: number;
-  data: TagCounts;
-  message: string;
   reason: string;
+  message: string;
+  data: TagCounts;
 }
 
 export interface GetTokenTradersData {
@@ -1210,9 +1211,9 @@ export interface GetTokenTradersData {
 
 export interface GetTokenTradersResponse {
   code: number;
-  data: GetTokenTradersData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenTradersData;
 }
 
 export interface GetTokenTradesData {
@@ -1222,9 +1223,9 @@ export interface GetTokenTradesData {
 
 export interface GetTokenTradesResponse {
   code: number;
-  data: GetTokenTradesData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenTradesData;
 }
 
 export interface GetTokenTradesV2Data {
@@ -1234,9 +1235,9 @@ export interface GetTokenTradesV2Data {
 
 export interface GetTokenTradesV2Response {
   code: number;
-  data: GetTokenTradesV2Data;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenTradesV2Data;
 }
 
 export interface GetTokenTrendsData {
@@ -1245,31 +1246,31 @@ export interface GetTokenTrendsData {
 
 export interface GetTokenTrendsResponse {
   code: number;
-  data: GetTokenTrendsData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenTrendsData;
 }
 
 export interface GetTokenWalletTagsStatData {
-  bundler_wallets: number;
   chain: string;
-  creator_wallets: number;
-  following_wallets: number;
-  fresh_wallets: number;
-  rat_trader_wallets: number;
-  renowned_wallets: number;
-  smart_wallets: number;
-  sniper_wallets: number;
   token_address: string;
-  top_wallets: number;
+  smart_wallets: number;
+  fresh_wallets: number;
+  renowned_wallets: number;
+  creator_wallets: number;
+  sniper_wallets: number;
+  rat_trader_wallets: number;
   whale_wallets: number;
+  top_wallets: number;
+  following_wallets: number;
+  bundler_wallets: number;
 }
 
 export interface GetTokenWalletTagsStatResponse {
   code: number;
-  data: GetTokenWalletTagsStatData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTokenWalletTagsStatData;
 }
 
 export interface GetTopBuyersData {
@@ -1278,26 +1279,26 @@ export interface GetTopBuyersData {
 
 export interface GetTopBuyersResponse {
   code: number;
-  data: GetTopBuyersData;
   msg: string;
+  data: GetTopBuyersData;
 }
 
 export interface GetTopCallersData {
-  current_user: TopCaller | null;
   list: TopCaller[];
+  current_user: TopCaller | null;
 }
 
 export interface GetTopCallersResponse {
   code: number;
-  data: GetTopCallersData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetTopCallersData;
 }
 
 export interface GetTrendingTokensResponse {
   code: number;
-  data: TrendingChainBucket[];
   message: string;
+  data: TrendingChainBucket[];
 }
 
 export interface GetWalletActivityData {
@@ -1307,53 +1308,53 @@ export interface GetWalletActivityData {
 
 export interface GetWalletActivityResponse {
   code: number;
-  data: GetWalletActivityData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetWalletActivityData;
 }
 
 export interface GetWalletChainBalancesResponse {
   code: number;
-  data: WalletChainBalance[];
-  message: string;
   reason: string;
+  message: string;
+  data: WalletChainBalance[];
 }
 
 export interface GetWalletCommonStatData {
   avatar: string;
-  bind_status: string;
-  created_at: number;
-  created_token_count: number;
-  ens: string;
-  follow_count: number;
-  followers_count: number;
-  fund_amount: string;
-  fund_from: string;
-  fund_from_address: string;
-  fund_from_ts: number;
-  fund_tx_hash: string;
-  is_blue_verified: boolean;
   name: string;
-  nick_name: string;
-  remark_count: number;
+  ens: string;
   tag: string;
-  tag_rank: WalletTagRank;
   tags: string[];
-  twitter_bind: boolean;
-  twitter_description: string;
-  twitter_fans_num: number;
-  twitter_id: string;
+  tag_rank: WalletTagRank;
+  nick_name: string;
+  created_at: number;
   twitter_name: string;
   twitter_username: string;
+  is_blue_verified: boolean;
+  twitter_bind: boolean;
+  twitter_fans_num: number;
+  twitter_description: string;
+  followers_count: number;
+  twitter_id: string;
+  bind_status: string;
   verified: boolean;
+  follow_count: number;
+  remark_count: number;
+  created_token_count: number;
+  fund_from: string;
+  fund_from_ts: number;
+  fund_tx_hash: string;
   wallet_address: string;
+  fund_from_address: string;
+  fund_amount: string;
 }
 
 export interface GetWalletCommonStatResponse {
   code: number;
-  data: GetWalletCommonStatData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetWalletCommonStatData;
 }
 
 export interface GetWalletRankingsData {
@@ -1362,183 +1363,183 @@ export interface GetWalletRankingsData {
 
 export interface GetWalletRankingsResponse {
   code: number;
-  data: GetWalletRankingsData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetWalletRankingsData;
 }
 
 export interface GetWalletStatData {
-  bought_cost: string;
-  buy: number;
-  last_timestamp: number;
-  native_balance: string;
-  pnl_stat: WalletPnlStat;
+  wallet_address: string;
   realized_profit: string;
   realized_profit_pnl: string;
+  buy: number;
   sell: number;
-  sold_fee: string;
-  sold_income: string;
   total_cost: string;
-  wallet_address: string;
+  bought_cost: string;
+  sold_income: string;
+  sold_fee: string;
+  last_timestamp: number;
+  pnl_stat: WalletPnlStat;
+  native_balance: string;
 }
 
 export interface GetWalletStatResponse {
   code: number;
-  data: GetWalletStatData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetWalletStatData;
 }
 
 export interface GetWebsiteInfoData {
   address: string;
-  created_at: number;
-  ip: string;
   website: string;
+  ip: string;
+  created_at: number;
 }
 
 export interface GetWebsiteInfoResponse {
   code: number;
-  data: GetWebsiteInfoData;
-  message: string;
   reason: string;
+  message: string;
+  data: GetWebsiteInfoData;
 }
 
 export interface GmgnSearchCoin {
-  address: string;
-  ath_market_cap: string;
-  buy_tax: string;
   chain: string;
+  address: string;
+  name: string;
+  symbol: string;
+  trans_name: string;
+  trans_symbol: string;
+  trans_name_zhcn: string;
+  trans_symbol_zhcn: string;
+  remark_name: string;
+  logo: string;
   created_at: number;
-  creation_tool: string;
-  creator: string;
-  cto_flag: number;
+  price: string;
+  price_24h: string;
+  volume_1h: number;
+  volume_24h: number;
+  mcp: string;
+  liquidity: string;
+  follow_state: boolean;
+  quote_address: string;
+  launch_quote_address: string;
+  standard: string;
+  hot_level: number;
+  swaps_5m: number;
+  swaps_1h: number;
+  swaps_6h: number;
+  swaps_24h: number;
+  is_show_alert: boolean;
+  is_honeypot: boolean | null;
+  renounced_freeze_account: boolean | null;
+  buy_tax: string;
+  sell_tax: string;
+  total_buy_tax: number;
+  total_sell_tax: number;
+  token_link: GmgnSearchTokenLink;
   dexscr_ad: number;
+  dexscr_update_link: number;
   dexscr_boost_fee: number;
   dexscr_trending_bar_ts: number;
-  dexscr_update_link: number;
-  exchange: string;
-  follow_state: boolean;
-  holder_count: number;
-  hot_level: number;
-  is_honeypot: boolean | null;
-  is_og: boolean;
-  is_show_alert: boolean;
-  kol_count: number;
-  launch_quote_address: string;
+  cto_flag: number;
   launchpad: string;
   launchpad_platform: string;
   launchpad_status: number;
-  liquidity: string;
-  logo: string;
-  mcp: string;
+  exchange: string;
   migrated_pool_exchange: string;
-  name: string;
-  offchain: boolean;
-  price: string;
-  price_24h: string;
-  progress: number;
-  quote_address: string;
-  remark_name: string;
-  renounced_freeze_account: boolean | null;
-  sell_tax: string;
-  standard: string;
-  swaps_1h: number;
-  swaps_24h: number;
-  swaps_5m: number;
-  swaps_6h: number;
-  symbol: string;
-  tax_allocation?: Record<string, unknown>;
-  token_link: GmgnSearchTokenLink;
-  total_buy_tax: number;
-  total_fee: string;
-  total_sell_tax: number;
-  trans_name: string;
-  trans_name_zhcn: string;
-  trans_symbol: string;
-  trans_symbol_zhcn: string;
   twitter_change_flag: number;
   twitter_rename_count: number;
+  creator: string;
+  progress: number;
+  is_og: boolean;
+  holder_count: number;
+  offchain: boolean;
+  creation_tool: string;
   visiting_count: number;
-  volume_1h: number;
-  volume_24h: number;
+  ath_market_cap: string;
+  total_fee: string;
+  kol_count: number;
+  tax_allocation?: Record<string, unknown>;
 }
 
 export interface GmgnSearchTokenLink {
   address: string;
-  bitbucket: string;
-  description: string;
-  discord: string;
-  facebook: string;
-  fracaster: unknown | null;
-  geckoterminal: string;
-  github: string;
   gmgn: string;
+  geckoterminal: string;
+  twitter_username: string;
+  website: string;
+  telegram: string;
+  bitbucket: string;
+  discord: string;
+  description: string;
+  facebook: string;
+  github: string;
   instagram: string;
   linkedin: string;
   medium: string;
   reddit: string;
-  telegram: string;
   tiktok: string;
-  twitter_username: string;
-  verify_status: number;
-  website: string;
   youtube: string;
+  verify_status: number;
+  fracaster: unknown | null;
 }
 
 export interface GmgnSearchWallet {
-  address: string;
-  avatar: string;
-  balance: string;
   chain: string;
+  address: string;
+  remark_name: string;
+  twitter_username: string;
+  twitter_name: string;
+  twitter_fans_num: number;
   ens: string;
-  follow_count: number;
+  avatar: string;
+  wallet_tags: string[];
   follow_state: boolean;
   fund_from: string;
   fund_from_ts: number;
+  balance: string;
+  follow_count: number;
+  remark_count: number;
   last_active_time: number;
   pnl_7d: string;
   realized_profit_7d: string;
-  remark_count: number;
-  remark_name: string;
-  twitter_fans_num: number;
-  twitter_name: string;
-  twitter_username: string;
-  wallet_tags: string[];
   win_rate_7d: number;
 }
 
 export interface HolderExtraInfo {
-  addr_type: number;
   address: string;
+  name: string | null;
   avatar: string | null;
+  twitter_username: string | null;
+  twitter_name: string | null;
   created_at: number;
+  native_balance: string;
+  native_transfer: HolderNativeTransfer | null;
+  token_transfer_in: HolderExtraTokenTransfer | null;
+  token_transfer_out: HolderTokenTransfer | null;
+  addr_type: number;
   exchange: string;
   is_new: boolean;
   is_on_curve: boolean;
-  maker_token_tags: string[] | null;
-  name: string | null;
-  native_balance: string;
-  native_transfer: HolderNativeTransfer | null;
-  tags: string[] | null;
-  token_transfer_in: HolderExtraTokenTransfer | null;
-  token_transfer_out: HolderTokenTransfer | null;
   transfer_in: boolean;
-  twitter_name: string | null;
-  twitter_username: string | null;
+  tags: string[] | null;
+  maker_token_tags: string[] | null;
 }
 
 export interface HolderExtraTokenTransfer {
-  address: string;
   name: string | null;
+  address: string;
   timestamp: number;
   tx_hash: string;
   type: string;
 }
 
 export interface HolderNativeTransfer {
-  amount: string;
-  from_address: string;
   name: string | null;
+  from_address: string;
+  amount: string;
   timestamp: number;
   tx_hash: string;
 }
@@ -1553,8 +1554,8 @@ export interface HolderStatParams {
 export type HolderTag = "smart_degen" | "fresh_wallet" | "renowned" | "bundler" | "bluechip_owner" | "sniper" | "rat_trader" | "dev" | "transfer_in" | "dex_bot";
 
 export interface HolderTokenTransfer {
-  address: string;
   name: string | null;
+  address: string;
   timestamp: number;
   tx_hash: string;
   type: string;
@@ -1562,13 +1563,13 @@ export interface HolderTokenTransfer {
 
 export interface HoldersParams {
   chain: Chain;
-  cost?: number;
-  cursor?: string | null;
-  direction?: SortDirection;
-  limit?: number;
-  order_by?: HolderOrderBy;
-  tag?: HolderTag | null;
   token_address: string;
+  limit?: number;
+  cost?: number;
+  order_by?: HolderOrderBy;
+  direction?: SortDirection;
+  tag?: HolderTag | null;
+  cursor?: string | null;
 }
 
 export interface LaunchpadTaxPlatform {
@@ -1580,57 +1581,57 @@ export interface LaunchpadTaxPolicyParams {
 }
 
 export interface LaunchpadTaxTip {
-  en: string;
   zhCN: string;
   zhTW: string;
+  en: string;
 }
 
 export interface LaunchpadTaxTipsConfigs {
-  icons: unknown[];
   tips: LaunchpadTaxTip[];
+  icons: unknown[];
 }
 
 export interface LiquidityHistory {
-  amount_usd: string;
-  balance: string;
+  maker: string;
   base_amount: string;
-  contract_address: string;
+  quote_amount: string;
+  amount_usd: string;
+  timestamp: number;
   event: string;
-  history_base: string;
-  history_bought_amount: string;
-  history_quote: string;
-  history_sold_amount: string;
-  history_sold_income: string;
+  tx_hash: string;
+  price_usd: string;
   id: string;
   is_open_or_close: number;
-  is_single: boolean;
-  maker: string;
-  maker_avatar: string;
-  maker_ens: string;
-  maker_name: string;
+  token_address: string;
   maker_tags: string[];
   maker_token_tags: string[];
-  maker_twitter_name: string;
+  quote_address: string;
+  quote_symbol: string;
+  total_trade: number;
+  balance: string;
+  history_bought_amount: string;
+  history_sold_income: string;
+  history_sold_amount: string;
+  realized_profit: string;
+  unrealized_profit: string;
+  maker_name: string;
   maker_twitter_username: string;
+  maker_twitter_name: string;
+  maker_avatar: string;
+  maker_ens: string;
   max_price: string;
   min_price: string;
-  price_usd: string;
-  quote_address: string;
-  quote_amount: string;
-  quote_symbol: string;
-  realized_profit: string;
-  timestamp: number;
-  token_address: string;
-  total_trade: number;
-  tx_hash: string;
-  unrealized_profit: string;
+  history_base: string;
+  history_quote: string;
+  contract_address: string;
+  is_single: boolean;
 }
 
 export interface LiquidityParams {
   chain: Chain;
-  cursor?: string | null;
-  limit?: number;
   token_address: string;
+  limit?: number;
+  cursor?: string | null;
 }
 
 export interface LivePreviewParams {
@@ -1640,33 +1641,33 @@ export interface LivePreviewParams {
 
 export interface LockSummary {
   is_locked: boolean;
-  left_lock_percent: string;
   lock_detail: unknown | null;
-  lock_percent: string;
   lock_tags: string[] | null;
+  lock_percent: string;
+  left_lock_percent: string;
 }
 
 export interface MajorCoinPrice {
-  price: string;
   symbol: string;
+  price: string;
 }
 
 export interface McapCandle {
-  amount: string;
+  time: number;
+  open: string;
   close: string;
   high: string;
   low: string;
-  open: string;
-  source: string;
-  time: number;
   volume: string;
+  source: string;
+  amount: string;
 }
 
 export interface McapCandlesParams {
   chain: Chain;
-  limit?: number;
-  resolution?: Resolution;
   token_address: string;
+  resolution?: Resolution;
+  limit?: number;
 }
 
 export interface MultiTokenFullInfoParams {
@@ -1674,36 +1675,37 @@ export interface MultiTokenFullInfoParams {
 }
 
 export interface MultiTokenInfo {
-  address: string;
-  ath_price: number;
-  biggest_pool_address: string;
   chain: string;
+  address: string;
+  symbol: string;
+  name: string;
+  logo: string;
+  total_supply: number;
+  locked_ratio: number;
   creation_timestamp: number;
-  creator_address: string;
-  decimals: number;
+  migrated_timestamp: number;
+  biggest_pool_address: string;
   holder_count: number;
-  is_hidden?: boolean;
+  liquidity: number;
+  decimals: number;
+  tpool: Tpool;
+  standard: string;
   launchpad: string;
-  launchpad_platform: string;
   launchpad_progress: number;
   launchpad_status: number;
-  liquidity: number;
-  locked_ratio: number;
-  logo: string;
-  migrated_pool: string;
-  migrated_timestamp: number;
+  launchpad_platform: string;
   migration_market_cap: number;
   migration_market_cap_quote: string;
-  name: string;
-  route_info_init?: Record<string, RouteInfoInitMember>;
-  standard: string;
-  symbol: string;
-  total_supply: number;
-  tpool: Tpool;
-  trans_name: string;
-  trans_name_zhcn: string;
+  creator_address: string;
   trans_symbol: string;
+  trans_name: string;
   trans_symbol_zhcn: string;
+  trans_name_zhcn: string;
+  ath_price: number;
+  migrated_pool: string;
+  route_info_init?: Record<string, RouteInfoInitMember>;
+  is_hidden?: boolean;
+  migration_market_cap_quote_address?: string;
 }
 
 export interface MultiTokenInfoParams {
@@ -1713,68 +1715,68 @@ export interface MultiTokenInfoParams {
 export interface MultiWindowTokenDev {
   address: string;
   creator_address: string;
-  creator_open_count: number;
   creator_token_balance: string;
   creator_token_status: string;
-  cto_flag: number;
+  twitter_name_change_history: unknown[];
+  top_10_holder_rate: string;
   dexscr_ad: number;
-  dexscr_ad_ts: number;
-  dexscr_boost_fee: number;
-  dexscr_boost_ts: number;
-  dexscr_trending_bar: number;
-  dexscr_trending_bar_ts: number;
   dexscr_update_link: number;
+  cto_flag: number;
+  dexscr_boost_fee: number;
+  dexscr_trending_bar: number;
+  dexscr_ad_ts: number;
   dexscr_update_link_ts: number;
+  dexscr_boost_ts: number;
+  dexscr_trending_bar_ts: number;
+  twitter_del_post_token_count: number;
+  twitter_create_token_count: number;
   fund_from: string;
   fund_from_ts: number;
+  creator_open_count: number;
   offchain: boolean;
-  top_10_holder_rate: string;
   twitter_change_flag: boolean;
-  twitter_create_token_count: number;
   twitter_created_count: number;
   twitter_del_post_count: number;
-  twitter_del_post_token_count: number;
-  twitter_name_change_history: unknown[];
   twitter_rename_count: number;
 }
 
 export interface MultiWindowTokenInfo {
   address: string;
+  symbol: string;
+  name: string;
+  decimals: number;
+  logo: string;
   banner: string;
   biggest_pool_address: string;
-  callout_declaration?: boolean;
-  circulating_supply: string;
-  creation_timestamp: number;
-  creation_tool: string;
-  decimals: number;
-  dev: MultiWindowTokenDev;
-  holder_count: number;
-  image_dup_count: number;
-  is_hidden?: boolean;
-  liquidity: string;
-  logo: string;
-  max_supply: string;
-  migrated_timestamp: number;
-  name: string;
-  offchain: boolean;
-  og: boolean;
   open_timestamp: number;
-  pool: MultiWindowTokenPool;
-  price: MultiWindowTokenPrice;
-  priority_fee: string;
-  standard: string;
-  symbol: string;
-  tcid: string;
-  tip_fee: string;
-  total_fee: string;
+  migrated_timestamp: number;
+  holder_count: number;
+  circulating_supply: string;
   total_supply: string;
+  max_supply: string;
+  liquidity: string;
+  creation_timestamp: number;
+  pool: MultiWindowTokenPool;
   tpool: Tpool;
+  dev: MultiWindowTokenDev;
+  price: MultiWindowTokenPrice;
+  standard: string;
+  priority_fee: string;
+  tip_fee: string;
   trade_fee: string;
-  trans_name: string;
-  trans_name_zhcn: string;
+  total_fee: string;
+  og: boolean;
+  image_dup_count: number;
+  creation_tool: string;
   trans_symbol: string;
+  trans_name: string;
   trans_symbol_zhcn: string;
+  trans_name_zhcn: string;
+  offchain: boolean;
+  tcid: string;
   visiting_count: number;
+  callout_declaration?: boolean;
+  is_hidden?: boolean;
 }
 
 export interface MultiWindowTokenInfoParams {
@@ -1783,69 +1785,69 @@ export interface MultiWindowTokenInfoParams {
 
 export interface MultiWindowTokenPool {
   address: string;
-  base_address: string;
-  base_reserve: string;
-  base_reserve_value: string;
-  base_symbol?: string;
-  base_vault_address: string;
-  creation_timestamp: number;
-  creator: string;
-  exchange: string;
-  factory?: string;
-  fee_ratio: string;
-  initial_base_reserve: string;
-  initial_liquidity: string;
-  initial_quote_reserve: string;
-  liquidity: string;
   pool_address: string;
   quote_address: string;
-  quote_reserve: string;
-  quote_reserve_value: string;
   quote_symbol: string;
+  liquidity: string;
+  base_reserve: string;
+  quote_reserve: string;
+  initial_liquidity: string;
+  initial_base_reserve: string;
+  initial_quote_reserve: string;
+  creation_timestamp: number;
+  base_reserve_value: string;
+  quote_reserve_value: string;
   quote_vault_address: string;
+  base_vault_address: string;
+  creator: string;
+  exchange: string;
   token0_address: string;
   token1_address: string;
+  base_address: string;
+  fee_ratio: string;
+  factory?: string;
+  base_symbol?: string;
 }
 
 export interface MultiWindowTokenPrice {
   address: string;
-  buy_volume_1h: string;
-  buy_volume_1m: string;
-  buy_volume_24h: string;
-  buy_volume_5m: string;
-  buy_volume_6h: string;
-  buys_1h: number;
-  buys_1m: number;
-  buys_24h: number;
-  buys_5m: number;
-  buys_6h: number;
-  hot_level: number;
   price: string;
-  price_1h: string;
   price_1m: string;
-  price_24h: string;
   price_5m: string;
+  price_1h: string;
   price_6h: string;
-  sell_volume_1h: string;
-  sell_volume_1m: string;
-  sell_volume_24h: string;
-  sell_volume_5m: string;
-  sell_volume_6h: string;
-  sells_1h: number;
+  price_24h: string;
+  buys_1m: number;
+  buys_5m: number;
+  buys_1h: number;
+  buys_6h: number;
+  buys_24h: number;
   sells_1m: number;
-  sells_24h: number;
   sells_5m: number;
+  sells_1h: number;
   sells_6h: number;
-  swaps_1h: number;
-  swaps_1m: number;
-  swaps_24h: number;
-  swaps_5m: number;
-  swaps_6h: number;
-  volume_1h: string;
+  sells_24h: number;
   volume_1m: string;
-  volume_24h: string;
   volume_5m: string;
+  volume_1h: string;
   volume_6h: string;
+  volume_24h: string;
+  buy_volume_1m: string;
+  buy_volume_5m: string;
+  buy_volume_1h: string;
+  buy_volume_6h: string;
+  buy_volume_24h: string;
+  sell_volume_1m: string;
+  sell_volume_5m: string;
+  sell_volume_1h: string;
+  sell_volume_6h: string;
+  sell_volume_24h: string;
+  swaps_1m: number;
+  swaps_5m: number;
+  swaps_1h: number;
+  swaps_6h: number;
+  swaps_24h: number;
+  hot_level: number;
 }
 
 export interface NativeTransferParams {
@@ -1855,145 +1857,145 @@ export interface NativeTransferParams {
 
 export interface NewPair {
   address: string;
+  chain: string;
   base_address: string;
+  quote_address: string;
+  quote_reserve?: string;
+  initial_liquidity: string;
+  initial_quote_reserve: string;
+  quote_reserve_usd?: string;
+  exchange: string;
+  launchpad?: string;
+  launchpad_platform?: string;
+  open_timestamp: number;
+  quote_symbol: string;
   base_token_info: NewPairBaseToken;
+  seq_index: string;
+  image_dup: string;
+  dev_team_hold_rate?: number;
   bot_degen_count?: number;
   bot_degen_rate?: number;
-  chain: string;
-  dev_team_hold_rate?: number;
+  launch_quote_address?: string;
+  total_fee?: number;
+  history_highest_market_cap?: number;
+  top70_sniper_hold_rate?: number;
+  visiting_count?: number;
+  twitter_dup?: number;
+  migrated_pool_exchange?: string;
+  website_dup?: number;
   dexscr_ad_ts?: number;
   dexscr_boost_fee?: number;
   dexscr_boost_ts?: number;
   dexscr_update_link_ts?: number;
-  exchange: string;
-  history_highest_market_cap?: number;
-  image_dup: string;
-  initial_liquidity: string;
-  initial_quote_reserve: string;
-  launch_quote_address?: string;
-  launchpad?: string;
-  launchpad_platform?: string;
-  migrated_pool_exchange?: string;
-  open_timestamp: number;
-  quote_address: string;
-  quote_reserve?: string;
-  quote_reserve_usd?: string;
-  quote_symbol: string;
-  seq_index: string;
   telegram_dup?: number;
-  top70_sniper_hold_rate?: number;
-  total_fee?: number;
-  twitter_dup?: number;
-  visiting_count?: number;
-  website_dup?: number;
 }
 
 export interface NewPairBaseToken {
   address: string;
-  bundler_rate?: number;
-  bundler_trader_amount_rate?: string;
-  burn_ratio?: string;
-  burn_status: string;
-  buy_tax?: string;
-  buy_volume_1h: string;
-  buy_volume_1m: string;
-  buy_volume_24h: string;
-  buy_volume_5m: string;
-  buy_volume_6h: string;
-  buys?: number;
-  creation_timestamp: number;
-  creator: string;
-  creator_balance_rate?: string;
-  creator_created_inner_count?: number;
-  creator_created_open_ratio?: number;
-  creator_token_status?: string;
-  cto_flag: number;
-  dev_token_burn_ratio?: number;
-  dexscr_ad: number;
-  dexscr_update_link: number;
-  entrapment_ratio?: string;
-  fund_from_address?: string;
-  holder_count?: number;
-  hot_level?: number;
-  insider_ratio?: number;
-  is_honeypot: string;
-  is_og?: boolean;
-  is_token_live?: boolean;
-  launchpad_status: number;
-  liquidity: string;
-  logo: string;
-  market_cap: string;
+  symbol: string;
   name: string;
+  logo: string;
+  total_supply: number;
+  standard?: string;
+  creation_timestamp: number;
+  liquidity: string;
   price: string;
-  price_1h: string;
   price_1m: string;
-  price_24h: string;
   price_5m: string;
+  price_1h: string;
   price_6h: string;
-  price_change_percent1h: string;
+  price_24h: string;
+  buy_volume_1m: string;
+  buy_volume_5m: string;
+  buy_volume_1h: string;
+  buy_volume_6h: string;
+  buy_volume_24h: string;
+  sell_volume_1m: string;
+  sell_volume_5m: string;
+  sell_volume_1h: string;
+  sell_volume_6h: string;
+  sell_volume_24h: string;
   price_change_percent1m: string;
   price_change_percent5m: string;
-  progress: number;
-  rat_trader_amount_rate?: number;
-  renounced: number;
-  renounced_freeze_account: number;
-  renounced_mint: number;
-  renowned_count?: number;
-  rug_ratio?: number;
-  sell_tax?: string;
-  sell_volume_1h: string;
-  sell_volume_1m: string;
-  sell_volume_24h: string;
-  sell_volume_5m: string;
-  sell_volume_6h: string;
-  sells?: number;
-  smart_degen_count?: number;
-  sniper_count?: number;
-  social_links: NewPairSocialLinks;
-  standard?: string;
-  swaps?: number;
-  symbol: string;
+  price_change_percent1h: string;
+  launchpad_status: number;
+  creator: string;
+  fund_from_address?: string;
+  creator_balance_rate?: string;
+  creator_token_status?: string;
   top_10_holder_rate?: number;
-  total_supply: number;
-  twitter_change_flag: number;
-  twitter_create_token_count?: number;
-  twitter_del_post_token_count?: number;
-  twitter_rename_count?: number;
+  market_cap: string;
+  social_links: NewPairSocialLinks;
+  renounced_mint: number;
+  renounced_freeze_account: number;
+  renounced: number;
   volume: string;
+  burn_status: string;
+  burn_ratio?: string;
+  is_honeypot: string;
+  dexscr_ad: number;
+  dexscr_update_link: number;
+  cto_flag: number;
+  twitter_change_flag: number;
+  progress: number;
+  entrapment_ratio?: string;
+  is_og?: boolean;
+  holder_count?: number;
+  swaps?: number;
+  buys?: number;
+  sells?: number;
+  sniper_count?: number;
+  creator_created_inner_count?: number;
+  creator_created_open_ratio?: number;
+  rug_ratio?: number;
+  twitter_create_token_count?: number;
+  twitter_rename_count?: number;
+  bundler_trader_amount_rate?: string;
+  bundler_rate?: number;
+  insider_ratio?: number;
+  rat_trader_amount_rate?: number;
+  twitter_del_post_token_count?: number;
+  smart_degen_count?: number;
+  renowned_count?: number;
+  buy_tax?: string;
+  dev_token_burn_ratio?: number;
+  hot_level?: number;
+  is_token_live?: boolean;
+  sell_tax?: string;
 }
 
 export interface NewPairSocialLinks {
-  telegram?: string;
   twitter_username?: string;
   website?: string;
+  telegram?: string;
 }
 
 export type NewPairsOrderBy = "open_timestamp" | "creation_timestamp" | "market_cap" | "holder_count" | "liquidity" | "volume" | "swaps" | "progress" | "price_change_percent1h";
 
 export interface NewPairsParams {
   chain: Chain;
-  /** Security screens applied before sorting. */
-  filters?: TokenFilter[] | null;
   /** Age window — only pairs opened inside it are returned. */
   interval?: TrendingInterval;
-  /** Restrict to these launchpads, e.g. `Pump.fun`, `letsbonk`, `fourmeme`. */
-  launchpad_platforms?: string[] | null;
   /** Maximum pairs to return. */
   limit?: number;
   /** Column to sort on. */
   order_by?: NewPairsOrderBy;
+  /** Security screens applied before sorting. */
+  filters?: TokenFilter[] | null;
+  /** Restrict to these launchpads, e.g. `Pump.fun`, `letsbonk`, `fourmeme`. */
+  launchpad_platforms?: string[] | null;
 }
 
 export interface PoolFeeInfo {
   address: string;
   exchange: string;
-  fee_params: unknown | null;
+  liquidity: number;
   fee_ratio: number;
   is_dynamic_fee: boolean;
-  liquidity: number;
-  meteora_damm_v2_base_fee_config: unknown | null;
-  meteora_virtual_curve_fee_config: unknown | null;
   pool_type: string;
+  meteora_virtual_curve_fee_config: unknown | null;
+  meteora_damm_v2_base_fee_config: unknown | null;
+  fee_params: unknown | null;
 }
 
 export interface PoolFeeInfoParams {
@@ -2082,21 +2084,21 @@ export interface RouteInfoInitMember {
   mb?: string | null;
   mba?: string | null;
   p?: string | null;
+  s?: Record<string, string>;
   "p:c"?: string;
   "p:fc"?: string;
   "pa:c"?: string;
   "pa:fc"?: string;
   rbh?: string | null;
   rs?: string;
-  s?: Record<string, string>;
   sc?: string;
 }
 
 export interface RuggedToken {
   address: string;
-  logo: string;
-  name: string;
   symbol: string;
+  name: string;
+  logo: string;
 }
 
 export interface SearchParams {
@@ -2112,9 +2114,9 @@ export interface SearchTokensData {
 
 export interface SearchTokensResponse {
   code: number;
-  data: SearchTokensData;
-  message: string;
   reason: string;
+  message: string;
+  data: SearchTokensData;
 }
 
 export interface SecurityParams {
@@ -2123,35 +2125,35 @@ export interface SecurityParams {
 }
 
 export interface SimilarCoin {
-  address: string;
   chain: string;
-  is_og: boolean;
-  last_trade_time: number;
-  liquidity: number;
-  logo: string;
-  mcp: number;
+  address: string;
+  symbol: string;
   name: string;
   open_or_create_time: number;
-  symbol: string;
+  last_trade_time: number;
+  mcp: number;
+  liquidity: number;
+  logo: string;
+  is_og: boolean;
 }
 
 export interface SimilarCoinExtreme {
-  address: string;
   chain: string;
-  is_og: boolean;
-  last_trade_time: number;
-  liquidity: number;
-  logo: string;
-  mcp: number;
+  address: string;
+  symbol: string;
   name: string;
   open_or_create_time: number;
-  symbol: string;
+  last_trade_time: number;
+  mcp: number;
+  liquidity: number;
+  logo: string;
+  is_og: boolean;
 }
 
 export interface SimilarCoinExtremesParams {
   chain: Chain;
-  name: string;
   symbol: string;
+  name: string;
   token_address: string;
 }
 
@@ -2159,22 +2161,22 @@ export type SimilarCoinsOrderBy = "mcp" | "open_or_create_time";
 
 export interface SimilarCoinsParams {
   chain: Chain;
-  name: string;
-  order_by?: SimilarCoinsOrderBy;
   symbol: string;
+  name: string;
   token_address: string;
+  order_by?: SimilarCoinsOrderBy;
 }
 
 export interface SmartMoneyRisk {
-  fast_tx: string;
-  fast_tx_ratio: number;
+  token_active: string;
+  token_honeypot: string;
+  token_honeypot_ratio: number;
   no_buy_hold: string;
   no_buy_hold_ratio: number;
   sell_pass_buy: string;
   sell_pass_buy_ratio: number;
-  token_active: string;
-  token_honeypot: string;
-  token_honeypot_ratio: number;
+  fast_tx: string;
+  fast_tx_ratio: number;
 }
 
 export interface SmartMoneyWalletInfoParams {
@@ -2195,111 +2197,111 @@ export interface StatsParams {
 }
 
 export interface SwapRankToken {
-  address: string;
-  bluechip_owner_percentage: number;
-  bot_degen_count: number;
-  bot_degen_rate: number;
-  bundler_rate: number;
-  burn_ratio: number;
-  burn_status: string;
-  buy_tax: string;
-  buys: number;
-  chain: string;
-  creation_timestamp: number;
-  creator: string;
-  creator_close: boolean;
-  creator_token_status: string;
-  cto_flag: number;
-  dev_team_hold_rate: number;
-  dev_token_burn_amount: number;
-  dev_token_burn_ratio: number;
-  dexscr_ad: number;
-  dexscr_ad_ts: number;
-  dexscr_boost_fee: number;
-  dexscr_boost_ts: number;
-  dexscr_trending_bar: number;
-  dexscr_trending_bar_ts: number;
-  dexscr_update_link: number;
-  dexscr_update_link_ts: number;
-  end_live_timestamp: number;
-  entrapment_ratio: number;
-  exchange: string;
-  fund_from_address?: string;
-  gas_fee: number;
-  history_highest_market_cap: number;
-  holder_count: number;
-  hot_level: number;
   id: number;
-  image_dup: string;
+  chain: string;
+  address: string;
+  name: string;
+  symbol: string;
+  logo: string;
+  price: number;
+  price_change_percent: number;
+  price_change_percent1m: number;
+  price_change_percent5m: number;
+  price_change_percent1h: number;
+  volume: number;
+  liquidity: number;
+  market_cap: number;
+  total_supply: number;
   initial_liquidity: number;
-  is_honeypot: number;
-  is_og: boolean;
-  is_open_source: number;
-  is_renounced: number;
-  is_show_alert: boolean;
-  is_token_live: boolean;
-  is_wash_trading: boolean;
-  launch_quote_address: string;
+  history_highest_market_cap: number;
+  swaps: number;
+  buys: number;
+  sells: number;
+  holder_count: number;
+  top_10_holder_rate: number;
+  open_timestamp: number;
+  creation_timestamp: number;
+  pool_type: number;
+  pool_type_str: string;
   launchpad: string;
   launchpad_platform: string;
   launchpad_status: string;
-  liquidity: number;
-  lock_percent: number;
-  logo: string;
-  market_cap: number;
-  migrated_pool_exchange: string;
-  name: string;
-  open_timestamp: number;
-  pool_type: number;
-  pool_type_str: string;
-  price: number;
-  price_change_percent: number;
-  price_change_percent1h: number;
-  price_change_percent1m: number;
-  price_change_percent5m: number;
-  rank: number;
-  rat_trader_amount_rate: number;
-  renounced_freeze_account: number;
-  renounced_mint: number;
-  renowned_count: number;
-  rug_ratio: number;
-  score: number;
-  sell_tax: string;
-  sells: number;
-  smart_degen_count: number;
-  sniper_count: number;
-  square_mentions: number;
-  start_live_timestamp: number;
-  swaps: number;
-  symbol: string;
-  tcid: string;
-  telegram: string;
-  telegram_dup: number;
-  top70_sniper_hold_rate: number;
-  top_10_holder_rate: number;
-  total_supply: number;
-  trans_name: string;
-  trans_name_zhcn: string;
-  trans_symbol: string;
-  trans_symbol_zhcn: string;
-  twitter_change_flag: number;
-  twitter_create_token_count: number;
-  twitter_del_post_token_count: number;
-  twitter_dup: number;
-  twitter_rename_count: number;
+  exchange: string;
   twitter_username: string;
-  visiting_count: number;
-  volume: number;
   website: string;
+  telegram: string;
+  renounced_mint: number;
+  renounced_freeze_account: number;
+  burn_ratio: number;
+  burn_status: string;
+  dev_token_burn_amount: number;
+  dev_token_burn_ratio: number;
+  creator: string;
+  creator_token_status: string;
+  creator_close: boolean;
+  fund_from_address?: string;
+  hot_level: number;
+  is_show_alert: boolean;
+  is_wash_trading: boolean;
+  image_dup: string;
+  dexscr_ad: number;
+  dexscr_update_link: number;
+  cto_flag: number;
+  twitter_change_flag: number;
+  twitter_rename_count: number;
+  twitter_del_post_token_count: number;
+  twitter_create_token_count: number;
+  rat_trader_amount_rate: number;
+  bluechip_owner_percentage: number;
+  rug_ratio: number;
+  sniper_count: number;
+  smart_degen_count: number;
+  renowned_count: number;
+  bundler_rate: number;
+  entrapment_ratio: number;
+  dexscr_trending_bar: number;
+  dexscr_boost_fee: number;
+  is_og: boolean;
+  gas_fee: number;
+  is_token_live: boolean;
+  start_live_timestamp: number;
+  end_live_timestamp: number;
+  tcid: string;
+  dev_team_hold_rate: number;
+  top70_sniper_hold_rate: number;
+  bot_degen_count: number;
+  buy_tax: string;
+  sell_tax: string;
+  is_honeypot: number;
+  is_renounced: number;
+  is_open_source: number;
+  lock_percent: number;
+  bot_degen_rate: number;
+  dexscr_ad_ts: number;
+  dexscr_update_link_ts: number;
+  dexscr_boost_ts: number;
+  dexscr_trending_bar_ts: number;
+  twitter_dup: number;
+  telegram_dup: number;
   website_dup: number;
+  score: number;
+  rank: number;
+  square_mentions: number;
+  visiting_count: number;
+  trans_name: string;
+  trans_symbol: string;
+  trans_name_zhcn: string;
+  trans_symbol_zhcn: string;
+  launch_quote_address: string;
+  migrated_pool_exchange: string;
 }
 
 export interface SwapRankingsParams {
   chain: Chain;
-  /** Restrict to these exchanges/launchpads, e.g. `pump`, `raydium`, `meteora`. */
-  platforms?: string[] | null;
   /** Activity window to rank over. */
   timeframe?: TimeWindow;
+  /** Restrict to these exchanges/launchpads, e.g. `pump`, `raydium`, `meteora`. */
+  platforms?: string[] | null;
 }
 
 export interface SymbolListRequest {
@@ -2307,15 +2309,15 @@ export interface SymbolListRequest {
 }
 
 export interface TagCounts {
+  smart_degen_count: number;
+  renowned_count: number;
+  fresh_wallet_count: number;
+  dex_bot_count: number;
+  insider_count: number;
+  following_count: number;
+  dev_count: number;
   bluechip_owner_count: number;
   bundler_count: number;
-  dev_count: number;
-  dex_bot_count: number;
-  following_count: number;
-  fresh_wallet_count: number;
-  insider_count: number;
-  renowned_count: number;
-  smart_degen_count: number;
   sniper_count: number;
 }
 
@@ -2329,16 +2331,16 @@ export interface TokenAiNarrativeParams {
 export interface TokenBrief {
   address: string;
   chain: string;
+  symbol: string;
+  logo: string;
+  is_show_alert: boolean;
+  liqudity: string;
   decimals: number;
   is_honeypot: boolean;
-  is_show_alert: boolean;
   launchpad: string;
   launchpad_platform: string;
-  liqudity: string;
-  logo: string;
   migrated_pool_exchange: string;
   renounced_freeze_account: boolean | null;
-  symbol: string;
   total_supply?: string;
 }
 
@@ -2349,15 +2351,15 @@ export interface TokenBundlerStatParams {
 
 export interface TokenCandlesParams {
   chain: Chain;
-  /** Unix milliseconds lower bound, inclusive. */
-  from_timestamp?: number;
-  /** Maximum candles. */
-  limit?: number;
+  token_address: string;
   /** Candle width. */
   resolution?: Resolution;
+  /** Unix milliseconds lower bound, inclusive. */
+  from_timestamp?: number;
   /** Unix milliseconds upper bound. Defaults to now. */
   to_timestamp?: number | null;
-  token_address: string;
+  /** Maximum candles. */
+  limit?: number;
 }
 
 export interface TokenCommunity {
@@ -2365,37 +2367,57 @@ export interface TokenCommunity {
 }
 
 export interface TokenCommunityMessage {
-  accu_cost: string;
-  accu_fee: string;
-  balance: string;
-  content: string;
-  created_at: string;
-  current_holding_usd: string;
-  current_pnl_usd: string;
-  display_content?: string;
-  display_name: string;
-  follower_count: number;
   id: string;
+  content: string;
+  media_url: string | null;
+  username: string;
+  display_name: string;
+  profile_image_url: string | null;
+  wallet_address: string;
+  user_twitter_url: string;
+  follower_count: number;
+  like_count: number;
+  reply_count: number;
+  created_at: string;
+  source: string;
+  multiplier: string;
+  ulid: string;
   is_blue_verified: boolean;
   is_kol: boolean;
   is_safe: string;
-  like_count: number;
-  media_url: string | null;
-  multiplier: string;
-  profile_image_url: string;
-  reply_count: number;
-  source: string;
-  ulid: string;
-  user_twitter_url: string;
-  username: string;
-  wallet_address: string;
+  balance: string;
+  accu_cost: string;
+  accu_fee: string;
+  current_holding_usd: string;
+  current_pnl_usd: string;
+  profile_username?: string;
+  encrypted_user_id?: string;
+  open_id?: string;
+  bought_amount?: string;
+  sold_amount?: string;
+  transfer_out_amount?: string;
+  accu_amount?: string;
+  swap_accu_amount?: string;
+  swap_accu_fee?: string;
+  swap_accu_cost?: string;
+  unrealized_profit?: string;
+  unrealized_profit_pnl?: string;
+  realized_profit?: string;
+  history_sold_income?: string;
+  history_transfer_out_income?: string;
+  history_bought_cost?: string;
+  history_transfer_in_cost?: string;
+  history_bought_fee?: string;
+  history_sold_fee?: string;
+  history_transfer_out_fee?: string;
+  display_content?: string;
 }
 
 export interface TokenCommunityMessagesParams {
   chain: Chain;
+  token_address: string;
   /** Maximum messages. */
   limit?: number;
-  token_address: string;
 }
 
 export interface TokenDevInfoParams {
@@ -2414,63 +2436,63 @@ export interface TokenFeeInfoParams {
 }
 
 export interface TokenFeeLockDetail {
-  is_blackhole: boolean;
   percent: string;
   pool: string;
+  is_blackhole: boolean;
 }
 
 export interface TokenFeeLockSummary {
   is_locked: boolean;
-  left_lock_percent: string;
   lock_detail: TokenFeeLockDetail[] | null;
-  lock_percent: string;
   lock_tags: unknown | null;
+  lock_percent: string;
+  left_lock_percent: string;
 }
 
 export interface TokenFeePool {
   address: string;
   exchange: string;
-  fee_params: string[] | null;
+  liquidity: number;
   fee_ratio: number;
   is_dynamic_fee: boolean;
-  liquidity: number;
-  meteora_damm_v2_base_fee_config: unknown | null;
-  meteora_virtual_curve_fee_config: unknown | null;
   pool_type: string;
+  meteora_virtual_curve_fee_config: unknown | null;
+  meteora_damm_v2_base_fee_config: unknown | null;
+  fee_params: string[] | null;
 }
 
 export interface TokenFeeSecurity {
   address: string;
-  audit?: TokenFeeSecurityAudit;
-  average_tax: string;
-  blacklist: number;
+  is_show_alert: boolean;
+  top_10_holder_rate: string;
+  renounced_mint?: boolean;
+  renounced_freeze_account?: boolean;
   burn_ratio: string;
   burn_status: string;
-  buy_tax: string;
-  can_not_sell: number;
-  can_sell: number;
   dev_token_burn_amount: string;
   dev_token_burn_ratio: string;
-  flags: string[];
-  hide_risk: boolean;
-  high_tax: string;
-  honeypot: number;
-  is_blacklist: boolean | null;
-  is_honeypot: boolean | null;
   is_open_source: boolean | null;
-  is_renounced: boolean | null;
-  is_show_alert: boolean;
-  lockInfo: unknown | null;
-  lock_summary: TokenFeeLockSummary;
   open_source: number;
-  privileges: unknown | null;
+  is_blacklist: boolean | null;
+  blacklist: number;
+  is_honeypot: boolean | null;
+  honeypot: number;
+  is_renounced: boolean | null;
   renounced: number | null;
-  renounced_freeze_account?: boolean;
-  renounced_mint?: boolean;
+  can_sell: number;
+  can_not_sell: number;
+  buy_tax: string;
   sell_tax: string;
-  top_10_holder_rate: string;
+  average_tax: string;
+  high_tax: string;
   total_buy_tax: string;
   total_sell_tax: string;
+  flags: string[];
+  lockInfo: unknown | null;
+  lock_summary: TokenFeeLockSummary;
+  hide_risk: boolean;
+  privileges: unknown | null;
+  audit?: TokenFeeSecurityAudit;
 }
 
 export interface TokenFeeSecurityAudit {
@@ -2482,74 +2504,74 @@ export interface TokenFeeSecurityAudit {
 export type TokenFilter = "not_honeypot" | "verified" | "renounced" | "frozen" | "has_social" | "burn";
 
 export interface TokenHolder {
+  address: string;
   account_address: string;
+  addr_type: number;
+  exchange: string;
+  native_balance: string;
+  balance: number;
+  amount_cur: number;
+  usd_value: number;
+  amount_percentage: number;
   accu_amount: number;
   accu_cost: number;
-  addr_type: number;
-  address: string;
-  amount_cur: number;
-  amount_percentage: number;
-  avatar: string | null;
-  avg_cost: number | null;
-  avg_sold: number | null;
-  balance: number;
-  bluechip_holding_info?: TokenHolderBluechipHolding[];
-  buy_amount_cur: number;
-  buy_tx_count_cur: number;
-  buy_volume_cur: number;
   cost: number;
   cost_cur: number;
-  created_at: number;
+  sell_amount_cur: number;
+  sell_amount_percentage: number;
+  sell_volume_cur: number;
+  buy_volume_cur: number;
+  buy_amount_cur: number;
+  netflow_usd: number;
+  netflow_amount: number;
+  buy_tx_count_cur: number;
+  sell_tx_count_cur: number;
   current_buy_amount: number;
   current_sell_amount: number;
   current_transfer_in_amount: number;
   current_transfer_out_amount: number;
-  end_holding_at: number | null;
-  exchange: string;
   history_bought_cost: number;
   history_bought_fee: number;
-  history_sold_fee: number;
   history_sold_income: number;
+  history_sold_fee: number;
   history_transfer_in_amount: number;
   history_transfer_in_cost: number;
   history_transfer_out_amount: number;
-  history_transfer_out_fee: number;
   history_transfer_out_income: number;
-  is_new: boolean;
-  is_on_curve: boolean;
-  is_suspicious: boolean;
-  last_active_timestamp: number;
-  last_block: number;
-  maker_token_tags: string[];
-  name: string | null;
-  native_balance: string;
-  native_transfer: HolderNativeTransfer | null;
-  netflow_amount: number;
-  netflow_usd: number;
+  history_transfer_out_fee: number;
+  transfer_in_count: number;
+  transfer_out_count: number;
+  wallet_tag_v2: string;
   profit: number;
+  total_cost: number;
   profit_change: number | null;
-  realized_pnl: number | null;
   realized_profit: number;
-  sell_amount_cur: number;
-  sell_amount_percentage: number;
-  sell_tx_count_cur: number;
-  sell_volume_cur: number;
+  realized_pnl: number | null;
+  unrealized_profit: number;
+  unrealized_pnl: number | null;
+  avg_cost: number | null;
+  avg_sold: number | null;
+  transfer_in: boolean;
+  is_new: boolean;
+  is_suspicious: boolean;
+  is_on_curve: boolean;
   start_holding_at: number | null;
-  tags: string[];
+  end_holding_at: number | null;
+  last_block: number;
+  last_active_timestamp: number;
+  native_transfer: HolderNativeTransfer | null;
   token_transfer: HolderTokenTransfer;
   token_transfer_in: HolderTokenTransfer;
   token_transfer_out: HolderTokenTransfer;
-  total_bc_value?: number;
-  total_cost: number;
-  transfer_in: boolean;
-  transfer_in_count: number;
-  transfer_out_count: number;
-  twitter_name: string | null;
+  tags: string[];
+  maker_token_tags: string[];
+  name: string | null;
+  avatar: string | null;
   twitter_username: string | null;
-  unrealized_pnl: number | null;
-  unrealized_profit: number;
-  usd_value: number;
-  wallet_tag_v2: string;
+  twitter_name: string | null;
+  created_at: number;
+  bluechip_holding_info?: TokenHolderBluechipHolding[];
+  total_bc_value?: number;
 }
 
 export interface TokenHolderBluechipHolding {
@@ -2573,13 +2595,13 @@ export interface TokenInfoBriefParams {
 
 export interface TokenLaunchpad {
   address: string;
-  description: string;
-  launch_quote_address: string;
   launchpad: string;
-  launchpad_platform: string;
-  launchpad_progress: string;
   launchpad_status: number;
+  launchpad_progress: string;
+  description: string;
+  launchpad_platform: string;
   migrated_pool_exchange: string;
+  launch_quote_address: string;
 }
 
 export interface TokenLiquidityStatsParams {
@@ -2613,229 +2635,229 @@ export interface TokenPricesParams {
 
 export interface TokenRug {
   address: string;
+  rug_ratio: string;
   holder_rugged_num: number;
   holder_token_num: number;
-  rug_ratio: string;
   rugged_tokens: RuggedToken[] | null;
 }
 
 export interface TokenSecurity {
   address: string;
-  average_tax: string;
-  blacklist: number;
+  is_show_alert: boolean;
+  top_10_holder_rate: string;
+  renounced_mint?: boolean;
+  renounced_freeze_account?: boolean;
   burn_ratio: string;
   burn_status: string;
-  buy_tax: string;
-  can_not_sell: number;
-  can_sell: number;
   dev_token_burn_amount: string;
   dev_token_burn_ratio: string;
-  flags: string[];
-  hide_risk: boolean;
-  high_tax: string;
-  honeypot: number;
-  is_blacklist: boolean | null;
-  is_honeypot: boolean | null;
   is_open_source: boolean | null;
+  open_source: number;
+  is_blacklist: boolean | null;
+  blacklist: number;
+  is_honeypot: boolean | null;
+  honeypot: number;
   is_renounced: boolean | null;
-  is_show_alert: boolean;
+  renounced: number | null;
+  can_sell: number;
+  can_not_sell: number;
+  buy_tax: string;
+  sell_tax: string;
+  average_tax: string;
+  high_tax: string;
+  flags: string[];
   lockInfo: unknown | null;
   lock_summary: LockSummary;
-  open_source: number;
+  hide_risk: boolean;
   privileges: unknown | null;
-  renounced: number | null;
-  renounced_freeze_account?: boolean;
-  renounced_mint?: boolean;
-  sell_tax: string;
-  top_10_holder_rate: string;
   total_buy_tax?: string;
   total_sell_tax?: string;
 }
 
 export interface TokenSignal {
-  ath: number;
-  cur_data: TokenSignalCurrentStats;
-  data: TokenSignalTokenInfo;
-  first_trigger_mc: number;
   id: string;
-  market_cap: number;
-  signal_times: number;
-  signal_times_by_type: Record<string, number>;
-  signal_type: number;
   token_address: string;
+  signal_type: number;
+  ath: number;
+  market_cap: number;
   trigger_at: number;
   trigger_mc: number;
+  first_trigger_mc: number;
+  signal_times: number;
+  signal_times_by_type: Record<string, number>;
+  data: TokenSignalTokenInfo;
+  cur_data: TokenSignalCurrentStats;
 }
 
 export interface TokenSignalCurrentStats {
+  top_10_holder_rate: number;
   holder_count: number;
   liquidity: number;
-  top_10_holder_rate: number;
 }
 
 export interface TokenSignalGroupRequest {
-  /** Restrict to tokens launched on these platforms. */
-  launchpad_platforms?: string[] | null;
   /** GMGN signal ids to match, e.g. `1` for a surge. */
   signal_types: number[];
   /** Drop tokens whose lifetime launchpad fees are below this. */
   total_fee_min?: number | null;
+  /** Restrict to tokens launched on these platforms. */
+  launchpad_platforms?: string[] | null;
 }
 
 export interface TokenSignalTokenInfo {
-  address: string;
-  binance_charity_tax: number;
-  bonus_category: unknown | null;
-  bot_degen_count: number;
-  bot_degen_rate: number;
-  bundler_mhr: number;
-  bundler_trader_amount_rate: number;
-  burn_status: string;
-  burn_tax: number;
-  buy_tax: number;
-  buys_1h: number;
-  buys_1m: number;
-  buys_24h: number;
-  buys_6h: number;
-  callout_count: number;
-  callout_declaration: boolean;
   chain: string;
-  claim_avatar: string;
-  claim_fee_is_first: boolean;
-  claim_fee_sol_amount: string;
-  claim_platform: string;
-  claim_platform_avatar: string;
-  claim_platform_username: string;
-  claim_twitter_user_name: string;
-  claim_wallet_address: string;
-  complete_cost_time: number;
-  complete_timestamp: number;
-  created_timestamp: number;
-  created_timestamp_us: number;
-  creation_tool: string;
-  creator: string;
-  creator_balance_rate: number;
-  creator_created_count: number;
-  creator_created_open_count: number;
-  creator_created_open_ratio: number;
-  creator_token_status: string;
-  cto_flag: boolean;
-  decimals: number;
-  dev_tax: number;
-  dev_team_hold_rate: number;
-  dev_token_burn_amount: number;
-  dev_token_burn_ratio: number;
-  dexscr_ad: boolean;
-  dexscr_boost_fee: number;
-  dexscr_trending_bar: boolean;
-  dexscr_update_link: boolean;
-  dividend_tax: number;
-  end_live_timestamp: number;
-  entrapment_ratio: number;
-  exchange: string;
-  fee_params: unknown | null;
-  fracaster: unknown | null;
-  fresh_wallet_rate: number;
-  fund_from: string;
-  fund_from_address: string;
-  fund_from_ts: number;
-  giggle_charity_tax: number;
-  has_at_least_one_social: boolean;
-  holder_count: number;
-  image_dup: number;
-  instagram: string;
-  is_honeypot: string;
-  is_og: boolean;
-  is_token_live: boolean;
-  is_wash_trading: boolean;
+  address: string;
+  pool_address: string;
+  quote_address: string;
+  logo: string;
+  symbol: string;
+  name: string;
+  trans_symbol: string;
+  trans_name: string;
+  trans_symbol_zhcn: string;
+  trans_name_zhcn: string;
   launchpad: string;
   launchpad_platform: string;
-  liquidity: number;
-  liquidity_tax: number;
-  logo: string;
+  creation_tool: string;
+  exchange: string;
+  creator_token_status: string;
+  dev_token_burn_amount: number;
+  dev_token_burn_ratio: number;
+  progress: number;
+  total_supply: number;
+  usd_market_cap: number;
   market_cap: number;
-  max_amount: number;
-  migrated_pool_exchange?: string;
-  min_amount: number;
-  name: string;
+  swaps_1h: number;
+  volume_1h: number;
+  buys_1h: number;
+  sells_1h: number;
   net_buy_1h: number;
+  swaps_1m: number;
+  buys_1m: number;
+  sells_1m: number;
   net_buy_1m: number;
-  net_buy_24h: number;
+  volume_1m: number;
+  swaps_6h: number;
+  volume_6h: number;
+  buys_6h: number;
+  sells_6h: number;
   net_buy_6h: number;
-  offchain: boolean;
-  open_source: string;
+  swaps_24h: number;
+  volume_24h: number;
+  buys_24h: number;
+  sells_24h: number;
+  net_buy_24h: number;
+  top_10_holder_rate: number;
+  creator_balance_rate: number;
+  rat_trader_amount_rate: number;
+  bundler_trader_amount_rate: number;
+  bundler_mhr: number;
+  renowned_count: number;
+  bot_degen_rate: number;
+  start_live_timestamp: number;
+  end_live_timestamp: number;
+  sniper_count: number;
+  bot_degen_count: number;
+  smart_degen_count: number;
+  holder_count: number;
+  liquidity: number;
+  creator: string;
+  creator_created_open_count: number;
+  creator_created_open_ratio: number;
+  creator_created_count: number;
+  fund_from: string;
+  fund_from_ts: number;
+  fund_from_address: string;
+  rug_ratio: number;
+  created_timestamp: number;
+  created_timestamp_us: number;
   open_timestamp: number;
   open_timestamp_us: number;
-  other_tax: number;
-  owner_renounced: string;
-  pool_address: string;
-  priority_fee: number;
-  private_vault_hold_rate: number;
-  progress: number;
-  quote_address: string;
-  rat_trader_amount_rate: number;
-  renounced_freeze_account: boolean;
-  renounced_mint: boolean;
-  renowned_count: number;
-  rug_ratio: number;
-  sell_tax: number;
-  sells_1h: number;
-  sells_1m: number;
-  sells_24h: number;
-  sells_6h: number;
-  seq_index: string;
-  show_sharing_fee: boolean;
-  smart_degen_count: number;
-  sniper_count: number;
-  standard: string;
-  start_live_timestamp: number;
-  status: number;
-  suspected_insider_hold_rate: number;
-  swaps_1h: number;
-  swaps_1m: number;
-  swaps_24h: number;
-  swaps_6h: number;
-  symbol: string;
-  tc_name: string;
-  tcid: string;
-  telegram: string;
-  telegram_dup: number;
-  tg_call_count: number;
-  tiktok: string;
-  tip_fee: number;
-  top70_sniper_hold_rate: number;
-  top_10_holder_rate: number;
-  top_10_holder_rate_snp: number;
-  total_buy_tax: number;
   total_fee: number;
+  priority_fee: number;
+  tip_fee: number;
+  fee_params: unknown | null;
+  show_sharing_fee: boolean;
+  buy_tax: number;
+  sell_tax: number;
+  total_buy_tax: number;
   total_sell_tax: number;
-  total_supply: number;
-  trade_fee: number;
-  trans_name: string;
-  trans_name_zhcn: string;
-  trans_symbol: string;
-  trans_symbol_zhcn: string;
-  trigger_count: number;
-  tweet_publish_time: number;
-  twitter: string;
-  twitter_create_token_count: number;
-  twitter_del_post_token_count: number;
-  twitter_dup: number;
-  twitter_handle: string;
-  twitter_is_tweet: boolean;
-  twitter_rename_count: number;
-  usd_market_cap: number;
+  dev_tax: number;
+  burn_tax: number;
+  dividend_tax: number;
+  liquidity_tax: number;
   vault_tax: number;
+  other_tax: number;
+  giggle_charity_tax: number;
+  binance_charity_tax: number;
+  entrapment_ratio: number;
+  is_wash_trading: boolean;
+  renounced_mint: boolean;
+  renounced_freeze_account: boolean;
+  burn_status: string;
+  is_honeypot: string;
+  open_source: string;
+  owner_renounced: string;
+  dev_team_hold_rate: number;
+  suspected_insider_hold_rate: number;
+  is_token_live: boolean;
+  top70_sniper_hold_rate: number;
+  private_vault_hold_rate: number;
   visiting_count: number;
-  volume_1h: number;
-  volume_1m: number;
-  volume_24h: number;
-  volume_6h: number;
+  seq_index: string;
+  has_at_least_one_social: boolean;
+  twitter_is_tweet: boolean;
+  twitter: string;
   website: string;
-  website_dup: number;
-  x_user_follower: number;
-  x_user_following: number;
+  telegram: string;
+  instagram: string;
+  tiktok: string;
+  fracaster: unknown | null;
   zora_social_info: unknown | null;
+  dexscr_ad: boolean;
+  dexscr_update_link: boolean;
+  dexscr_trending_bar: boolean;
+  dexscr_boost_fee: number;
+  cto_flag: boolean;
+  offchain: boolean;
+  twitter_rename_count: number;
+  twitter_del_post_token_count: number;
+  twitter_create_token_count: number;
+  twitter_handle: string;
+  tc_name: string;
+  x_user_following: number;
+  x_user_follower: number;
+  tcid: string;
+  image_dup: number;
+  status: number;
+  tg_call_count: number;
+  callout_count: number;
+  callout_declaration: boolean;
+  fresh_wallet_rate: number;
+  trade_fee: number;
+  twitter_dup: number;
+  telegram_dup: number;
+  website_dup: number;
+  complete_timestamp: number;
+  complete_cost_time: number;
+  bonus_category: unknown | null;
+  standard: string;
+  decimals: number;
+  tweet_publish_time: number;
+  is_og: boolean;
+  top_10_holder_rate_snp: number;
+  trigger_count: number;
+  min_amount: number;
+  max_amount: number;
+  claim_fee_is_first: boolean;
+  claim_fee_sol_amount: string;
+  claim_twitter_user_name: string;
+  claim_avatar: string;
+  claim_wallet_address: string;
+  claim_platform: string;
+  claim_platform_username: string;
+  claim_platform_avatar: string;
+  migrated_pool_exchange?: string;
 }
 
 export interface TokenSignalsParams {
@@ -2849,33 +2871,33 @@ export interface TokenSignalsRequest {
 
 export interface TokenSocialLink {
   address: string;
-  bitbucket: string;
-  description: string;
-  discord: string;
-  facebook: string;
-  fracaster: string | null;
-  geckoterminal: string;
-  github: string;
   gmgn: string;
+  geckoterminal: string;
+  twitter_username: string;
+  website: string;
+  telegram: string;
+  bitbucket: string;
+  discord: string;
+  description: string;
+  facebook: string;
+  github: string;
   instagram: string;
   linkedin: string;
   medium: string;
   reddit: string;
-  telegram: string;
   tiktok: string;
-  twitter_username: string;
-  verify_status: number;
-  website: string;
   youtube: string;
+  verify_status: number;
+  fracaster: string | null;
 }
 
 export interface TokenTradesV2Params {
   chain: Chain;
-  /** Pagination token from the previous page's `data.next`. */
-  cursor?: string | null;
+  token_address: string;
   /** Restrict to a single maker wallet. */
   maker?: string;
-  token_address: string;
+  /** Pagination token from the previous page's `data.next`. */
+  cursor?: string | null;
 }
 
 export interface TokenTrendPoint {
@@ -2884,10 +2906,10 @@ export interface TokenTrendPoint {
 }
 
 export interface TokenTrendSeries {
+  entrapment_percent?: TokenTrendPoint[];
   avg_holding_balance?: TokenTrendPoint[];
   bot_degen_percent?: TokenTrendPoint[];
   bundler_percent?: TokenTrendPoint[];
-  entrapment_percent?: TokenTrendPoint[];
   holder_count?: TokenTrendPoint[];
   insider_percent?: TokenTrendPoint[];
   top100_holder_percent?: TokenTrendPoint[];
@@ -2909,39 +2931,39 @@ export interface TokenVote {
 }
 
 export interface TopBuyerHolderInfo {
+  wallet_address: string;
+  tags: string[] | null;
   maker_token_tags: string[];
   status?: string;
-  tags: string[] | null;
-  wallet_address: string;
 }
 
 export interface TopBuyerHolders {
-  bought_more: number;
   chain: string;
-  hold_diff: number;
-  holderInfo: TopBuyerHolderInfo[];
   holder_count: number;
+  top70_sniper_hold_rate: string;
+  statusNow: TopBuyerStatusNow;
   sold_diff: number;
   sold_part_diff: number;
-  statusNow: TopBuyerStatusNow;
-  top70_sniper_hold_rate: string;
+  hold_diff: number;
+  bought_more: number;
+  holderInfo: TopBuyerHolderInfo[];
 }
 
 export interface TopBuyerStatusNow {
-  bought_more: number;
-  bought_rate: string;
   hold: number;
-  holding_rate: string;
-  smart_count_bought_more: number | null;
-  smart_count_hold: number | null;
-  smart_count_sold: number | null;
-  smart_count_sold_part: number | null;
-  smart_count_transfered: number | null;
-  smart_pos: number[];
-  sold: number;
+  bought_more: number;
   sold_part: number;
-  top_10_holder_rate: number;
+  sold: number;
   transfered: number;
+  bought_rate: string;
+  holding_rate: string;
+  smart_pos: number[];
+  smart_count_hold: number | null;
+  smart_count_bought_more: number | null;
+  smart_count_sold_part: number | null;
+  smart_count_sold: number | null;
+  smart_count_transfered: number | null;
+  top_10_holder_rate: number;
 }
 
 export interface TopBuyersParams {
@@ -2950,84 +2972,83 @@ export interface TopBuyersParams {
 }
 
 export interface TopCaller {
+  rank: number;
+  wallet: string;
+  twitter_username: string;
+  twitter_name: string;
+  twitter_avatar: string;
+  is_blue: boolean;
   avg_multiplier: string;
+  total_calls: number;
+  hit_2x_count: number;
+  top_tokens: TopCallerToken[];
+  prev_rank: number;
+  tier: string;
+  follower_count: number;
   display_name?: string;
   encrypted_user_id?: string;
-  follower_count: number;
-  hit_2x_count: number;
-  is_blue: boolean;
-  prev_rank: number;
   profile_image_url?: string;
-  rank: number;
-  tier: string;
-  top_tokens: TopCallerToken[];
-  total_calls: number;
-  twitter_avatar: string;
-  twitter_name: string;
-  twitter_username: string;
   username?: string;
-  wallet: string;
+  profile_username?: string;
 }
 
 export interface TopCallerToken {
   chain: string;
+  token: string;
+  token_symbol: string;
+  token_logo: string;
+  multiplier: string;
   launchpad: string;
   launchpad_platform: string;
-  multiplier: string;
-  token: string;
-  token_logo: string;
-  token_symbol: string;
 }
 
 export interface TopCallersParams {
   chain: Chain;
-  /** Window the call multiples are scored over. */
-  window?: TimeWindow;
 }
 
 export interface Tpool {
-  base_address: string;
   exchange: string;
-  launch_type: string;
   pool_address: string;
+  base_address: string;
   quote_address: string;
+  launch_type: string;
 }
 
 export interface TradeHistory {
-  amount_usd: string;
-  balance: string;
+  maker: string;
   base_amount: string;
-  dex_native: string;
-  dex_usd: string;
+  quote_amount: string;
+  amount_usd: string;
+  timestamp: number;
   event: string;
-  gas_native: string;
-  gas_usd: string;
-  history_bought_amount: string;
-  history_sold_amount: string;
-  history_sold_income: string;
+  tx_hash: string;
+  price_usd: string;
   id: string;
   is_open_or_close: number;
-  maker: string;
-  maker_avatar: string;
-  maker_ens: string;
-  maker_event_tags: string[];
-  maker_name: string;
+  token_address: string;
   maker_tags: string[];
   maker_token_tags: string[];
-  maker_twitter_name: string;
-  maker_twitter_username: string;
-  price_usd: string;
-  priority_fee: string;
+  maker_event_tags: string[];
   quote_address: string;
-  quote_amount: string;
   quote_symbol: string;
-  realized_profit: string;
-  timestamp: number;
-  tip_fee: string;
-  token_address: string;
   total_trade: number;
-  tx_hash: string;
+  balance: string;
+  history_bought_amount: string;
+  history_sold_income: string;
+  history_sold_amount: string;
+  realized_profit: string;
   unrealized_profit: string;
+  maker_name: string;
+  maker_twitter_username: string;
+  maker_twitter_name: string;
+  maker_avatar: string;
+  maker_ens: string;
+  priority_fee: string;
+  tip_fee: string;
+  gas_usd: string;
+  gas_native: string;
+  dex_usd: string;
+  dex_native: string;
 }
 
 export type TraderOrderBy = "profit" | "realized_profit" | "unrealized_profit" | "amount_percentage" | "last_active_timestamp" | "netflow_usd" | "buy_volume_cur" | "sell_volume_cur";
@@ -3039,145 +3060,145 @@ export interface TraderStatParams {
 
 export interface TradersParams {
   chain: Chain;
-  cursor?: string | null;
-  direction?: SortDirection;
+  token_address: string;
   limit?: number;
   order_by?: TraderOrderBy;
+  direction?: SortDirection;
   /** Wallet cohort to filter on. Omit for all traders. */
   tag?: HolderTag | null;
-  token_address: string;
+  cursor?: string | null;
 }
 
 export interface TradesParams {
   chain: Chain;
+  token_address: string;
+  maker?: string;
   /** Opaque pagination token. trades returns a fixed page (~50) with no page-size control; paginate by passing the previous response's `data.next` token here. */
   cursor?: string | null;
-  maker?: string;
-  token_address: string;
 }
 
 export interface TrendingChainBucket {
+  interval: string;
   chain: string;
   filter_id: string;
-  interval: string;
-  tokens: TrendingToken[];
   version: string;
+  tokens: TrendingToken[];
 }
 
 export interface TrendingChainRequest {
   /** Chain to rank tokens on. */
   chain?: Chain;
-  /** Security screens applied before ranking. */
-  filters?: TokenFilter[] | null;
   /** Ranking window — GMGN recomputes the leaderboard per window. */
   interval?: TrendingInterval;
-  /** Restrict to tokens launched on these platforms, e.g. `Pump.fun`, `letsbonk`, `fourmeme`. */
-  launchpad_platforms?: string[] | null;
   /** Maximum tokens in this chain's bucket. Omit to take GMGN's own default, which is the whole leaderboard it has for that chain. */
   limit?: number | null;
+  /** Security screens applied before ranking. */
+  filters?: TokenFilter[] | null;
+  /** Restrict to tokens launched on these platforms, e.g. `Pump.fun`, `letsbonk`, `fourmeme`. */
+  launchpad_platforms?: string[] | null;
 }
 
 export type TrendingInterval = "1m" | "5m" | "1h" | "6h" | "24h";
 
 export interface TrendingToken {
   a: string;
-  bdc: number;
-  bdr: number;
-  bdrr: number;
-  bop: number;
-  br: number;
-  btax: string;
-  bu: number;
-  c: string;
-  cc: boolean;
-  co_d: boolean;
-  ct: number;
-  cto: number;
-  d_br: number;
-  d_ct: string;
-  d_ffa?: string;
-  d_ts: string;
-  dhr: number;
-  dtba: number;
-  dtbr: number;
-  dx_ad: number;
-  dx_adts: number;
-  dx_bf: number;
-  dx_bts: number;
-  dx_tb: number;
-  dx_tbts: number;
-  dx_ul: number;
-  dx_ults: number;
-  elt: number;
-  etpr: number;
-  ex: string;
-  gf: number;
-  hd: number;
-  hhmc: number;
-  hl: number;
-  ilq: number;
-  img_dup: string;
-  isa: boolean;
-  isog: boolean;
-  itl: boolean;
   itv: string;
-  iwt: boolean;
-  kol: number;
+  c: string;
+  nm: string;
+  s: string;
   l: string;
-  lkp?: number;
+  ts_n: string;
+  ts_s: string;
+  ts_nzh: string;
+  ts_szh: string;
+  p: number;
+  pcp: number;
+  pcp1m: number;
+  pcp5m: number;
+  pcp1h: number;
+  v: number;
+  lq: number;
+  mc: number;
+  tsp: number;
+  ilq: number;
+  hhmc: number;
+  t10: number;
+  sw: number;
+  bu: number;
+  se: number;
+  hd: number;
+  sc: number;
+  ot: number;
+  ct: number;
   lp: string;
   lpp: string;
   lpst: string;
-  lq: number;
+  ex: string;
   lqa: string;
-  m_t: string;
-  m_w: string;
-  m_x: string;
-  m_xctc: number;
-  m_xdpc: number;
-  mc: number;
   mpe: string;
-  nm: string;
+  m_x: string;
+  m_w: string;
+  m_t: string;
+  tcid: string;
+  s_nm?: number;
+  s_blk?: number;
+  br: number;
+  s_brs: string;
+  dtba: number;
+  dtbr: number;
+  d_ct: string;
+  d_ts: string;
+  cc: boolean;
+  d_ffa?: string;
+  img_dup: string;
   nt: number;
   ntg: number;
   nws: number;
-  ot: number;
-  p: number;
-  pcp: number;
-  pcp1h: number;
-  pcp1m: number;
-  pcp5m: number;
-  rat: number;
-  rug: number;
-  s: string;
-  s_blk?: number;
-  s_brs: string;
-  s_ihp: number | null;
-  s_nm?: number;
-  s_or?: number;
-  s_os: number;
-  s_qsafe?: string;
-  sc: number;
-  se: number;
-  slt: number;
-  smt: number;
-  snp: number;
-  ssf: boolean;
-  stax: string;
-  std?: string;
-  sw: number;
-  t10: number;
-  t70_shr: number;
-  tcid: string;
-  ts_n: string;
-  ts_nzh: string;
-  ts_s: string;
-  ts_szh: string;
-  tsp: number;
-  v: number;
-  v_c: number;
-  xcc: number;
+  dx_ad: number;
+  dx_ul: number;
+  dx_bf: number;
+  dx_adts: number;
+  dx_ults: number;
+  dx_bts: number;
+  dx_tbts: number;
+  cto: number;
   xcf: number;
+  xcc: number;
+  m_xdpc: number;
+  m_xctc: number;
+  rug: number;
+  etpr: number;
+  bdrr: number;
+  snp: number;
+  smt: number;
+  kol: number;
+  bdc: number;
+  dhr: number;
+  d_br: number;
+  t70_shr: number;
+  bdr: number;
+  itl: boolean;
+  slt: number;
+  elt: number;
+  v_c: number;
+  btax: string;
+  stax: string;
+  s_ihp: number | null;
+  s_os: number;
+  isa: boolean;
+  iwt: boolean;
+  isog: boolean;
+  bop: number;
+  rat: number;
+  hl: number;
+  gf: number;
+  dx_tb: number;
+  ssf: boolean;
+  std?: string;
+  co_d: boolean;
+  s_or?: number;
+  lkp?: number;
+  s_qsafe?: string;
 }
 
 export interface TrendingTokensRequest {
@@ -3190,64 +3211,64 @@ export interface TwitchKolChannel {
 }
 
 export interface WalletActivityEvent {
-  buy_cost_usd: string | null;
+  wallet: string;
   chain: string;
-  cost_usd: string;
-  dex_native: string;
-  dex_usd: string;
-  event_type: string;
-  from_address: string;
-  gas_native: string;
-  gas_usd: string;
-  is_open_or_close: number;
-  launchpad: string;
-  launchpad_platform: string;
-  price: string;
-  price_usd: string;
-  priority_fee: string;
-  quote_address: string;
-  quote_amount: string;
-  quote_token: WalletActivityQuoteToken;
+  tx_hash: string;
   timestamp: number;
-  tip_fee: string;
-  to_address: string;
+  event_type: string;
   token: WalletActivityToken;
   token_amount: string;
-  tx_hash: string;
-  wallet: string;
+  quote_amount: string;
+  cost_usd: string;
+  buy_cost_usd: string | null;
+  price_usd: string;
+  price: string;
+  is_open_or_close: number;
+  quote_token: WalletActivityQuoteToken;
+  quote_address: string;
+  from_address: string;
+  to_address: string;
+  gas_native: string;
+  gas_usd: string;
+  dex_native: string;
+  dex_usd: string;
+  priority_fee: string;
+  tip_fee: string;
+  launchpad: string;
+  launchpad_platform: string;
 }
 
 export interface WalletActivityParams {
   chain: Chain;
-  /** Opaque cursor from a previous `next`. */
-  cursor?: string | null;
+  wallet_address: string;
   limit?: number;
   /** Event types to include; defaults to buy and sell. */
   type?: string[] | null;
-  wallet_address: string;
+  /** Opaque cursor from a previous `next`. */
+  cursor?: string | null;
 }
 
 export interface WalletActivityQuoteToken {
-  decimals: number;
-  logo: string;
+  token_address: string;
   name: string;
   symbol: string;
-  token_address: string;
+  decimals: number;
+  logo: string;
 }
 
 export interface WalletActivityToken {
   address: string;
-  logo: string;
   symbol: string;
+  logo: string;
   total_supply: string;
 }
 
 export interface WalletChainBalance {
-  address: string;
-  balance: string;
   chain: string;
-  token_num: number;
+  address: string;
   total_volume: string | null;
+  token_num: number;
+  balance: string;
 }
 
 export interface WalletChainBalancesParams {
@@ -3261,26 +3282,26 @@ export interface WalletCommonStatParams {
 }
 
 export interface WalletDailyProfit {
-  profit: string;
   timestamp: number;
+  profit: string;
 }
 
 export interface WalletPnlParams {
   chain: Chain;
+  wallet_address: string;
   /** Window the P&L is computed over. */
   period?: WalletRankPeriod;
-  wallet_address: string;
 }
 
 export interface WalletPnlStat {
-  avg_holding_period: number | null;
+  token_num: number;
+  winrate: number | null;
+  pnl_lt_nd5_num: number;
+  pnl_nd5_0x_num: number;
   pnl_0x_2x_num: number;
   pnl_2x_5x_num: number;
   pnl_gt_5x_num: number;
-  pnl_lt_nd5_num: number;
-  pnl_nd5_0x_num: number;
-  token_num: number;
-  winrate: number | null;
+  avg_holding_period: number | null;
 }
 
 export type WalletRankOrderBy = "pnl_1d" | "pnl_7d" | "pnl_30d" | "winrate_1d" | "winrate_7d" | "winrate_30d";
@@ -3289,42 +3310,42 @@ export type WalletRankPeriod = "1d" | "7d" | "30d";
 
 export interface WalletRankingsParams {
   chain: Chain;
-  /** Metric to sort on. Its window is independent of `period`. */
-  order_by?: WalletRankOrderBy;
   /** Leaderboard window GMGN computes the rank over. */
   period?: WalletRankPeriod;
+  /** Metric to sort on. Its window is independent of `period`. */
+  order_by?: WalletRankOrderBy;
 }
 
 export interface WalletRiskProfile {
-  fast_tx: string;
-  fast_tx_ratio: number;
+  token_active: string;
+  token_honeypot: string;
+  token_honeypot_ratio: number;
   no_buy_hold: string;
   no_buy_hold_ratio: number;
   sell_pass_buy: string;
   sell_pass_buy_ratio: number;
-  token_active: string;
-  token_honeypot: string;
-  token_honeypot_ratio: number;
+  fast_tx: string;
+  fast_tx_ratio: number;
 }
 
 export interface WalletStatParams {
   chain: Chain;
+  wallet_address: string;
   /** P&L window. Omit for all-time. */
   period?: WalletStatPeriod | null;
-  wallet_address: string;
 }
 
 export type WalletStatPeriod = "1d" | "7d" | "all";
 
 export interface WalletTagRank {
-  arbitrager?: number | null;
+  trojan?: number | null;
   axiom?: number | null;
   kol?: number;
   photon?: number | null;
   top_followed?: number;
   top_renamed?: number;
-  trojan?: number | null;
   wash_trader?: number;
+  arbitrager?: number | null;
 }
 
 export interface WalletTagsStatParams {

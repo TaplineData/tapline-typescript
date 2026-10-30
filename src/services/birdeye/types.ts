@@ -5,36 +5,36 @@ export type BirdeyeCandleInterval = "1s" | "5s" | "15s" | "30s" | "1m" | "3m" | 
 export type BirdeyeCursorCompletion = "exhausted" | "depth_limit";
 
 export interface BirdeyeCursorPagination {
-  completion: BirdeyeCursorCompletion | null;
   next_cursor: string | null;
+  completion: BirdeyeCursorCompletion | null;
 }
 
 export interface BirdeyeFirstBuyers {
-  buyers?: BirdeyeFirstBuyersBuyersItem[];
+  token_address?: string;
   flow?: string;
   page_summary?: BirdeyeFirstBuyersPageSummary;
-  token_address?: string;
+  buyers?: BirdeyeFirstBuyersBuyersItem[];
 }
 
 export interface BirdeyeFirstBuyersBuyersItem {
+  wallet_address?: string;
   block_number?: string;
   block_unix_time?: string;
-  current_holding?: number;
   first_buy_volume?: number;
   first_buy_volume_usd?: number;
-  initial_holding?: number;
-  position_status?: string;
-  tags?: string[];
   total_buy_volume?: number;
   total_buy_volume_usd?: number;
-  wallet_address?: string;
+  initial_holding?: number;
+  current_holding?: number;
+  position_status?: string;
+  tags?: string[];
 }
 
 export interface BirdeyeFirstBuyersPageSummary {
-  buy_more?: string;
-  sell_all?: string;
-  sell_partial?: string;
   total_wallets?: string;
+  buy_more?: string;
+  sell_partial?: string;
+  sell_all?: string;
 }
 
 export type BirdeyeLeaderboardInterval = "1d" | "7d" | "30d";
@@ -48,46 +48,46 @@ export type BirdeyeLeaderboardSort = "total_pnl" | "realized_pnl" | "volume_usd"
 
 export interface BirdeyeLeaderboardTrader {
   address?: string;
-  first_trade_unix_time?: string;
-  first_tx_unix_time?: string;
-  label?: string;
-  label_metadata?: BirdeyeLeaderboardTraderLabelMetadata;
-  last_trade_unix_time?: string;
-  net_worth?: number;
-  pfp?: string;
   realized_pnl?: number;
-  realized_pnl_percent?: number;
-  realized_pnl_percent_0_100?: string;
-  realized_pnl_percent_100_500?: string;
-  realized_pnl_percent_gt_500?: string;
-  realized_pnl_percent_lt_neg50?: string;
-  realized_pnl_percent_neg50_0?: string;
-  rug_token_percent?: number;
+  unrealized_pnl?: number;
   total_pnl?: number;
+  volume_usd?: number;
   total_token_traded?: string;
   total_tx_count?: string;
-  twitter?: string;
-  unrealized_pnl?: number;
+  rug_token_percent?: number;
+  realized_pnl_percent?: number;
   unrealized_pnl_percent?: number;
-  volume_buy_usd?: number;
-  volume_usd?: number;
-  wallet_platforms?: string[];
   wallet_tags?: string[];
+  first_tx_unix_time?: string;
+  realized_pnl_percent_100_500?: string;
+  realized_pnl_percent_neg50_0?: string;
+  net_worth?: number;
+  last_trade_unix_time?: string;
+  first_trade_unix_time?: string;
+  volume_buy_usd?: number;
+  label_metadata?: BirdeyeLeaderboardTraderLabelMetadata;
+  realized_pnl_percent_gt_500?: string;
+  realized_pnl_percent_lt_neg50?: string;
+  label?: string;
+  pfp?: string;
   win_rate?: number;
+  realized_pnl_percent_0_100?: string;
+  wallet_platforms?: string[];
+  twitter?: string;
 }
 
 export interface BirdeyeLeaderboardTraderLabelMetadata {
-  label?: string;
   labels?: Record<string, BirdeyeLeaderboardTraderLabelMetadataLabelsEntry>;
+  label?: string;
   logoURI?: string;
   primary?: string;
   x_url?: string;
 }
 
 export interface BirdeyeLeaderboardTraderLabelMetadataLabelsEntry {
-  entity?: string;
   label?: string;
   logoURI?: string;
+  entity?: string;
   total?: number;
   values?: string[];
 }
@@ -105,117 +105,136 @@ export interface BirdeyeMarket {
 export type BirdeyeMarketSort = "volume_24h" | "liquidity";
 
 export interface BirdeyeNetWorthHistory {
+  wallet_address?: string;
   currency?: string;
   current_timestamp?: string;
-  history?: BirdeyeNetWorthHistoryHistoryItem[];
   past_timestamp?: string;
-  wallet_address?: string;
+  history?: BirdeyeNetWorthHistoryHistoryItem[];
 }
 
 export interface BirdeyeNetWorthHistoryHistoryItem {
+  timestamp?: string;
   net_worth?: number;
   net_worth_change?: number;
   net_worth_change_percent?: number;
-  timestamp?: string;
 }
 
 export type BirdeyeNetWorthInterval = "1h" | "1d";
 
 export interface BirdeyeNewListing {
+  name?: string;
+  symbol?: string;
   address?: string;
-  bundlerBalance?: number;
-  bundlerPercentage?: number;
-  bundlers?: number;
-  buy24h?: number;
   createdAt?: number;
+  platform?: string;
+  isCashbackEnabled?: boolean;
+  isHolderReward?: boolean;
+  isDevBuyFirst?: boolean;
+  mc?: number;
+  fdmc?: number;
+  progress?: number | null;
+  updatedAtSlot?: number;
+  eventTimestamp?: number;
+  totalBuyFeeBps?: number;
+  totalSellFeeBps?: number;
+  feeDetail?: BirdeyeNewListingFeeDetailItem[];
+  feeTimestamp?: number;
+  logoURI?: string;
+  twitter?: string;
+  website?: string;
+  description?: string;
+  xHandle?: string;
+  updatedAt?: number;
+  id?: string;
+  network?: string;
+  node2_WriteVersion?: number;
+  quoteMints?: BirdeyeNewListingQuoteMintsItem[];
+  platformImg?: string;
+  platformName?: string;
+  similarLogoTokenCount?: number;
+  similarSymbolTokenCount?: number;
+  node1_WriteVersion?: number;
+  buy24h?: number;
+  trade24h?: number;
+  v24h?: number;
+  mcChange24hPercent?: number;
+  v24hUSD?: number;
+  vBuy24hUSD?: number;
+  liquidity?: number;
+  vBuy24h?: number;
+  vSell24hUSD?: number;
+  vSell24h?: number;
+  sell24h?: number;
   creator?: string;
   creatorCreatedTokens?: number;
   creatorMigratedTokens?: number;
+  smartMoneys?: number;
+  insiders?: number;
+  smartMoneyBalance?: number;
+  sniperBalance?: number;
+  insiderPercentage?: number;
+  sniperPercentage?: number;
+  insiderBalance?: number;
+  tagTimestamp?: number;
+  bundlers?: number;
+  smartMoneyPercentage?: number;
+  snipers?: number;
+  bundlerBalance?: number;
+  bundlerPercentage?: number;
   credit?: BirdeyeNewListingCredit;
-  decimals?: number;
-  description?: string;
-  devFirstFundAmount?: number;
-  devFirstFundAt?: number;
+  globalFeePaidSol?: number;
   devFirstFundToken?: string;
+  devFirstFundAt?: number;
   devFirstFundTokenName?: string;
   devFirstFundTx?: string;
+  devFirstFundAmount?: number;
   devFirstFundWallet?: string;
-  devWalletBalance?: number | string;
+  devFirstFundWalletLabel?: BirdeyeNewListingDevFirstFundWalletLabel;
+  decimals?: number;
+  holders?: number;
+  top10HolderPercentage?: number;
+  holderTimestamp?: number;
+  top10UserPercentage?: number;
+  devWalletBalance?: string | number;
   devWalletPercentage?: number;
   devWalletTimestamp?: number;
-  eventTimestamp?: number;
-  fdmc?: number;
-  feeDetail?: BirdeyeNewListingFeeDetailItem[];
-  globalFeePaidSol?: number;
   graduatedAt?: string;
-  holderTimestamp?: number;
-  holders?: number;
-  id?: string;
-  insiderBalance?: number;
-  insiderPercentage?: number;
-  insiders?: number;
-  instagram?: string;
-  isCashbackEnabled?: boolean;
-  isCharity?: boolean;
-  isDevBuyFirst?: boolean;
   isGraduated?: boolean | null;
-  isHolderReward?: boolean;
-  liquidity?: number;
-  logoURI?: string;
-  mc?: number;
-  mcChange24hPercent?: number;
-  name?: string;
-  network?: string;
-  node1_WriteVersion?: number;
-  node2_WriteVersion?: number;
-  platform?: string;
-  platformImg?: string;
-  platformName?: string;
-  progress?: number | null;
-  quoteMints?: string[];
-  sell24h?: number;
-  similarLogoTokenCount?: number;
-  similarSymbolTokenCount?: number;
-  smartMoneyBalance?: number;
-  smartMoneyPercentage?: number;
-  smartMoneys?: number;
-  sniperBalance?: number;
-  sniperPercentage?: number;
-  snipers?: number;
-  symbol?: string;
-  tagTimestamp?: number;
   telegram?: string;
-  top10HolderPercentage?: number;
-  top10UserPercentage?: number;
-  totalBuyFeeBps?: number;
-  totalSellFeeBps?: number;
-  trade24h?: number;
-  twitter?: string;
-  updatedAt?: number;
-  updatedAtSlot?: number;
-  v24h?: number;
-  v24hUSD?: number;
-  vBuy24h?: number;
-  vBuy24hUSD?: number;
-  vSell24h?: number;
-  vSell24hUSD?: number;
-  website?: string;
-  xHandle?: string;
+  isCharity?: boolean;
+  instagram?: string;
 }
 
 export interface BirdeyeNewListingCredit {
-  grade?: string;
+  screened?: boolean;
   pRug?: number;
+  grade?: string;
   pRugRaw?: number;
   points?: number;
-  screened?: boolean;
+}
+
+export interface BirdeyeNewListingDevFirstFundWalletLabel {
+  $typeName?: string;
+  address?: string;
+  labels?: Record<string, unknown>;
+  label?: string;
+  logoURI?: string;
+  primary?: string;
+  $unknown?: Record<string, unknown>[];
 }
 
 export interface BirdeyeNewListingFeeDetailItem {
+  type?: string;
   displayName?: string;
   feeBps?: number;
   name?: string;
-  type?: string;
+}
+
+export interface BirdeyeNewListingQuoteMintsItem {
+  address?: string;
+  logoURI?: string | null;
+  name?: string;
+  symbol?: string;
 }
 
 export interface BirdeyeNewListings {
@@ -223,12 +242,12 @@ export interface BirdeyeNewListings {
 }
 
 export interface BirdeyeOhlcv {
-  c: number[];
+  o: number[];
   h: number[];
   l: number[];
-  o: number[];
-  t: number[];
+  c: number[];
   v: number[];
+  t: number[];
 }
 
 export type BirdeyePnlChain = "solana" | "ethereum" | "base" | "bsc";
@@ -237,16 +256,16 @@ export type BirdeyePnlPeriod = "1d" | "7d" | "30d" | "90d";
 
 export interface BirdeyePortfolioToken {
   address?: string;
-  amount?: number;
-  balance?: string;
   decimals?: number;
-  jup_strict?: boolean;
-  logo_uri?: string;
-  name?: string;
-  network?: string;
   price?: number;
+  balance?: string;
+  amount?: number;
+  network?: string;
+  name?: string;
   symbol?: string;
+  logo_uri?: string;
   value?: string;
+  jup_strict?: boolean;
 }
 
 export type BirdeyeSortOrder = "asc" | "desc";
@@ -255,43 +274,43 @@ export type BirdeyeTokenChain = "solana" | "ethereum" | "base" | "bsc" | "arbitr
 
 export interface BirdeyeTokenHolder {
   address?: string;
-  avgBuyPerTx?: number;
-  avgBuyPrice?: number;
-  firstTxUnixTime?: string;
-  funding?: BirdeyeTokenHolderFunding;
-  holdAvgPrice?: number;
+  token?: string;
+  solBalance?: number;
   holdVolume?: number;
   holdVolumeUSD?: number;
-  isOnCurve?: boolean;
-  lastTradeUnixTime?: string;
-  meta?: BirdeyeTokenHolderMeta;
-  netValue?: number;
+  walletTags?: string[];
+  firstTxUnixTime?: string;
+  funding?: BirdeyeTokenHolderFunding;
   netWorth?: number;
-  remainVolume?: number;
-  solBalance?: number;
-  token?: string;
   totalPnl?: number;
   totalPnlPercent?: number;
-  txBuyCount?: string;
-  txCount?: string;
   unrealizedPnl?: number;
   unrealizedPnlPercent?: number;
+  avgBuyPrice?: number;
+  netValue?: number;
+  holdAvgPrice?: number;
+  avgBuyPerTx?: number;
   volume?: number;
+  volumeUSD?: number;
   volumeBuy?: number;
   volumeBuyUSD?: number;
-  volumeUSD?: number;
-  walletTags?: string[];
+  remainVolume?: number;
+  txCount?: string;
+  txBuyCount?: string;
+  lastTradeUnixTime?: string;
+  isOnCurve?: boolean;
+  meta?: BirdeyeTokenHolderMeta;
 }
 
 export interface BirdeyeTokenHolderFunding {
-  amount?: number;
   funder?: string;
-  meta?: BirdeyeTokenHolderFundingMeta;
-  timeLinked?: BirdeyeTokenHolderFundingTimeLinked;
-  totalFundedAmount?: number;
-  totalFundedHolders?: string;
-  txHash?: string;
   unixTime?: number;
+  amount?: number;
+  totalFundedHolders?: string;
+  totalFundedAmount?: number;
+  timeLinked?: BirdeyeTokenHolderFundingTimeLinked;
+  txHash?: string;
+  meta?: BirdeyeTokenHolderFundingMeta;
 }
 
 export interface BirdeyeTokenHolderFundingMeta {
@@ -305,10 +324,10 @@ export interface BirdeyeTokenHolderFundingTimeLinked {
 
 export interface BirdeyeTokenHolderFundingTimeLinkedPeersItem {
   address?: string;
-  holdVolumeUSD?: number;
-  solBalance?: number;
-  txHash?: string;
   unixTime?: number;
+  solBalance?: number;
+  holdVolumeUSD?: number;
+  txHash?: string;
 }
 
 export interface BirdeyeTokenHolderMeta {
@@ -328,14 +347,11 @@ export interface BirdeyeTokenMarkets {
 
 export interface BirdeyeTokenOverview {
   _id?: string;
-  activeHours24h?: number;
   address: string;
   buy12h?: number;
   buy12hChangePercent?: number;
   buy1h: number;
   buy1hChangePercent: number;
-  buy1m?: number;
-  buy1mChangePercent?: number;
   buy24h: number;
   buy24hChangePercent: number;
   buy2h: number;
@@ -344,55 +360,34 @@ export interface BirdeyeTokenOverview {
   buy30mChangePercent: number;
   buy4h: number;
   buy4hChangePercent: number;
-  buy5m?: number;
-  buy5mChangePercent?: number;
   buy6h?: number;
   buy6hChangePercent?: number;
   buy8h: number;
   buy8hChangePercent: number;
   buyHistory12h?: number;
   buyHistory1h: number;
-  buyHistory1m?: number;
   buyHistory24h: number;
   buyHistory2h: number;
   buyHistory30m: number;
   buyHistory4h: number;
-  buyHistory5m?: number;
   buyHistory6h?: number;
   buyHistory8h: number;
   circulatingSupply?: number;
   createdAt: string;
-  daysOver100M?: number;
   decimals: number;
   extensions: BirdeyeTokenOverviewExtensions;
   history12hPrice?: number;
-  history1hLiquidity?: number;
   history1hPrice: number;
-  history1mPrice?: number;
-  history24hLiquidity?: number;
   history24hPrice: number;
-  history2hLiquidity?: number;
   history2hPrice: number;
-  history30mLiquidity?: number;
   history30mPrice: number;
-  history4hLiquidity?: number;
   history4hPrice: number;
-  history5mPrice?: number;
   history6hPrice?: number;
-  history8hLiquidity?: number;
   history8hPrice: number;
   holder: number;
-  lastMcCheck?: string;
-  lastPriceUpdatedUnixTime?: number;
   lastTradeHumanTime: string;
   lastTradeUnixTime: number;
   liquidity: number;
-  liquidityChange1hPercent?: number;
-  liquidityChange24hPercent?: number;
-  liquidityChange2hPercent?: number;
-  liquidityChange30mPercent?: number;
-  liquidityChange4hPercent?: number;
-  liquidityChange8hPercent?: number;
   logoURI: string;
   mc: number;
   name: string;
@@ -400,12 +395,10 @@ export interface BirdeyeTokenOverview {
   price: number;
   priceChange12hPercent?: number;
   priceChange1hPercent: number;
-  priceChange1mPercent?: number;
   priceChange24hPercent: number;
   priceChange2hPercent: number;
   priceChange30mPercent: number;
   priceChange4hPercent: number;
-  priceChange5mPercent?: number;
   priceChange6hPercent?: number;
   priceChange8hPercent: number;
   realMc: number;
@@ -414,8 +407,6 @@ export interface BirdeyeTokenOverview {
   sell12hChangePercent?: number;
   sell1h: number;
   sell1hChangePercent: number;
-  sell1m?: number;
-  sell1mChangePercent?: number;
   sell24h: number;
   sell24hChangePercent: number;
   sell2h: number;
@@ -424,20 +415,16 @@ export interface BirdeyeTokenOverview {
   sell30mChangePercent: number;
   sell4h: number;
   sell4hChangePercent: number;
-  sell5m?: number;
-  sell5mChangePercent?: number;
   sell6h?: number;
   sell6hChangePercent?: number;
   sell8h: number;
   sell8hChangePercent: number;
   sellHistory12h?: number;
   sellHistory1h: number;
-  sellHistory1m?: number;
   sellHistory24h: number;
   sellHistory2h: number;
   sellHistory30m: number;
   sellHistory4h: number;
-  sellHistory5m?: number;
   sellHistory6h?: number;
   sellHistory8h: number;
   supply: number;
@@ -446,8 +433,6 @@ export interface BirdeyeTokenOverview {
   trade12hChangePercent?: number;
   trade1h: number;
   trade1hChangePercent: number;
-  trade1m?: number;
-  trade1mChangePercent?: number;
   trade24h: number;
   trade24hChangePercent: number;
   trade2h: number;
@@ -456,20 +441,16 @@ export interface BirdeyeTokenOverview {
   trade30mChangePercent: number;
   trade4h: number;
   trade4hChangePercent: number;
-  trade5m?: number;
-  trade5mChangePercent?: number;
   trade6h?: number;
   trade6hChangePercent?: number;
   trade8h: number;
   trade8hChangePercent: number;
   tradeHistory12h?: number;
   tradeHistory1h: number;
-  tradeHistory1m?: number;
   tradeHistory24h: number;
   tradeHistory2h: number;
   tradeHistory30m: number;
   tradeHistory4h: number;
-  tradeHistory5m?: number;
   tradeHistory6h?: number;
   tradeHistory8h: number;
   trendNo24h?: string | null;
@@ -501,8 +482,6 @@ export interface BirdeyeTokenOverview {
   uniqueWallet12hChangePercent?: number;
   uniqueWallet1h: number;
   uniqueWallet1hChangePercent: number;
-  uniqueWallet1m?: number;
-  uniqueWallet1mChangePercent?: number;
   uniqueWallet24h: number;
   uniqueWallet24hChangePercent: number;
   uniqueWallet2h: number;
@@ -511,20 +490,10 @@ export interface BirdeyeTokenOverview {
   uniqueWallet30mChangePercent: number;
   uniqueWallet4h: number;
   uniqueWallet4hChangePercent: number;
-  uniqueWallet5m?: number;
-  uniqueWallet5mChangePercent?: number;
   uniqueWallet6h?: number;
   uniqueWallet6hChangePercent?: number;
   uniqueWallet8h: number;
   uniqueWallet8hChangePercent: number;
-  uniqueWalletHistory1h: number;
-  uniqueWalletHistory1m?: number;
-  uniqueWalletHistory24h: number;
-  uniqueWalletHistory2h: number;
-  uniqueWalletHistory30m: number;
-  uniqueWalletHistory4h: number;
-  uniqueWalletHistory5m?: number;
-  uniqueWalletHistory8h: number;
   updatedAt?: string;
   v12h?: number;
   v12hChangePercent?: number;
@@ -532,82 +501,52 @@ export interface BirdeyeTokenOverview {
   v1h: number;
   v1hChangePercent: number;
   v1hUSD: number;
-  v1hUSDChangePercent?: number;
-  v1m?: number;
-  v1mChangePercent?: number;
-  v1mUSD?: number;
-  v1mUSDChangePercent?: number;
   v24h: number;
   v24hChangePercent: number;
   v24hUSD: number;
-  v24hUSDChangePercent?: number;
   v2h: number;
   v2hChangePercent: number;
   v2hUSD: number;
-  v2hUSDChangePercent?: number;
   v30m: number;
   v30mChangePercent: number;
   v30mUSD: number;
-  v30mUSDChangePercent?: number;
   v4h: number;
   v4hChangePercent: number;
   v4hUSD: number;
-  v4hUSDChangePercent?: number;
-  v5m?: number;
-  v5mChangePercent?: number;
-  v5mUSD?: number;
-  v5mUSDChangePercent?: number;
   v6h?: number;
   v6hChangePercent?: number;
   v6hUSD?: number;
   v8h: number;
   v8hChangePercent: number;
   v8hUSD: number;
-  v8hUSDChangePercent?: number;
   vBuy12h?: number;
   vBuy12hChangePercent?: number;
   vBuy12hUSD?: number;
   vBuy1h: number;
   vBuy1hChangePercent: number;
   vBuy1hUSD: number;
-  vBuy1hUSDChangePercent?: number;
-  vBuy1m?: number;
-  vBuy1mChangePercent?: number;
-  vBuy1mUSD?: number;
-  vBuy1mUSDChangePercent?: number;
   vBuy24h: number;
   vBuy24hChangePercent: number;
   vBuy24hUSD: number;
-  vBuy24hUSDChangePercent?: number;
   vBuy2h: number;
   vBuy2hChangePercent: number;
   vBuy2hUSD: number;
-  vBuy2hUSDChangePercent?: number;
   vBuy30m: number;
   vBuy30mChangePercent: number;
   vBuy30mUSD: number;
-  vBuy30mUSDChangePercent?: number;
   vBuy4h: number;
   vBuy4hChangePercent: number;
   vBuy4hUSD: number;
-  vBuy4hUSDChangePercent?: number;
-  vBuy5m?: number;
-  vBuy5mChangePercent?: number;
-  vBuy5mUSD?: number;
-  vBuy5mUSDChangePercent?: number;
   vBuy6h?: number;
   vBuy6hChangePercent?: number;
   vBuy6hUSD?: number;
   vBuy8h: number;
   vBuy8hChangePercent: number;
   vBuy8hUSD: number;
-  vBuy8hUSDChangePercent?: number;
   vBuyHistory12h?: number;
   vBuyHistory12hUSD?: number;
   vBuyHistory1h: number;
   vBuyHistory1hUSD: number;
-  vBuyHistory1m?: number;
-  vBuyHistory1mUSD?: number;
   vBuyHistory24h: number;
   vBuyHistory24hUSD: number;
   vBuyHistory2h: number;
@@ -616,8 +555,6 @@ export interface BirdeyeTokenOverview {
   vBuyHistory30mUSD: number;
   vBuyHistory4h: number;
   vBuyHistory4hUSD: number;
-  vBuyHistory5m?: number;
-  vBuyHistory5mUSD?: number;
   vBuyHistory6h?: number;
   vBuyHistory6hUSD?: number;
   vBuyHistory8h: number;
@@ -626,8 +563,6 @@ export interface BirdeyeTokenOverview {
   vHistory12hUSD?: number;
   vHistory1h: number;
   vHistory1hUSD: number;
-  vHistory1m?: number;
-  vHistory1mUSD?: number;
   vHistory24h: number;
   vHistory24hUSD: number;
   vHistory2h: number;
@@ -636,8 +571,6 @@ export interface BirdeyeTokenOverview {
   vHistory30mUSD: number;
   vHistory4h: number;
   vHistory4hUSD: number;
-  vHistory5m?: number;
-  vHistory5mUSD?: number;
   vHistory6h?: number;
   vHistory6hUSD?: number;
   vHistory8h: number;
@@ -648,44 +581,28 @@ export interface BirdeyeTokenOverview {
   vSell1h: number;
   vSell1hChangePercent: number;
   vSell1hUSD: number;
-  vSell1hUSDChangePercent?: number;
-  vSell1m?: number;
-  vSell1mChangePercent?: number;
-  vSell1mUSD?: number;
-  vSell1mUSDChangePercent?: number;
   vSell24h: number;
   vSell24hChangePercent: number;
   vSell24hUSD: number;
-  vSell24hUSDChangePercent?: number;
   vSell2h: number;
   vSell2hChangePercent: number;
   vSell2hUSD: number;
-  vSell2hUSDChangePercent?: number;
   vSell30m: number;
   vSell30mChangePercent: number;
   vSell30mUSD: number;
-  vSell30mUSDChangePercent?: number;
   vSell4h: number;
   vSell4hChangePercent: number;
   vSell4hUSD: number;
-  vSell4hUSDChangePercent?: number;
-  vSell5m?: number;
-  vSell5mChangePercent?: number;
-  vSell5mUSD?: number;
-  vSell5mUSDChangePercent?: number;
   vSell6h?: number;
   vSell6hChangePercent?: number;
   vSell6hUSD?: number;
   vSell8h: number;
   vSell8hChangePercent: number;
   vSell8hUSD: number;
-  vSell8hUSDChangePercent?: number;
   vSellHistory12h?: number;
   vSellHistory12hUSD?: number;
   vSellHistory1h: number;
   vSellHistory1hUSD: number;
-  vSellHistory1m?: number;
-  vSellHistory1mUSD?: number;
   vSellHistory24h: number;
   vSellHistory24hUSD: number;
   vSellHistory2h: number;
@@ -694,8 +611,6 @@ export interface BirdeyeTokenOverview {
   vSellHistory30mUSD: number;
   vSellHistory4h: number;
   vSellHistory4hUSD: number;
-  vSellHistory5m?: number;
-  vSellHistory5mUSD?: number;
   vSellHistory6h?: number;
   vSellHistory6hUSD?: number;
   vSellHistory8h: number;
@@ -725,43 +640,153 @@ export interface BirdeyeTokenOverview {
   viewHistory6h?: number;
   viewHistory8h: number;
   watch: number | null;
+  daysOver100M?: number;
+  lastMcCheck?: string;
+  buy1m?: number;
+  buyHistory1m?: number;
+  buy1mChangePercent?: number;
+  sell1m?: number;
+  sellHistory1m?: number;
+  sell1mChangePercent?: number;
+  vBuy1mUSD?: number;
+  vBuyHistory1mUSD?: number;
+  vBuy1mUSDChangePercent?: number;
+  vSell1mUSD?: number;
+  vSellHistory1mUSD?: number;
+  vSell1mUSDChangePercent?: number;
+  vBuy1m?: number;
+  vBuyHistory1m?: number;
+  vBuy1mChangePercent?: number;
+  vSell1m?: number;
+  vSellHistory1m?: number;
+  vSell1mChangePercent?: number;
+  trade1m?: number;
+  tradeHistory1m?: number;
+  trade1mChangePercent?: number;
+  v1mUSD?: number;
+  vHistory1mUSD?: number;
+  v1mUSDChangePercent?: number;
+  v1m?: number;
+  vHistory1m?: number;
+  v1mChangePercent?: number;
+  uniqueWallet1m?: number;
+  uniqueWalletHistory1m?: number;
+  uniqueWallet1mChangePercent?: number;
+  buy5m?: number;
+  buyHistory5m?: number;
+  buy5mChangePercent?: number;
+  sell5m?: number;
+  sellHistory5m?: number;
+  sell5mChangePercent?: number;
+  vBuy5mUSD?: number;
+  vBuyHistory5mUSD?: number;
+  vBuy5mUSDChangePercent?: number;
+  vSell5mUSD?: number;
+  vSellHistory5mUSD?: number;
+  vSell5mUSDChangePercent?: number;
+  vBuy5m?: number;
+  vBuyHistory5m?: number;
+  vBuy5mChangePercent?: number;
+  vSell5m?: number;
+  vSellHistory5m?: number;
+  vSell5mChangePercent?: number;
+  trade5m?: number;
+  tradeHistory5m?: number;
+  trade5mChangePercent?: number;
+  v5mUSD?: number;
+  vHistory5mUSD?: number;
+  v5mUSDChangePercent?: number;
+  v5m?: number;
+  vHistory5m?: number;
+  v5mChangePercent?: number;
+  uniqueWallet5m?: number;
+  uniqueWalletHistory5m?: number;
+  uniqueWallet5mChangePercent?: number;
+  vBuy30mUSDChangePercent?: number;
+  vSell30mUSDChangePercent?: number;
+  v30mUSDChangePercent?: number;
+  uniqueWalletHistory30m: number;
+  vBuy1hUSDChangePercent?: number;
+  vSell1hUSDChangePercent?: number;
+  v1hUSDChangePercent?: number;
+  uniqueWalletHistory1h: number;
+  vBuy2hUSDChangePercent?: number;
+  vSell2hUSDChangePercent?: number;
+  v2hUSDChangePercent?: number;
+  uniqueWalletHistory2h: number;
+  vBuy4hUSDChangePercent?: number;
+  vSell4hUSDChangePercent?: number;
+  v4hUSDChangePercent?: number;
+  uniqueWalletHistory4h: number;
+  vBuy8hUSDChangePercent?: number;
+  vSell8hUSDChangePercent?: number;
+  v8hUSDChangePercent?: number;
+  uniqueWalletHistory8h: number;
+  vBuy24hUSDChangePercent?: number;
+  vSell24hUSDChangePercent?: number;
+  v24hUSDChangePercent?: number;
+  uniqueWalletHistory24h: number;
+  activeHours24h?: number;
+  history1mPrice?: number;
+  priceChange1mPercent?: number;
+  history5mPrice?: number;
+  priceChange5mPercent?: number;
+  lastPriceUpdatedUnixTime?: number;
+  history30mLiquidity?: number;
+  liquidityChange30mPercent?: number;
+  history1hLiquidity?: number;
+  liquidityChange1hPercent?: number;
+  history2hLiquidity?: number;
+  liquidityChange2hPercent?: number;
+  history4hLiquidity?: number;
+  liquidityChange4hPercent?: number;
+  history24hLiquidity?: number;
+  liquidityChange24hPercent?: number;
+  history8hLiquidity?: number;
+  liquidityChange8hPercent?: number;
 }
 
 export interface BirdeyeTokenOverviewExtensions {
-  bitbucket?: string | null;
-  coingeckoId?: string;
-  coinmarketcapId?: string;
-  description: string | null;
+  twitter: string | null;
+  website: string | null;
+  telegram: string | null;
+  github: string | null;
   discord: string | null;
   facebook?: string | null;
-  github: string | null;
   instagram?: string | null;
   medium?: string | null;
-  reddit?: string | null;
-  telegram: string | null;
-  twitter: string | null;
+  description: string | null;
+  coingeckoId?: string;
   updateTime: number;
-  website: string | null;
+  reddit?: string | null;
+  coinmarketcapId?: string;
   whitepaper?: string | null;
+  bitbucket?: string | null;
 }
 
 export interface BirdeyeTokenSecurity {
-  birdeye: Record<string, BirdeyeTokenSecurityBirdeyeEntry> | null;
-  cols: string[];
-  goplus: BirdeyeTokenSecurityGoplus;
   groups: BirdeyeTokenSecurityGroupsItem[];
-  issuesCount: number;
-  overall: string | null;
   severity: BirdeyeTokenSecuritySeverity;
+  birdeye: Record<string, BirdeyeTokenSecurityBirdeyeEntry> | null;
+  goplus: BirdeyeTokenSecurityGoplus;
+  cols: string[];
+  overall: string | null;
+  issuesCount: number;
 }
 
 export interface BirdeyeTokenSecurityBirdeyeEntry {
-  level: string;
-  message: string;
   value: boolean | number | string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplus {
+  "3"?: BirdeyeTokenSecurityGoplusF3;
+  "4"?: BirdeyeTokenSecurityGoplusF4;
+  "5"?: BirdeyeTokenSecurityGoplusF5;
+  "6"?: BirdeyeTokenSecurityGoplusF6;
+  "7"?: BirdeyeTokenSecurityGoplusF7;
+  "8"?: BirdeyeTokenSecurityGoplusF8;
   "10"?: BirdeyeTokenSecurityGoplusF10;
   "11"?: BirdeyeTokenSecurityGoplusF11;
   "12"?: BirdeyeTokenSecurityGoplusF12;
@@ -774,211 +799,205 @@ export interface BirdeyeTokenSecurityGoplus {
   "20"?: BirdeyeTokenSecurityGoplusF20;
   "24"?: BirdeyeTokenSecurityGoplusF24;
   "28"?: BirdeyeTokenSecurityGoplusF28;
-  "3"?: BirdeyeTokenSecurityGoplusF3;
   "32"?: BirdeyeTokenSecurityGoplusF32;
   "33"?: BirdeyeTokenSecurityGoplusF33;
   "36"?: BirdeyeTokenSecurityGoplusF36;
   "38"?: BirdeyeTokenSecurityGoplusF38;
   "39"?: BirdeyeTokenSecurityGoplusF39;
-  "4"?: BirdeyeTokenSecurityGoplusF4;
   "43"?: BirdeyeTokenSecurityGoplusF43;
   "44"?: BirdeyeTokenSecurityGoplusF44;
-  "5"?: BirdeyeTokenSecurityGoplusF5;
   "51"?: BirdeyeTokenSecurityGoplusF51;
   "52"?: BirdeyeTokenSecurityGoplusF52;
   "53"?: BirdeyeTokenSecurityGoplusF53;
   "54"?: BirdeyeTokenSecurityGoplusF54;
   "57"?: BirdeyeTokenSecurityGoplusF57;
   "58"?: BirdeyeTokenSecurityGoplusF58;
-  "6"?: BirdeyeTokenSecurityGoplusF6;
-  "7"?: BirdeyeTokenSecurityGoplusF7;
-  "8"?: BirdeyeTokenSecurityGoplusF8;
 }
 
 export interface BirdeyeTokenSecurityGoplusF10 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF11 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF12 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF13 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF14 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF15 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF17 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF18 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF19 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF20 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF24 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF28 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF3 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF32 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF33 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF36 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF38 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF39 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF4 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF43 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF44 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF5 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF51 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF52 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF53 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF54 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF57 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF58 {
-  level: string;
-  message: string;
   value: string;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF6 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF7 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGoplusF8 {
-  level: string;
-  message: string;
   value: boolean;
+  message: string;
+  level: string;
 }
 
 export interface BirdeyeTokenSecurityGroupsItem {
@@ -988,11 +1007,11 @@ export interface BirdeyeTokenSecurityGroupsItem {
 
 export interface BirdeyeTokenSecurityGroupsItemRowsItem {
   id: string;
-  index: number;
-  name: string;
   severity: number;
-  tooltip: string;
+  name: string;
   type: string;
+  tooltip: string;
+  index: number;
 }
 
 export interface BirdeyeTokenSecuritySeverity {
@@ -1009,48 +1028,48 @@ export interface BirdeyeTokenTradesPage {
 
 export interface BirdeyeTopTrader {
   address?: string;
-  avgBuyPerTx?: number;
-  avgBuyPrice?: number;
-  avgSellPrice?: number;
-  firstTxUnixTime?: string;
-  funding?: BirdeyeTopTraderFunding;
-  holdAvgPrice?: number;
-  holdVolume?: number;
-  holdVolumeUSD?: number;
-  isOnCurve?: boolean;
-  lastTradeUnixTime?: string;
-  netValue?: number;
-  netWorth?: number;
-  realizedPnl?: number;
-  realizedPnlPercent?: number;
-  remainVolume?: number;
-  solBalance?: number;
   token?: string;
+  solBalance?: number;
   totalPnl?: number;
   totalPnlPercent?: number;
-  txBuyCount?: string;
+  realizedPnl?: number;
+  realizedPnlPercent?: number;
+  avgBuyPrice?: number;
+  avgSellPrice?: number;
+  netValue?: number;
+  holdVolume?: number;
+  holdVolumeUSD?: number;
+  holdAvgPrice?: number;
+  avgBuyPerTx?: number;
+  volume?: number;
+  volumeUSD?: number;
+  volumeBuy?: number;
+  volumeSell?: number;
+  volumeBuyUSD?: number;
+  volumeSellUSD?: number;
   txCount?: string;
+  txBuyCount?: string;
   txSellCount?: string;
+  walletTags?: string[];
+  firstTxUnixTime?: string;
+  lastTradeUnixTime?: string;
+  funding?: BirdeyeTopTraderFunding;
+  netWorth?: number;
+  isOnCurve?: boolean;
   unrealizedPnl?: number;
   unrealizedPnlPercent?: number;
-  volume?: number;
-  volumeBuy?: number;
-  volumeBuyUSD?: number;
-  volumeSell?: number;
-  volumeSellUSD?: number;
-  volumeUSD?: number;
-  walletTags?: string[];
+  remainVolume?: number;
 }
 
 export interface BirdeyeTopTraderFunding {
-  amount?: number;
   funder?: string;
   meta?: BirdeyeTopTraderFundingMeta;
-  timeLinked?: BirdeyeTopTraderFundingTimeLinked;
-  totalFundedAmount?: number;
-  totalFundedHolders?: string;
-  txHash?: string;
   unixTime?: number;
+  amount?: number;
+  totalFundedHolders?: string;
+  totalFundedAmount?: number;
+  txHash?: string;
+  timeLinked?: BirdeyeTopTraderFundingTimeLinked;
 }
 
 export interface BirdeyeTopTraderFundingMeta {
@@ -1064,15 +1083,15 @@ export interface BirdeyeTopTraderFundingTimeLinked {
 
 export interface BirdeyeTopTraderFundingTimeLinkedPeersItem {
   address?: string;
-  holdVolumeUSD?: number;
-  realizedPnl?: number;
-  solBalance?: number;
-  totalPnl?: number;
-  txHash?: string;
   unixTime?: number;
-  unrealizedPnl?: number;
+  solBalance?: number;
   volumeBuyUSD?: number;
   volumeSellUSD?: number;
+  holdVolumeUSD?: number;
+  totalPnl?: number;
+  realizedPnl?: number;
+  txHash?: string;
+  unrealizedPnl?: number;
 }
 
 export interface BirdeyeTopTradersPage {
@@ -1081,32 +1100,32 @@ export interface BirdeyeTopTradersPage {
 }
 
 export interface BirdeyeTrade {
-  address: string;
-  alias?: BirdeyeTradeAlias;
-  blockHumanTime: string;
-  blockUnixTime: number;
-  from: BirdeyeTradeFrom;
   id: string;
-  mc?: number;
-  network: string;
-  owner: string;
-  platform: string;
-  platformAddress?: string;
-  pnl: string | null;
-  pricePair?: number | null;
-  side: string;
-  signers?: string[];
+  volumeUSD: number;
+  blockUnixTime: number;
   slot: number;
-  soldPercentage?: number | null;
+  blockHumanTime: string;
+  txType: string;
+  txHash: string;
+  address: string;
+  owner: string;
+  signers?: string[];
   source: string;
-  sourceAddress?: string;
+  platform: string;
+  walletTags?: string[];
+  txIndex?: number;
+  pnl: string | null;
+  side: string;
+  pricePair?: number | null;
+  from: BirdeyeTradeFrom;
   to: BirdeyeTradeTo;
   tokenPrice: number | null;
-  txHash: string;
-  txIndex?: number;
-  txType: string;
-  volumeUSD: number;
-  walletTags?: string[];
+  mc?: number;
+  network: string;
+  soldPercentage?: number | null;
+  sourceAddress?: string;
+  platformAddress?: string;
+  alias?: BirdeyeTradeAlias;
 }
 
 export interface BirdeyeTradeAlias {
@@ -1121,30 +1140,30 @@ export interface BirdeyeTradeAliasLabel {
 
 export interface BirdeyeTradeFrom {
   address: string;
-  amount: number | string;
-  decimals: number;
-  icon: string | null;
-  preAmount?: string;
-  price: number | null;
   symbol: string;
-  typeSwap: string | null;
+  icon: string | null;
+  decimals: number;
+  amount: number | string;
+  price: number | null;
   uiAmount: number;
   uiChangeAmount: number | null;
+  typeSwap: string | null;
+  preAmount?: string;
 }
 
 export type BirdeyeTradeSide = "all" | "buy" | "sell" | "add" | "remove" | "trade" | "liquidity";
 
 export interface BirdeyeTradeTo {
   address: string;
-  amount: number | string;
-  decimals: number;
-  icon: string | null;
-  preAmount?: string;
-  price: number | null;
   symbol: string;
-  typeSwap: string | null;
+  decimals: number;
+  amount: number | string;
+  price: number | null;
   uiAmount: number;
   uiChangeAmount: number | null;
+  typeSwap: string | null;
+  preAmount?: string;
+  icon: string | null;
 }
 
 export type BirdeyeTraderSort = "total_pnl" | "realized_pnl" | "unrealized_pnl";
@@ -1152,42 +1171,42 @@ export type BirdeyeTraderSort = "total_pnl" | "realized_pnl" | "unrealized_pnl";
 export type BirdeyeTrendingChain = "all" | "solana" | "ethereum" | "base" | "bsc" | "arbitrum" | "avalanche" | "optimism" | "polygon";
 
 export interface BirdeyeTrendingToken {
-  createdAt?: string;
+  token: string;
+  price: number;
   liquidity: number;
   network: string;
-  price: number;
-  realMc: number;
-  tf1h: BirdeyeTrendingTokenTf1h;
-  tf24h: BirdeyeTrendingTokenTf24h;
-  tf4h: BirdeyeTrendingTokenTf4h;
-  token: string;
   tokenData: BirdeyeTrendingTokenTokenData;
+  realMc: number;
+  createdAt?: string;
+  tf24h: BirdeyeTrendingTokenTf24h;
+  tf1h: BirdeyeTrendingTokenTf1h;
+  tf4h: BirdeyeTrendingTokenTf4h;
   trendingScore: number;
 }
 
 export interface BirdeyeTrendingTokenTf1h {
-  priceChangePercent: number;
+  priceChangePercent: number | null;
 }
 
 export interface BirdeyeTrendingTokenTf24h {
-  priceChangePercent: number;
-  tradeCount: number;
-  volumeChangePercent?: number | null;
+  priceChangePercent: number | null;
   volumeUSD: number;
+  volumeChangePercent?: number | null;
+  tradeCount: number;
 }
 
 export interface BirdeyeTrendingTokenTf4h {
-  priceChangePercent: number;
+  priceChangePercent: number | null;
 }
 
 export interface BirdeyeTrendingTokenTokenData {
-  birdeyeStrict?: boolean;
-  decimals: number;
-  icon?: string | null;
-  jupStrict?: boolean;
   name: string;
   symbol: string;
+  decimals: number;
+  icon?: string | null;
   website: string | null;
+  jupStrict?: boolean;
+  birdeyeStrict?: boolean;
 }
 
 export interface BirdeyeTrendingTokens {
@@ -1196,41 +1215,41 @@ export interface BirdeyeTrendingTokens {
 }
 
 export interface BirdeyeWalletPnlSummary {
-  average_profit_usd_per_trade?: number;
-  average_swap_amount_usd?: number;
-  avg_investment_size?: number;
-  avg_loss_size?: number;
-  avg_win_size?: number;
-  did_not_buy_percent?: number;
-  label_metadata?: BirdeyeWalletPnlSummaryLabelMetadata;
-  net_value?: number;
-  realized_pnl?: number;
+  wallet?: string;
   realized_pnl_percent?: number;
-  realized_pnl_percent_0_100?: string;
-  realized_pnl_percent_100_500?: string;
-  realized_pnl_percent_gt_500?: string;
-  realized_pnl_percent_lt_neg50?: string;
-  realized_pnl_percent_neg50_0?: string;
-  rug_token_percent?: number;
-  sold_gt_bought_percent?: number;
+  realized_pnl?: number;
   token_traded_count?: string;
-  total_pnl?: number;
-  tx_buy_count?: string;
   tx_count?: string;
+  tx_buy_count?: string;
   tx_sell_count?: string;
-  unrealized_pnl?: number;
   volume_buy_usd?: number;
   volume_sell_usd?: number;
+  net_value?: number;
   volume_usd?: number;
-  wallet?: string;
-  wallet_platforms?: string[];
-  wallet_tags?: string[];
+  avg_investment_size?: number;
+  average_swap_amount_usd?: number;
+  unrealized_pnl?: number;
+  total_pnl?: number;
+  average_profit_usd_per_trade?: number;
   win_rate?: number;
+  realized_pnl_percent_gt_500?: string;
+  realized_pnl_percent_100_500?: string;
+  realized_pnl_percent_0_100?: string;
+  realized_pnl_percent_neg50_0?: string;
+  realized_pnl_percent_lt_neg50?: string;
+  avg_win_size?: number;
+  avg_loss_size?: number;
+  sold_gt_bought_percent?: number;
+  rug_token_percent?: number;
+  label_metadata?: BirdeyeWalletPnlSummaryLabelMetadata;
+  wallet_tags?: string[];
+  wallet_platforms?: string[];
+  did_not_buy_percent?: number;
 }
 
 export interface BirdeyeWalletPnlSummaryLabelMetadata {
-  label?: string;
   labels?: Record<string, BirdeyeWalletPnlSummaryLabelMetadataLabelsEntry>;
+  label?: string;
   logoURI?: string;
   primary?: string;
 }
@@ -1240,57 +1259,57 @@ export interface BirdeyeWalletPnlSummaryLabelMetadataLabelsEntry {
 }
 
 export interface BirdeyeWalletPortfolioPage {
+  wallet: string;
   currency: string;
+  total_value: string;
   current_timestamp: string;
   items: BirdeyePortfolioToken[];
   pagination: BirdeyeCursorPagination;
-  total_value: string;
-  wallet: string;
 }
 
 export interface BirdeyeWalletToken {
-  avg_buy_per_tx?: number;
+  wallet?: string;
+  token?: string;
+  tx_count?: string;
+  tx_buy_count?: string;
+  tx_sell_count?: string;
+  volume_buy?: number;
+  volume_sell?: number;
   avg_buy_price?: number;
   avg_sell_price?: number;
-  current_price?: number;
-  effective_sell_volume?: number;
-  first_trade_unix_time?: string;
-  hold_volume?: number;
-  hold_volume_usd?: number;
-  init_time?: string;
-  is_low_liquidity?: boolean;
-  last_trade_unix_time?: string;
-  market_cap?: number;
-  net_value?: number;
-  realized_pnl?: number;
-  realized_pnl_percent?: number;
+  avg_buy_per_tx?: number;
+  volume?: number;
+  volume_usd?: number;
+  volume_buy_usd?: number;
+  volume_sell_usd?: number;
   remain_volume?: number;
-  token?: string;
-  token_meta?: BirdeyeWalletTokenTokenMeta;
+  effective_sell_volume?: number;
+  net_value?: number;
   total_pnl?: number;
   total_pnl_percent?: number;
-  tx_buy_count?: string;
-  tx_count?: string;
-  tx_sell_count?: string;
+  realized_pnl?: number;
+  realized_pnl_percent?: number;
+  current_price?: number;
+  first_trade_unix_time?: string;
+  last_trade_unix_time?: string;
   unrealized_pnl?: number;
   unrealized_pnl_percent?: number;
-  volume?: number;
-  volume_buy?: number;
-  volume_buy_usd?: number;
-  volume_sell?: number;
-  volume_sell_usd?: number;
-  volume_usd?: number;
-  wallet?: string;
+  token_meta?: BirdeyeWalletTokenTokenMeta;
+  hold_volume?: number;
+  hold_volume_usd?: number;
+  market_cap?: number;
+  init_time?: string;
+  is_low_liquidity?: boolean;
 }
 
 export type BirdeyeWalletTokenSort = "last_trade" | "tx_count" | "total_pnl";
 
 export interface BirdeyeWalletTokenTokenMeta {
-  birdeye_strict?: boolean;
-  jup_strict?: boolean;
-  logo_uri?: string;
-  name?: string;
   symbol?: string;
+  name?: string;
+  logo_uri?: string;
+  jup_strict?: boolean;
+  birdeye_strict?: boolean;
 }
 
 export interface BirdeyeWalletTokensPage {
@@ -1299,37 +1318,37 @@ export interface BirdeyeWalletTokensPage {
 }
 
 export interface BirdeyeWalletTransaction {
-  block_unix_time?: string;
-  from?: BirdeyeWalletTransactionFrom;
-  network?: string;
-  to?: BirdeyeWalletTransactionTo;
   tx_hash?: string;
+  block_unix_time?: string;
   type?: string;
+  from?: BirdeyeWalletTransactionFrom;
+  to?: BirdeyeWalletTransactionTo;
+  network?: string;
   volume_usd?: number;
 }
 
 export interface BirdeyeWalletTransactionFrom {
+  token?: string;
   amount?: string;
-  birdeye_strict?: boolean;
-  jup_strict?: boolean;
-  logo_uri?: string;
-  name?: string;
+  ui_amount?: number;
   price?: number;
   symbol?: string;
-  token?: string;
-  ui_amount?: number;
+  name?: string;
+  logo_uri?: string;
+  jup_strict?: boolean;
+  birdeye_strict?: boolean;
 }
 
 export interface BirdeyeWalletTransactionTo {
+  token?: string;
   amount?: string;
-  birdeye_strict?: boolean;
-  jup_strict?: boolean;
-  logo_uri?: string;
-  name?: string;
+  ui_amount?: number;
   price?: number;
   symbol?: string;
-  token?: string;
-  ui_amount?: number;
+  name?: string;
+  logo_uri?: string;
+  jup_strict?: boolean;
+  birdeye_strict?: boolean;
 }
 
 export interface BirdeyeWalletTransactionsPage {
@@ -1338,65 +1357,65 @@ export interface BirdeyeWalletTransactionsPage {
 }
 
 export interface ErrorDetail {
-  ctx?: Record<string, unknown> | null;
-  input?: unknown | null;
+  type?: string | null;
   loc?: (string | number)[] | null;
   msg?: string | null;
-  type?: string | null;
+  input?: unknown | null;
+  ctx?: Record<string, unknown> | null;
 }
 
 export interface ErrorResponse {
   code: PublicError;
-  details?: ErrorDetail[] | null;
-  domain?: string | null;
   message: string;
   request_id: string;
+  domain?: string | null;
+  details?: ErrorDetail[] | null;
   upgrade_url?: string | null;
 }
 
 export interface GetNetWorthHistoryParams {
-  /** Number of points. */
-  count?: number;
-  /** Spacing of the points. */
-  interval?: BirdeyeNetWorthInterval;
   /** Solana wallet address, base58. */
   wallet: string;
+  /** Spacing of the points. */
+  interval?: BirdeyeNetWorthInterval;
+  /** Number of points. */
+  count?: number;
 }
 
 export interface GetTokenOhlcvParams {
-  /** Token address on the chosen chain: a base58 mint on Solana, 0x plus 40 hex characters on an EVM chain. */
-  address: string;
   /** Chain the token lives on, as birdeye names it. */
   chain: BirdeyeTokenChain;
-  /** Number of candles. */
-  count?: number;
+  /** Token address on the chosen chain: a base58 mint on Solana, 0x plus 40 hex characters on an EVM chain. */
+  address: string;
   /** Candle size. */
   interval?: BirdeyeCandleInterval;
+  /** Number of candles. */
+  count?: number;
   /** Return bars strictly before this unix time, in seconds. */
   to?: number | null;
 }
 
 export interface GetTokenOverviewParams {
-  /** Token address on the chosen chain: a base58 mint on Solana, 0x plus 40 hex characters on an EVM chain. */
-  address: string;
   /** Chain the token lives on, as birdeye names it. */
   chain: BirdeyeTokenChain;
+  /** Token address on the chosen chain: a base58 mint on Solana, 0x plus 40 hex characters on an EVM chain. */
+  address: string;
 }
 
 export interface GetTokenSecurityParams {
-  /** Token address on the chosen chain: a base58 mint on Solana, 0x plus 40 hex characters on an EVM chain. */
-  address: string;
   /** Chain the token lives on, as birdeye names it. */
   chain: BirdeyeTokenChain;
+  /** Token address on the chosen chain: a base58 mint on Solana, 0x plus 40 hex characters on an EVM chain. */
+  address: string;
 }
 
 export interface GetWalletPnlSummaryParams {
   /** Chain of the wallet PnL data. birdeye computes PnL on these chains only. */
   chain: BirdeyePnlChain;
-  /** Window the summary covers. */
-  period?: BirdeyePnlPeriod;
   /** Wallet address on the chosen chain: base58 on Solana, 0x plus 40 hex characters on an EVM chain. */
   wallet: string;
+  /** Window the summary covers. */
+  period?: BirdeyePnlPeriod;
 }
 
 export interface ListFirstBuyersParams {
@@ -1407,16 +1426,16 @@ export interface ListFirstBuyersParams {
 export interface ListLeaderboardParams {
   /** Chain of the wallet PnL data. birdeye computes PnL on these chains only. */
   chain: BirdeyePnlChain;
-  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
-  cursor?: string;
   /** Ranking period. */
   interval?: BirdeyeLeaderboardInterval;
-  /** Traders per page. */
-  limit?: number;
-  /** Sort direction. */
-  order?: BirdeyeSortOrder;
   /** Ranking field. */
   sort_by?: BirdeyeLeaderboardSort;
+  /** Sort direction. */
+  order?: BirdeyeSortOrder;
+  /** Traders per page. */
+  limit?: number;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
+  cursor?: string;
 }
 
 export interface ListNewListingsParams {
@@ -1432,42 +1451,42 @@ export interface ListTokenHoldersParams {
 }
 
 export interface ListTokenMarketsParams {
-  /** Token address on the chosen chain: a base58 mint on Solana, 0x plus 40 hex characters on an EVM chain. */
-  address: string;
   /** Chain the token lives on, as birdeye names it. */
   chain: BirdeyeTokenChain;
-  /** Sort direction. */
-  order?: BirdeyeSortOrder;
+  /** Token address on the chosen chain: a base58 mint on Solana, 0x plus 40 hex characters on an EVM chain. */
+  address: string;
   /** Pool ordering. */
   sort_by?: BirdeyeMarketSort;
+  /** Sort direction. */
+  order?: BirdeyeSortOrder;
 }
 
 export interface ListTokenTradesParams {
-  /** Token address on the chosen chain: a base58 mint on Solana, 0x plus 40 hex characters on an EVM chain. */
-  address: string;
   /** Chain the token lives on, as birdeye names it. */
   chain: BirdeyeTokenChain;
-  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
-  cursor?: string;
-  /** Trades per page. */
-  limit?: number;
+  /** Token address on the chosen chain: a base58 mint on Solana, 0x plus 40 hex characters on an EVM chain. */
+  address: string;
   /** Keep one kind of event: `buy`, `sell`, `trade` (buys and sells), `add`, `remove`, `liquidity` (adds and removes), or `all`. */
   side?: BirdeyeTradeSide;
+  /** Trades per page. */
+  limit?: number;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
+  cursor?: string;
 }
 
 export interface ListTopTradersParams {
-  /** Token address on the chosen chain: a base58 mint on Solana, 0x plus 40 hex characters on an EVM chain. */
-  address: string;
   /** Chain of the wallet PnL data. birdeye computes PnL on these chains only. */
   chain: BirdeyePnlChain;
-  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
-  cursor?: string;
-  /** Traders per page. */
-  limit?: number;
-  /** Sort direction. */
-  order?: BirdeyeSortOrder;
+  /** Token address on the chosen chain: a base58 mint on Solana, 0x plus 40 hex characters on an EVM chain. */
+  address: string;
   /** Ranking field. */
   sort_by?: BirdeyeTraderSort;
+  /** Sort direction. */
+  order?: BirdeyeSortOrder;
+  /** Traders per page. */
+  limit?: number;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
+  cursor?: string;
 }
 
 export interface ListTrendingTokensParams {
@@ -1476,40 +1495,40 @@ export interface ListTrendingTokensParams {
 }
 
 export interface ListWalletPortfolioParams {
-  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
-  cursor?: string;
-  /** Holdings per page. */
-  limit?: number;
   /** Solana wallet address, base58. */
   wallet: string;
+  /** Holdings per page. */
+  limit?: number;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
+  cursor?: string;
 }
 
 export interface ListWalletTokensParams {
   /** Chain of the wallet PnL data. birdeye computes PnL on these chains only. */
   chain: BirdeyePnlChain;
-  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
-  cursor?: string;
-  /** Tokens per page. */
-  limit?: number;
-  /** Sort direction. */
-  order?: BirdeyeSortOrder;
-  /** Token ordering. */
-  sort_by?: BirdeyeWalletTokenSort;
   /** Wallet address on the chosen chain: base58 on Solana, 0x plus 40 hex characters on an EVM chain. */
   wallet: string;
+  /** Token ordering. */
+  sort_by?: BirdeyeWalletTokenSort;
+  /** Sort direction. */
+  order?: BirdeyeSortOrder;
+  /** Tokens per page. */
+  limit?: number;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
+  cursor?: string;
 }
 
 export interface ListWalletTransactionsParams {
   /** Chain of the wallet PnL data. birdeye computes PnL on these chains only. */
   chain: BirdeyePnlChain;
-  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
-  cursor?: string;
-  /** Swaps per page. */
-  limit?: number;
-  /** Keep swaps of this token address only, in the chain's address format. */
-  token?: string | null;
   /** Wallet address on the chosen chain: base58 on Solana, 0x plus 40 hex characters on an EVM chain. */
   wallet: string;
+  /** Keep swaps of this token address only, in the chain's address format. */
+  token?: string | null;
+  /** Swaps per page. */
+  limit?: number;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a position, so send it with the same sort and filters as the page it came from. `pagination.completion` is `exhausted` at the last page and `depth_limit` where birdeye stops serving deeper pages. */
+  cursor?: string;
 }
 
 export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
