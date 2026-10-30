@@ -414,7 +414,7 @@ export type ListingDelivery = "all" | "local_pickup" | "shipping";
 
 export type ListingSort = "best_match" | "creation_time_descend" | "creation_time_ascend" | "price_ascend" | "price_descend" | "distance_ascend" | "distance_descend" | "vehicle_year_ascend" | "vehicle_year_descend" | "vehicle_mileage_ascend" | "vehicle_mileage_descend";
 
-export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
+export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
 
 export interface SearchMarketplaceLocationsParams {
   /** Search text. */
