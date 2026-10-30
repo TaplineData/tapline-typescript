@@ -11,7 +11,7 @@ export class ImovelwebClient {
     return this.base.get<ImovelwebListingsPage>('/v1/imovelweb/listings', { ...params });
   }
 
-  /** Returns map markers for the 100 most relevant listings, plus the matching count, viewport, and area boundary when available. Uses the filters from `/listings`. Costs 1 credit. */
+  /** Returns map markers for the 100 most relevant listings, plus the matching count, viewport, and area boundary when available. Uses the filters from `/listings`; a search that matches a few million listings fails, so add a location. Costs 1 credit. */
   async mapListings(params: MapListingsParams): Promise<ImovelwebListingsMap> {
     return this.base.get<ImovelwebListingsMap>('/v1/imovelweb/listings/map', { ...params });
   }
