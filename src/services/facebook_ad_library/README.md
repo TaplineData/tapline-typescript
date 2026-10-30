@@ -39,7 +39,7 @@ If you omit `apiKey`, the client reads `TAPLINE_API_KEY` in Node.js. Keep the ke
 | `getAdReport` | `country`, `period`, `date` | the political and issue ads report for a country; a 503 with `Retry-After` means retry after that many seconds | 3 |
 | `listAdReportAdvertisers` | `country`, `period`, `query`, `sort`, `cursor`, `date` | 20 report advertisers per page | 3 |
 
-Paged methods cost their credits per page.
+Paged methods cost their credits per page. `country` defaults to `ALL`, every country, except on `getAdReport` and `listAdReportAdvertisers`, which take a two-letter code only and default to `US`.
 
 ## Search ads and follow their versions
 
@@ -69,9 +69,9 @@ const advertiser = await tapline.facebookAdLibrary.getAdvertiser({ page_id: '150
 console.log(advertiser.page.name, advertiser.ads.total_count);
 
 const report = await tapline.facebookAdLibrary.getAdReport({ country: 'US', period: 'last_30_days' });
-console.log(report.lifetime.total_ads, report.lifetime.total_spend.formatted);
+console.log(report.lifetime.total_ads, report.lifetime.total_spend.amount);
 const top = await tapline.facebookAdLibrary.listAdReportAdvertisers({ country: 'US', period: 'last_30_days' });
-for (const row of top.advertisers) console.log(row.page.name, row.paid_for_by, row.total_spend.formatted);
+for (const row of top.advertisers) console.log(row.page.name, row.paid_for_by, row.total_spend.amount);
 ```
 
 ## Read the response

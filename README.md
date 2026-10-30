@@ -1,6 +1,6 @@
 # @tapline/client
 
-Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, Twitter (X), Pinterest, Instagram, Pumpfun, TikTok, Birdeye, LinkedIn, imovelweb, Expedia, Brave Search, Indeed, Facebook Ad Library, Facebook Marketplace, and Facebook in TypeScript or JavaScript.
+Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerminal, GoPlus Security, Pons Family, Twitter (X), Pinterest, Instagram, Pumpfun, TikTok, Birdeye, LinkedIn, imovelweb, Zillow, Expedia, Brave Search, Indeed, Facebook Ad Library, Facebook Marketplace, and Facebook in TypeScript or JavaScript.
 
 ## What you can do
 
@@ -14,11 +14,13 @@ Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerm
 | Pons Family | Browse and search launches, read token markets, trades and holders, follow wallets and creator fees, and read the memestock forum | [Pons Family guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/ponsfamily/README.md) |
 | Twitter (X) | Read public X profiles by handle or id, an account's newest posts, single posts with media and quotes, and X Communities with their top posts | [Twitter guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/twitter/README.md) |
 | Pinterest | Search pins, read one pin with every image size, its video and idea-pin pages, list a user's boards, and read the pins on a board | [Pinterest guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/pinterest/README.md) |
+| Pinterest v2 | Search pins, read a pin, list a user's boards and read a board, with one normalized pin, board and user shape across all four | [Pinterest v2 guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/pinterest_v2/README.md) |
 | Instagram | Read profiles, posts, reels, comments, highlights, audio pages, popular topics, embeds, and exact post counts | [Instagram guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/instagram/README.md) |
 | TikTok | Read profiles and videos, comments and replies, followers, sounds, hashtags, captions, collections, suggestions, and regional trending feeds | [TikTok guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/tiktok/README.md) |
 | Birdeye | Read token overviews, security checks, trades, candles, pools, trending tokens and launchpad listings on Solana and seven EVM chains, plus trader leaderboards and wallet PnL | [Birdeye guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/birdeye/README.md) |
 | LinkedIn | Read public member profiles, company, school and showcase pages with their posts, posts and Pulse articles with video transcripts, and job search and postings | [LinkedIn guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/linkedin/README.md) |
 | imovelweb | Search Brazilian homes and commercial property for sale, rent, short stays, auction and new developments, map a search, read full listings, and get each agency's phone numbers and ratings | [imovelweb guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/imovelweb/README.md) |
+| Zillow | Search homes for sale, for rent or recently sold, read a property, its price and tax records with schools and agents, its value history and comparables, and look up locations | [Zillow guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/zillow/README.md) |
 | Expedia | Search hotels and vacation homes, read hotel details, reviews and price calendars, price every room and rate plan, find things to do, and search flights with their fares and a fare calendar | [Expedia guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/expedia/README.md) |
 | Brave Search | Search the web, news, videos and images, get Brave's AI answers with their sources, find places, get driving and transit directions, and read sports standings, games and box scores | [Brave Search guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/brave_search/README.md) |
 | Indeed | Search job postings with pay, attributes and apply details on 62 country sites, read companies with their ratings and jobs, look up reported pay, and get search suggestions | [Indeed guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/indeed/README.md) |
@@ -26,7 +28,7 @@ Use `@tapline/client` to collect live data from YouTube, Airbnb, GMGN, GeckoTerm
 | Facebook Marketplace | Find Marketplace locations, search and browse listings around a point, read a listing with its seller, photos and videos, and map rentals | [Facebook Marketplace guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/facebook_marketplace/README.md) |
 | Facebook | Turn facebook.com URLs into ids, read pages and profiles, posts, photos, videos, reels and comments, search videos and events, and read public groups | [Facebook guide](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/facebook/README.md) |
 
-One API key and credit balance work across all nineteen services listed above.
+One API key and credit balance work across every service above.
 
 ## Get started
 
@@ -187,11 +189,13 @@ Use the [Tapline API reference](https://tapline.sh/docs?utm_source=typescript_cl
 - [Pons Family](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/ponsfamily/README.md)
 - [Twitter (X)](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/twitter/README.md)
 - [Pinterest](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/pinterest/README.md)
+- [Pinterest v2](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/pinterest_v2/README.md)
 - [Instagram](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/instagram/README.md)
 - [TikTok](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/tiktok/README.md)
 - [Birdeye](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/birdeye/README.md)
 - [LinkedIn](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/linkedin/README.md)
 - [imovelweb](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/imovelweb/README.md)
+- [Zillow](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/zillow/README.md)
 - [Expedia](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/expedia/README.md)
 - [Brave Search](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/brave_search/README.md)
 - [Indeed](https://github.com/TaplineData/tapline-typescript/blob/main/src/services/indeed/README.md)

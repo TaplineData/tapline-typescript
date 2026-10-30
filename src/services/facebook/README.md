@@ -67,7 +67,7 @@ Paged methods cost their credits per page.
 const resolved = await tapline.facebook.resolveUrl({ url: 'https://www.facebook.com/NASA' });
 const page = await tapline.facebook.getPage({ profile_id: resolved.ids.profile_id! });
 console.log(page.name, page.metrics.follower_count_approx);
-for (const tab of page.tabs) {
+for (const tab of page.tabs ?? []) {
   console.log(tab.tab_key, tab.collections.map((collection) => collection.collection_id));
 }
 ```
@@ -102,6 +102,7 @@ A cursor works only with the method and inputs that issued it.
 ## Read the response
 
 - Facebook's enum values arrive as `{code, label}`: `code` is Facebook's value and `label` says what it means.
+- Pages from `getPage`, `lookUpPage` and the Ad Library share one type. Fields only some of them fill, such as `tabs`, are optional.
 - `listPageFollowers`, `listPageFollowing` and `listHashtagPosts` return only the first page Facebook shows; there is no cursor.
 
 ## Handle errors and check costs
