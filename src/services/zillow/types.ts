@@ -41,7 +41,7 @@ export interface ListComparablesParams {
   zpid: number;
 }
 
-export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
+export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
 
 export interface SearchHomesParams {
   /** `pagination.next_cursor` from the previous page; empty for the first page. A cursor holds only a page number, so send it with the same location and filters. `pagination.completion` is `exhausted` at the last page and `depth_limit` at page 20, the deepest Zillow serves; narrow the filters to reach more homes. */

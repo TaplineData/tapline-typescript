@@ -50,12 +50,12 @@ export interface AthBatchRequest {
 export type AthCurrency = "USD" | "SOL" | "BASE" | "QUOTE";
 
 export interface AthParams {
-  /** Chain of the coin. Omit for a Solana pump.fun coin, the original behaviour; set it for an EVM token or to pin a coin to one chain. */
-  chain?: TokenChain | null;
-  /** Quote currency. */
-  currency?: AthCurrency;
   /** Coin address: a Solana mint or an EVM token (0x). */
   mint: string;
+  /** Quote currency. */
+  currency?: AthCurrency;
+  /** Chain of the coin. Omit for a Solana pump.fun coin, the original behaviour; set it for an EVM token or to pin a coin to one chain. */
+  chain?: TokenChain | null;
 }
 
 export interface Attachment {
@@ -147,10 +147,10 @@ export interface BountyDraftResolution {
 }
 
 export interface BountyFeedRecentParams {
-  /** `nextCursor` from the previous page; omit for the first page. */
-  cursor?: string | null;
   /** Maximum feed entries to return. */
   limit?: number;
+  /** `nextCursor` from the previous page; omit for the first page. */
+  cursor?: string | null;
 }
 
 export interface BountyFeedTrendingParams {
@@ -195,55 +195,55 @@ export interface BountyResolutionHistoryWinner {
 export type BountySort = "createdAt" | "publishedAt" | "expiresAt" | "rewardTotalUsd" | "likeCount" | "submissionCount" | "creatorXFollowerCount" | "distance";
 
 export interface BountySubmissionsParams {
-  /** `nextCursor` from the previous page; omit for the first page. */
-  cursor?: string | null;
-  /** Maximum submissions to return. */
-  limit?: number;
   /** Solana wallet that made the submissions. */
   requester_address: string;
+  /** Maximum submissions to return. */
+  limit?: number;
+  /** `nextCursor` from the previous page; omit for the first page. */
+  cursor?: string | null;
 }
 
 export interface BountyTasksParams {
-  /** Restrict to bounties on one Solana coin. */
-  coin_address?: string | null;
-  /** Bounties posted by this Solana wallet. */
-  creator_address?: string | null;
-  /** `nextCursor` from the previous page; omit for the first page. */
-  cursor?: string | null;
-  /** Expiring at or after this ISO 8601 date or time, such as `2026-11-01T00:00:00Z`. */
-  expires_at_gte?: string | null;
-  /** Expiring at or before this ISO 8601 date or time, such as `2026-11-01`. */
-  expires_at_lte?: string | null;
-  /** Include aggregate facet counts alongside the tasks. */
-  facets?: boolean;
-  /** Include moderated tasks. */
-  include_banned?: boolean | null;
-  /** Latitude for a distance search. */
-  lat?: number | null;
-  /** Minimum likes. */
-  like_count_gte?: number | null;
-  /** Maximum tasks to return. */
-  limit?: number;
-  /** Longitude for a distance search. */
-  lng?: number | null;
-  /** Sort direction. */
-  order?: OrderDirection;
   /** Lifecycle phases to return. Repeat for several. A phase is pump.fun's grouping of task states, not the task's `status`: an `OPEN` task can carry status `PENDING_RESOLUTION`. Tasks carry no `phase` field. */
   phase?: BountyPhase[];
+  /** Ranking column. */
+  sort?: BountySort;
+  /** Sort direction. */
+  order?: OrderDirection;
+  /** Maximum tasks to return. */
+  limit?: number;
+  /** Include aggregate facet counts alongside the tasks. */
+  facets?: boolean;
+  /** Restrict to bounties on one Solana coin. */
+  coin_address?: string | null;
+  /** `nextCursor` from the previous page; omit for the first page. */
+  cursor?: string | null;
   /** Free-text search. */
   q?: string | null;
-  /** Radius in km for a distance search. */
-  radius_km?: number | null;
+  /** Bounties posted by this Solana wallet. */
+  creator_address?: string | null;
   /** Bounties paying in these Solana token mints. Repeat for several. */
   reward_mints?: string[] | null;
   /** Minimum reward in USD. */
   reward_total_usd_gte?: number | null;
   /** Maximum reward in USD. */
   reward_total_usd_lte?: number | null;
-  /** Ranking column. */
-  sort?: BountySort;
+  /** Expiring at or after this ISO 8601 date or time, such as `2026-11-01T00:00:00Z`. */
+  expires_at_gte?: string | null;
+  /** Expiring at or before this ISO 8601 date or time, such as `2026-11-01`. */
+  expires_at_lte?: string | null;
+  /** Minimum likes. */
+  like_count_gte?: number | null;
   /** Minimum submissions. */
   submission_count_gte?: number | null;
+  /** Include moderated tasks. */
+  include_banned?: boolean | null;
+  /** Latitude for a distance search. */
+  lat?: number | null;
+  /** Longitude for a distance search. */
+  lng?: number | null;
+  /** Radius in km for a distance search. */
+  radius_km?: number | null;
 }
 
 export interface BountyTopCoinsParams {
@@ -338,22 +338,22 @@ export interface CalloutQuotesParams {
 }
 
 export interface CalloutRepliesParams {
-  /** Replies older than this reply id. Recency order only, so not with `sort=POSITION` or `PNL`. */
-  before_id?: string | null;
   /** Callout UUID. */
   callout_id: string;
-  /** Restrict to a reply audience. */
-  filter?: ReplyFilter;
   /** Maximum replies to return. */
   limit?: number;
-  /** Newest child replies to inline per reply. */
-  nested_limit?: number | null;
+  /** Restrict to a reply audience. */
+  filter?: ReplyFilter;
+  /** Replies older than this reply id. Recency order only, so not with `sort=POSITION` or `PNL`. */
+  before_id?: string | null;
   /** Page number for `sort=POSITION`. */
   page?: number | null;
-  /** List this reply's direct children instead of top-level replies. */
-  parent_reply_id?: string | null;
   /** Reply order. */
   sort?: ReplySort | null;
+  /** List this reply's direct children instead of top-level replies. */
+  parent_reply_id?: string | null;
+  /** Newest child replies to inline per reply. */
+  nested_limit?: number | null;
 }
 
 export interface CalloutRepostersParams {
@@ -374,90 +374,64 @@ export interface CalloutStatsParams {
 
 export type CalloutWindow = "daily" | "weekly" | "monthly" | "alltime";
 
-export interface Candle {
-  close: string;
-  high: string;
-  low: string;
-  open: string;
-  timestamp: number;
-  volume: string;
-}
-
-export type CandleInterval = "1s" | "15s" | "30s" | "1m" | "5m" | "15m" | "30m" | "1h" | "4h" | "6h" | "12h" | "24h";
-
 export type CandleResolution = "1s" | "15s" | "30s" | "1m" | "5m" | "15m" | "1h" | "4h" | "1d";
 
-export interface CandlesParams {
-  /** Chain of the coin. Omit for a Solana pump.fun coin, the original behaviour; set it for an EVM token or to pin a coin to one chain. */
-  chain?: TokenChain | null;
-  /** Coin creation timestamp in milliseconds, as returned by the coin endpoints. pump.fun does not use it to pick the window: any value returns the same series. */
-  created_ts: number;
-  /** Quote currency for the candle values. */
-  currency?: AthCurrency;
-  /** Candle width. */
-  interval?: CandleInterval;
-  /** Maximum candles to return. */
-  limit?: number;
-  /** Coin address: a Solana mint or an EVM token (0x). */
-  mint: string;
-}
-
 export interface ChainCandlesParams {
-  /** Coin address on the chosen chain: a base58 mint on Solana, a 0x token on an EVM chain, or the coin name (such as BTC) on hypercore. */
-  address: string;
   /** Chain the coin trades on; `hypercore` for HyperCore perps. */
   chain: MarketChain;
-  /** Bars ending at `to`. */
-  count?: number;
-  /** What each bar measures. `market_cap_usd` multiplies the USD price by the current circulating supply. */
-  measure?: PriceMeasure;
-  /** One pool of the coin. Omit to stitch curve and AMM bars together. */
-  pool?: string | null;
+  /** Coin address on the chosen chain: a base58 mint on Solana, a 0x token on an EVM chain, or the coin name (such as BTC) on hypercore. */
+  address: string;
   /** Bar width. */
   resolution: CandleResolution;
+  /** What each bar measures. `market_cap_usd` multiplies the USD price by the current circulating supply. */
+  measure?: PriceMeasure;
   /** Unix time in milliseconds of the newest bar. Omit for now, forming bar included. */
   to?: number | null;
+  /** Bars ending at `to`. */
+  count?: number;
+  /** One pool of the coin. Omit to stitch curve and AMM bars together. */
+  pool?: string | null;
 }
 
 export interface ChainPriceLineParams {
-  /** Coin address on the chosen chain: a base58 mint on Solana, a 0x token on an EVM chain, or the coin name (such as BTC) on hypercore. */
-  address: string;
   /** Chain the coin trades on; `hypercore` for HyperCore perps. */
   chain: MarketChain;
+  /** Coin address on the chosen chain: a base58 mint on Solana, a 0x token on an EVM chain, or the coin name (such as BTC) on hypercore. */
+  address: string;
+  /** Bar width. */
+  resolution: CandleResolution;
+  /** What each bar measures. `market_cap_usd` multiplies the USD price by the current circulating supply. */
+  measure?: PriceMeasure;
+  /** Unix time in milliseconds of the newest bar. Omit for now, forming bar included. */
+  to?: number | null;
   /** Bars ending at `to`. */
   count?: number;
   /** Most points returned; at or above `count` keeps every bar. */
   max_points?: number;
-  /** What each bar measures. `market_cap_usd` multiplies the USD price by the current circulating supply. */
-  measure?: PriceMeasure;
-  /** Bar width. */
-  resolution: CandleResolution;
-  /** Unix time in milliseconds of the newest bar. Omit for now, forming bar included. */
-  to?: number | null;
 }
 
 export interface ChainTopHoldersParams {
-  /** Coin address on the chosen chain: a base58 mint on Solana, a 0x token on an EVM chain. */
-  address: string;
   /** Chain the coin lives on. */
   chain: TokenChain;
+  /** Coin address on the chosen chain: a base58 mint on Solana, a 0x token on an EVM chain. */
+  address: string;
 }
 
 export interface ChainTradesParams {
-  /** Coin address on the chosen chain: a base58 mint on Solana, a 0x token on an EVM chain, or the coin name (such as BTC) on hypercore. */
-  address: string;
-  /** Trades newer than this `ordinalKey`. */
-  after?: string | null;
-  /** Trades older than this `ordinalKey`. */
-  before?: string | null;
   /** Chain the coin trades on; `hypercore` for HyperCore perps. */
   chain: MarketChain;
-  /** `nextCursor` from the previous page; omit for the first page. */
-  cursor?: string | null;
-  /** Trade kinds to keep. HyperCore coins default to `perp_fill`. */
-  kinds?: TradeKind[] | null;
+  /** Coin address on the chosen chain: a base58 mint on Solana, a 0x token on an EVM chain, or the coin name (such as BTC) on hypercore. */
+  address: string;
   /** Maximum trades to return. */
   limit?: number;
+  /** `nextCursor` from the previous page; omit for the first page. */
+  cursor?: string | null;
+  /** Trades older than this `ordinalKey`. */
+  before?: string | null;
+  /** Trades newer than this `ordinalKey`. */
+  after?: string | null;
+  /** Trade kinds to keep. HyperCore coins default to `perp_fill`. */
+  kinds?: TradeKind[] | null;
   /** Drop trades smaller than this in USD. */
   min_usd?: number | null;
   /** Keep trades in this pool only. */
@@ -473,8 +447,6 @@ export interface Chainconfigsnapshot {
   publishFeeLamports: string;
   submissionFeeLamports: string;
 }
-
-export type ChartTimeframe = "1m" | "5m" | "15m" | "30m" | "1h" | "6h" | "12h" | "24h" | "1w" | "1mo" | "3mo" | "1y";
 
 export interface ClipCountsParams {
   /** Coin address: a Solana mint or an EVM token (0x). */
@@ -608,30 +580,30 @@ export type CoinBoard = "new" | "graduating" | "graduated" | "movers" | "charity
 export interface CoinBoardParams {
   /** Which ranked board to read. */
   board: CoinBoard;
-  /** Keep only coins on these chains, at most 8: pump.fun refuses all nine at once. Repeat the parameter for several; omit it for every chain. */
-  chains?: TokenChain[] | null;
   /** Maximum coins to return. */
   limit?: number;
   /** Rows to skip. */
   offset?: number;
+  /** Keep only coins on these chains, at most 8: pump.fun refuses all nine at once. Repeat the parameter for several; omit it for every chain. */
+  chains?: TokenChain[] | null;
 }
 
 export interface CoinClipsParams {
-  /** Clip category as pump.fun labels it: `COMPLETE`, `HIGHLIGHT` or `PREVIEW`. Any other value answers an empty list. */
-  clip_type?: string;
-  /** `lastEvaluatedKey` from the previous page, with the same `clip_type`; omit for the first page. */
-  cursor?: string | null;
-  /** Maximum clips to return. */
-  limit?: number;
   /** Token mint address. */
   mint: string;
+  /** Clip category as pump.fun labels it: `COMPLETE`, `HIGHLIGHT` or `PREVIEW`. Any other value answers an empty list. */
+  clip_type?: string;
+  /** Maximum clips to return. */
+  limit?: number;
+  /** `lastEvaluatedKey` from the previous page, with the same `clip_type`; omit for the first page. */
+  cursor?: string | null;
 }
 
 export interface CoinFeeEventsParams {
-  /** Coin address on the chosen chain: a base58 mint on Solana, a 0x token on an EVM chain. */
-  address: string;
   /** Chain the coin lives on. */
   chain: TokenChain;
+  /** Coin address on the chosen chain: a base58 mint on Solana, a 0x token on an EVM chain. */
+  address: string;
   /** `nextCursor` from the previous page; omit for the first page. */
   cursor?: string | null;
 }
@@ -656,23 +628,23 @@ export interface CoinMayhemStateParams {
 }
 
 export interface CoinNarrativesParams {
-  /** `cursor` from the previous answer; omit for the first page. */
-  cursor?: string | null;
   /** Maximum narratives to return. */
   limit?: number;
-  /** Language, such as `en`. */
-  locale?: string | null;
+  /** `cursor` from the previous answer; omit for the first page. */
+  cursor?: string | null;
   /** Board the narratives cover. */
   source?: NarrativeSource | null;
+  /** Language, such as `en`. */
+  locale?: string | null;
 }
 
 export interface CoinParams {
-  /** Pin an EVM address that exists on several chains to one of them. A coin that is not on this chain answers 404. Omit to let pump.fun pick. */
-  chain?: TokenChain | null;
-  /** Attach livestream metadata when the coin is streaming. */
-  include_livestream_info?: boolean;
   /** Coin address: a Solana mint or an EVM token (0x). */
   mint: string;
+  /** Attach livestream metadata when the coin is streaming. */
+  include_livestream_info?: boolean;
+  /** Pin an EVM address that exists on several chains to one of them. A coin that is not on this chain answers 404. Omit to let pump.fun pick. */
+  chain?: TokenChain | null;
 }
 
 export interface CoinPosition {
@@ -715,21 +687,21 @@ export type CoinSort = "created_timestamp" | "market_cap" | "ath_market_cap" | "
 export type CoinSortDirection = "ASC" | "DESC";
 
 export interface CoinTimelineParams {
-  /** `nextCursor` from the previous page; omit for the first page. */
-  cursor?: string | null;
-  /** Maximum timeline events to return. */
-  limit?: number;
   /** Coin address: a Solana mint or an EVM token (0x). */
   mint: string;
+  /** Maximum timeline events to return. */
+  limit?: number;
+  /** `nextCursor` from the previous page; omit for the first page. */
+  cursor?: string | null;
 }
 
 export interface CoinTopCalloutsParams {
-  /** Chain of the coin, to pin an EVM token. */
-  chain?: TokenChain | null;
-  /** Maximum callouts to return. */
-  limit?: number;
   /** Coin address: a Solana mint or an EVM token (0x). */
   mint: string;
+  /** Maximum callouts to return. */
+  limit?: number;
+  /** Chain of the coin, to pin an EVM token. */
+  chain?: TokenChain | null;
 }
 
 export interface CoinsBatch {
@@ -818,22 +790,22 @@ export interface CoinsCreatedByMode {
 }
 
 export interface CoinsParams {
-  /** Keep coins in these boost states. Repeat the parameter for several. */
-  boost_modes?: BoostMode[] | null;
-  /** `true` keeps graduated coins only, `false` bonding-curve coins only. */
-  complete?: boolean | null;
-  /** Only coins launched by this wallet, Solana or EVM (0x). */
-  creator?: string | null;
-  /** Include coins flagged not-safe-for-work. */
-  include_nsfw?: boolean;
-  /** Maximum coins to return. pump.fun serves 70 at most. */
-  limit?: number;
   /** Rows to skip. */
   offset?: number;
-  /** Sort direction. */
-  order?: CoinSortDirection;
+  /** Maximum coins to return. pump.fun serves 70 at most. */
+  limit?: number;
   /** Ranking column. */
   sort?: CoinSort;
+  /** Sort direction. */
+  order?: CoinSortDirection;
+  /** Include coins flagged not-safe-for-work. */
+  include_nsfw?: boolean;
+  /** Only coins launched by this wallet, Solana or EVM (0x). */
+  creator?: string | null;
+  /** `true` keeps graduated coins only, `false` bonding-curve coins only. */
+  complete?: boolean | null;
+  /** Keep coins in these boost states. Repeat the parameter for several. */
+  boost_modes?: BoostMode[] | null;
 }
 
 export interface Competition {
@@ -941,10 +913,10 @@ export interface CreatorFeesParams {
   address: string;
   /** Bucket width. pump.fun's `5m` series has answered 503 (not charged) for every creator tried since 2026-10-08. */
   interval?: CreatorFeeInterval;
-  /** Narrow the earnings to one Solana coin. A Solana creator only. */
-  mint?: string | null;
   /** Window ending now. Omit for the widest window `interval` allows. */
   period?: FeePeriod | null;
+  /** Narrow the earnings to one Solana coin. A Solana creator only. */
+  mint?: string | null;
 }
 
 export interface CreatorFeesTotalParams {
@@ -1068,19 +1040,19 @@ export interface Entry {
 }
 
 export interface ErrorDetail {
-  ctx?: Record<string, unknown> | null;
-  input?: unknown | null;
+  type?: string | null;
   loc?: (string | number)[] | null;
   msg?: string | null;
-  type?: string | null;
+  input?: unknown | null;
+  ctx?: Record<string, unknown> | null;
 }
 
 export interface ErrorResponse {
   code: PublicError;
-  details?: ErrorDetail[] | null;
-  domain?: string | null;
   message: string;
   request_id: string;
+  domain?: string | null;
+  details?: ErrorDetail[] | null;
   upgrade_url?: string | null;
 }
 
@@ -1134,10 +1106,10 @@ export type FeePeriod = "1d" | "7d" | "30d";
 export interface FeeSharingSharesParams {
   /** Solana wallet address. pump.fun refuses EVM wallets here. */
   address: string;
-  /** Cursor from a previous page. */
-  cursor?: string;
   /** Maximum shares to return. */
   limit?: number;
+  /** Cursor from a previous page. */
+  cursor?: string;
 }
 
 export interface FeeSharingTotalsParams {
@@ -1215,15 +1187,6 @@ export interface FollowingParams {
   offset?: number | null;
   /** `followers` puts the most-followed profiles first; `recent` the newest follows. */
   sort?: FollowSort | null;
-}
-
-export interface Fundingsource {
-  amount: number;
-  funder: string;
-  funderName: string | null;
-  funderType: string | null;
-  signature: string;
-  timestamp: number | string;
 }
 
 export interface Generatedmedia {
@@ -2383,21 +2346,6 @@ export interface GetTokenHolderCountResponse {
   networkId: number;
 }
 
-export interface GetTopHoldersResponse {
-  topHolders: GetTopHoldersResponseTopholder[];
-  totalHolders: number;
-}
-
-export interface GetTopHoldersResponseTopholder {
-  address: string;
-  amount: number;
-  enteredAt: number | null;
-  fundingSource: Fundingsource | null;
-  isBundler: boolean;
-  isDev: boolean;
-  isSniper: boolean;
-}
-
 export interface GetTopTokenMintChainsResponse {
   chains: Record<string, string[]>;
   mints: string[];
@@ -2443,28 +2391,6 @@ export interface GetTopTraderTradesResponseTrader {
 }
 
 export type GetTradesBatchResponse = Record<string, TradesBatchEntry[]>;
-
-export interface GetTradesResponse {
-  pagination: PageCursor;
-  trades: GetTradesResponseTrade[];
-}
-
-export interface GetTradesResponseTrade {
-  amountSol: string;
-  amountUsd: string;
-  baseAmount: string;
-  fillPriceSol: string;
-  fillPriceUsd: string;
-  priceSol: string;
-  priceUsd: string;
-  program: string;
-  quoteAmount: string;
-  slotIndexId: string;
-  timestamp: string;
-  tx: string;
-  type: string;
-  userAddress: string;
-}
 
 export interface GetTrendingBoardResponse {
   board: string;
@@ -2964,14 +2890,14 @@ export interface GroupMembersPnlParams {
 }
 
 export interface GroupPnlLeaderboardParams {
-  /** Maximum squads to return. */
-  limit?: number;
   /** Ranking window. */
   period?: LeaderboardPeriod;
-  /** Top positions shown per squad (pump.fun's default 3). */
-  positions_limit?: number | null;
   /** Which PnL figure ranks squads. */
   sort?: LeaderboardSort | null;
+  /** Maximum squads to return. */
+  limit?: number;
+  /** Top positions shown per squad (pump.fun's default 3). */
+  positions_limit?: number | null;
 }
 
 export interface Groupbadge {
@@ -2991,18 +2917,18 @@ export type HolderRewardSort = "accrued" | "accruedNow" | "distributed" | "lastP
 export interface HolderRewardsParams {
   /** `nextCursor` from the previous page; omit for the first page. */
   cursor?: string | null;
-  /** Sort direction. */
-  direction?: OrderDirection;
-  /** Coins per page. */
-  limit?: number;
-  /** Page number, from 1. */
-  page?: number;
-  /** Only coins that paid holders. */
-  paying_only?: boolean | null;
-  /** Only coins quoted in this token mint. */
-  quote?: string | null;
   /** Ranking column. */
   sort?: HolderRewardSort;
+  /** Sort direction. */
+  direction?: OrderDirection;
+  /** Only coins quoted in this token mint. */
+  quote?: string | null;
+  /** Only coins that paid holders. */
+  paying_only?: boolean | null;
+  /** Page number, from 1. */
+  page?: number;
+  /** Coins per page. */
+  limit?: number;
 }
 
 export interface HolderStatsParams {
@@ -3059,12 +2985,12 @@ export interface HomeFeedLegacyPosition {
 }
 
 export interface HomeFeedParams {
+  /** Number of feed entries to return. */
+  page_size?: number;
   /** Restrict the feed to one chain. pump.fun's feed does not cover Monad. */
   chain?: FeedChain;
   /** Page number, from 0. */
   page?: number | null;
-  /** Number of feed entries to return. */
-  page_size?: number;
   /** Author updates to include per callout. */
   updates_limit?: number | null;
 }
@@ -3197,22 +3123,6 @@ export interface Liker {
   username: string;
   verifiedBadgeVisible: boolean;
   walletAddress: string;
-}
-
-export interface LineChart {
-  price: number;
-  time: number;
-}
-
-export interface LineChartParams {
-  /** Coin creation timestamp in milliseconds, as returned by the coin endpoints. pump.fun does not use it to pick the window: any value returns the same series. */
-  created_ts: number;
-  /** Coin address: a Solana mint or an EVM token (0x). */
-  mint: string;
-  /** Series window. */
-  timeframe?: ChartTimeframe;
-  /** Points pump.fun aims for. It treats this as a hint: the count it returns varies with the timeframe and can exceed `width`. */
-  width?: number;
 }
 
 export interface ListCompetitionsResponse {
@@ -3409,12 +3319,12 @@ export interface LiveCoinMayhem {
 }
 
 export interface LiveCoinsParams {
-  /** Include coins flagged not-safe-for-work. */
-  include_nsfw?: boolean;
   /** Maximum coins to return. */
   limit?: number;
   /** Rows to skip. */
   offset?: number;
+  /** Include coins flagged not-safe-for-work. */
+  include_nsfw?: boolean;
 }
 
 export interface Livestream {
@@ -3434,10 +3344,10 @@ export interface Livestream {
 }
 
 export interface LivestreamHistoryParams {
-  /** Maximum sessions to return. */
-  limit?: number;
   /** Token mint address. */
   mint: string;
+  /** Maximum sessions to return. */
+  limit?: number;
   /** Rows to skip. */
   offset?: number;
 }
@@ -3495,10 +3405,10 @@ export type MarketActivityInterval = "1m" | "5m" | "15m" | "30m" | "1h" | "6h" |
 export type MarketActivityMetric = "numTxs" | "volumeUSD" | "numUsers" | "numBuys" | "numSells" | "buyVolumeUSD" | "sellVolumeUSD" | "numBuyers" | "numSellers" | "priceChangePercent";
 
 export interface MarketActivityParams {
-  /** Chain of the coin. Omit for a Solana pump.fun coin, the original behaviour; set it for an EVM token or to pin a coin to one chain. */
-  chain?: TokenChain | null;
   /** Coin address: a Solana mint or an EVM token (0x). */
   mint: string;
+  /** Chain of the coin. Omit for a Solana pump.fun coin, the original behaviour; set it for an EVM token or to pin a coin to one chain. */
+  chain?: TokenChain | null;
 }
 
 export type MarketChain = "solana" | "ethereum" | "bsc" | "base" | "monad" | "robinhood" | "hyperevm" | "ink" | "arc" | "hypercore";
@@ -3593,14 +3503,14 @@ export interface MayhemCoinTopTradersParams {
 }
 
 export interface MayhemCoinsParams {
-  /** Include coins flagged not-safe-for-work. */
-  include_nsfw?: boolean | null;
   /** Maximum coins to return. pump.fun serves 60 at most. */
   limit?: number;
   /** Restrict to one agent state. Omit for active and paused coins. */
   mayhem_state?: MayhemState | null;
   /** Rows to skip. */
   offset?: number | null;
+  /** Include coins flagged not-safe-for-work. */
+  include_nsfw?: boolean | null;
 }
 
 export type MayhemState = "active" | "paused" | "completed";
@@ -3657,26 +3567,26 @@ export interface Metadata {
 export type MintPositionSort = "LATEST" | "TOP" | "LOWEST_ENTRY" | "RANKED" | "CLOSED_PNL";
 
 export interface MintPositionsParams {
-  /** `RANKED` only: chain of an EVM coin. */
-  chain?: TokenChain | null;
-  /** Ignore positions below this USD value. Refused with `RANKED` and `CLOSED_PNL`. */
-  dust_floor_usd?: number | null;
-  /** Embed each holder's full profile. */
-  include_profile?: boolean | null;
   /** Coin address: a Solana mint or an EVM token (0x). */
   mint: string;
-  /** Page number, from 0. Not with `RANKED`. */
-  page?: number | null;
   /** Positions per page. */
   page_size?: number;
-  /** `RANKED` only: `nextPageToken` from the previous page. pump.fun answered `RANKED` in one page (`hasMore` false) with no `nextPageToken` in every probe since 2026-10-08. */
-  page_token?: string | null;
   /** Ranking column. */
   sort_by?: MintPositionSort;
-  /** Author updates per callout (pump.fun's default 5). */
-  updates_limit?: number | null;
   /** Only positions carrying a written thesis. `RANKED` and `CLOSED_PNL` need `true`. */
   with_thesis?: boolean | null;
+  /** Page number, from 0. Not with `RANKED`. */
+  page?: number | null;
+  /** Author updates per callout (pump.fun's default 5). */
+  updates_limit?: number | null;
+  /** Embed each holder's full profile. */
+  include_profile?: boolean | null;
+  /** Ignore positions below this USD value. Refused with `RANKED` and `CLOSED_PNL`. */
+  dust_floor_usd?: number | null;
+  /** `RANKED` only: `nextPageToken` from the previous page. pump.fun answered `RANKED` in one page (`hasMore` false) with no `nextPageToken` in every probe since 2026-10-08. */
+  page_token?: string | null;
+  /** `RANKED` only: chain of an EVM coin. */
+  chain?: TokenChain | null;
 }
 
 export interface Monad {
@@ -3690,10 +3600,10 @@ export interface Monad {
 }
 
 export interface MoversBoardParams {
-  /** Keep only coins on these chains. Repeat the parameter for several. */
-  chains?: NonMonadChain[] | null;
   /** Maximum board entries to return. pump.fun serves at most 150. */
   limit?: number;
+  /** Keep only coins on these chains. Repeat the parameter for several. */
+  chains?: NonMonadChain[] | null;
 }
 
 export interface MultiChainBreakdown {
@@ -3720,45 +3630,45 @@ export interface Nativeasset {
 }
 
 export interface NewCalloutsCountParams {
-  /** Restrict the feed to one chain. pump.fun's feed does not cover Monad. */
-  chain?: FeedChain;
-  /** Keep callouts made when the coin's market cap was at most this. */
-  max_callout_market_cap_usd?: number | null;
-  /** Keep positions whose net USD cost basis is at most this. */
-  max_cost_basis_usd?: number | null;
-  /** Keep coins whose current market cap in USD is at most this. */
-  max_market_cap_usd?: number | null;
-  /** Keep callouts made when the coin's market cap was at least this. */
-  min_callout_market_cap_usd?: number | null;
-  /** Keep positions whose net USD cost basis is at least this. */
-  min_cost_basis_usd?: number | null;
-  /** Keep coins whose current market cap in USD is at least this. */
-  min_market_cap_usd?: number | null;
   /** `headToken` from `/home-feed/new`, kept until you reload the feed. */
   since: string;
+  /** Restrict the feed to one chain. pump.fun's feed does not cover Monad. */
+  chain?: FeedChain;
+  /** Keep positions whose net USD cost basis is at least this. */
+  min_cost_basis_usd?: number | null;
+  /** Keep positions whose net USD cost basis is at most this. */
+  max_cost_basis_usd?: number | null;
+  /** Keep callouts made when the coin's market cap was at least this. */
+  min_callout_market_cap_usd?: number | null;
+  /** Keep callouts made when the coin's market cap was at most this. */
+  max_callout_market_cap_usd?: number | null;
+  /** Keep coins whose current market cap in USD is at least this. */
+  min_market_cap_usd?: number | null;
+  /** Keep coins whose current market cap in USD is at most this. */
+  max_market_cap_usd?: number | null;
 }
 
 export interface NewCalloutsFeedParams {
-  /** Restrict the feed to one chain. pump.fun's feed does not cover Monad. */
-  chain?: FeedChain;
-  /** Keep callouts made when the coin's market cap was at most this. */
-  max_callout_market_cap_usd?: number | null;
-  /** Keep positions whose net USD cost basis is at most this. */
-  max_cost_basis_usd?: number | null;
-  /** Keep coins whose current market cap in USD is at most this. */
-  max_market_cap_usd?: number | null;
-  /** Keep callouts made when the coin's market cap was at least this. */
-  min_callout_market_cap_usd?: number | null;
-  /** Keep positions whose net USD cost basis is at least this. */
-  min_cost_basis_usd?: number | null;
-  /** Keep coins whose current market cap in USD is at least this. */
-  min_market_cap_usd?: number | null;
   /** Number of callouts to return. */
   page_size?: number;
   /** `nextPageToken` from the previous page. */
   page_token?: string | null;
   /** Author updates to include per callout. */
   updates_limit?: number | null;
+  /** Restrict the feed to one chain. pump.fun's feed does not cover Monad. */
+  chain?: FeedChain;
+  /** Keep positions whose net USD cost basis is at least this. */
+  min_cost_basis_usd?: number | null;
+  /** Keep positions whose net USD cost basis is at most this. */
+  max_cost_basis_usd?: number | null;
+  /** Keep callouts made when the coin's market cap was at least this. */
+  min_callout_market_cap_usd?: number | null;
+  /** Keep callouts made when the coin's market cap was at most this. */
+  max_callout_market_cap_usd?: number | null;
+  /** Keep coins whose current market cap in USD is at least this. */
+  min_market_cap_usd?: number | null;
+  /** Keep coins whose current market cap in USD is at most this. */
+  max_market_cap_usd?: number | null;
 }
 
 export type NonMonadChain = "solana" | "ethereum" | "bsc" | "base" | "robinhood" | "hyperevm" | "ink" | "arc";
@@ -3888,21 +3798,21 @@ export type PerpTradeKind = "perp_fill" | "perp_funding" | "perp_transfer";
 export interface PerpTradesParams {
   /** Wallet address (Solana or EVM) or pump.fun user id (UUID). */
   address: string;
+  /** Maximum rows to return. */
+  limit?: number;
   /** `nextCursor` from the previous page; omit for the first page. */
   cursor?: string | null;
   /** Row kinds. pump.fun returns fills and transfers by default. */
   kinds?: PerpTradeKind[] | null;
-  /** Maximum rows to return. */
-  limit?: number;
 }
 
 export interface PerpsParams {
+  /** Ranking column. */
+  sort?: PerpSort;
   /** Maximum perps to return. */
   limit?: number;
   /** Rows to skip. */
   offset?: number;
-  /** Ranking column. */
-  sort?: PerpSort;
 }
 
 export interface Playback {
@@ -3917,21 +3827,21 @@ export interface PlaylistMapRequest {
 }
 
 export interface PnlLeaderboardParams {
-  /** Maximum traders to return. pump.fun serves 100 at most. */
-  limit?: number;
   /** Ranking window. */
   period?: LeaderboardPeriod;
-  /** Top positions shown per trader (pump.fun's default 3). */
-  positions_limit?: number | null;
   /** Which PnL figure ranks traders. */
   sort?: LeaderboardSort;
+  /** Maximum traders to return. pump.fun serves 100 at most. */
+  limit?: number;
+  /** Top positions shown per trader (pump.fun's default 3). */
+  positions_limit?: number | null;
 }
 
 export interface PnlLeaderboardPositionsParams {
-  /** Maximum positions to return. */
-  limit?: number | null;
   /** Ranking window. */
   period?: PositionsPeriod;
+  /** Maximum positions to return. */
+  limit?: number | null;
 }
 
 export interface Pnlloop {
@@ -4066,7 +3976,7 @@ export interface Progress {
   previousThreshold: number | null;
 }
 
-export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
+export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
 
 export interface Qr {
   enabled: boolean;
@@ -4209,21 +4119,21 @@ export interface Reply {
 export type ReplyFilter = "ALL" | "EXCLUDE_AUTHOR" | "AUTHOR_ONLY";
 
 export interface ReplyLikersParams {
+  /** Callout reply UUID. */
+  reply_id: string;
   /** Maximum profiles to return. */
   limit?: number;
   /** Rows to skip. pump.fun stops at 10,000. */
   offset?: number;
-  /** Callout reply UUID. */
-  reply_id: string;
 }
 
 export interface ReplyRepostersParams {
+  /** Callout reply UUID. */
+  reply_id: string;
   /** Maximum profiles to return. */
   limit?: number;
   /** Rows to skip. pump.fun stops at 10,000. */
   offset?: number;
-  /** Callout reply UUID. */
-  reply_id: string;
 }
 
 export type ReplySort = "RECENCY" | "POSITION" | "PNL";
@@ -4424,74 +4334,74 @@ export interface Row {
 }
 
 export interface SearchCoinsParams {
-  /** `true` keeps graduated coins only, `false` bonding-curve coins only. */
-  complete?: boolean | null;
-  /** Only coins launched by this wallet, Solana or EVM (0x). */
-  creator?: string | null;
-  /** Include coins flagged not-safe-for-work. */
-  include_nsfw?: boolean;
-  /** Maximum coins to return. */
-  limit?: number;
-  /** Only coins at most this many seconds old. */
-  max_age_seconds?: number | null;
-  /** Only coins at least this many seconds old. */
-  min_age_seconds?: number | null;
-  /** Rows to skip. */
-  offset?: number;
-  /** Deprecated: pump.fun does not order search results by this column, though a value other than the default can change which coins come back. */
-  order?: CoinSortDirection;
   /** Free-text search term. */
   search_term: string;
+  /** Rows to skip. */
+  offset?: number;
+  /** Maximum coins to return. */
+  limit?: number;
   /** Deprecated: pump.fun does not order search results by this column, though a value other than the default can change which coins come back. */
   sort?: CoinSort;
+  /** Deprecated: pump.fun does not order search results by this column, though a value other than the default can change which coins come back. */
+  order?: CoinSortDirection;
+  /** Include coins flagged not-safe-for-work. */
+  include_nsfw?: boolean;
+  /** Only coins launched by this wallet, Solana or EVM (0x). */
+  creator?: string | null;
+  /** `true` keeps graduated coins only, `false` bonding-curve coins only. */
+  complete?: boolean | null;
+  /** Only coins at least this many seconds old. */
+  min_age_seconds?: number | null;
+  /** Only coins at most this many seconds old. */
+  max_age_seconds?: number | null;
 }
 
 export interface SearchFollowersParams {
   /** Solana wallet address or pump.fun user id (UUID). pump.fun refuses EVM wallets here. */
   address: string;
+  /** Search term, 2 to 50 characters. */
+  search_term: string;
   /** Maximum profiles to return. */
   limit?: number;
   /** Rows to skip. */
   offset?: number;
-  /** Search term, 2 to 50 characters. */
-  search_term: string;
 }
 
 export interface SearchFollowingParams {
   /** Solana wallet address or pump.fun user id (UUID). pump.fun refuses EVM wallets here. */
   address: string;
+  /** Search term, 2 to 50 characters. */
+  search_term: string;
   /** Maximum profiles to return. */
   limit?: number;
   /** Rows to skip. */
   offset?: number;
-  /** Search term, 2 to 50 characters. */
-  search_term: string;
 }
 
 export interface SearchQuoteFacetsParams {
-  /** `true` keeps graduated coins only, `false` bonding-curve coins only. */
-  complete?: boolean | null;
-  /** Only coins launched by this wallet, Solana or EVM (0x). */
-  creator?: string | null;
-  /** Include coins flagged not-safe-for-work. */
-  include_nsfw?: boolean;
-  /** Only coins at most this many seconds old. */
-  max_age_seconds?: number | null;
-  /** Only coins at least this many seconds old. */
-  min_age_seconds?: number | null;
   /** Free-text search term. */
   search_term?: string | null;
+  /** Only coins launched by this wallet, Solana or EVM (0x). */
+  creator?: string | null;
+  /** `true` keeps graduated coins only, `false` bonding-curve coins only. */
+  complete?: boolean | null;
+  /** Include coins flagged not-safe-for-work. */
+  include_nsfw?: boolean;
+  /** Only coins at least this many seconds old. */
+  min_age_seconds?: number | null;
+  /** Only coins at most this many seconds old. */
+  max_age_seconds?: number | null;
 }
 
 export interface SearchUsersParams {
-  /** Include wallets pump.fun has labelled but that have no profile. */
-  include_labelled_wallets?: boolean;
-  /** Maximum profiles to return. */
-  limit?: number;
-  /** Rows to skip. */
-  offset?: number;
   /** Free-text search term. */
   search_term: string;
+  /** Rows to skip. */
+  offset?: number;
+  /** Maximum profiles to return. */
+  limit?: number;
+  /** Include wallets pump.fun has labelled but that have no profile. */
+  include_labelled_wallets?: boolean;
 }
 
 export interface SearchedCoin {
@@ -4706,14 +4616,14 @@ export interface SimilarCoinResult {
 }
 
 export interface SimilarCoinsParams {
-  /** Include coins flagged not-safe-for-work. */
-  include_nsfw?: boolean;
-  /** Maximum coins to return. */
-  limit?: number;
   /** Coin address: a Solana mint or an EVM token (0x). */
   mint: string;
+  /** Maximum coins to return. */
+  limit?: number;
   /** Rows to skip. */
   offset?: number;
+  /** Include coins flagged not-safe-for-work. */
+  include_nsfw?: boolean;
 }
 
 export interface Social {
@@ -4882,21 +4792,16 @@ export interface Top {
 }
 
 export interface TopClipsParams {
-  /** Clip category as pump.fun labels it. */
-  clip_type?: ClipType;
+  /** Ranking window. */
+  period?: VodPeriod;
   /** Maximum clips to return. */
   limit?: number;
   /** Candidate pool size the ranking samples from. */
   oversample?: number;
-  /** Ranking window. */
-  period?: VodPeriod;
+  /** Clip category as pump.fun labels it. */
+  clip_type?: ClipType;
   /** Unix seconds to rank as of. Defaults to now. */
   timestamp?: number | null;
-}
-
-export interface TopHoldersParams {
-  /** Coin address: a Solana mint or an EVM token (0x). */
-  mint: string;
 }
 
 export type TopMintsSort = "volume_1_hr" | "market_cap";
@@ -4912,16 +4817,16 @@ export interface TopTokenMintsParams {
 }
 
 export interface TopTraderTradesParams {
+  /** Coin address: a Solana mint or an EVM token (0x). */
+  mint: string;
   /** Chain of an EVM coin. Omit for Solana, or to let pump.fun infer it. */
   chain?: TokenChain | null;
+  /** Unix time in ms of the newest trade. pump.fun honours it only while it pages the answer. */
+  to?: number | null;
   /** `page.nextCursor` from the previous page; omit for the first page. */
   cursor?: string | null;
   /** Maximum trades to return. */
   limit?: number;
-  /** Coin address: a Solana mint or an EVM token (0x). */
-  mint: string;
-  /** Unix time in ms of the newest trade. pump.fun honours it only while it pages the answer. */
-  to?: number | null;
 }
 
 export interface TopVod {
@@ -5025,17 +4930,6 @@ export interface TradesBatchRequest {
   user_addresses: string[];
 }
 
-export interface TradesParams {
-  /** Cursor from a previous page. */
-  cursor?: string | null;
-  /** Maximum trades to return. */
-  limit?: number;
-  /** Drop trades below this SOL size. */
-  min_sol_amount?: number | null;
-  /** Coin address: a Solana mint or an EVM token (0x). */
-  mint: string;
-}
-
 export interface Transaction {
   block_time: number;
   chain?: string;
@@ -5054,10 +4948,10 @@ export interface Transaction {
 }
 
 export interface TrendingBoardParams {
-  /** Keep only coins on these chains. Repeat the parameter for several. */
-  chains?: NonMonadChain[] | null;
   /** Maximum board entries to return. pump.fun serves at most 150. */
   limit?: number;
+  /** Keep only coins on these chains. Repeat the parameter for several. */
+  chains?: NonMonadChain[] | null;
 }
 
 export interface TrendingCoin {
@@ -5204,12 +5098,12 @@ export interface UserAchievementsParams {
 export interface UserCalloutRepliesParams {
   /** Wallet address (Solana or EVM) or pump.fun user id (UUID). */
   address: string;
+  /** Maximum replies to return. */
+  limit?: number;
   /** Replies older than this reply id. */
   before_id?: string | null;
   /** Plain replies, quote posts, or both. */
   filter?: UserReplyFilter | null;
-  /** Maximum replies to return. */
-  limit?: number;
 }
 
 export interface UserCalloutsParams {
@@ -5217,12 +5111,12 @@ export interface UserCalloutsParams {
   address: string;
   /** Maximum callouts to return. pump.fun serves 100 at most. */
   limit?: number;
-  /** `nextPageToken` from the previous page. */
-  page_token?: string | null;
   /** Ranking column. */
   sort_by?: CalloutSort;
   /** Sort direction. */
   sort_order?: CoinSortDirection;
+  /** `nextPageToken` from the previous page. */
+  page_token?: string | null;
   /** Only callouts from this rolling window. Omit for all time. */
   window?: CalloutWindow | null;
 }
@@ -5239,12 +5133,12 @@ export interface UserCoinCalloutParams {
 export interface UserCreatedCoinsParams {
   /** Wallet address, Solana or EVM (0x). */
   address: string;
-  /** Include coins flagged not-safe-for-work. */
-  include_nsfw?: boolean;
   /** Maximum coins to return. pump.fun serves 50 at most. */
   limit?: number;
   /** Rows to skip. */
   offset?: number;
+  /** Include coins flagged not-safe-for-work. */
+  include_nsfw?: boolean;
 }
 
 export interface UserOverviewParams {
@@ -5260,22 +5154,22 @@ export interface UserParams {
 export interface UserPortfolioParams {
   /** Wallet address (Solana or EVM), pump.fun user id or squad id (UUIDs). */
   address: string;
-  /** Only positions on this chain. pump.fun keeps no Monad portfolio. */
-  chain?: NonMonadChain | null;
   /** Which positions to return. */
   filter?: PortfolioFilter;
-  /** Drop positions pump.fun groups as spam before paging. */
-  filter_spam?: boolean | null;
   /** Zero-based page index. */
   page?: number;
   /** Positions per page. */
   page_size?: number;
   /** Ranking column. */
   sort_by?: PortfolioSort;
-  /** Return only the spam group. Cannot be combined with `filter_spam`. */
-  spam_only?: boolean | null;
   /** Return the summary only (position count), without positions. */
   total_only?: boolean | null;
+  /** Drop positions pump.fun groups as spam before paging. */
+  filter_spam?: boolean | null;
+  /** Return only the spam group. Cannot be combined with `filter_spam`. */
+  spam_only?: boolean | null;
+  /** Only positions on this chain. pump.fun keeps no Monad portfolio. */
+  chain?: NonMonadChain | null;
 }
 
 export interface UserPositionsParams {
@@ -5292,12 +5186,12 @@ export type UserReplyFilter = "ALL" | "REPLIES" | "QUOTES";
 export interface UserRepostsParams {
   /** Wallet address (Solana or EVM) or pump.fun user id (UUID). */
   address: string;
+  /** Maximum reposts to return. */
+  limit?: number;
   /** `nextCursor` from the previous page; omit for the first page. */
   cursor?: string | null;
   /** Interleave the wallet's quote posts. */
   include_quotes?: boolean;
-  /** Maximum reposts to return. */
-  limit?: number;
 }
 
 export type UserTradeType = "trades" | "transfers";
@@ -5305,14 +5199,14 @@ export type UserTradeType = "trades" | "transfers";
 export interface UserTradesParams {
   /** Wallet address (Solana or EVM) or pump.fun user id (UUID). */
   address: string;
+  /** Only trades in this coin (Solana mint or EVM token). */
+  mint?: string | null;
   /** Only trades on this chain. pump.fun serves no Monad trades here. */
   chain?: NonMonadChain | null;
   /** `nextCursor` from the previous page; omit for the first page. */
   cursor?: string | null;
   /** Maximum trades to return. */
   limit?: number;
-  /** Only trades in this coin (Solana mint or EVM token). */
-  mint?: string | null;
   /** Row kinds. Add `transfers` to interleave wallet transfers; each row then carries `kind`. */
   types?: UserTradeType[] | null;
 }
@@ -5342,10 +5236,10 @@ export interface UsersBatch {
 }
 
 export interface UsersParams {
-  /** Maximum profiles to return. */
-  limit?: number;
   /** Rows to skip. pump.fun stops at 10,000. */
   offset?: number;
+  /** Maximum profiles to return. */
+  limit?: number;
 }
 
 export interface VanityCheckParams {
@@ -5465,12 +5359,12 @@ export interface WalletBalanceSummaryParams {
 export interface WalletBalancesParams {
   /** Solana wallet address. pump.fun refuses EVM wallets here. */
   address: string;
-  /** Restrict to one chain, or `all` for every chain. Omit for Solana tokens only. pump.fun spells HyperEVM `hype`. */
-  chain?: BalanceChain | null;
   /** One-based page index. */
   page?: number;
   /** Balances per page. */
   size?: number;
+  /** Restrict to one chain, or `all` for every chain. Omit for Solana tokens only. pump.fun spells HyperEVM `hype`. */
+  chain?: BalanceChain | null;
 }
 
 export interface WalletEntry {
@@ -5512,25 +5406,25 @@ export interface WalletTokenPnlParams {
 export interface WalletTradesParams {
   /** Wallet address, Solana or EVM (0x). */
   address: string;
-  /** Chain of an EVM coin. Omit for Solana. When set, the wallet and the coin must both be addresses on that chain. */
-  chain?: TokenChain | null;
-  /** `nextCursor` from the previous page; omit for the first page. */
-  cursor?: string | null;
-  /** Maximum trades to return. */
-  limit?: number;
   /** Coin address: a Solana mint, or an EVM token for an EVM wallet. */
   mint: string;
+  /** Chain of an EVM coin. Omit for Solana. When set, the wallet and the coin must both be addresses on that chain. */
+  chain?: TokenChain | null;
+  /** Maximum trades to return. */
+  limit?: number;
+  /** `nextCursor` from the previous page; omit for the first page. */
+  cursor?: string | null;
 }
 
 export interface WalletTransactionsParams {
   /** Solana wallet address. pump.fun refuses EVM wallets here. */
   address: string;
-  /** Cursor from a previous page. */
-  cursor?: string | null;
   /** Drop dust-sized transactions. */
   dust_filter?: boolean;
   /** Include EVM chains alongside Solana. */
   include_evm?: boolean;
+  /** Cursor from a previous page. */
+  cursor?: string | null;
 }
 
 export interface Weekly {
