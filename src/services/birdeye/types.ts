@@ -157,7 +157,7 @@ export interface BirdeyeNewListing {
   buy24h?: number;
   trade24h?: number;
   v24h?: number;
-  mcChange24hPercent?: number;
+  mcChange24hPercent?: number | null;
   v24hUSD?: number;
   vBuy24hUSD?: number;
   liquidity?: number;
@@ -195,7 +195,7 @@ export interface BirdeyeNewListing {
   top10HolderPercentage?: number;
   holderTimestamp?: number;
   top10UserPercentage?: number;
-  devWalletBalance?: string | number;
+  devWalletBalance?: number | string;
   devWalletPercentage?: number;
   devWalletTimestamp?: number;
   graduatedAt?: string;
@@ -1531,4 +1531,4 @@ export interface ListWalletTransactionsParams {
   cursor?: string;
 }
 
-export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
+export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
