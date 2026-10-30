@@ -579,7 +579,7 @@ export interface BraveSearchPlacesPageCitiesItem {
   name: string;
   description: string;
   short_description: string;
-  description_ai_html: string;
+  description_ai_html?: string;
   local_time: BraveSearchPlacesPageCitiesItemLocalTime;
   pois: BraveSearchPlace[];
   type: string;
@@ -1057,7 +1057,7 @@ export interface BraveSearchSportsFixtureStatisticsAwayPlayer {
   kick_return_stats: BraveSearchSportsFixtureStatisticsAwayPlayerKickReturnStatsItem[];
   punt_return_stats: BraveSearchSportsFixtureStatisticsAwayPlayerPuntReturnStatsItem[];
   defense_stats: BraveSearchSportsFixtureStatisticsAwayPlayerDefenseStatsItem[];
-  interception_stats: BraveSearchUnobservedObject[];
+  interception_stats: BraveSearchSportsFixtureStatisticsHomePlayerInterceptionStatsItem[];
   own_fumble_stats: BraveSearchSportsFixtureStatisticsAwayPlayerOwnFumbleStatsItem[];
   own_fumble_recovered_stats: BraveSearchSportsFixtureStatisticsAwayPlayerOwnFumbleRecoveredStatsItem[];
   opponent_fumble_recovered_stats: BraveSearchSportsFixtureStatisticsAwayPlayerOpponentFumbleRecoveredStatsItem[];
@@ -1102,7 +1102,7 @@ export interface BraveSearchSportsFixtureStatisticsAwayPlayerFieldGoalStatsItem 
   longest_gain: number;
   blocked: number;
   made_details: BraveSearchSportsFixtureStatisticsAwayPlayerFieldGoalStatsItemMadeDetailsItem[];
-  missed_details: BraveSearchUnobservedObject[];
+  missed_details: BraveSearchSportsFixtureStatisticsHomePlayerFieldGoalStatsItemMissedDetailsItem[];
 }
 
 export interface BraveSearchSportsFixtureStatisticsAwayPlayerFieldGoalStatsItemMadeDetailsItem {
@@ -1402,9 +1402,9 @@ export interface BraveSearchSportsFixtureStatisticsHomePlayer {
   receiving_stats: BraveSearchSportsFixtureStatisticsHomePlayerReceivingStatsItem[];
   punting_stats: BraveSearchSportsFixtureStatisticsHomePlayerPuntingStatsItem[];
   kick_return_stats: BraveSearchSportsFixtureStatisticsHomePlayerKickReturnStatsItem[];
-  punt_return_stats: BraveSearchUnobservedObject[];
+  punt_return_stats: BraveSearchSportsFixtureStatisticsHomePlayerPuntReturnStatsItem[];
   defense_stats: BraveSearchSportsFixtureStatisticsHomePlayerDefenseStatsItem[];
-  interception_stats: BraveSearchUnobservedObject[];
+  interception_stats: BraveSearchSportsFixtureStatisticsHomePlayerInterceptionStatsItem[];
   own_fumble_stats: BraveSearchSportsFixtureStatisticsHomePlayerOwnFumbleStatsItem[];
   own_fumble_recovered_stats: BraveSearchUnobservedObject[];
   opponent_fumble_recovered_stats: BraveSearchUnobservedObject[];
@@ -1449,12 +1449,19 @@ export interface BraveSearchSportsFixtureStatisticsHomePlayerFieldGoalStatsItem 
   longest_gain: number;
   blocked: number;
   made_details: BraveSearchSportsFixtureStatisticsHomePlayerFieldGoalStatsItemMadeDetailsItem[];
-  missed_details: BraveSearchUnobservedObject[];
+  missed_details: BraveSearchSportsFixtureStatisticsHomePlayerFieldGoalStatsItemMissedDetailsItem[];
 }
 
 export interface BraveSearchSportsFixtureStatisticsHomePlayerFieldGoalStatsItemMadeDetailsItem {
   distance_yards: number | null;
   distance_yards_as_sent?: boolean | number | string | BraveSearchUnobservedObject;
+}
+
+export interface BraveSearchSportsFixtureStatisticsHomePlayerFieldGoalStatsItemMissedDetailsItem {
+  is_blocked: boolean;
+  distance_yards: number | null;
+  distance_yards_as_sent?: boolean | number | string | BraveSearchUnobservedObject;
+  reason: string;
 }
 
 export interface BraveSearchSportsFixtureStatisticsHomePlayerFieldGoalStatsItemPlayer {
@@ -1481,6 +1488,22 @@ export interface BraveSearchSportsFixtureStatisticsHomePlayerInactivesItem {
 }
 
 export interface BraveSearchSportsFixtureStatisticsHomePlayerInactivesItemPlayer {
+  player_id: number;
+  first_name: string;
+  last_name: string;
+  uniform: string;
+}
+
+export interface BraveSearchSportsFixtureStatisticsHomePlayerInterceptionStatsItem {
+  player: BraveSearchSportsFixtureStatisticsHomePlayerInterceptionStatsItemPlayer;
+  number: number;
+  yards: number;
+  longest_gain: number;
+  is_long_touchdown: boolean;
+  touchdowns: number;
+}
+
+export interface BraveSearchSportsFixtureStatisticsHomePlayerInterceptionStatsItemPlayer {
   player_id: number;
   first_name: string;
   last_name: string;
@@ -1598,6 +1621,30 @@ export interface BraveSearchSportsFixtureStatisticsHomePlayerPenaltyStatsItem {
 }
 
 export interface BraveSearchSportsFixtureStatisticsHomePlayerPenaltyStatsItemPlayer {
+  player_id: number;
+  first_name: string;
+  last_name: string;
+  uniform: string;
+}
+
+export interface BraveSearchSportsFixtureStatisticsHomePlayerPuntReturnStatsItem {
+  player: BraveSearchSportsFixtureStatisticsHomePlayerPuntReturnStatsItemPlayer;
+  returns: number;
+  yards: number;
+  fair_catches: number;
+  longest_gain: number;
+  is_long_touchdown: boolean;
+  touchdowns: number;
+  big_plays: BraveSearchSportsFixtureStatisticsHomePlayerPuntReturnStatsItemBigPlaysItem[];
+}
+
+export interface BraveSearchSportsFixtureStatisticsHomePlayerPuntReturnStatsItemBigPlaysItem {
+  value: number;
+  number: number;
+  touchdowns: number;
+}
+
+export interface BraveSearchSportsFixtureStatisticsHomePlayerPuntReturnStatsItemPlayer {
   player_id: number;
   first_name: string;
   last_name: string;
@@ -2283,6 +2330,7 @@ export interface BraveSearchWebPageInfoboxResultsItemData {
 
 export interface BraveSearchWebPageInfoboxResultsItemDataAnswer {
   text: string;
+  text_html?: string;
   upvote_count: number;
   author: string;
 }
@@ -2632,7 +2680,7 @@ export interface BraveSearchWebPageRichResultsItemNewsArticlesItem {
   site: BraveSearchSite;
   img_small: string;
   publisher_name: string;
-  published_label: string;
+  published_label?: string;
   extra_snippets: string[];
   image_url: string;
 }
@@ -3144,12 +3192,15 @@ export interface BraveSearchWebResultOrganizationContactPointsItem {
 
 export interface BraveSearchWebResultProduct {
   name: string;
-  description: string;
+  description?: string;
   description_html?: string;
   url?: string;
   price: string;
+  rating?: BraveSearchRating;
   type: string;
   offers: BraveSearchWebResultProductOffersItem[];
+  gtin12?: string;
+  gtin13?: string;
   gtin14?: string;
   thumbnail: BraveSearchImage;
 }
@@ -3163,6 +3214,8 @@ export interface BraveSearchWebResultProductClusterItem {
   rating?: BraveSearchRating;
   type: string;
   offers?: BraveSearchWebResultProductClusterItemOffersItem[];
+  gtin13?: string;
+  gtin12?: string;
   thumbnail: BraveSearchImage;
 }
 
@@ -3204,7 +3257,7 @@ export interface BraveSearchWebResultQaAnswer {
 
 export interface BraveSearchWebResultQaSuggestedAnswersItem {
   text: string;
-  text_html: string;
+  text_html?: string;
   upvote_count: number;
   author?: string;
 }
@@ -3247,7 +3300,7 @@ export interface BraveSearchWebResultRecipeVideo {
 export interface BraveSearchWebResultReview {
   name: string;
   description: string;
-  description_html: string;
+  description_html?: string;
   rating: BraveSearchRating;
   type: string;
   thumbnail: BraveSearchImage;

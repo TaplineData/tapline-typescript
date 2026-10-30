@@ -75,7 +75,7 @@ export interface GetPostParams {
   trim?: boolean;
   /** Must be false. Tapline does not re-host media. */
   download_media?: false | null;
-  /** Set to false to omit `video_play_count` and skip the extra lookup it needs. Defaults to true. Only videos carry a play count. */
+  /** Set to false to return the `metrics` play and view counts as null and skip the extra lookup they need. Defaults to true. Only videos carry a play count. */
   include_play_count?: boolean;
   /** Ignored. Every request fetches a fresh response and is charged. */
   cache_max_age?: GetPostParamsCacheMaxAge | null;
@@ -97,14 +97,14 @@ export type GetProfileParamsCacheMaxAge = "1d" | "3d" | "7d" | "14d" | "30d";
 export interface GetUserPostsParams {
   /** Instagram handle, with or without a leading @. */
   handle: string;
-  /** The `next_max_id` from the previous page (`timeline:AQHT…`), or the `end_cursor` of `/v1/instagram/profile`'s timeline (`mobile:AQHT…`). The bare `AQHT…` cursor works too. Omit it for the first page. */
+  /** The `pagination.next_cursor` from the previous page, or `recent_posts.pagination.next_cursor` from `/v1/instagram/profile`. Omit it for the first page. */
   next_max_id?: string | null;
   /** Set to true to return fewer fields per item. */
   trim?: boolean;
 }
 
 export type GetUserReelsParams = {
-  /** The `paging_info.max_id` (or trimmed `max_id`) from the previous page. Omit it for the first page. It is base64, so percent-encode `+` and `/` in a hand-built URL. */
+  /** The `pagination.next_cursor` from the previous page. Omit it for the first page. It is base64, so percent-encode `+` and `/` in a hand-built URL. */
   max_id?: string | null;
   /** Set to true to return fewer fields per item. */
   trim?: boolean;

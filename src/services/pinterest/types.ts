@@ -1202,6 +1202,8 @@ export interface PinterestRichMetadataProductOfferSummary {
   availability?: number;
   condition?: number;
   standard_price?: string;
+  percentage_off?: string;
+  percentage_off_raw?: number;
 }
 
 export interface PinterestSearchPin {
@@ -1334,6 +1336,7 @@ export interface PinterestSearchResultRichSummary {
   display_name?: string;
   aggregate_rating?: PinterestRichMetadataAggregateRating;
   is_hard_404?: boolean;
+  is_soft_404?: boolean;
 }
 
 export interface PinterestSearchResultStoryPinData {
@@ -1376,6 +1379,7 @@ export interface PinterestSearchResultStoryPinDataPage {
 }
 
 export interface PinterestSearchResultStoryPinDataPageBlock {
+  id?: string;
   image_signature?: string;
   text?: string;
   tracking_id?: string;
@@ -1389,6 +1393,10 @@ export interface PinterestSearchResultStoryPinDataPageBlock {
   pin?: PinterestLinkDomain;
   pin_id?: string;
   is_removed?: boolean;
+  style?: PinterestStoryPinTextStyle;
+  mentions?: unknown[];
+  sticker_id?: string;
+  sticker_type?: number;
 }
 
 export interface PinterestSearchResultStoryPinDataPageBlockBlockStyle {
@@ -1440,6 +1448,28 @@ export interface PinterestSearchStoryObjectImageCrop {
 export interface PinterestShippingInfo {
   free_shipping_value?: number;
   free_shipping_price?: string;
+}
+
+export interface PinterestStoryPinFont {
+  id?: string;
+  name?: string;
+  key?: string;
+  url?: string;
+  default_size?: number;
+  min_size?: number;
+  max_size?: number;
+  line_height?: number;
+  letter_spacing?: number;
+  offset?: number;
+}
+
+export interface PinterestStoryPinTextStyle {
+  hex_color?: string;
+  font?: PinterestStoryPinFont;
+  font_id?: number;
+  font_size?: number;
+  alignment?: number;
+  vertical_alignment?: number;
 }
 
 export interface PinterestUserBoard {
@@ -1591,6 +1621,7 @@ export interface PinterestUserBoardDisplayOption {
   stacked_card_cover_shade_colors?: unknown | null;
   corner_radius?: unknown | null;
   subtitle_text_color?: unknown | null;
+  vsa_display_configs?: unknown | null;
 }
 
 export interface PinterestUserBoardObject {
