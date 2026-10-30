@@ -6,7 +6,7 @@ import type { GetBoardParams, GetPinParams, GetUserBoardsParams, PinterestV2Boar
 export class PinterestV2Client {
   constructor(private readonly base: BaseClient) {}
 
-  /** Returns the board's details and its normalized pins in board order, including media, story and carousel content, creator and pinner identities, attribution, rich content, and engagement. Board details and counts can be up to 24 hours old. Pass `cursor` back until it is `null`. `trim` is accepted but does not change the response. Costs 1 credit. */
+  /** A board's details and its pins in board order. Board details and counts can be up to 24 hours old. Pass `cursor` back until it is `null`. `trim` is accepted but does not change the response. Costs 1 credit. */
   async getBoard(params: GetBoardParams): Promise<PinterestV2BoardResponse> {
     return this.base.get<PinterestV2BoardResponse>('/v2/pinterest/board', { ...params });
   }
