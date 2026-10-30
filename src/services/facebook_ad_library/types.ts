@@ -15,19 +15,19 @@ export type AdType = "all" | "political_and_issue" | "housing" | "employment" | 
 export type AudiencePeriod = "last_7_days" | "last_30_days" | "last_90_days";
 
 export interface ErrorDetail {
-  ctx?: Record<string, unknown> | null;
-  input?: unknown | null;
+  type?: string | null;
   loc?: (string | number)[] | null;
   msg?: string | null;
-  type?: string | null;
+  input?: unknown | null;
+  ctx?: Record<string, unknown> | null;
 }
 
 export interface ErrorResponse {
   code: PublicError;
-  details?: ErrorDetail[] | null;
-  domain?: string | null;
   message: string;
   request_id: string;
+  domain?: string | null;
+  details?: ErrorDetail[] | null;
   upgrade_url?: string | null;
 }
 
@@ -39,144 +39,143 @@ export interface FacebookAd {
 export interface FacebookAdCard {
   ad_archive_id: string | null;
   ad_id: string | null;
-  categories: FacebookCode[];
-  collation: FacebookAdCollation;
-  creative: FacebookAdCreative;
-  delivery: FacebookAdDelivery;
-  disclaimer: FacebookAdDisclaimer;
-  moderation: FacebookAdModeration;
-  page: FacebookPageRef;
-  performance: FacebookAdPerformance;
-  regulation: FacebookAdRegulation;
   text: FacebookAdText;
+  url: string | null;
+  page: FacebookPage;
+  regulation: FacebookAdRegulation;
+  collation: FacebookAdCollation;
+  categories: FacebookCode[];
+  disclaimer: FacebookAdDisclaimer;
+  creative: FacebookAdCreative;
+  performance: FacebookAdPerformance;
+  delivery: FacebookAdDelivery;
+  moderation: FacebookAdModeration;
 }
 
 export interface FacebookAdCarouselCard {
+  title: string | null;
   body: string | null;
   caption: string | null;
-  cta_type: FacebookCode;
-  image: FacebookAdImage | null;
   link_description: string | null;
   link_url: string | null;
-  title: string | null;
+  cta_type: FacebookCode;
+  image: FacebookAdImage | null;
   video: FacebookAdVideo | null;
 }
 
 export interface FacebookAdCollation {
-  count: number | null;
   id: string | null;
+  count: number | null;
 }
 
 export interface FacebookAdCreative {
-  branded_content: FacebookPageRef | null;
-  cards: FacebookAdCarouselCard[];
-  cta_type: FacebookCode;
-  display_format: FacebookCode;
-  event: unknown | null;
-  extra_images: FacebookAdImage[];
-  extra_links: string[];
-  extra_videos: FacebookAdVideo[];
-  images: FacebookAdImage[];
-  is_reshared: boolean | null;
   link_url: string | null;
+  extra_links: string[];
+  branded_content: FacebookPage | null;
+  display_format: FacebookCode;
+  cta_type: FacebookCode;
+  cards: FacebookAdCarouselCard[];
+  is_reshared: boolean | null;
   root_reshared_post: unknown | null;
+  event: unknown | null;
+  images: FacebookAdImage[];
+  extra_images: FacebookAdImage[];
   videos: FacebookAdVideo[];
+  extra_videos: FacebookAdVideo[];
 }
 
 export interface FacebookAdDelivery {
-  end_at: string | null;
+  total_active_seconds: number | null;
   is_active: boolean | null;
+  start_at: string | null;
+  end_at: string | null;
   last_seen_at: string | null;
   publisher_platforms: FacebookCode[];
-  start_at: string | null;
   targeted_or_reached_countries: string[];
-  total_active_seconds: number | null;
 }
 
 export interface FacebookAdDisclaimer {
-  paid_for_by: string | null;
   type: FacebookCode;
+  paid_for_by: string | null;
   verification: FacebookAdDisclaimerVerification | null;
 }
 
 export interface FacebookAdDisclaimerVerification {
-  address: string | null;
-  email: string | null;
-  fec_info: string | null;
-  free_form_info: string | null;
   help_text: string | null;
   help_url: string | null;
-  method: string | null;
-  page_admin_info: string | null;
-  page_name_info: string | null;
-  phone: string | null;
-  submitted_on: string | null;
   website: string | null;
+  method: string | null;
+  submitted_on: string | null;
+  phone: string | null;
+  email: string | null;
+  address: string | null;
+  page_admin_info: string | null;
+  free_form_info: string | null;
+  page_name_info: string | null;
+  fec_info: string | null;
 }
 
 export interface FacebookAdImage {
-  crops: unknown[];
   original_url: string | null;
   resized_url: string | null;
   watermarked_resized_url: string | null;
+  crops: unknown[];
 }
 
 export interface FacebookAdModeration {
-  contains_digital_created_media: boolean | null;
-  contains_sensitive_content: boolean | null;
-  gated_type: FacebookCode;
-  has_user_reported: boolean | null;
-  hide_data_status: FacebookCode;
-  is_eligible_for_beneficiary_payer_disclosure: boolean | null;
-  menu_items: unknown[];
   report_count: number | null;
+  hide_data_status: FacebookCode;
+  gated_type: FacebookCode;
+  is_eligible_for_beneficiary_payer_disclosure: boolean | null;
+  contains_sensitive_content: boolean | null;
   state_media_label: string | null;
+  contains_digital_created_media: boolean | null;
 }
 
 export interface FacebookAdParty {
-  license_info: string | null;
-  license_info_list: string[];
-  location: string | null;
   name: string | null;
   website: string | null;
+  location: string | null;
+  license_info: string | null;
+  license_info_list: string[];
 }
 
 export interface FacebookAdPerformance {
-  impressions: FacebookCountRange | null;
-  impressions_bucket: number | null;
-  reach: FacebookCountRange | null;
   spend: FacebookMoneyRange | null;
+  impressions: FacebookCountRange | null;
+  reach: FacebookCountRange | null;
+  impressions_bucket: number | null;
 }
 
 export interface FacebookAdRegulation {
-  additional_info: unknown | null;
   brazil_tax_id: string | null;
-  country_iso_code: string | null;
-  eu_certificates: unknown[];
+  is_financial_services_ad: boolean | null;
   has_limited_financial_delivery: boolean | null;
   has_limited_taiwan_anti_scam_delivery: boolean | null;
-  is_financial_services_ad: boolean | null;
+  country_iso_code: string | null;
+  eu_certificates: unknown[];
+  additional_info: unknown | null;
 }
 
 export interface FacebookAdReport {
+  locations: FacebookReportLocation[];
   advertisers: FacebookReportAdvertisers;
-  country: string;
-  date: string;
   downloads: FacebookReportDownload[];
   lifetime: FacebookReportLifetime;
-  locations: FacebookReportLocation[];
+  country: string;
+  date: string;
   period: string;
-  service_status: FacebookServiceStatus;
   supported_countries: string[];
+  service_status: FacebookServiceStatus;
 }
 
 export interface FacebookAdReportAdvertisersPage {
   advertisers: FacebookReportAdvertiser[];
+  total_count: number | null;
   country: string;
   date: string;
-  pagination: FacebookCursorPagination;
   period: string;
-  total_count: number | null;
+  pagination: FacebookCursorPagination;
 }
 
 export interface FacebookAdSearchPage {
@@ -185,120 +184,120 @@ export interface FacebookAdSearchPage {
 }
 
 export interface FacebookAdText {
+  title: string | null;
   body: string | null;
   caption: string | null;
-  extra_texts: string[];
   link_description: string | null;
-  title: string | null;
+  extra_texts: string[];
 }
 
 export interface FacebookAdTransparency {
   ad_archive_id: string;
-  brazil: unknown | null;
-  eu: FacebookRegionTransparency | null;
-  financial_services: FacebookFinancialServicesDisclosure[];
-  payer_beneficiary: FacebookPayerBeneficiary[];
-  political_insights: FacebookPoliticalAdInsights;
   status: FacebookAdTransparencyStatus;
+  payer_beneficiary: FacebookPayerBeneficiary[];
   targets_eu: boolean | null;
+  eu: FacebookRegionTransparency | null;
   uk: FacebookRegionTransparency | null;
+  brazil: unknown | null;
+  political_insights: FacebookPoliticalAdInsights;
+  financial_services: FacebookFinancialServicesDisclosure[];
   verified_voice_types: FacebookCode[];
   violation_types: string[];
 }
 
 export interface FacebookAdTransparencyStatus {
-  has_violating_payer_beneficiary: boolean | null;
   is_ad_taken_down: boolean | null;
-  is_eligible_for_eu_political_ai_disclosure: boolean | null;
+  has_violating_payer_beneficiary: boolean | null;
   violates_eu_political_ad_rules: boolean | null;
+  is_eligible_for_eu_political_ai_disclosure: boolean | null;
 }
 
 export interface FacebookAdVersionsPage {
-  ads: FacebookAdCard[];
   collation_id: string;
-  pagination: FacebookCursorPagination;
   total_count: number | null;
+  ads: FacebookAdCard[];
+  pagination: FacebookCursorPagination;
 }
 
 export interface FacebookAdVideo {
   hd_url: string | null;
-  preview_image_url: string | null;
   sd_url: string | null;
   watermarked_hd_url: string | null;
   watermarked_sd_url: string | null;
+  preview_image_url: string | null;
 }
 
 export interface FacebookAdminCountry {
+  country_page_id: string | null;
   admin_count: number | null;
   country: string | null;
-  country_page_id: string | null;
 }
 
 export interface FacebookAdvertiser {
-  about: string | null;
+  transparency_node_id: string | null;
+  spend: FacebookAdvertiserSpend;
+  status: FacebookAdvertiserStatus;
+  service_status: FacebookServiceStatus;
+  page: FacebookPage;
+  owner: FacebookAdvertiserOwner;
   admin_countries: FacebookAdminCountry[];
   ads: FacebookAdvertiserAds;
   alias: string | null;
+  about: string | null;
   history: FacebookPageHistoryEvent[];
-  is_delegate_page_with_linked_primary_profile: boolean | null;
-  owner: FacebookAdvertiserOwner;
-  page: FacebookPageRef;
-  related_pages: unknown[];
-  service_status: FacebookServiceStatus;
   shared_disclaimer_pages: unknown[];
-  spend: FacebookAdvertiserSpend;
-  state_media_label: string | null;
-  status: FacebookAdvertiserStatus;
+  related_pages: unknown[];
+  is_delegate_page_with_linked_primary_profile: boolean | null;
   supported_countries: string[];
-  transparency_node_id: string | null;
+  state_media_label: string | null;
 }
 
 export interface FacebookAdvertiserAds {
+  total_count: number | null;
+  hidden_ad_count: number | null;
   first_page: FacebookAdCard[];
   has_blank_ads: boolean | null;
-  hidden_ad_count: number | null;
-  total_count: number | null;
 }
 
 export interface FacebookAdvertiserAudience {
-  age: FacebookAudienceSlice[];
-  custom_audiences: FacebookAudienceSlice[];
-  detailed_targeting: FacebookAudienceSlice[];
-  gender: FacebookAudienceSlice[];
-  has_political_ads_ever: boolean | null;
-  has_political_ads_in_period: boolean | null;
-  languages: FacebookAudienceSlice[];
-  locations: FacebookAudienceSlice[];
-  lookalike_audiences: FacebookAudienceSlice[];
   page_id: string;
-  page_name: string | null;
-  period: string;
   summary: FacebookAudienceSummary;
+  locations: FacebookAudienceSlice[];
+  page_name: string | null;
+  gender: FacebookAudienceSlice[];
+  age: FacebookAudienceSlice[];
+  languages: FacebookAudienceSlice[];
+  custom_audiences: FacebookAudienceSlice[];
+  lookalike_audiences: FacebookAudienceSlice[];
+  detailed_targeting: FacebookAudienceSlice[];
+  period: string;
+  has_political_ads_in_period: boolean | null;
+  has_political_ads_ever: boolean | null;
 }
 
 export interface FacebookAdvertiserOwner {
-  address: string | null;
   business_id: string | null;
   name: string | null;
+  address: string | null;
   phone: string | null;
 }
 
 export interface FacebookAdvertiserSpend {
   current_week: unknown | null;
-  is_political_page?: boolean | null;
   lifetime_by_disclaimer: FacebookDisclaimerSpend[];
   weekly_by_disclaimer: FacebookDisclaimerSpend[];
+  is_political_page?: boolean | null;
 }
 
 export interface FacebookAdvertiserStatus {
-  is_actioned: boolean | null;
   is_deleted: boolean | null;
+  is_actioned: boolean | null;
 }
 
 export interface FacebookAdvertiserSuggestion {
+  page: FacebookPage;
   alias: string | null;
   country: string | null;
-  page: FacebookPageRef;
 }
 
 export interface FacebookAdvertiserSuggestions {
@@ -317,35 +316,35 @@ export interface FacebookAgeGenderShare {
 }
 
 export interface FacebookAgeRange {
-  max: number | null;
   min: number | null;
+  max: number | null;
 }
 
 export interface FacebookAudienceLocation {
-  hidden_location_count: number | null;
-  is_excluded: boolean | null;
   name: string | null;
+  hidden_location_count: number | null;
   type: FacebookCode;
+  is_excluded: boolean | null;
 }
 
 export interface FacebookAudienceSlice {
   ad_count: number | null;
-  country?: string | null;
   hidden_location_count?: number | null;
-  is_excluded?: boolean | null;
-  place_name?: string | null;
+  value: string | null;
   spend_fraction: number | null;
   type?: FacebookCode;
-  value: string | null;
+  place_name?: string | null;
+  country?: string | null;
+  is_excluded?: boolean | null;
 }
 
 export interface FacebookAudienceSummary {
-  date: string | null;
-  detailed_spend: unknown[];
+  total_spend: FacebookMoney;
+  total_ads: number | null;
   is_30_day_available: boolean | null;
   is_90_day_available: boolean | null;
-  total_ads: number | null;
-  total_spend: FacebookMoney;
+  date: string | null;
+  detailed_spend: unknown[];
 }
 
 export interface FacebookCode {
@@ -354,32 +353,52 @@ export interface FacebookCode {
 }
 
 export interface FacebookCountRange {
-  formatted: string | null;
-  max: number | null;
   min: number | null;
+  max: number | null;
+  formatted: string | null;
+}
+
+export interface FacebookCoverPhoto {
+  id: string | null;
+  owner_id: string | null;
+  accessibility_caption: string | null;
+  url: string | null;
+  focus: FacebookFocus | null;
+  image: FacebookImage | null;
 }
 
 export interface FacebookCursorPagination {
-  has_more: boolean | null;
   next_cursor: string | null;
+  has_more: boolean | null;
 }
 
 export interface FacebookDisclaimerSpend {
-  paid_for_by: string | null;
   spend: FacebookMoney;
+  paid_for_by: string | null;
 }
 
 export interface FacebookFinancialServicesDisclosure {
-  beneficiary: FacebookAdParty;
+  region: FacebookCode;
   is_payer_beneficiary_same: boolean | null;
   payer: FacebookAdParty;
-  region: FacebookCode;
+  beneficiary: FacebookAdParty;
+}
+
+export interface FacebookFocus {
+  x: number | null;
+  y: number | null;
+}
+
+export interface FacebookImage {
+  url: string | null;
+  width: number | null;
+  height: number | null;
 }
 
 export interface FacebookInstagramAccount {
+  username: string | null;
   follower_count: number | null;
   is_verified: boolean | null;
-  username: string | null;
 }
 
 export interface FacebookMoney {
@@ -389,10 +408,42 @@ export interface FacebookMoney {
 }
 
 export interface FacebookMoneyRange {
+  min: number | null;
+  max: number | null;
   currency: string | null;
   formatted: string | null;
-  max: number | null;
-  min: number | null;
+}
+
+export interface FacebookPage {
+  page_id: string | null;
+  profile_id: string | null;
+  username?: string | null;
+  story_bucket_ids?: string[];
+  name: string | null;
+  url: string | null;
+  metrics: FacebookPageMetrics;
+  status: FacebookPageStatus;
+  instagram?: FacebookInstagramAccount | null;
+  tabs?: FacebookPageTab[];
+  category?: string | null;
+  entity_type?: FacebookCode;
+  verification?: FacebookCode;
+  alternate_name?: string | null;
+  gender?: FacebookCode;
+  profile_type_transition?: FacebookCode;
+  social_context?: FacebookSocialContextItem[];
+  legal?: FacebookPageLegal;
+  profile_picture_url?: string | null;
+  profile_photo?: FacebookPhoto;
+  profile_pictures?: FacebookImage[];
+  cover_photo?: FacebookCoverPhoto | null;
+}
+
+export interface FacebookPageCollectionLink {
+  collection_id: string | null;
+  tab_key: string | null;
+  name: string | null;
+  url: string | null;
 }
 
 export interface FacebookPageHistoryEvent {
@@ -400,104 +451,139 @@ export interface FacebookPageHistoryEvent {
   type: FacebookCode;
 }
 
-export interface FacebookPageMetrics {
-  follower_count: number | null;
-  like_count: number | null;
-  talking_about_count: number | null;
+export interface FacebookPageLegal {
+  dsa_reporting_url: string | null;
+  dsa_report_entrypoint: string | null;
+  is_dsa_legal_reporting_enabled: boolean | null;
 }
 
-export interface FacebookPageRef {
-  category: string | null;
-  entity_type: FacebookCode;
-  instagram: FacebookInstagramAccount | null;
-  is_deleted: boolean | null;
-  metrics: FacebookPageMetrics;
+export interface FacebookPageMetrics {
+  like_count?: number | null;
+  follower_count?: number | null;
+  talking_about_count?: number | null;
+  follower_count_approx?: number | null;
+  following_count_approx?: number | null;
+}
+
+export interface FacebookPageStatus {
+  is_deleted?: boolean | null;
+  is_verified?: boolean | null;
+  is_memorialized?: boolean | null;
+  restriction_violation_status?: string | null;
+  is_currently_live?: boolean | null;
+  is_business_page_active?: boolean | null;
+  is_additional_profile_plus?: boolean | null;
+  profile_picture_is_silhouette?: boolean | null;
+}
+
+export interface FacebookPageTab {
+  section_id: string | null;
+  tab_key: string | null;
   name: string | null;
-  page_id: string | null;
-  profile_id: string | null;
-  profile_picture_url: string | null;
   url: string | null;
-  username: string | null;
-  verification: FacebookCode;
+  displayable_count: number | null;
+  collections: FacebookPageCollectionLink[];
+  section_type: FacebookCode;
 }
 
 export interface FacebookPayerBeneficiary {
-  beneficiary: string | null;
   payer: string | null;
+  beneficiary: string | null;
+}
+
+export interface FacebookPhoto {
+  collection_item_id?: string | null;
+  id: string | null;
+  owner_id: string | null;
+  feedback_id: string | null;
+  creation_story_id: string | null;
+  accessibility_caption: string | null;
+  url: string | null;
+  focus: FacebookFocus | null;
+  type: string;
+  is_playable: boolean | null;
+  image: FacebookImage | null;
+  thumbnail_url: string | null;
 }
 
 export interface FacebookPoliticalAdInsights {
-  age_gender: FacebookAgeGenderShare[];
   country: string | null;
   is_currency_matched: boolean | null;
+  age_gender: FacebookAgeGenderShare[];
   regions: FacebookRegionShare[];
 }
 
 export interface FacebookReachByAgeGender {
-  age_range: string | null;
   country: string | null;
-  female: number | null;
+  age_range: string | null;
   male: number | null;
+  female: number | null;
   unknown: number | null;
 }
 
 export interface FacebookRegionShare {
-  reach_share: number | null;
   region: string | null;
+  reach_share: number | null;
 }
 
 export interface FacebookRegionTransparency {
+  total_reach: number | null;
+  locations: FacebookAudienceLocation[];
   age: FacebookAgeRange;
   gender: FacebookCode;
-  locations: FacebookAudienceLocation[];
   reach_by_country_age_gender: FacebookReachByAgeGender[];
-  total_reach: number | null;
 }
 
 export interface FacebookReportAdvertiser {
-  detailed_spends: FacebookMoney[];
-  page: FacebookPageRef;
-  paid_for_by: string | null;
   report_row_id: string | null;
-  show_detailed_spends: boolean | null;
-  total_ads: number | null;
   total_spend: FacebookMoney;
+  total_ads: number | null;
+  show_detailed_spends: boolean | null;
+  page: FacebookPage;
+  paid_for_by: string | null;
+  detailed_spends: FacebookMoney[];
 }
 
 export interface FacebookReportAdvertisers {
+  total_count: number | null;
   items: FacebookReportAdvertiser[];
   pagination: FacebookCursorPagination;
-  total_count: number | null;
 }
 
 export interface FacebookReportDownload {
-  date: string | null;
   is_available: boolean | null;
+  date: string | null;
   period: FacebookCode;
 }
 
 export interface FacebookReportLifetime {
-  top_keywords: string[];
   total_ads: number | null;
   total_spend: FacebookMoney;
+  top_keywords: string[];
 }
 
 export interface FacebookReportLocation {
-  detailed_spends: FacebookMoney[];
   name: string | null;
-  show_detailed_spends: boolean | null;
   total_spend: FacebookMoney;
+  show_detailed_spends: boolean | null;
+  detailed_spends: FacebookMoney[];
 }
 
 export interface FacebookServiceIssue {
-  product: string | null;
   status: string | null;
+  product: string | null;
 }
 
 export interface FacebookServiceStatus {
-  is_captcha_required: boolean | null;
-  issues: FacebookServiceIssue[];
   status: string | null;
+  issues: FacebookServiceIssue[];
+  is_captcha_required: boolean | null;
+}
+
+export interface FacebookSocialContextItem {
+  text: string | null;
+  url: string | null;
+  count_approx: number | null;
 }
 
 export interface GetAdParams {
@@ -508,21 +594,21 @@ export interface GetAdParams {
 }
 
 export interface GetAdReportParams {
-  /** ISO 3166-1 alpha-2 country, upper case, or `ALL`. */
+  /** ISO 3166-1 alpha-2 country, upper case. */
   country?: string;
-  /** Report day; defaults to the newest published day, two days ago. */
-  date?: string | null;
   /** Time window; a report Facebook is still building answers 503 with `Retry-After`. */
   period?: ReportPeriod;
+  /** Report day; defaults to the newest published day, two days ago. */
+  date?: string | null;
 }
 
 export interface GetAdTransparencyParams {
   /** The ad's `ad_archive_id`. */
   ad_id: string;
-  /** ISO 3166-1 alpha-2 country, upper case, or `ALL`. */
-  country?: string;
   /** The ad's `page.page_id`; Facebook needs a page id but answers the same for any valid one. */
   page_id: string;
+  /** ISO 3166-1 alpha-2 country, upper case, or `ALL`. */
+  country?: string;
 }
 
 export interface GetAdvertiserAudienceParams {
@@ -533,25 +619,25 @@ export interface GetAdvertiserAudienceParams {
 }
 
 export interface GetAdvertiserParams {
-  /** ISO 3166-1 alpha-2 country, upper case, or `ALL`. */
-  country?: string;
   /** The advertiser's `page_id`: `page.page_id` of an ad or `advertisers[].page.page_id` from `/ad-library/advertisers/search`. */
   page_id: string;
+  /** ISO 3166-1 alpha-2 country, upper case, or `ALL`. */
+  country?: string;
 }
 
 export interface ListAdReportAdvertisersParams {
-  /** ISO 3166-1 alpha-2 country, upper case, or `ALL`. */
+  /** ISO 3166-1 alpha-2 country, upper case. */
   country?: string;
-  /** `pagination.next_cursor` from the previous page; empty for the first page. */
-  cursor?: string;
-  /** Report day; defaults to the newest published day, two days ago. */
-  date?: string | null;
   /** Time window. */
   period?: ReportPeriod;
   /** Search text. */
   query?: string | null;
   /** Order by spend or by number of ads. */
   sort?: ReportSort;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. */
+  cursor?: string;
+  /** Report day; defaults to the newest published day, two days ago. */
+  date?: string | null;
 }
 
 export interface ListAdVersionsParams {
@@ -570,39 +656,39 @@ export type ReportPeriod = "yesterday" | "last_7_days" | "last_30_days" | "last_
 export type ReportSort = "spend" | "ads";
 
 export interface SearchAdsParams {
-  /** Ad category. */
-  ad_type?: AdType;
-  /** ISO 3166-1 alpha-2 country, upper case, or `ALL`. */
-  country?: string;
   /** `pagination.next_cursor` from the previous page; empty for the first page. */
   cursor?: string;
+  /** Search text. */
+  query?: string | null;
+  /** Only this advertiser's ads: `advertisers[].page.page_id` from `/ad-library/advertisers/search`. Send this or `query`. */
+  page_id?: string | null;
+  /** Match any of the words or the exact phrase. */
+  match?: AdMatch;
+  /** ISO 3166-1 alpha-2 country, upper case, or `ALL`. */
+  country?: string;
+  /** Running, stopped or both. */
+  status?: AdStatus;
+  /** Ad category. */
+  ad_type?: AdType;
+  /** Creative format. */
+  media_type?: AdMediaType;
+  /** Only ads shown on these platforms; repeat the parameter for several. */
+  platforms?: AdPlatform[];
+  /** Only ads in these ISO 639-1 languages, such as `en`; repeat for several. */
+  languages?: string[];
   /** Only ads shown on this day or later. */
   delivered_after?: string | null;
   /** Only ads shown on this day or earlier. */
   delivered_before?: string | null;
-  /** Only ads in these ISO 639-1 languages, such as `en`; repeat for several. */
-  languages?: string[];
-  /** Match any of the words or the exact phrase. */
-  match?: AdMatch;
-  /** Creative format. */
-  media_type?: AdMediaType;
-  /** Only this advertiser's ads: `advertisers[].page.page_id` from `/ad-library/advertisers/search`. Send this or `query`. */
-  page_id?: string | null;
-  /** Only ads shown on these platforms; repeat the parameter for several. */
-  platforms?: AdPlatform[];
-  /** Search text. */
-  query?: string | null;
   /** Result order. */
   sort?: AdSort;
-  /** Running, stopped or both. */
-  status?: AdStatus;
 }
 
 export interface SearchAdvertisersParams {
-  /** Ad category. */
-  ad_type?: AdType;
-  /** ISO 3166-1 alpha-2 country, upper case, or `ALL`. */
-  country?: string;
   /** Search text. */
   query: string;
+  /** ISO 3166-1 alpha-2 country, upper case, or `ALL`. */
+  country?: string;
+  /** Ad category. */
+  ad_type?: AdType;
 }

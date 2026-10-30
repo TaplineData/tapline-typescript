@@ -7,53 +7,53 @@ export type Availability = "public" | "unlisted" | "needs_auth" | "premium_only"
 export type ChannelContentType = "videos" | "shorts" | "streams";
 
 export interface ChannelResponse {
-  /** Content tabs available on the channel: Videos, Shorts, and Streams. Null when the yt-dlp fallback cannot identify individual tabs. */
-  available_content_types: ChannelContentType[] | null;
-  channel: string | null;
-  channel_follower_count: number | null;
   channel_id: string;
+  channel: string | null;
   channel_url: string | null;
-  /** Number of available Videos, Shorts, and Streams content tabs. */
-  content_tab_count: number | null;
-  description: string | null;
   handle: string | null;
   handle_url: string | null;
-  /** Deprecated alias for content_tab_count. This counts content tabs, not user-created playlists. */
-  playlist_count: number | null;
+  description: string | null;
+  channel_follower_count: number | null;
   tags: string[];
   thumbnail: string | null;
   thumbnails: ThumbnailItem[];
+  /** Content tabs available on the channel: Videos, Shorts, and Streams. Null when the yt-dlp fallback cannot identify individual tabs. */
+  available_content_types: ChannelContentType[] | null;
+  /** Number of available Videos, Shorts, and Streams content tabs. */
+  content_tab_count: number | null;
+  /** Deprecated alias for content_tab_count. This counts content tabs, not user-created playlists. */
+  playlist_count: number | null;
 }
 
 export interface ChannelVideosResponse {
   channel_id: string;
-  pagination: CursorPagination;
   returned_count: number;
   videos: VideoListItem[];
+  pagination: CursorPagination;
 }
 
 export interface ChapterItem {
-  end_time: number;
   start_time: number;
+  end_time: number;
   title: string;
 }
 
 export interface CommentItem {
+  comment_id: string | null;
+  text: string | null;
+  like_count: number | null;
+  dislike_count: number | null;
+  timestamp: number | null;
+  published_at: string | null;
+  is_pinned: boolean | null;
+  is_favorited: boolean | null;
   author: string | null;
   author_id: string | null;
-  author_is_uploader: boolean | null;
-  author_is_verified: boolean | null;
   author_thumbnail: string | null;
   author_url: string | null;
-  comment_id: string | null;
-  dislike_count: number | null;
+  author_is_verified: boolean | null;
+  author_is_uploader: boolean | null;
   html: string | null;
-  is_favorited: boolean | null;
-  is_pinned: boolean | null;
-  like_count: number | null;
-  published_at: string | null;
-  text: string | null;
-  timestamp: number | null;
 }
 
 export type CommentSortOrder = "top" | "new";
@@ -64,17 +64,17 @@ export interface CommentThread {
 }
 
 export interface CommentsResponse {
-  pagination: CursorPagination;
+  video_id: string;
   returned_count: number;
   threads: CommentThread[];
-  video_id: string;
+  pagination: CursorPagination;
 }
 
 export type Container = "m4a_dash" | "mp4_dash" | "webm_dash";
 
 export interface CursorPagination {
-  completion: CursorPaginationCompletion | null;
   next_cursor: string | null;
+  completion: CursorPaginationCompletion | null;
 }
 
 export type CursorPaginationCompletion = "exhausted" | "depth_limit";
@@ -82,19 +82,19 @@ export type CursorPaginationCompletion = "exhausted" | "depth_limit";
 export type DynamicRange = "SDR" | "HDR10" | "HDR10+" | "HDR12" | "HLG" | "DV";
 
 export interface ErrorDetail {
-  ctx?: Record<string, unknown> | null;
-  input?: unknown | null;
+  type?: string | null;
   loc?: (string | number)[] | null;
   msg?: string | null;
-  type?: string | null;
+  input?: unknown | null;
+  ctx?: Record<string, unknown> | null;
 }
 
 export interface ErrorResponse {
   code: PublicError;
-  details?: ErrorDetail[] | null;
-  domain?: string | null;
   message: string;
   request_id: string;
+  domain?: string | null;
+  details?: ErrorDetail[] | null;
   upgrade_url?: string | null;
 }
 
@@ -103,42 +103,42 @@ export type Ext = "mp4" | "m4a" | "webm" | "mhtml";
 export type Feature = "live" | "4k" | "hd" | "subtitles" | "creative_commons" | "360" | "vr180" | "3d" | "hdr" | "location" | "purchased";
 
 export interface FormatItem {
-  abr?: number | null;
-  acodec?: string;
-  aspect_ratio?: number | null;
-  asr?: number | null;
-  audio_channels?: number | null;
-  audio_ext?: AudioExt;
-  container?: Container | null;
-  dynamic_range?: DynamicRange | null;
-  ext?: Ext;
-  filesize?: number | null;
-  filesize_approx?: number | null;
-  format?: string;
   format_id?: string;
   format_note?: string;
-  fps?: number | null;
-  has_drm?: boolean | null;
+  ext?: Ext;
+  protocol?: Protocol;
+  acodec?: string;
+  vcodec?: string;
+  url?: string;
+  width?: number | null;
   height?: number | null;
+  fps?: number | null;
+  audio_ext?: AudioExt;
+  video_ext?: VideoExt;
+  vbr?: number | null;
+  abr?: number | null;
+  tbr?: number | null;
+  resolution?: string;
+  aspect_ratio?: number | null;
+  filesize?: number | null;
+  filesize_approx?: number | null;
+  asr?: number | null;
+  audio_channels?: number | null;
+  quality?: number | null;
+  has_drm?: boolean | null;
   language?: string | null;
   language_preference?: number | null;
   preference?: number | null;
-  protocol?: Protocol;
-  quality?: number | null;
-  resolution?: string;
+  dynamic_range?: DynamicRange | null;
+  container?: Container | null;
   source_preference?: number | null;
-  tbr?: number | null;
-  url?: string;
-  vbr?: number | null;
-  vcodec?: string;
-  video_ext?: VideoExt;
-  width?: number | null;
+  format?: string;
 }
 
 export interface FormatsResponse {
+  video_id: string;
   format_count: number;
   formats: FormatItem[];
-  video_id: string;
 }
 
 export interface GetChannelParams {
@@ -156,21 +156,21 @@ export interface GetChannelVideosParams {
 }
 
 export interface GetCommentRepliesParams {
+  /** YouTube video ID or a supported video URL, normalized to the eleven-character video ID. URLs may use watch?v=, youtu.be/, shorts/, embed/, or live/ forms. */
+  video_id: string;
   /** YouTube top-level comment ID (5–150 URL-safe characters). */
   comment_id: string;
   /** Required. Send the `replies_cursor` from a comment, or the `pagination.next_cursor` from the last replies page. A cursor only works on one video and comment and can expire; bad or expired ones return `invalid_cursor` (400). */
   cursor: string;
-  /** YouTube video ID or a supported video URL, normalized to the eleven-character video ID. URLs may use watch?v=, youtu.be/, shorts/, embed/, or live/ forms. */
-  video_id: string;
 }
 
 export interface GetCommentsParams {
-  /** Send the `pagination.next_cursor` from the last page to get the next one. Leave it empty for the first page. The cursor remembers its sort, so `sort` is ignored. Each request returns one complete upstream page, usually 20 threads. Sorting by top stops at about 1,200 comments, marked `completion=depth_limit`. A cursor only works on one video and can expire; bad or expired ones return `invalid_cursor` (400). */
-  cursor?: string;
-  /** Comment order: top-ranked or newest first. Pinned threads surface first in either order. Ignored when cursor is supplied because the cursor preserves the walk's sort. */
-  sort?: CommentSortOrder;
   /** YouTube video ID or a supported video URL, normalized to the eleven-character video ID. URLs may use watch?v=, youtu.be/, shorts/, embed/, or live/ forms. */
   video_id: string;
+  /** Comment order: top-ranked or newest first. Pinned threads surface first in either order. Ignored when cursor is supplied because the cursor preserves the walk's sort. */
+  sort?: CommentSortOrder;
+  /** Send the `pagination.next_cursor` from the last page to get the next one. Leave it empty for the first page. The cursor remembers its sort, so `sort` is ignored. Each request returns one complete upstream page, usually 20 threads. Sorting by top stops at about 1,200 comments, marked `completion=depth_limit`. A cursor only works on one video and can expire; bad or expired ones return `invalid_cursor` (400). */
+  cursor?: string;
 }
 
 export interface GetFormatsParams {
@@ -184,77 +184,78 @@ export interface GetHeatmapParams {
 }
 
 export interface GetMetadataParams {
-  /** Optional ISO 3166-1 alpha-2 country code, normalized uppercase. */
-  country?: string | null;
-  /** Optional comma-separated projection of metadata fields; video_id is always included, and an empty value is treated as omitted. Allowed fields: `age_limit`, `availability`, `categories`, `channel`, `channel_follower_count`, `channel_id`, `channel_is_verified`, `channel_url`, `chapters`, `comment_count`, `concurrent_view_count`, `description`, `duration`, `duration_string`, `fulltitle`, `handle`, `handle_url`, `heatmap`, `height`, `language`, `license`, `like_count`, `live_status`, `location`, `media_type`, `original_url`, `playable_in_embed`, `release_date`, `release_timestamp`, `tags`, `thumbnail`, `thumbnails`, `timestamp`, `title`, `upload_date`, `video_id`, `view_count`, `webpage_url`, `width`. */
-  fields?: string | null;
   /** YouTube video ID or a supported video URL, normalized to the eleven-character video ID. URLs may use watch?v=, youtu.be/, shorts/, embed/, or live/ forms. */
   video_id: string;
+  /** Optional comma-separated projection of metadata fields; video_id is always included, and an empty value is treated as omitted. Allowed fields: `age_limit`, `availability`, `categories`, `channel`, `channel_follower_count`, `channel_id`, `channel_is_verified`, `channel_url`, `chapters`, `comment_count`, `concurrent_view_count`, `description`, `duration`, `duration_string`, `fulltitle`, `handle`, `handle_url`, `heatmap`, `height`, `language`, `license`, `like_count`, `live_status`, `location`, `media_type`, `original_url`, `playable_in_embed`, `release_date`, `release_timestamp`, `tags`, `thumbnail`, `thumbnails`, `timestamp`, `title`, `upload_date`, `video_id`, `view_count`, `webpage_url`, `width`. */
+  fields?: string | null;
+  /** Optional ISO 3166-1 alpha-2 country code, normalized uppercase. */
+  country?: string | null;
 }
 
 export interface GetPlaylistParams {
-  /** Maximum playlist entries to return (1–100). */
-  limit?: number;
   /** YouTube playlist ID (2–150 URL-safe characters). */
   playlist_id: string;
+  /** Maximum playlist entries to return (1–100). */
+  limit?: number;
 }
 
 export interface GetSubtitleTracksParams {
-  /** Optional ISO 3166-1 alpha-2 country code, normalized uppercase. */
-  country?: string | null;
   /** YouTube video ID or a supported video URL, normalized to the eleven-character video ID. URLs may use watch?v=, youtu.be/, shorts/, embed/, or live/ forms. */
   video_id: string;
+  /** Optional ISO 3166-1 alpha-2 country code, normalized uppercase. */
+  country?: string | null;
 }
 
 export interface GetSubtitlesParams {
-  /** Optional ISO 3166-1 alpha-2 country code, normalized uppercase. */
-  country?: string | null;
-  /** Languages to try, in order, if the requested language is unavailable. Use `*` to accept any language, defaulting to the video's spoken language. */
-  fallback_languages?: string[] | null;
-  /** YouTube-compatible language tag with a registered two- or three-letter primary code and optional script/region (for example pt-BR, es-419, zh-Hans, en-orig). Must exactly match a subtitle track the video has; YouTube auto-translation is not available. A track `id` from /subtitles/tracks (for example en.uYU-mmqFLq8) requests that exact track. */
-  language?: string;
-  /** Caption track to return: manual (human-authored) or auto (machine-generated). Defaults to any, which prefers manual and falls back to auto. */
-  source?: SubtitleSource;
-  /** Subtitle document format: srt (default), vtt, json3, ttml, or txt (plain text extracted from the srt, one line per cue). */
-  subtitle_format?: SubtitleFormat;
   /** YouTube video ID or a supported video URL, normalized to the eleven-character video ID. URLs may use watch?v=, youtu.be/, shorts/, embed/, or live/ forms. */
   video_id: string;
+  /** YouTube-compatible language tag with a registered two- or three-letter primary code and optional script/region (for example pt-BR, es-419, zh-Hans, en-orig). Must exactly match a subtitle track the video has; YouTube auto-translation is not available. A track `id` from /subtitles/tracks (for example en.uYU-mmqFLq8) requests that exact track. */
+  language?: string;
+  /** Languages to try, in order, if the requested language is unavailable. Use `*` to accept any language, defaulting to the video's spoken language. */
+  fallback_languages?: string[] | null;
+  /** Subtitle document format: srt (default), vtt, json3, ttml, or txt (plain text extracted from the srt, one line per cue). */
+  subtitle_format?: SubtitleFormat;
+  /** Caption track to return: manual (human-authored) or auto (machine-generated). Defaults to any, which prefers manual and falls back to auto. */
+  source?: SubtitleSource;
+  /** Optional ISO 3166-1 alpha-2 country code, normalized uppercase. */
+  country?: string | null;
 }
 
 export interface HeatmapItem {
-  end_time: number;
   start_time: number;
+  end_time: number;
   value: number;
 }
 
 export interface HeatmapResponse {
-  heatmap: HeatmapItem[] | null;
   video_id: string;
+  heatmap: HeatmapItem[] | null;
 }
 
 export interface Json3Event {
-  aAppend?: number;
+  tStartMs?: number;
   dDurationMs?: number;
   id?: number;
-  segs?: Json3Segment[];
-  tStartMs?: number;
   wWinId?: number;
   wpWinPosId?: number;
   wsWinStyleId?: number;
+  aAppend?: number;
+  segs?: Json3Segment[];
 }
 
 export interface Json3Segment {
-  acAsrConf?: number;
-  tOffsetMs?: number;
   utf8?: string;
+  tOffsetMs?: number;
+  acAsrConf?: number;
+  isSpeakerChange?: number;
 }
 
 export interface Json3Transcript {
-  events?: Json3Event[];
-  pens?: Record<string, number>[];
   wireMagic?: string;
-  wpWinPositions?: Record<string, number>[];
+  pens?: Record<string, number>[];
   wsWinStyles?: Record<string, number>[];
+  wpWinPositions?: Record<string, number>[];
+  events?: Json3Event[];
 }
 
 export type LiveStatus = "is_live" | "is_upcoming" | "was_live" | "post_live" | "not_live";
@@ -262,22 +263,22 @@ export type LiveStatus = "is_live" | "is_upcoming" | "was_live" | "post_live" | 
 export type MediaType = "video" | "short" | "clip" | "livestream";
 
 export interface PlaylistResponse {
+  playlist_id: string;
+  title: string | null;
+  description: string | null;
   channel: string | null;
   channel_id: string | null;
   channel_url: string | null;
-  description: string | null;
-  entries: VideoListItem[];
   handle: string | null;
   handle_url: string | null;
-  modified_date: string | null;
-  playlist_id: string;
-  returned_count: number;
   thumbnail: string | null;
   thumbnails: ThumbnailItem[];
-  title: string | null;
-  total_count: number | null;
   view_count: number | null;
+  modified_date: string | null;
+  total_count: number | null;
   webpage_url: string | null;
+  returned_count: number;
+  entries: VideoListItem[];
 }
 
 export type Protocol = "https" | "mhtml" | "m3u8_native" | "http_dash_segments";
@@ -285,54 +286,54 @@ export type Protocol = "https" | "mhtml" | "m3u8_native" | "http_dash_segments";
 export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
 
 export interface RepliesResponse {
-  comment_id: string;
-  pagination: CursorPagination;
-  replies: CommentItem[];
-  returned_count: number;
   video_id: string;
+  comment_id: string;
+  returned_count: number;
+  replies: CommentItem[];
+  pagination: CursorPagination;
 }
 
 export interface SearchParams {
-  /** Optional ISO 3166-1 alpha-2 country code, normalized uppercase. */
-  country?: string | null;
-  /** Send the `pagination.next_cursor` from the last search page to continue. Leave it empty for the first page. The cursor is bound to the normalized query, country, and filters; changing any of them returns `invalid_cursor` (400). Each request returns one complete upstream page. Results are live rather than a durable snapshot, so cursors can expire. */
-  cursor?: string;
-  /** Restrict video results to a duration band (under 4 min, 4–20 min, over 20 min). */
-  duration?: VideoDuration | null;
-  /** Require one or more result features (repeatable): e.g. hd, 4k, subtitles, live. */
-  features?: Feature[] | null;
   /** Search text; surrounding whitespace is removed (1–200 characters). */
   query: string;
-  /** Restrict results to a single kind: video, channel, playlist, or movie. */
-  search_type?: SearchType | null;
+  /** Optional ISO 3166-1 alpha-2 country code, normalized uppercase. */
+  country?: string | null;
   /** Rank order for results: relevance, upload date, view count, or rating. */
   sort?: SearchSort;
   /** Restrict results to an upload-recency window (last hour through this year). */
   upload_date?: UploadDate | null;
+  /** Restrict results to a single kind: video, channel, playlist, or movie. */
+  search_type?: SearchType | null;
+  /** Restrict video results to a duration band (under 4 min, 4–20 min, over 20 min). */
+  duration?: VideoDuration | null;
+  /** Require one or more result features (repeatable): e.g. hd, 4k, subtitles, live. */
+  features?: Feature[] | null;
+  /** Send the `pagination.next_cursor` from the last search page to continue. Leave it empty for the first page. The cursor is bound to the normalized query, country, and filters; changing any of them returns `invalid_cursor` (400). Each request returns one complete upstream page. Results are live rather than a durable snapshot, so cursors can expire. */
+  cursor?: string;
 }
 
 export interface SearchResponse {
-  pagination: CursorPagination;
   query: string;
-  results: SearchResultItem[];
   returned_count: number;
+  results: SearchResultItem[];
+  pagination: CursorPagination;
 }
 
 export interface SearchResultItem {
-  channel: string | null;
-  channel_id: string | null;
-  channel_is_verified: boolean | null;
-  channel_url: string | null;
-  description: string | null;
-  duration: number | null;
-  id: string | null;
-  live_status: LiveStatus | null;
   result_type: SearchResultType;
-  thumbnail: string | null;
-  thumbnails: ThumbnailItem[] | null;
+  id: string | null;
   title: string | null;
   url: string | null;
+  duration: number | null;
   view_count: number | null;
+  channel: string | null;
+  channel_id: string | null;
+  channel_url: string | null;
+  thumbnail: string | null;
+  thumbnails: ThumbnailItem[] | null;
+  description: string | null;
+  live_status: LiveStatus | null;
+  channel_is_verified: boolean | null;
 }
 
 export type SearchResultType = "video" | "channel" | "playlist" | "movie";
@@ -344,42 +345,42 @@ export type SearchType = "video" | "channel" | "playlist" | "movie";
 export type SubtitleFormat = "srt" | "vtt" | "json3" | "ttml" | "txt";
 
 export interface SubtitleMetadata {
+  video_id: string;
+  title: string | null;
   channel: string | null;
   channel_id: string | null;
   duration: number | null;
-  title: string | null;
-  video_id: string;
 }
 
 export interface SubtitleResponse {
-  is_auto_generated: boolean;
-  language: string;
-  metadata: SubtitleMetadata;
-  track_id: string;
   transcript: string | Json3Transcript;
+  language: string;
+  track_id: string;
+  is_auto_generated: boolean;
+  metadata: SubtitleMetadata;
 }
 
 export type SubtitleSource = "any" | "manual" | "auto";
 
 export interface SubtitleTrackItem {
-  formats: string[];
   id: string;
   language: string;
   language_name: string | null;
+  formats: string[];
 }
 
 export interface SubtitleTracksResponse {
-  auto: SubtitleTrackItem[];
+  video_id: string;
+  manual_count: number;
   auto_count: number;
   manual: SubtitleTrackItem[];
-  manual_count: number;
-  video_id: string;
+  auto: SubtitleTrackItem[];
 }
 
 export interface ThumbnailItem {
-  height: number | null;
   url: string;
   width: number | null;
+  height: number | null;
 }
 
 export type UploadDate = "last_hour" | "today" | "this_week" | "this_month" | "this_year";
@@ -389,58 +390,58 @@ export type VideoDuration = "under_4_min" | "4_to_20_min" | "over_20_min";
 export type VideoExt = "mp4" | "webm" | "none";
 
 export interface VideoListItem {
-  channel: string | null;
-  channel_id: string | null;
-  channel_is_verified: boolean | null;
-  channel_url: string | null;
-  duration?: number | null;
-  live_status: LiveStatus | null;
-  thumbnail: string | null;
-  thumbnails: ThumbnailItem[] | null;
+  video_id: string | null;
   title: string | null;
   url: string | null;
-  video_id: string | null;
+  duration?: number | null;
   view_count: number | null;
+  channel: string | null;
+  channel_id: string | null;
+  channel_url: string | null;
+  thumbnail: string | null;
+  thumbnails: ThumbnailItem[] | null;
+  live_status: LiveStatus | null;
+  channel_is_verified: boolean | null;
 }
 
 export interface VideoMetadataResponse {
-  age_limit?: number | null;
-  availability?: Availability | null;
-  categories?: string[] | null;
-  channel?: string | null;
-  channel_follower_count?: number | null;
-  channel_id?: string | null;
-  channel_is_verified?: boolean | null;
-  channel_url?: string | null;
-  chapters?: ChapterItem[] | null;
-  comment_count?: number | null;
-  concurrent_view_count?: number | null;
+  video_id: string;
+  title?: string | null;
+  fulltitle?: string | null;
   description?: string | null;
   duration?: number | null;
   duration_string?: string | null;
-  fulltitle?: string | null;
+  upload_date?: string | null;
+  timestamp?: number | null;
+  release_timestamp?: number | null;
+  release_date?: string | null;
+  view_count?: number | null;
+  like_count?: number | null;
+  comment_count?: number | null;
   handle?: string | null;
   handle_url?: string | null;
-  heatmap?: HeatmapItem[] | null;
-  height?: number | null;
-  language?: string | null;
-  license?: string | null;
-  like_count?: number | null;
-  live_status?: LiveStatus | null;
-  location?: string | null;
-  media_type?: MediaType | null;
-  original_url?: string | null;
-  playable_in_embed?: boolean | null;
-  release_date?: string | null;
-  release_timestamp?: number | null;
-  tags?: string[];
+  channel?: string | null;
+  channel_id?: string | null;
+  channel_url?: string | null;
+  channel_follower_count?: number | null;
+  channel_is_verified?: boolean | null;
   thumbnail?: string | null;
   thumbnails?: ThumbnailItem[];
-  timestamp?: number | null;
-  title?: string | null;
-  upload_date?: string | null;
-  video_id: string;
-  view_count?: number | null;
-  webpage_url?: string | null;
   width?: number | null;
+  height?: number | null;
+  categories?: string[] | null;
+  tags?: string[];
+  live_status?: LiveStatus | null;
+  availability?: Availability | null;
+  age_limit?: number | null;
+  playable_in_embed?: boolean | null;
+  webpage_url?: string | null;
+  original_url?: string | null;
+  language?: string | null;
+  chapters?: ChapterItem[] | null;
+  heatmap?: HeatmapItem[] | null;
+  concurrent_view_count?: number | null;
+  location?: string | null;
+  license?: string | null;
+  media_type?: MediaType | null;
 }

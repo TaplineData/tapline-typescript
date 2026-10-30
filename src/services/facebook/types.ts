@@ -3,59 +3,58 @@
 export type CommentSort = "relevant" | "newest" | "all";
 
 export interface ErrorDetail {
-  ctx?: Record<string, unknown> | null;
-  input?: unknown | null;
+  type?: string | null;
   loc?: (string | number)[] | null;
   msg?: string | null;
-  type?: string | null;
+  input?: unknown | null;
+  ctx?: Record<string, unknown> | null;
 }
 
 export interface ErrorResponse {
   code: PublicError;
-  details?: ErrorDetail[] | null;
-  domain?: string | null;
   message: string;
   request_id: string;
+  domain?: string | null;
+  details?: ErrorDetail[] | null;
   upgrade_url?: string | null;
 }
 
 export type EventDateRange = "today" | "tomorrow" | "this_week" | "this_weekend" | "next_week" | "next_weekend" | "next_month";
 
 export interface FacebookAboutField {
-  date: string | null;
-  decoded_url: string | null;
-  icon_url: string | null;
-  labels: string[];
   text: string | null;
-  type: string | null;
   url: string | null;
+  decoded_url: string | null;
+  date: string | null;
+  type: string | null;
+  labels: string[];
 }
 
 export interface FacebookAboutFieldSection {
-  fields: FacebookAboutField[];
   id: string | null;
-  subtitle: string | null;
   title: string | null;
+  subtitle: string | null;
   type: string | null;
+  fields: FacebookAboutField[];
 }
 
 export interface FacebookAiDisclosure {
-  transparency_type: FacebookCode;
   was_detected_as_ai_generated: boolean | null;
   was_self_disclosed_as_ai_generated: boolean | null;
+  transparency_type: FacebookCode;
 }
 
 export interface FacebookAttachment {
-  article_author: string | null;
+  title: string | null;
+  subtitle: string | null;
+  url: string | null;
   external_url: string | null;
+  target: FacebookAttachmentTarget;
   items: (FacebookPhoto | FacebookVideo | FacebookOtherMedia)[];
+  source: string | null;
+  article_author: string | null;
   kind: FacebookCode;
   media: FacebookPhoto | FacebookVideo | FacebookOtherMedia | null;
-  source: string | null;
-  subtitle: string | null;
-  target: FacebookAttachmentTarget;
-  title: string | null;
-  url: string | null;
 }
 
 export interface FacebookAttachmentTarget {
@@ -65,19 +64,19 @@ export interface FacebookAttachmentTarget {
 
 export interface FacebookCaption {
   language: string | null;
-  locale: string | null;
   url: string | null;
+  locale: string | null;
 }
 
 export interface FacebookCity {
   city_id: string | null;
-  description: string | null;
   name: string | null;
+  description: string | null;
 }
 
 export interface FacebookCityEventsPage {
-  city: FacebookCity | null;
   events: FacebookEventCard[];
+  city: FacebookCity | null;
   pagination: FacebookCursorPagination;
 }
 
@@ -89,110 +88,102 @@ export interface FacebookCode {
 export interface FacebookCollectionAlbum {
   collection_item_id: string | null;
   id: string | null;
-  image_url: string | null;
-  item_count: number | null;
-  item_count_text: string | null;
   title: string | null;
   url: string | null;
+  item_count: number | null;
+  item_count_text: string | null;
+  image_url: string | null;
 }
 
 export interface FacebookCollectionPerson {
   collection_item_id: string | null;
-  person: FacebookProfileRef;
   subtitle: string | null;
+  person: FacebookProfileRef;
 }
 
 export interface FacebookCollectionSummary {
-  empty_message: string | null;
   id: string | null;
-  listed_count: number | null;
   name: string | null;
+  listed_count: number | null;
+  empty_message: string | null;
 }
 
 export interface FacebookComment {
-  attachments: FacebookAttachment[];
-  author: FacebookProfileRef | null;
-  created_at: string | null;
-  depth: number | null;
-  engagement: FacebookCommentEngagement;
-  feedback_id: string | null;
   id: string | null;
-  legacy_token: string | null;
-  node_id: string | null;
   parent_comment_id: string | null;
-  post: FacebookCommentPost;
-  replies_cursor: string | null;
-  status: FacebookCommentStatus;
+  feedback_id: string | null;
+  node_id: string | null;
   text: string | null;
-  timestamp_in_video_seconds: number | null;
-  translation: FacebookTranslation;
   url: string | null;
-  viewer: FacebookCommentViewer;
+  status: FacebookCommentStatus;
+  created_at: string | null;
+  timestamp_in_video_seconds: number | null;
+  author: FacebookProfileRef | null;
+  post: FacebookCommentPost;
+  translation: FacebookTranslation;
+  attachments: FacebookAttachment[];
+  engagement: FacebookCommentEngagement;
+  replies_cursor: string | null;
+  depth: number | null;
+  legacy_token: string | null;
 }
 
 export interface FacebookCommentEngagement {
   reaction_count: number | null;
   reaction_count_text: string | null;
-  reactions: FacebookReaction[];
   reply_count: number | null;
   reply_total_count: number | null;
+  reactions: FacebookReaction[];
 }
 
 export interface FacebookCommentPost {
-  feedback_id: string | null;
-  owner: FacebookProfileRef | null;
   post_id: string | null;
   story_id: string | null;
+  feedback_id: string | null;
+  owner: FacebookProfileRef | null;
 }
 
 export interface FacebookCommentSort {
-  description: string | null;
-  intent_token: string | null;
-  sort: string | null;
   title: string | null;
+  description: string | null;
+  sort: string | null;
+  intent_token: string | null;
 }
 
 export interface FacebookCommentStatus {
-  has_only_low_quality_replies: boolean | null;
-  is_author_weak_reference: boolean | null;
   is_disabled: boolean | null;
   is_live_video_comment: boolean | null;
-  is_markdown_enabled: boolean | null;
-  is_self_disclosed_as_ai_generated: boolean | null;
   is_subreply_parent_deleted: boolean | null;
+  is_self_disclosed_as_ai_generated: boolean | null;
+  has_only_low_quality_replies: boolean | null;
   replies_hidden_notice: string | null;
-  spam_display_mode: string | null;
   written_while_video_was_live: boolean | null;
 }
 
 export interface FacebookCommentThread {
+  summary: FacebookCommentsSummary;
   comments: FacebookComment[];
   pagination: FacebookCursorPagination;
-  summary: FacebookCommentsSummary;
-}
-
-export interface FacebookCommentViewer {
-  is_hidden_by_viewer: boolean | null;
 }
 
 export interface FacebookCommentsPage {
-  comments: FacebookComment[];
   feedback_id: string;
-  pagination: FacebookCursorPagination;
-  summary: FacebookCommentsSummary;
   url: string | null;
+  summary: FacebookCommentsSummary;
+  comments: FacebookComment[];
+  pagination: FacebookCursorPagination;
 }
 
 export interface FacebookCommentsSummary {
-  comments_disabled_notice: string | null;
-  filtering_note: string | null;
+  total_count: number | null;
+  visible_count: number | null;
   has_comments_disabled: boolean | null;
   page_size: number | null;
   sort: FacebookCommentSort | null;
-  sort_note: string | null;
   sort_options: FacebookCommentSort[];
-  total_count: number | null;
-  visible_count: number | null;
+  sort_note: string | null;
+  filtering_note: string | null;
+  comments_disabled_notice: string | null;
 }
 
 export interface FacebookContentTag {
@@ -201,126 +192,124 @@ export interface FacebookContentTag {
 }
 
 export interface FacebookCoverPhoto {
-  accessibility_caption: string | null;
-  blurred_image: FacebookImage | null;
-  focus: FacebookFocus | null;
   id: string | null;
-  image: FacebookImage | null;
   owner_id: string | null;
+  accessibility_caption: string | null;
   url: string | null;
+  focus: FacebookFocus | null;
+  image: FacebookImage | null;
 }
 
 export interface FacebookCursorPagination {
-  has_more: boolean | null;
   next_cursor: string | null;
+  has_more: boolean | null;
 }
 
 export interface FacebookDashStream {
-  bandwidth: number | null;
-  codecs: string | null;
-  content_type: string | null;
-  frame_rate: number | null;
-  height: number | null;
   id: string | null;
-  mime_type: string | null;
-  quality_label: string | null;
   url: string | null;
+  content_type: string | null;
+  mime_type: string | null;
+  codecs: string | null;
+  bandwidth: number | null;
   width: number | null;
+  height: number | null;
+  frame_rate: number | null;
+  quality_label: string | null;
 }
 
 export interface FacebookEngagement {
-  comment_count: number | null;
-  play_count: number | null;
-  post_play_count: number | null;
   reaction_count: number | null;
   reaction_count_text: string | null;
-  reactions: FacebookReaction[];
+  comment_count: number | null;
   share_count: number | null;
   share_count_text: string | null;
   view_count: number | null;
   view_count_text: string | null;
+  play_count: number | null;
+  post_play_count: number | null;
+  reactions: FacebookReaction[];
 }
 
 export interface FacebookEvent {
-  cover_photo: FacebookCoverPhoto | null;
-  day_time_text: string | null;
-  frequency: FacebookCode;
   id: string;
+  owner_page_id: string | null;
+  recurring_parent_event_id: string | null;
+  name: string | null;
+  day_time_text: string | null;
+  start_time_text: string | null;
+  url: string | null;
+  occurrence_count: number | null;
+  price_info: string | null;
   is_canceled: boolean | null;
   is_draft: boolean | null;
+  start_at: string | null;
+  next_occurrence_at: string | null;
+  place: FacebookPlace | null;
+  frequency: FacebookCode;
   is_online: boolean | null;
   is_past: boolean | null;
   is_sale_event: boolean | null;
-  name: string | null;
-  next_occurrence_at: string | null;
-  occurrence_count: number | null;
-  owner_page_id: string | null;
-  place: FacebookPlace | null;
-  price_info: string | null;
-  recurring_parent_event_id: string | null;
-  start_at: string | null;
-  start_time_text: string | null;
-  url: string | null;
-  viewer: FacebookEventViewerState;
+  cover_photo: FacebookCoverPhoto | null;
 }
 
 export interface FacebookEventAbout {
-  attendance_text: string | null;
-  categories: string[];
+  id: string;
+  ticketing_title: string | null;
   description: string | null;
-  duration_label: string | null;
   duration_text: string | null;
+  host_text: string | null;
+  attendance_text: string | null;
+  ticket_url: string | null;
+  notable_source_count: number | null;
+  start_at: string | null;
   end_at: string | null;
+  scheduled_publish_at: string | null;
+  place: FacebookPlace | null;
+  hosts: FacebookProfileRef[];
+  suggested_events: FacebookEventCard[];
+  categories: string[];
+  kind: FacebookCode;
+  duration_label: string | null;
+  timezone_abbreviation: string | null;
+  ticketing_subtitle: string | null;
+  ticket_provider: string | null;
+  lineups: string[];
   flags: string[];
+  keywords: string[];
   has_date_changed: boolean | null;
   has_name_changed: boolean | null;
-  host_text: string | null;
-  hosts: FacebookProfileRef[];
-  id: string;
+  rsvp_style: FacebookCode;
   is_online: boolean | null;
   is_past: boolean | null;
-  keywords: string[];
-  kind: FacebookCode;
-  lineups: string[];
-  notable_source_count: number | null;
-  place: FacebookPlace | null;
-  rsvp_style: FacebookCode;
-  scheduled_publish_at: string | null;
-  start_at: string | null;
-  suggested_events: FacebookEventCard[];
-  ticket_url: string | null;
-  ticketing_subtitle: string | null;
-  ticketing_title: string | null;
-  timezone_abbreviation: string | null;
 }
 
 export interface FacebookEventCard {
-  cover_photo: FacebookCoverPhoto | null;
-  creator: FacebookProfileRef | null;
-  day_time_text: string | null;
-  end_at: string | null;
   id: string | null;
+  recurring_parent_event_id: string | null;
+  live_video_ids: string[];
+  name: string | null;
+  day_time_text: string | null;
+  url: string | null;
+  price_range_text: string | null;
+  metrics: FacebookEventMetrics;
   is_canceled: boolean | null;
-  is_happening_now: boolean | null;
+  start_at: string | null;
+  end_at: string | null;
+  place: FacebookPlace | null;
+  creator: FacebookProfileRef | null;
+  kind: FacebookCode;
+  social_context: string | null;
+  online_type: string | null;
   is_online: boolean | null;
   is_past: boolean | null;
-  kind: FacebookCode;
-  live_video_ids: string[];
-  metrics: FacebookEventMetrics;
-  name: string | null;
-  online_type: string | null;
-  place: FacebookPlace | null;
-  price_range_text: string | null;
-  recurring_parent_event_id: string | null;
-  social_context: string | null;
-  start_at: string | null;
-  url: string | null;
-  viewer: FacebookEventViewer;
+  is_happening_now: boolean | null;
+  cover_photo: FacebookCoverPhoto | null;
 }
 
 export interface FacebookEventMetrics {
-  going_count: number | null;
   interested_count: number | null;
+  going_count: number | null;
 }
 
 export interface FacebookEventSearchPage {
@@ -329,86 +318,69 @@ export interface FacebookEventSearchPage {
   pagination: FacebookCursorPagination;
 }
 
-export interface FacebookEventViewer {
-  watch_status: string | null;
-}
-
-export interface FacebookEventViewerState {
-  acting_account_id: string | null;
-  acting_account_name: string | null;
-}
-
 export interface FacebookFocus {
   x: number | null;
   y: number | null;
 }
 
 export interface FacebookGroup {
+  id: string;
+  name: string | null;
+  url: string | null;
+  metrics: FacebookGroupMetrics;
+  join_restriction_reason: string | null;
+  work_official_status: string | null;
+  privacy: FacebookGroupPrivacy;
+  tabs: FacebookGroupTab[];
+  has_membership_questions: boolean | null;
+  is_multi_company_group: boolean | null;
+  type_name: string | null;
   address: string | null;
   cover_photo: FacebookCoverPhoto | null;
-  has_membership_questions: boolean | null;
-  id: string;
-  is_multi_company_group: boolean | null;
-  join_restriction_reason: string | null;
-  metrics: FacebookGroupMetrics;
-  name: string | null;
-  privacy: FacebookGroupPrivacy;
   profile_picture_url: string | null;
-  secondary_theme_color_argb: string | null;
-  tabs: FacebookGroupTab[];
-  theme_color_argb: string | null;
-  type_name: string | null;
-  url: string | null;
-  work_official_status: string | null;
 }
 
 export interface FacebookGroupAbout {
-  admin_sentence: string | null;
-  admins: FacebookGroupMember[];
-  created_at: string | null;
+  id: string;
   description: string | null;
   history_text: string | null;
-  id: string;
-  info_items: string[];
-  member_count_text: string | null;
-  metrics: FacebookGroupAboutMetrics;
-  moderators: FacebookGroupMember[];
   new_members_text: string | null;
-  privacy: FacebookGroupPrivacy;
-  rules: FacebookGroupRule[];
+  metrics: FacebookGroupAboutMetrics;
+  member_count_text: string | null;
   total_members_text: string | null;
-  viewer: FacebookGroupAboutViewer;
   visibility: FacebookGroupPrivacy;
+  privacy: FacebookGroupPrivacy;
+  created_at: string | null;
+  admins: FacebookGroupMember[];
+  moderators: FacebookGroupMember[];
+  rules: FacebookGroupRule[];
+  admin_sentence: string | null;
+  info_items: string[];
 }
 
 export interface FacebookGroupAboutMetrics {
-  admin_count: number | null;
   member_count: number | null;
   member_count_approx: number | null;
-  moderator_count: number | null;
   new_member_count: number | null;
+  admin_count: number | null;
+  moderator_count: number | null;
   posts_last_day: number | null;
   posts_last_month: number | null;
 }
 
-export interface FacebookGroupAboutViewer {
-  friend_member_count: number | null;
-  friends_sentence: string | null;
-}
-
 export interface FacebookGroupEvents {
-  group_cover_photo_id: string | null;
   group_id: string;
+  group_cover_photo_id: string | null;
   past: FacebookEventCard[];
-  past_pagination: FacebookCursorPagination;
   upcoming: FacebookEventCard[];
   upcoming_pagination: FacebookCursorPagination;
+  past_pagination: FacebookCursorPagination;
 }
 
 export interface FacebookGroupMember {
-  has_member_feed: boolean | null;
   membership_id: string | null;
   person: FacebookProfileRef;
+  has_member_feed: boolean | null;
 }
 
 export interface FacebookGroupMetrics {
@@ -421,62 +393,59 @@ export interface FacebookGroupPhotosPage {
   group_id: string;
   mediaset_id: string | null;
   mediaset_token: string | null;
-  pagination: FacebookCursorPagination;
   photos: FacebookPhoto[];
+  pagination: FacebookCursorPagination;
 }
 
 export interface FacebookGroupPrivacy {
-  code: string | null;
   description: string | null;
-  icon_name: string | null;
+  code: string | null;
   label: string | null;
 }
 
 export interface FacebookGroupRule {
-  description: string | null;
   id: string | null;
   title: string | null;
+  description: string | null;
 }
 
 export interface FacebookGroupTab {
-  is_default: boolean | null;
-  name: string | null;
   tab_key: string | null;
+  name: string | null;
   url: string | null;
 }
 
 export interface FacebookHashtagPosts {
+  posts: FacebookPost[];
   hashtag: string;
   pagination: FacebookCursorPagination;
-  posts: FacebookPost[];
 }
 
 export interface FacebookImage {
-  height: number | null;
   url: string | null;
   width: number | null;
+  height: number | null;
 }
 
 export interface FacebookInstagramAccount {
+  username: string | null;
   follower_count: number | null;
   is_verified: boolean | null;
-  username: string | null;
 }
 
 export interface FacebookIntroItem {
-  decoded_url: string | null;
-  icon_url: string | null;
   page_id: string | null;
-  subtitle: string | null;
-  target_type: string | null;
   text: string | null;
-  type: FacebookCode;
+  subtitle: string | null;
   url: string | null;
+  decoded_url: string | null;
+  type: FacebookCode;
+  target_type: string | null;
 }
 
 export interface FacebookLiveSection {
-  posts: FacebookPost[];
   title: string | null;
+  posts: FacebookPost[];
   type: FacebookCode;
 }
 
@@ -484,321 +453,335 @@ export interface FacebookLiveVideos {
   sections: FacebookLiveSection[];
 }
 
+export interface FacebookMessageEntity {
+  id: string | null;
+  url: string | null;
+  external_url: string | null;
+  offset: number | null;
+  length: number | null;
+  type: string | null;
+}
+
 export interface FacebookOtherMedia {
   id: string | null;
-  type: string | null;
   url: string | null;
+  type: string | null;
 }
 
 export interface FacebookPage {
-  alternate_name: string | null;
-  cover_photo: FacebookCoverPhoto | null;
-  gender: FacebookCode;
-  legal: FacebookPageLegal;
-  metrics: FacebookPageHeaderMetrics;
-  name: string | null;
   page_id: string | null;
-  profile_id: string;
-  profile_photo: FacebookPhoto;
-  profile_pictures: FacebookImage[];
-  profile_type_transition: FacebookCode;
-  social_context: FacebookSocialContextItem[];
-  status: FacebookPageStatus;
-  story_bucket_ids: string[];
-  tabs: FacebookPageTab[];
+  profile_id: string | null;
+  username?: string | null;
+  story_bucket_ids?: string[];
+  name: string | null;
   url: string | null;
+  metrics: FacebookPageMetrics;
+  status: FacebookPageStatus;
+  instagram?: FacebookInstagramAccount | null;
+  tabs?: FacebookPageTab[];
+  category?: string | null;
+  entity_type?: FacebookCode;
+  verification?: FacebookCode;
+  alternate_name?: string | null;
+  gender?: FacebookCode;
+  profile_type_transition?: FacebookCode;
+  social_context?: FacebookSocialContextItem[];
+  legal?: FacebookPageLegal;
+  profile_picture_url?: string | null;
+  profile_photo?: FacebookPhoto;
+  profile_pictures?: FacebookImage[];
+  cover_photo?: FacebookCoverPhoto | null;
 }
 
 export interface FacebookPageAboutSection {
+  profile_id: string;
+  page_id: string | null;
+  section_id: string | null;
+  sections: FacebookAboutFieldSection[];
   collection: FacebookPageCollectionLink;
   collections: FacebookPageCollectionLink[];
-  page_id: string | null;
-  profile_id: string;
-  section_id: string | null;
   section_name: string | null;
-  sections: FacebookAboutFieldSection[];
+  transparency: FacebookPageTransparency | null;
 }
 
 export interface FacebookPageCollectionLink {
   collection_id: string | null;
-  name: string | null;
   tab_key: string | null;
+  name: string | null;
   url: string | null;
 }
 
 export interface FacebookPageEventsPage {
-  collection: FacebookCollectionSummary;
-  events: FacebookEventCard[];
-  pagination: FacebookCursorPagination;
   profile_id: string;
+  events: FacebookEventCard[];
   section: FacebookPageSectionSummary | null;
-}
-
-export interface FacebookPageHeaderMetrics {
-  follower_count_approx: number | null;
-  following_count_approx: number | null;
+  collection: FacebookCollectionSummary;
+  pagination: FacebookCursorPagination;
 }
 
 export interface FacebookPageIntro {
-  addresses: string[];
-  bio: string | null;
-  bio_status_id: string | null;
-  category: string | null;
-  emails: string[];
-  featured_photos: FacebookPhoto[];
-  items: FacebookIntroItem[];
-  page_id: string | null;
-  phones: string[];
-  photos_mediaset_token: string | null;
   profile_id: string;
-  profile_type: string | null;
-  see_more_text: string | null;
+  page_id: string | null;
+  bio_status_id: string | null;
+  bio: string | null;
+  hours_text: string | null;
   websites: string[];
+  social_links: FacebookSocialLink[];
+  rating: FacebookPageRating | null;
+  price_range: string | null;
+  items: FacebookIntroItem[];
+  category: string | null;
+  confirmed_owner: string | null;
+  services: string[];
+  emails: string[];
+  phones: string[];
+  addresses: string[];
+  profile_type: string | null;
+  photos_mediaset_token: string | null;
+  featured_photos: FacebookPhoto[];
 }
 
 export interface FacebookPageLegal {
-  dsa_report_entrypoint: string | null;
   dsa_reporting_url: string | null;
+  dsa_report_entrypoint: string | null;
   is_dsa_legal_reporting_enabled: boolean | null;
 }
 
 export interface FacebookPageMetrics {
-  follower_count: number | null;
-  like_count: number | null;
-  talking_about_count: number | null;
+  like_count?: number | null;
+  follower_count?: number | null;
+  talking_about_count?: number | null;
+  follower_count_approx?: number | null;
+  following_count_approx?: number | null;
 }
 
 export interface FacebookPagePeople {
+  profile_id: string;
+  people: FacebookCollectionPerson[];
+  section: FacebookPageSectionSummary | null;
   collection: FacebookCollectionSummary;
   pagination: FacebookCursorPagination;
-  people: FacebookCollectionPerson[];
-  profile_id: string;
-  section: FacebookPageSectionSummary | null;
 }
 
 export interface FacebookPagePhotosPage {
-  albums: FacebookCollectionAlbum[];
-  collection: FacebookCollectionSummary;
-  pagination: FacebookCursorPagination;
-  photos: FacebookPhoto[];
   profile_id: string;
+  albums: FacebookCollectionAlbum[];
   section: FacebookPageSectionSummary | null;
+  collection: FacebookCollectionSummary;
+  photos: FacebookPhoto[];
+  pagination: FacebookCursorPagination;
 }
 
-export interface FacebookPageRef {
-  category: string | null;
-  entity_type: FacebookCode;
-  instagram: FacebookInstagramAccount | null;
-  is_deleted: boolean | null;
-  metrics: FacebookPageMetrics;
-  name: string | null;
-  page_id: string | null;
-  profile_id: string | null;
-  profile_picture_url: string | null;
-  url: string | null;
-  username: string | null;
-  verification: FacebookCode;
+export interface FacebookPageRating {
+  text: string;
+  review_count: number | null;
+  recommend_percent: number | null;
 }
 
 export interface FacebookPageSectionSummary {
-  collections: FacebookPageCollectionLink[];
-  empty_message: string | null;
   id: string | null;
   name: string | null;
-  notice: string | null;
-  type: FacebookCode;
   url: string | null;
+  collections: FacebookPageCollectionLink[];
+  type: FacebookCode;
+  notice: string | null;
+  empty_message: string | null;
 }
 
 export interface FacebookPageStatus {
-  is_additional_profile_plus: boolean | null;
-  is_business_page_active: boolean | null;
-  is_currently_live: boolean | null;
-  is_memorialized: boolean | null;
-  is_verified: boolean | null;
-  profile_picture_is_silhouette: boolean | null;
-  restriction_violation_status: string | null;
+  is_deleted?: boolean | null;
+  is_verified?: boolean | null;
+  is_memorialized?: boolean | null;
+  restriction_violation_status?: string | null;
+  is_currently_live?: boolean | null;
+  is_business_page_active?: boolean | null;
+  is_additional_profile_plus?: boolean | null;
+  profile_picture_is_silhouette?: boolean | null;
 }
 
 export interface FacebookPageSummary {
+  page: FacebookPage;
   description: string | null;
-  locale: string | null;
   open_graph_type: string | null;
-  page: FacebookPageRef;
+  locale: string | null;
 }
 
 export interface FacebookPageTab {
-  collections: FacebookPageCollectionLink[];
-  displayable_count: number | null;
-  has_new_content: boolean | null;
-  name: string | null;
   section_id: string | null;
-  section_type: FacebookCode;
   tab_key: string | null;
+  name: string | null;
   url: string | null;
+  displayable_count: number | null;
+  collections: FacebookPageCollectionLink[];
+  section_type: FacebookCode;
+}
+
+export interface FacebookPageTransparency {
+  created_on_text: string | null;
+  ad_status: string | null;
+  created_on: string | null;
+  is_running_ads: boolean | null;
+  confirmed_owner: string | null;
 }
 
 export interface FacebookPageVideoShow {
-  description: string | null;
   id: string | null;
-  seasons: FacebookContentTag[];
   title: string | null;
+  description: string | null;
   video_count: number | null;
+  seasons: FacebookContentTag[];
   videos: FacebookVideoCard[];
 }
 
 export interface FacebookPageVideosPage {
-  is_currently_live: boolean | null;
-  latest: FacebookVideoCard[];
   page_id: string;
-  pagination: FacebookCursorPagination;
-  playlist_count: number | null;
-  popular: FacebookVideoCard | null;
   show_count: number | null;
+  playlist_count: number | null;
+  is_currently_live: boolean | null;
+  popular: FacebookVideoCard | null;
   shows: FacebookPageVideoShow[];
+  latest: FacebookVideoCard[];
   videos: FacebookVideoCard[];
+  pagination: FacebookCursorPagination;
 }
 
 export interface FacebookPhoto {
-  accent_color_argb: string | null;
-  accessibility_caption: string | null;
   collection_item_id?: string | null;
-  creation_story_id: string | null;
-  feedback_id: string | null;
-  focus: FacebookFocus | null;
   id: string | null;
-  image: FacebookImage | null;
-  is_playable: boolean | null;
   owner_id: string | null;
-  thumbnail_url: string | null;
-  type: string;
+  feedback_id: string | null;
+  creation_story_id: string | null;
+  accessibility_caption: string | null;
   url: string | null;
+  focus: FacebookFocus | null;
+  type: string;
+  is_playable: boolean | null;
+  image: FacebookImage | null;
+  thumbnail_url: string | null;
 }
 
 export interface FacebookPhotoDetail {
   album_id: string | null;
-  business_content_type: FacebookCode;
-  comments: FacebookCommentThread;
-  created_at: string | null;
-  engagement: FacebookEngagement;
-  next_photo_ids: string[];
-  owner: FacebookProfileRef | null;
   page_id: string | null;
-  photo: FacebookPhoto;
+  next_photo_ids: string[];
   previous_photo_ids: string[];
-  privacy: FacebookCode;
   text: string | null;
+  privacy: FacebookCode;
+  created_at: string | null;
+  owner: FacebookProfileRef | null;
+  comments: FacebookCommentThread;
+  engagement: FacebookEngagement;
+  business_content_type: FacebookCode;
+  photo: FacebookPhoto;
 }
 
 export interface FacebookPlace {
-  address: string | null;
-  city_id: string | null;
-  city_name: string | null;
-  contextual_name: string | null;
   id: string | null;
-  is_user_specified: boolean | null;
+  city_id: string | null;
+  name: string | null;
+  url: string | null;
+  contextual_name: string | null;
+  type: FacebookCode;
+  address: string | null;
   latitude: number | null;
   longitude: number | null;
-  name: string | null;
-  type: FacebookCode;
-  url: string | null;
+  city_name: string | null;
+  is_user_specified: boolean | null;
 }
 
 export interface FacebookPost {
-  actors: FacebookProfileRef[];
-  ai_disclosure: FacebookAiDisclosure;
-  attached_post: FacebookPost | null;
-  attachments: FacebookAttachment[];
-  author: FacebookProfileRef | null;
-  cache_id: string | null;
-  created_at: string | null;
-  engagement: FacebookEngagement;
+  id: string | null;
+  story_id: string | null;
   feedback_id: string | null;
   group_id: string | null;
-  id: string | null;
-  music: FacebookPostMusic | null;
-  owner: FacebookProfileRef | null;
-  place_name: string | null;
-  rich_text: FacebookRichTextBlock[];
-  status: FacebookPostStatus;
-  story_id: string | null;
-  text: string | null;
   title: string | null;
-  top_comments: FacebookComment[];
+  text: string | null;
+  rich_text: FacebookRichTextBlock[];
   url: string | null;
-  viewer: FacebookPostViewer;
+  status: FacebookPostStatus;
+  created_at: string | null;
+  message_entities?: FacebookMessageEntity[] | null;
+  author: FacebookProfileRef | null;
+  actors: FacebookProfileRef[];
+  collaborators: FacebookProfileRef[];
+  owner: FacebookProfileRef | null;
+  top_comments: FacebookComment[];
+  music: FacebookPostMusic | null;
+  attached_post: FacebookPost | null;
+  engagement: FacebookEngagement;
+  attachments: FacebookAttachment[];
+  place_name: string | null;
+  ai_disclosure: FacebookAiDisclosure;
 }
 
 export interface FacebookPostDetail {
-  comments: FacebookCommentThread;
   post: FacebookPost;
+  comments: FacebookCommentThread;
 }
 
 export interface FacebookPostMusic {
-  artist_name: string | null;
   song_title: string | null;
+  artist_name: string | null;
 }
 
 export interface FacebookPostStatus {
-  default_comment_order: string | null;
   has_comments_disabled: boolean | null;
-  is_text_only: boolean | null;
   publish_state: FacebookCode;
-}
-
-export interface FacebookPostViewer {
-  save_state: string | null;
+  default_comment_order: string | null;
+  is_text_only: boolean | null;
 }
 
 export interface FacebookPostsPage {
-  pagination: FacebookCursorPagination;
   posts: FacebookPost[];
+  pagination: FacebookCursorPagination;
 }
 
 export interface FacebookProfileRef {
+  id: string | null;
+  pfbid: string | null;
+  username: string | null;
+  name: string | null;
+  url: string | null;
+  is_verified: boolean | null;
+  short_name: string | null;
   account_type: FacebookCode;
   gender: string | null;
-  id: string | null;
-  is_verified: boolean | null;
-  name: string | null;
-  pfbid: string | null;
   profile_picture_url: string | null;
-  short_name: string | null;
-  url: string | null;
 }
 
 export interface FacebookReaction {
+  reaction_id: string | null;
   count: number | null;
   count_text: string | null;
   label: string | null;
-  reaction_id: string | null;
 }
 
 export interface FacebookReel {
-  audio: FacebookReelAudio;
-  created_at: string | null;
+  post_id: string | null;
   creation_story_id: string | null;
-  engagement: FacebookEngagement;
-  is_embeddable: boolean | null;
-  is_made_with_meta_ai_app: boolean | null;
-  is_reshare: boolean | null;
+  seo_title: string | null;
+  text: string | null;
+  seo_summary: string | null;
+  shareable_url: string | null;
+  remix_status: FacebookCode;
+  privacy: FacebookCode;
+  created_at: string | null;
+  scheduled_publish_at: string | null;
+  message_entities?: FacebookMessageEntity[] | null;
   owner: FacebookProfileRef | null;
   owner_type: FacebookCode;
-  post_id: string | null;
-  privacy: FacebookCode;
-  remix_status: FacebookCode;
-  scheduled_publish_at: string | null;
-  seo_summary: string | null;
-  seo_title: string | null;
-  shareable_url: string | null;
-  text: string | null;
+  engagement: FacebookEngagement;
+  is_reshare: boolean | null;
+  is_embeddable: boolean | null;
+  is_made_with_meta_ai_app: boolean | null;
   video: FacebookVideo;
+  audio: FacebookReelAudio;
 }
 
 export interface FacebookReelAudio {
-  album_art_url: string | null;
-  is_original_audio: boolean | null;
   track_title: string | null;
+  is_original_audio: boolean | null;
+  album_art_url: string | null;
 }
 
 export interface FacebookReelDetail {
@@ -808,25 +791,25 @@ export interface FacebookReelDetail {
 export interface FacebookRepliesPage {
   comment_id: string;
   feedback_id: string | null;
-  pagination: FacebookCursorPagination;
   replies: FacebookComment[];
+  pagination: FacebookCursorPagination;
 }
 
 export interface FacebookResolvedIds {
-  author_profile_id: string | null;
-  collection_id: string | null;
-  event_id: string | null;
-  group_id: string | null;
-  hashtag: string | null;
-  listing_id: string | null;
-  photo_id: string | null;
   profile_id: string | null;
-  raw_section_token: string | null;
-  reel_id: string | null;
-  section_id: string | null;
-  story_id: string | null;
   username: string | null;
+  story_id: string | null;
+  author_profile_id: string | null;
+  group_id: string | null;
+  listing_id: string | null;
+  event_id: string | null;
   video_id: string | null;
+  reel_id: string | null;
+  photo_id: string | null;
+  collection_id: string | null;
+  section_id: string | null;
+  hashtag: string | null;
+  raw_section_token: string | null;
 }
 
 export interface FacebookResolvedLocation {
@@ -837,51 +820,57 @@ export interface FacebookResolvedLocation {
 }
 
 export interface FacebookResolvedUrl {
-  group_sort: string | null;
-  header_title: string | null;
   ids: FacebookResolvedIds;
-  kind: FacebookCode;
-  location: FacebookResolvedLocation | null;
-  route_name: string | null;
-  seo_url: string | null;
   title: string | null;
+  header_title: string | null;
   url: string;
+  seo_url: string | null;
+  location: FacebookResolvedLocation | null;
+  kind: FacebookCode;
+  route_name: string | null;
+  group_sort: string | null;
 }
 
 export interface FacebookRichTextBlock {
+  text: string | null;
   block_type: string | null;
   depth: number | null;
   media_alignment: string | null;
   media_caption: string | null;
-  text: string | null;
 }
 
 export interface FacebookScrubberPreview {
-  max_number_of_images_per_sprite: number | null;
   sprite_uris: string[];
-  thumbnail_height: number | null;
   thumbnail_width: number | null;
+  thumbnail_height: number | null;
+  max_number_of_images_per_sprite: number | null;
   time_interval_between_image: number | null;
 }
 
 export interface FacebookSearchFilter {
-  label: string | null;
   name: string | null;
+  label: string | null;
   options: FacebookSearchFilterOption[];
 }
 
 export interface FacebookSearchFilterOption {
-  filter_name: string | null;
   label: string | null;
+  filter_name: string | null;
+  value: string | null;
   param: string | null;
   param_value: string | null;
-  value: string | null;
 }
 
 export interface FacebookSocialContextItem {
-  count_approx: number | null;
   text: string | null;
   url: string | null;
+  count_approx: number | null;
+}
+
+export interface FacebookSocialLink {
+  username: string | null;
+  url: string;
+  network: string;
 }
 
 export interface FacebookTranslation {
@@ -891,92 +880,87 @@ export interface FacebookTranslation {
 }
 
 export interface FacebookVideo {
-  accent_color_argb: string | null;
-  broadcast_status: string | null;
-  captions: FacebookCaption[];
-  description: string | null;
-  duration_seconds: number | null;
-  first_frame_url: string | null;
-  height: number | null;
   id: string | null;
-  is_live: boolean | null;
-  live_status: FacebookCode;
-  owner: FacebookProfileRef | null;
+  title: string | null;
+  description: string | null;
+  url: string | null;
   playable_url: string | null;
   playable_url_hd: string | null;
-  player: FacebookVideoPlayer;
+  live_status: FacebookCode;
+  broadcast_status: string | null;
+  is_live: boolean | null;
   published_at: string | null;
-  thumbnail_url: string | null;
-  title: string | null;
-  type: string;
-  url: string | null;
+  owner: FacebookProfileRef | null;
+  duration_seconds: number | null;
   width: number | null;
+  height: number | null;
+  player: FacebookVideoPlayer;
+  type: string;
+  thumbnail_url: string | null;
+  first_frame_url: string | null;
+  captions: FacebookCaption[];
 }
 
 export interface FacebookVideoCard {
-  content_tags: FacebookContentTag[];
-  engagement: FacebookEngagement;
-  feedback_id: string | null;
   post_id: string | null;
   story_id: string | null;
-  top_comments: FacebookComment[];
+  feedback_id: string | null;
   total_post_count: number | null;
+  content_tags: FacebookContentTag[];
+  top_comments: FacebookComment[];
+  engagement: FacebookEngagement;
   video: FacebookVideo;
 }
 
 export interface FacebookVideoDetail {
-  comments: FacebookCommentThread;
-  post: FacebookPost | null;
   video: FacebookVideo;
+  post: FacebookPost | null;
+  comments: FacebookCommentThread;
 }
 
 export interface FacebookVideoPlayer {
-  aspect_ratio: number | null;
-  audio_availability: FacebookCode;
-  browser_native_hd_url: string | null;
   browser_native_sd_url: string | null;
+  browser_native_hd_url: string | null;
   dash_manifest_url: string | null;
-  dash_streams: FacebookDashStream[];
-  image_preview_payload: string | null;
-  is_clip: boolean | null;
-  is_gaming_video: boolean | null;
-  is_huddle: boolean | null;
-  is_looping: boolean | null;
-  is_music_clip: boolean | null;
-  is_podcast_video: boolean | null;
-  is_premiere: boolean | null;
-  is_soundbites_video: boolean | null;
-  is_spherical: boolean | null;
   live_viewer_count: number | null;
-  loop_count: number | null;
-  original_rotation: string | null;
-  preferred_thumbnail_source: string | null;
   scrubber_preview: FacebookScrubberPreview | null;
-  video_container_type: string | null;
+  aspect_ratio: number | null;
+  original_rotation: string | null;
   video_status_type: FacebookCode;
+  video_container_type: string | null;
+  is_spherical: boolean | null;
+  is_podcast_video: boolean | null;
+  is_gaming_video: boolean | null;
+  is_clip: boolean | null;
+  is_music_clip: boolean | null;
+  is_soundbites_video: boolean | null;
+  is_huddle: boolean | null;
+  is_premiere: boolean | null;
+  dash_streams: FacebookDashStream[];
+  audio_availability: FacebookCode;
 }
 
 export interface FacebookVideoSearchPage {
-  filters: FacebookSearchFilter[];
-  pagination: FacebookCursorPagination;
-  query: string;
   results: FacebookVideoSearchResult[];
+  filters: FacebookSearchFilter[];
+  query: string;
+  pagination: FacebookCursorPagination;
 }
 
 export interface FacebookVideoSearchReel {
-  broadcast_status: string | null;
   description: string | null;
   duration_text: string | null;
   subtitle: string | null;
-  thumbnail_url: string | null;
   url: string | null;
   view_count: number | null;
+  broadcast_status: string | null;
+  thumbnail_url: string | null;
 }
 
 export interface FacebookVideoSearchResult {
+  video_id: string | null;
   post: FacebookPost | null;
   reel: FacebookVideoSearchReel | null;
-  video_id: string | null;
 }
 
 export interface GetEventAboutParams {
@@ -1000,10 +984,10 @@ export interface GetGroupParams {
 }
 
 export interface GetPageAboutParams {
-  /** `collection_id` of the tab, from `/resolve` on the tab's URL or the page's `tabs[].collections`. */
-  collection_id: string;
   /** The page or profile's `profile_id`, such as `100044561550831`, from `/resolve` on its URL or `page.profile_id` in any answer. */
   profile_id: string;
+  /** `collection_id` of the tab, from `/resolve` on the tab's URL or the page's `tabs[].collections`. */
+  collection_id: string;
 }
 
 export interface GetPageIntroParams {
@@ -1053,12 +1037,12 @@ export interface ListCommentRepliesParams {
 }
 
 export interface ListCommentsParams {
-  /** `pagination.next_cursor` from the previous page; empty for the first page. */
-  cursor?: string;
   /** `feedback_id` of a post, photo, video or reel. */
   feedback_id: string;
   /** Most relevant, newest first, or all comments. */
   sort?: CommentSort;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. */
+  cursor?: string;
 }
 
 export interface ListGroupEventsParams {
@@ -1067,19 +1051,19 @@ export interface ListGroupEventsParams {
 }
 
 export interface ListGroupPhotosParams {
-  /** `pagination.next_cursor` from the previous page; empty for the first page. */
-  cursor?: string;
   /** Numeric group id; `/resolve` turns a group URL into one. */
   group_id: string;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. */
+  cursor?: string;
 }
 
 export interface ListGroupPostsParams {
-  /** `pagination.next_cursor` from the previous page; empty for the first page. */
-  cursor?: string;
   /** Numeric group id; `/resolve` turns a group URL into one. */
   group_id: string;
   /** Top posts or newest first. */
   sort?: GroupSort;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. */
+  cursor?: string;
 }
 
 export interface ListHashtagPostsParams {
@@ -1088,12 +1072,12 @@ export interface ListHashtagPostsParams {
 }
 
 export interface ListPageEventsParams {
+  /** The page or profile's `profile_id`, such as `100044561550831`, from `/resolve` on its URL or `page.profile_id` in any answer. */
+  profile_id: string;
   /** Another collection of the tab, from `/resolve` on its URL or the page's `tabs[].collections`; the tab's default when empty. */
   collection_id?: string | null;
   /** `pagination.next_cursor` from the previous page; empty for the first page. */
   cursor?: string;
-  /** The page or profile's `profile_id`, such as `100044561550831`, from `/resolve` on its URL or `page.profile_id` in any answer. */
-  profile_id: string;
 }
 
 export interface ListPageFollowersParams {
@@ -1102,33 +1086,33 @@ export interface ListPageFollowersParams {
 }
 
 export interface ListPageFollowingParams {
-  /** `collection_id` of the tab, from `/resolve` on the tab's URL or the page's `tabs[].collections`. */
-  collection_id: string;
   /** The page or profile's `profile_id`, such as `100044561550831`, from `/resolve` on its URL or `page.profile_id` in any answer. */
   profile_id: string;
+  /** `collection_id` of the tab, from `/resolve` on the tab's URL or the page's `tabs[].collections`. */
+  collection_id: string;
 }
 
 export interface ListPagePhotosParams {
+  /** The page or profile's `profile_id`, such as `100044561550831`, from `/resolve` on its URL or `page.profile_id` in any answer. */
+  profile_id: string;
   /** Another collection of the tab, from `/resolve` on its URL or the page's `tabs[].collections`; the tab's default when empty. */
   collection_id?: string | null;
   /** `pagination.next_cursor` from the previous page; empty for the first page. */
   cursor?: string;
-  /** The page or profile's `profile_id`, such as `100044561550831`, from `/resolve` on its URL or `page.profile_id` in any answer. */
-  profile_id: string;
 }
 
 export interface ListPagePostsParams {
-  /** `pagination.next_cursor` from the previous page; empty for the first page. */
-  cursor?: string;
   /** The page or profile's `profile_id`, such as `100044561550831`, from `/resolve` on its URL or `page.profile_id` in any answer. */
   profile_id: string;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. */
+  cursor?: string;
 }
 
 export interface ListPageVideosParams {
-  /** `pagination.next_cursor` from the previous page; empty for the first page. */
-  cursor?: string;
   /** The page's `page_id`, such as `54971236771`, from `page_id` on `/pages/{profile_id}` or `page.page_id` in an Ad Library answer. */
   page_id: string;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. */
+  cursor?: string;
 }
 
 export interface LookUpPageParams {
@@ -1144,25 +1128,25 @@ export interface ResolveUrlParams {
 }
 
 export interface SearchEventsParams {
+  /** `pagination.next_cursor` from the previous page; empty for the first page. */
+  cursor?: string;
+  /** Search text. */
+  query: string;
+  /** A day range counted from today, as in the `date` options of the answer's `filters[]`. Send this or `start_date` and `end_date`. */
+  date?: EventDateRange | null;
+  /** First day of a custom range. */
+  start_date?: string | null;
+  /** Last day of a custom range. */
+  end_date?: string | null;
   /** An event category: `param_value` of a `category_id` option in the answer's `filters[]`. */
   category_id?: string | null;
   /** Only events in this city: `locations[].city_id` from `/marketplace/locations`. */
   city_id?: string | null;
-  /** `pagination.next_cursor` from the previous page; empty for the first page. */
-  cursor?: string;
-  /** A day range counted from today, as in the `date` options of the answer's `filters[]`. Send this or `start_date` and `end_date`. */
-  date?: EventDateRange | null;
-  /** Last day of a custom range. */
-  end_date?: string | null;
-  /** Search text. */
-  query: string;
-  /** First day of a custom range. */
-  start_date?: string | null;
 }
 
 export interface SearchVideosParams {
-  /** `pagination.next_cursor` from the previous page; empty for the first page. */
-  cursor?: string;
   /** Search text. */
   query: string;
+  /** `pagination.next_cursor` from the previous page; empty for the first page. */
+  cursor?: string;
 }
