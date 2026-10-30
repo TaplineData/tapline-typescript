@@ -102,7 +102,7 @@ A cursor works only with the method and inputs that issued it.
 ## Read the response
 
 - Facebook's enum values arrive as `{code, label}`: `code` is Facebook's value and `label` says what it means.
-- Pages from `getPage`, `lookUpPage` and the Ad Library share one type. Fields only some of them fill, such as `tabs`, are optional.
+- `getPage` returns a `FacebookPage`. `lookUpPage` and the Ad Library's ad cards, advertisers, advertiser suggestions and report rows wrap one in `.page`. Fields only some of them fill, such as `tabs`, are optional.
 - `listPageFollowers`, `listPageFollowing` and `listHashtagPosts` return only the first page Facebook shows; there is no cursor.
 
 ## Handle errors and check costs

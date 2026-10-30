@@ -48,7 +48,7 @@ If you omit `apiKey`, the client reads `TAPLINE_API_KEY` in Node.js. Keep the ke
 
 | Method | Parameter type and key fields | Returns |
 | --- | --- | --- |
-| `getSubtitles` | `GetSubtitlesParams`: `video_id`; optional `language`, `subtitle_format`, `source`, `country` | `SubtitleResponse` in SRT, VTT, JSON3, TTML, or plain text |
+| `getSubtitles` | `GetSubtitlesParams`: `video_id`; optional `language`, `fallback_languages`, `subtitle_format`, `source`, `country` | `SubtitleResponse` in SRT, VTT, JSON3, TTML, or plain text |
 | `getSubtitleTracks` | `GetSubtitleTracksParams`: `video_id`; optional `country` | `SubtitleTracksResponse` with manual and automatic tracks |
 | `getComments` | `GetCommentsParams`: `video_id`; optional `sort`, `cursor` | `CommentsResponse` page of top-level threads |
 | `getCommentReplies` | `GetCommentRepliesParams`: `video_id`, `comment_id`, `cursor` | `RepliesResponse` page and next cursor |
