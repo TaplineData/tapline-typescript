@@ -128,8 +128,10 @@ export interface PinterestV2CollectionItem {
   pin_id?: string;
   title?: string;
   link?: string;
+  price_value?: number;
   is_active?: boolean;
   rich_content?: PinterestV2RichContent;
+  currency_symbol?: string;
   dominant_color?: string;
   image_signature?: string;
   images?: PinterestV2Image[];
@@ -451,6 +453,7 @@ export interface PinterestV2Story {
   pages?: PinterestV2StoryPage[];
   has_affiliate_products?: boolean;
   has_product_pins?: boolean;
+  canvas_aspect_ratio?: number;
 }
 
 export interface PinterestV2StoryBlock {
@@ -458,10 +461,26 @@ export interface PinterestV2StoryBlock {
   pin_id?: string;
   text?: string;
   is_removed?: boolean;
+  user?: PinterestV2User;
   type?: string;
+  text_style?: PinterestV2StoryTextStyle;
+  position?: PinterestV2StoryBlockPosition;
   images?: PinterestV2Image[];
   videos?: PinterestV2Video[];
   audio?: PinterestV2AudioData;
+}
+
+export interface PinterestV2StoryBlockPosition {
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+  rotation?: number;
+}
+
+export interface PinterestV2StoryFont {
+  name?: string;
+  url?: string;
 }
 
 export interface PinterestV2StoryPage {
@@ -473,6 +492,15 @@ export interface PinterestV2StoryPage {
   should_mute?: boolean;
   image_signature?: string;
   images?: PinterestV2Image[];
+}
+
+export interface PinterestV2StoryTextStyle {
+  color?: string;
+  highlight_color?: string;
+  font_size?: number;
+  alignment?: number;
+  vertical_alignment?: number;
+  font?: PinterestV2StoryFont;
 }
 
 export interface PinterestV2TextEntity {
