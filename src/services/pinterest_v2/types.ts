@@ -80,6 +80,7 @@ export interface PinterestV2BoardCover {
 }
 
 export interface PinterestV2BoardResponse {
+  board: PinterestV2BoardSummary;
   pins: PinterestV2Pin[];
   cursor: string | null;
 }
@@ -96,6 +97,7 @@ export interface PinterestV2BoardSummary {
   follower_count?: number;
   collaborator_count?: number;
   section_count?: number;
+  sectionless_pin_count?: number;
   place_saves_count?: number;
   privacy?: string;
   created_at?: string;
@@ -105,12 +107,14 @@ export interface PinterestV2BoardSummary {
   owner?: PinterestV2User;
   collaborators?: PinterestV2User[];
   related_interests?: PinterestV2RelatedInterest[];
+  category?: string;
   is_collaborative?: boolean;
   is_ads_only?: boolean;
   has_custom_cover?: boolean;
   collaborator_requests_enabled?: boolean;
   cover_pin?: PinterestV2BoardCover;
   cover_images?: PinterestV2Image[];
+  header_images?: PinterestV2Image[];
   images?: PinterestV2Image[];
 }
 
@@ -196,7 +200,7 @@ export interface PinterestV2MusicCredit {
 
 export interface PinterestV2Pin {
   id?: string;
-  canonical_pin_id?: string;
+  original_pin_id?: string;
   product_id?: string;
   top_interest_id?: number;
   advertiser_id?: string;
@@ -210,7 +214,7 @@ export interface PinterestV2Pin {
   url?: string;
   link?: string;
   mobile_link?: string;
-  canonical_url?: string;
+  original_pin_url?: string;
   affiliate_link?: string;
   metrics?: PinterestV2Metrics;
   product_status?: PinterestV2ProductStatus;
@@ -255,7 +259,7 @@ export interface PinterestV2Pin {
 
 export interface PinterestV2PinResponse {
   id?: string;
-  canonical_pin_id?: string;
+  original_pin_id?: string;
   product_id?: string;
   top_interest_id?: number;
   advertiser_id?: string;
@@ -269,7 +273,7 @@ export interface PinterestV2PinResponse {
   url?: string;
   link?: string;
   mobile_link?: string;
-  canonical_url?: string;
+  original_pin_url?: string;
   affiliate_link?: string;
   metrics?: PinterestV2Metrics;
   product_status?: PinterestV2ProductStatus;

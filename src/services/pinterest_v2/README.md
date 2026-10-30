@@ -34,7 +34,7 @@ If you omit `apiKey`, the client reads `TAPLINE_API_KEY` in Node.js. Keep the ke
 | `searchPins` | `query`, `cursor` | 1 | `PinterestV2SearchResponse`: `pins`, the refinement `guides` Pinterest suggests, and `cursor` |
 | `getPin` | `url`: a pin URL on any Pinterest domain, or a `pin.it` share link | 1 | `PinterestV2PinResponse`: one pin with its people, board, metrics, images, video and idea-pin pages |
 | `getUserBoards` | `handle`, `cursor` | 1 | `PinterestV2UserBoardsResponse`: `boards` and `cursor` |
-| `getBoard` | `url`: a board URL, such as a board's `url` from `getUserBoards`; `cursor` | 1 | `PinterestV2BoardResponse`: `pins` in board order and `cursor` |
+| `getBoard` | `url`: a board URL, such as a board's `url` from `getUserBoards`; `cursor` | 1 | `PinterestV2BoardResponse`: the `board` itself, `pins` in board order and `cursor` |
 
 `trim` is accepted on every method and `cache_max_age` on `getPin`. Neither changes the response, and every successful call is charged.
 
@@ -83,13 +83,14 @@ for (const board of boards.boards) {
 const first = boards.boards[0];
 if (first?.url) {
   const page = await tapline.pinterestV2.getBoard({ url: first.url });
+  console.log(page.board.name, page.board.pin_count, page.board.category);
   for (const pin of page.pins) {
     console.log(pin.id, pin.title, pin.link ?? 'uploaded, no link', pin.metrics?.save_count);
   }
 }
 ```
 
-Boards come most recently pinned to first, about 25 per page. A board's `url` is absolute and `getBoard` takes it as it is. A pin uploaded without a link has no `link`.
+Boards come most recently pinned to first, about 25 per page. A board's `url` is absolute and `getBoard` takes it as it is. `getBoard` also returns the board itself as `board`, the same object `getUserBoards` lists, plus `category`, `sectionless_pin_count` and `header_images` when Pinterest has them. Tapline keeps a board's details for up to 24 hours, so its counts can be that old; the pins are fetched on every call. A pin uploaded without a link has no `link`.
 
 ## Handle errors and check costs
 
