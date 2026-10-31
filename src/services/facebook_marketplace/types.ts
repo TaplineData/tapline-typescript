@@ -101,29 +101,66 @@ export interface FacebookListingCard {
   id: string | null;
   video_id: string | null;
   product_item_id: string | null;
-  origin_group_id: string | null;
-  parent_listing_id: string | null;
   feed_story_id: string | null;
   title: string | null;
   custom_title: string | null;
   subtitles: string[];
   share_url: string | null;
-  price: FacebookMoney | null;
-  inventory_count: number | null;
+  price: FacebookListingCardMoney | null;
   price_in_cents: number | null;
-  strikethrough_price: FacebookMoney | null;
-  min_price: FacebookMoney | null;
-  max_price: FacebookMoney | null;
-  status: FacebookListingStatus;
+  strikethrough_price: FacebookListingCardMoney | null;
+  status: FacebookListingCardStatus;
   created_at: string | null;
-  category: FacebookListingCategory;
-  location: FacebookListingLocation;
-  seller: FacebookProfileRef | null;
+  category: FacebookListingCardCategory;
+  location: FacebookListingCardLocation;
+  seller: FacebookListingCardSeller | null;
   delivery_types: FacebookCode[];
-  listing_tags: string[];
   feed_story_type: FacebookCode;
-  primary_photo: FacebookPhoto | null;
-  photos: FacebookPhoto[];
+  primary_photo: FacebookListingCardPhoto | null;
+  photos: FacebookListingCardPhoto[];
+}
+
+export interface FacebookListingCardCategory {
+  id: string | null;
+}
+
+export interface FacebookListingCardLocation {
+  city_id: string | null;
+  city: string | null;
+  state: string | null;
+  city_name: string | null;
+  latitude: number | null;
+  longitude: number | null;
+}
+
+export interface FacebookListingCardMoney {
+  amount: number | null;
+  formatted: string | null;
+}
+
+export interface FacebookListingCardPhoto {
+  id: string | null;
+  type: string;
+  image: FacebookImage | null;
+  thumbnail_url: string | null;
+}
+
+export interface FacebookListingCardSeller {
+  id: string | null;
+  pfbid: string | null;
+  name: string | null;
+  account_type: FacebookCode;
+}
+
+export interface FacebookListingCardStatus {
+  is_hidden: boolean | null;
+  is_live: boolean | null;
+  is_pending: boolean | null;
+  is_sold: boolean | null;
+  is_draft: boolean | null;
+  is_rejected: boolean | null;
+  created_with_seller_app: boolean | null;
+  messaging_enabled: boolean | null;
 }
 
 export interface FacebookListingCategory {
