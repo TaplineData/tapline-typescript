@@ -5,90 +5,90 @@ export type CandlestickCurrency = "usd" | "token";
 export type CandlestickResolution = "1" | "5" | "15" | "60" | "120" | "240" | "720" | "1D";
 
 export interface CandlesticksParams {
-  /** Denomination of the bar prices. */
-  currency?: CandlestickCurrency;
-  /** Unix timestamp for the start of the window. */
-  from_timestamp: number;
-  /** Quote bars in the other token of the pair. */
-  is_inverted?: boolean;
-  /** GeckoTerminal numeric pair id, from the pool's `pairs` relationship. */
-  pair_id: string;
   /** GeckoTerminal numeric pool id, as returned in a pool resource's `id`. */
   pool_id: string;
-  /** Bar width in minutes, or `1D`. */
-  resolution?: CandlestickResolution;
+  /** GeckoTerminal numeric pair id, from the pool's `pairs` relationship. */
+  pair_id: string;
+  /** Unix timestamp for the start of the window. */
+  from_timestamp: number;
   /** Unix timestamp for the end of the window. */
   to_timestamp: number;
+  /** Bar width in minutes, or `1D`. */
+  resolution?: CandlestickResolution;
+  /** Denomination of the bar prices. */
+  currency?: CandlestickCurrency;
+  /** Quote bars in the other token of the pair. */
+  is_inverted?: boolean;
 }
 
 export interface CandlesticksResponse {
-  data: CandlesticksResponseData[];
   meta: Record<string, string>;
+  data: CandlesticksResponseData[];
 }
 
 export interface CandlesticksResponseData {
-  c: number;
   dt: string;
+  o: number;
   h: number;
   l: number;
-  o: number;
+  c: number;
   v: number;
 }
 
 export interface DexAttributes {
+  name: string;
+  identifier?: string;
+  url?: string;
   analytics_pool_page_url?: string | null;
   analytics_token_page_url?: string | null;
-  identifier?: string;
-  image_url: string;
-  is_bonding_curve?: boolean;
-  is_launchpad?: boolean;
-  name: string;
   no_reserves?: boolean;
-  url?: string;
+  image_url: string;
+  is_launchpad?: boolean;
+  is_bonding_curve?: boolean;
 }
 
 export interface DexLinkServiceAttributes {
-  category: string;
-  image_url: string;
   name: string;
-  priority: number | null;
+  category: string;
   sub_category: string;
   url: string;
+  priority: number | null;
+  image_url: string;
 }
 
 export interface DexLinkServiceResource {
-  attributes: DexLinkServiceAttributes;
   id: string;
   type: string;
+  attributes: DexLinkServiceAttributes;
 }
 
 export interface DexMetricAttributes {
-  pools_count: number;
-  rank_by_volume: number | null;
-  reserve_in_usd: string;
-  swap_count_24h: number;
-  swap_volume_percent_change_24h: number | string;
   swap_volume_usd_24h: string;
+  swap_count_24h: number;
   swap_volume_usd_48h_24h: string;
+  swap_volume_percent_change_24h: number | string;
+  reserve_in_usd: string;
+  rank_by_volume: number | null;
+  pools_count: number;
   tokens_count: number;
 }
 
 export interface DexMetricResource {
-  attributes: DexMetricAttributes;
   id: string;
   type: string;
+  attributes: DexMetricAttributes;
 }
 
 export interface DexRelationships {
-  dex_metric?: ResourceLinkage;
   network: ResourceLinkage;
+  dex_metric?: ResourceLinkage;
 }
 
 export interface DexResource {
-  attributes: DexAttributes;
   id: string;
-  relationships: DexRelationships;
   type: string;
+  attributes: DexAttributes;
+  relationships: DexRelationships;
 }
 
 export interface DexesParams {
@@ -106,14 +106,14 @@ export interface DexesResponse {
 
 export interface DexesResponseLinks {
   first: string;
-  last: DexesResponseLinksLast;
-  next: string | null;
   prev: string | null;
+  next: string | null;
+  last: DexesResponseLinksLast;
 }
 
 export interface DexesResponseLinksLast {
-  href: string;
   meta: DexesResponseLinksLastMeta;
+  href: string;
 }
 
 export interface DexesResponseLinksLastMeta {
@@ -121,67 +121,67 @@ export interface DexesResponseLinksLastMeta {
 }
 
 export interface ErrorDetail {
-  ctx?: Record<string, unknown> | null;
-  input?: unknown | null;
+  type?: string | null;
   loc?: (string | number)[] | null;
   msg?: string | null;
-  type?: string | null;
+  input?: unknown | null;
+  ctx?: Record<string, unknown> | null;
 }
 
 export interface ErrorResponse {
   code: PublicError;
-  details?: ErrorDetail[] | null;
-  domain?: string | null;
   message: string;
   request_id: string;
+  domain?: string | null;
+  details?: ErrorDetail[] | null;
   upgrade_url?: string | null;
 }
 
 export interface ExplorerAttributes {
+  name: string;
+  url: string;
+  rank: number | null;
   coin_url: string;
   holders_url: string;
-  logo_url: string;
-  name: string;
-  rank: number | null;
   tx_url: string;
-  url: string;
+  logo_url: string;
 }
 
 export interface ExplorerResource {
-  attributes: ExplorerAttributes;
   id: string;
   type: string;
+  attributes: ExplorerAttributes;
 }
 
 export interface GlobalStatAttributes {
-  dexes_count: number;
-  eth_gas_oracle: GlobalStatAttributesEthGasOracle;
-  fng_stats: GlobalStatAttributesFngStats;
   networks_count: number;
+  dexes_count: number;
   pools_count: number;
   tokens_count: number;
+  fng_stats: GlobalStatAttributesFngStats;
+  eth_gas_oracle: GlobalStatAttributesEthGasOracle;
 }
 
 export interface GlobalStatAttributesEthGasOracle {
+  last_block: number;
+  updated_at: string;
   fast_gas_price: number;
   gas_used_ratio: string;
-  last_block: number;
-  propose_gas_price: number;
   safe_gas_price: number;
   suggest_base_fee: number;
-  updated_at: string;
+  propose_gas_price: number;
 }
 
 export interface GlobalStatAttributesFngStats {
-  next_update_at: string;
   value: number;
   value_classification: string;
+  next_update_at: string;
 }
 
 export interface GlobalStatResource {
-  attributes: GlobalStatAttributes;
   id: string;
   type: string;
+  attributes: GlobalStatAttributes;
 }
 
 export interface GlobalStatsResponse {
@@ -200,15 +200,15 @@ export interface LatestPoolsParams {
 export interface LatestPoolsResponse {
   data: PoolResource[];
   included: (DexResource | NetworkResource | PoolMetricResource | TokenResource)[];
-  links: LatestPoolsResponseLinks;
   meta: LatestPoolsResponseMeta;
+  links: LatestPoolsResponseLinks;
 }
 
 export interface LatestPoolsResponseLinks {
   first: string;
-  last: LatestPoolsResponseLinksLast;
-  next: string | null;
   prev: string | null;
+  next: string | null;
+  last: LatestPoolsResponseLinksLast;
 }
 
 export interface LatestPoolsResponseLinksLast {
@@ -224,20 +224,20 @@ export interface LatestPoolsResponseMeta {
 }
 
 export interface NetworkAttributes {
-  cg_network_id?: string | null;
-  chain_id?: number | null;
-  explorer_coin_url?: string;
-  explorer_logo_url?: string;
-  explorer_tx_url?: string;
-  explorer_url?: string;
+  name?: string;
   identifier: string;
+  chain_id?: number | null;
+  cg_network_id?: string | null;
+  native_currency_symbol?: string;
+  native_currency_address?: string;
+  pool_reserve_threshold?: string;
   image_url?: string;
   is_new?: boolean;
-  name?: string;
-  native_currency_address?: string;
-  native_currency_symbol?: string;
-  pool_reserve_threshold?: string;
   supports_top_holders?: boolean;
+  explorer_url?: string;
+  explorer_coin_url?: string;
+  explorer_tx_url?: string;
+  explorer_logo_url?: string;
 }
 
 export interface NetworkLatestPoolsParams {
@@ -252,93 +252,94 @@ export interface NetworkLatestPoolsParams {
 export interface NetworkLatestPoolsResponse {
   data: PoolResource[];
   included: (DexResource | NetworkResource | PoolMetricResource | TokenResource)[];
-  links: LatestPoolsResponseLinks;
   meta: NetworkLatestPoolsResponseMeta;
+  links: LatestPoolsResponseLinks;
 }
 
 export interface NetworkLatestPoolsResponseMeta {
-  network: string;
   sort: string;
+  network: string;
 }
 
 export interface NetworkLinkServiceAttributes {
-  category: string;
-  image_url: string;
   name: string;
-  priority: number | null;
+  category: string;
   sub_category: string | null;
   url: string;
+  priority: number | null;
+  image_url: string;
 }
 
 export interface NetworkLinkServiceResource {
-  attributes: NetworkLinkServiceAttributes;
   id: string;
   type: string;
+  attributes: NetworkLinkServiceAttributes;
 }
 
 export interface NetworkMetricAttributes {
-  dexes_count?: number;
-  latest_pools_count: number;
-  pools_count?: number;
-  rank_by_liquidity?: number;
-  reserve_in_usd?: string;
-  swap_count_24h?: number;
-  swap_volume_percent_change_24h?: string;
   swap_volume_usd_24h?: string;
+  swap_count_24h?: number;
   swap_volume_usd_48h_24h?: string;
-  tokens_count?: number;
+  /** A decimal string; 0.0 when prior-day volume is zero. */
+  swap_volume_percent_change_24h?: string | number;
+  latest_pools_count: number;
   trending_pools_count?: number;
+  reserve_in_usd?: string;
+  rank_by_liquidity?: number;
+  dexes_count?: number;
+  pools_count?: number;
+  tokens_count?: number;
 }
 
 export interface NetworkMetricResource {
-  attributes: NetworkMetricAttributes;
   id: string;
   type: string;
+  attributes: NetworkMetricAttributes;
 }
 
 export interface NetworkPoolScreenerRequest {
-  /** Buy tax percentage. */
-  buy_tax?: RangeFilter | null;
-  /** Buy count over the chosen window. */
-  buys?: TimeframedRangeFilter | null;
-  /** Restrict to a single DEX on this network, by identifier. */
-  dex?: string | null;
-  /** Restrict to these DEX identifiers. */
-  dexes?: string[] | null;
-  /** Fully diluted valuation in USD. */
-  fdv_in_usd?: RangeFilter | null;
-  /** Only pools above GeckoTerminal's GT score threshold. */
-  good_gt_score?: boolean | null;
-  /** Only pools whose token declares social links. */
-  has_social?: boolean | null;
-  /** Number of token holders. */
-  holder_count?: RangeFilter | null;
-  /** Pool liquidity in USD. */
-  liquidity?: RangeFilter | null;
-  /** Market cap in USD. */
-  mc_in_usd?: RangeFilter | null;
-  /** Restrict to these network identifiers. */
-  networks?: string[] | null;
-  /** Exclude tokens flagged as honeypots. */
-  no_honeypot?: boolean | null;
-  /** Only pools whose token is listed on CoinGecko. */
-  on_coingecko?: boolean | null;
   /** 1-based result page. */
   page?: number;
-  /** Pool age in hours. */
-  pool_creation_hours_ago?: RangeFilter | null;
-  /** Sell tax percentage. */
-  sell_tax?: RangeFilter | null;
-  /** Sell count over the chosen window. */
-  sells?: TimeframedRangeFilter | null;
   /** Ranking applied before pagination. Omit for GeckoTerminal's default. */
   sort?: PoolSort | null;
-  /** Share of supply held by the ten largest holders. */
-  top_10_holders_percentage?: RangeFilter | null;
-  /** Transaction count over the chosen window. */
-  tx_count?: TimeframedRangeFilter | null;
   /** 24h traded volume in USD. */
   volume_24h?: RangeFilter | null;
+  /** Pool liquidity in USD. */
+  liquidity?: RangeFilter | null;
+  /** Fully diluted valuation in USD. */
+  fdv_in_usd?: RangeFilter | null;
+  /** Market cap in USD. */
+  mc_in_usd?: RangeFilter | null;
+  /** Buy tax percentage. */
+  buy_tax?: RangeFilter | null;
+  /** Sell tax percentage. */
+  sell_tax?: RangeFilter | null;
+  /** Pool age in hours. */
+  pool_creation_hours_ago?: RangeFilter | null;
+  /** Share of supply held by the ten largest holders. */
+  top_10_holders_percentage?: RangeFilter | null;
+  /** Number of token holders. */
+  holder_count?: RangeFilter | null;
+  /** Transaction count over the chosen window. */
+  tx_count?: TimeframedRangeFilter | null;
+  /** Buy count over the chosen window. */
+  buys?: TimeframedRangeFilter | null;
+  /** Sell count over the chosen window. */
+  sells?: TimeframedRangeFilter | null;
+  /** Only pools whose token is listed on CoinGecko. */
+  on_coingecko?: boolean | null;
+  /** Only pools whose token declares social links. */
+  has_social?: boolean | null;
+  /** Exclude tokens flagged as honeypots. */
+  no_honeypot?: boolean | null;
+  /** Only pools above GeckoTerminal's GT score threshold. */
+  good_gt_score?: boolean | null;
+  /** Restrict to these network identifiers. */
+  networks?: string[] | null;
+  /** Restrict to these DEX identifiers. */
+  dexes?: string[] | null;
+  /** Restrict to a single DEX on this network, by identifier. */
+  dex?: string | null;
 }
 
 export interface NetworkPoolsParams {
@@ -349,8 +350,8 @@ export interface NetworkPoolsParams {
 export interface NetworkPoolsResponse {
   data: PoolResource[];
   included: (DexMetricResource | DexResource | NetworkResource | TokenResource)[];
-  links: LatestPoolsResponseLinks;
   meta: LatestPoolsResponseMeta;
+  links: LatestPoolsResponseLinks;
 }
 
 export interface NetworkRankingsParams {
@@ -370,10 +371,10 @@ export interface NetworkRelationships {
 }
 
 export interface NetworkResource {
-  attributes: NetworkAttributes;
   id: string;
-  relationships: NetworkRelationships;
   type: string;
+  attributes: NetworkAttributes;
+  relationships: NetworkRelationships;
 }
 
 export interface NetworksParams {
@@ -386,30 +387,30 @@ export interface NetworksResponse {
 }
 
 export interface PairAttributes {
-  base_address: string;
-  base_name: string;
-  base_price_in_currency: string;
-  base_price_in_quote: string;
-  base_price_in_usd: string;
-  base_price_in_usd_percent_change: number;
   base_symbol: string;
-  base_token_id: string;
-  data_24h: PairAttributesData24h;
-  name: string;
-  price_change_data: PairAttributesPriceChangeData;
-  quote_address: string;
-  quote_name: string;
-  quote_price_in_base: string;
-  quote_price_in_currency: string;
-  quote_price_in_usd: string;
-  quote_price_in_usd_percent_change: number;
+  base_price_in_currency: string;
+  base_price_in_usd_percent_change: number;
   quote_symbol: string;
-  quote_token_id: string;
-  swap_count: number;
-  transaction_data: PairAttributesTransactionData;
-  volume_data: PairAttributesVolumeData;
+  quote_price_in_currency: string;
+  quote_price_in_usd_percent_change: number;
+  base_price_in_quote: string;
+  quote_price_in_base: string;
   volume_in_currency: string;
   volume_in_usd: string;
+  transaction_data: PairAttributesTransactionData;
+  volume_data: PairAttributesVolumeData;
+  price_change_data: PairAttributesPriceChangeData;
+  swap_count: number;
+  name: string;
+  base_address: string;
+  quote_address: string;
+  base_name: string;
+  quote_name: string;
+  base_token_id: string;
+  quote_token_id: string;
+  base_price_in_usd: string;
+  quote_price_in_usd: string;
+  data_24h: PairAttributesData24h;
 }
 
 export interface PairAttributesData24h {
@@ -419,50 +420,50 @@ export interface PairAttributesData24h {
 }
 
 export interface PairAttributesPriceChangeData {
-  last_172800_s: PairAttributesPriceChangeDataEntry;
-  last_1800_s: PairAttributesPriceChangeDataEntry;
-  last_21600_s: PairAttributesPriceChangeDataEntry;
   last_300_s: PairAttributesPriceChangeDataEntry;
-  last_3600_s: PairAttributesPriceChangeDataEntry;
-  last_43200_s: PairAttributesPriceChangeDataEntry;
-  last_7200_s: PairAttributesPriceChangeDataEntry;
-  last_86400_s: PairAttributesPriceChangeDataEntry;
   last_900_s: PairAttributesPriceChangeDataEntry;
+  last_1800_s: PairAttributesPriceChangeDataEntry;
+  last_3600_s: PairAttributesPriceChangeDataEntry;
+  last_7200_s: PairAttributesPriceChangeDataEntry;
+  last_21600_s: PairAttributesPriceChangeDataEntry;
+  last_43200_s: PairAttributesPriceChangeDataEntry;
+  last_86400_s: PairAttributesPriceChangeDataEntry;
+  last_172800_s: PairAttributesPriceChangeDataEntry;
 }
 
 export interface PairAttributesPriceChangeDataEntry {
-  base_token_percentage: number;
-  base_token_usd: number;
   prices: PairAttributesPriceChangeDataEntryPrices;
-  quote_token_percentage: number;
+  base_token_usd: number;
   quote_token_usd: number;
+  base_token_percentage: number;
+  quote_token_percentage: number;
 }
 
 export interface PairAttributesPriceChangeDataEntryPrices {
-  base_token_high_price_in_usd?: number;
-  base_token_high_price_timestamp?: string;
-  base_token_last_price_in_usd?: number;
   base_token_low_price_in_usd?: number;
-  base_token_low_price_timestamp?: string;
+  base_token_high_price_in_usd?: number;
+  base_token_last_price_in_usd?: number;
+  quote_token_low_price_in_usd?: number;
   base_token_start_price_in_usd?: number;
   quote_token_high_price_in_usd?: number;
-  quote_token_high_price_timestamp?: string;
   quote_token_last_price_in_usd?: number;
-  quote_token_low_price_in_usd?: number;
-  quote_token_low_price_timestamp?: string;
+  base_token_low_price_timestamp?: string;
   quote_token_start_price_in_usd?: number;
+  base_token_high_price_timestamp?: string;
+  quote_token_low_price_timestamp?: string;
+  quote_token_high_price_timestamp?: string;
 }
 
 export interface PairAttributesTransactionData {
-  last_172800_s: PairAttributesTransactionDataEntry;
-  last_1800_s: PairAttributesTransactionDataEntry;
-  last_21600_s: PairAttributesTransactionDataEntry;
   last_300_s: PairAttributesTransactionDataEntry;
-  last_3600_s: PairAttributesTransactionDataEntry;
-  last_43200_s: PairAttributesTransactionDataEntry;
-  last_7200_s: PairAttributesTransactionDataEntry;
-  last_86400_s: PairAttributesTransactionDataEntry;
   last_900_s: PairAttributesTransactionDataEntry;
+  last_1800_s: PairAttributesTransactionDataEntry;
+  last_3600_s: PairAttributesTransactionDataEntry;
+  last_7200_s: PairAttributesTransactionDataEntry;
+  last_21600_s: PairAttributesTransactionDataEntry;
+  last_43200_s: PairAttributesTransactionDataEntry;
+  last_86400_s: PairAttributesTransactionDataEntry;
+  last_172800_s: PairAttributesTransactionDataEntry;
 }
 
 export interface PairAttributesTransactionDataEntry {
@@ -471,26 +472,26 @@ export interface PairAttributesTransactionDataEntry {
 }
 
 export interface PairAttributesVolumeData {
-  last_172800_s: PairAttributesVolumeDataEntry;
-  last_1800_s: PairAttributesVolumeDataEntry;
-  last_21600_s: PairAttributesVolumeDataEntry;
   last_300_s: PairAttributesVolumeDataEntry;
-  last_3600_s: PairAttributesVolumeDataEntry;
-  last_43200_s: PairAttributesVolumeDataEntry;
-  last_7200_s: PairAttributesVolumeDataEntry;
-  last_86400_s: PairAttributesVolumeDataEntry;
   last_900_s: PairAttributesVolumeDataEntry;
+  last_1800_s: PairAttributesVolumeDataEntry;
+  last_3600_s: PairAttributesVolumeDataEntry;
+  last_7200_s: PairAttributesVolumeDataEntry;
+  last_21600_s: PairAttributesVolumeDataEntry;
+  last_43200_s: PairAttributesVolumeDataEntry;
+  last_86400_s: PairAttributesVolumeDataEntry;
+  last_172800_s: PairAttributesVolumeDataEntry;
 }
 
 export interface PairAttributesVolumeDataEntry {
-  buys_in_currency_token: number;
   buys_in_usd: number;
-  sells_in_currency_token: number;
   sells_in_usd: number;
-  total_in_base_token: number;
-  total_in_currency_token: number;
-  total_in_quote_token: number;
   total_in_usd: number;
+  total_in_base_token: number;
+  total_in_quote_token: number;
+  buys_in_currency_token: number;
+  sells_in_currency_token: number;
+  total_in_currency_token: number;
 }
 
 export interface PairRelationships {
@@ -498,93 +499,93 @@ export interface PairRelationships {
 }
 
 export interface PairResource {
-  attributes: PairAttributes;
   id: string;
-  relationships: PairRelationships;
   type: string;
+  attributes: PairAttributes;
+  relationships: PairRelationships;
 }
 
 export interface PastTokensDeveloperDetailAttributes {
-  past_tokens: PastTokensDeveloperDetailAttributesPastTokens[] | string[];
   past_tokens_count: number;
+  past_tokens: PastTokensDeveloperDetailAttributesPastTokens[] | string[];
 }
 
 export interface PastTokensDeveloperDetailAttributesPastTokens {
-  address: string;
-  fdv_in_usd: number;
-  market_cap_in_usd: number | null;
-  name: string;
   symbol: string;
+  name: string;
+  address: string;
   token_image_url: string;
+  market_cap_in_usd: number | null;
+  fdv_in_usd: number;
   top_pool_address: string;
 }
 
 export interface PastTokensDeveloperDetailResource {
-  attributes: PastTokensDeveloperDetailAttributes;
   id: string;
   type: string;
+  attributes: PastTokensDeveloperDetailAttributes;
 }
 
 export interface PoolAttributes {
   address: string;
-  aggregated_network_metrics?: PoolAttributesAggregatedNetworkMetrics;
-  api_address?: string;
-  balancer_pool_id?: string | null;
-  base_token_id: string;
-  from_volume_in_usd?: string;
-  fully_diluted_valuation?: string;
-  graduated_pool_address?: string | null;
-  graduation_percentage?: number | null;
-  gt_score?: number;
-  gt_score_details?: PoolAttributesGtScoreDetails;
-  high_low_price_data_by_token_id?: Record<string, PoolAttributesHighLowPriceDataByTokenIdEntry>;
-  historical_data?: PoolAttributesHistoricalData;
-  holder_count?: number | null;
-  is_nsfw?: boolean;
-  is_pool_address_explorable?: boolean;
-  is_stale_pool?: boolean | null;
-  is_suspicious_chart?: boolean | null;
-  latest_swap_timestamp?: string;
   name?: string;
-  net_volume_data_24h?: PoolAttributesNetVolumeData24h;
-  pool_created_at: string;
-  pool_fee?: string | null;
-  pool_reports_count?: number;
-  price_in_target_token?: string;
-  price_in_usd?: string;
+  from_volume_in_usd?: string;
+  to_volume_in_usd?: string;
+  api_address?: string;
+  swap_count_24h?: number;
   price_percent_change: string | null;
   price_percent_changes?: PoolAttributesPricePercentChanges;
-  price_sparkline_7d?: number[] | null;
-  reserve_in_usd?: string | null;
-  reserve_threshold_met?: boolean;
-  risk_flags?: string[];
-  security_indicators?: string[];
-  security_indicators_data?: PoolAttributesSecurityIndicatorsData;
-  sentiment_votes?: PoolAttributesSentimentVotes;
-  suggested_pools_by_liquidity?: PoolAttributesSuggestedPoolsByLiquidity;
-  swap_count_24h?: number;
-  swap_url?: string;
-  tagged_token_id?: string;
-  to_volume_in_usd?: string;
-  token_reserves?: Record<string, PoolAttributesTokenReservesEntry>;
+  pool_fee?: string | null;
+  base_token_id: string;
   token_value_data?: Record<string, PoolAttributesTokenValueDataEntry>;
+  price_in_usd?: string;
+  reserve_in_usd?: string | null;
+  pool_created_at: string;
+  net_volume_data_24h?: PoolAttributesNetVolumeData24h;
+  graduation_percentage?: number | null;
+  graduated_pool_address?: string | null;
+  holder_count?: number | null;
+  security_indicators_data?: PoolAttributesSecurityIndicatorsData;
+  aggregated_network_metrics?: PoolAttributesAggregatedNetworkMetrics;
+  fully_diluted_valuation?: string;
+  price_in_target_token?: string;
+  reserve_threshold_met?: boolean;
+  is_suspicious_chart?: boolean | null;
   token_weightages?: Record<string, string> | null;
+  token_reserves?: Record<string, PoolAttributesTokenReservesEntry>;
+  balancer_pool_id?: string | null;
+  swap_url?: string;
+  sentiment_votes?: PoolAttributesSentimentVotes;
   trending_narrative?: string | null;
+  historical_data?: PoolAttributesHistoricalData;
+  security_indicators?: string[];
+  gt_score?: number;
+  gt_score_details?: PoolAttributesGtScoreDetails;
+  pool_reports_count?: number;
+  latest_swap_timestamp?: string;
+  high_low_price_data_by_token_id?: Record<string, PoolAttributesHighLowPriceDataByTokenIdEntry>;
+  is_nsfw?: boolean;
+  is_stale_pool?: boolean | null;
+  is_pool_address_explorable?: boolean;
+  risk_flags?: string[];
+  price_sparkline_7d?: number[] | null;
+  tagged_token_id?: string;
+  suggested_pools_by_liquidity?: PoolAttributesSuggestedPoolsByLiquidity;
 }
 
 export interface PoolAttributesAggregatedNetworkMetrics {
-  total_swap_count_24h: number;
-  total_swap_volume_percent_change_24h: string;
   total_swap_volume_usd_24h: string;
   total_swap_volume_usd_48h_24h: string;
+  total_swap_count_24h: number;
+  total_swap_volume_percent_change_24h: string;
 }
 
 export interface PoolAttributesGtScoreDetails {
-  creation: number;
-  holders: number;
   info: number;
   pool: number;
   transactions: number;
+  holders: number;
+  creation: number;
 }
 
 export interface PoolAttributesHighLowPriceDataByTokenIdEntry {
@@ -595,63 +596,63 @@ export interface PoolAttributesHighLowPriceDataByTokenIdEntry {
 }
 
 export interface PoolAttributesHistoricalData {
-  last_15m: PoolAttributesHistoricalDataEntry;
-  last_1h: PoolAttributesHistoricalDataEntry;
-  last_24h: PoolAttributesHistoricalDataEntry;
-  last_30m: PoolAttributesHistoricalDataEntry;
   last_5m: PoolAttributesHistoricalDataEntry;
+  last_15m: PoolAttributesHistoricalDataEntry;
+  last_30m: PoolAttributesHistoricalDataEntry;
+  last_1h: PoolAttributesHistoricalDataEntry;
   last_6h: PoolAttributesHistoricalDataEntry;
+  last_24h: PoolAttributesHistoricalDataEntry;
 }
 
 export interface PoolAttributesHistoricalDataEntry {
-  buy_swaps_count: number;
-  buy_volume_in_usd?: string;
-  buyers_count: number;
-  net_volume_in_usd?: string;
-  price_in_usd: string | null;
-  sell_swaps_count: number;
-  sell_volume_in_usd?: string;
-  sellers_count: number;
   swaps_count: number;
+  buyers_count: number;
+  price_in_usd: string | null;
+  sellers_count: number;
   volume_in_usd: string;
+  buy_volume_in_usd?: string;
+  sell_volume_in_usd?: string;
+  net_volume_in_usd?: string;
+  buy_swaps_count: number;
+  sell_swaps_count: number;
 }
 
 export interface PoolAttributesNetVolumeData24h {
   buy_volume_in_usd: string;
-  net_volume_in_usd: string;
   sell_volume_in_usd: string;
+  net_volume_in_usd: string;
 }
 
 export interface PoolAttributesPricePercentChanges {
-  last_15m: string | null;
-  last_1h: string | null;
-  last_24h: string | null;
-  last_30m: string | null;
   last_5m: string | null;
+  last_15m: string | null;
+  last_30m: string | null;
+  last_1h: string | null;
   last_6h: string | null;
+  last_24h: string | null;
 }
 
 export interface PoolAttributesSecurityIndicatorsData {
-  bundler_percentage: number | null;
-  buy_tax: number | null;
-  cluster_percentage: number | null;
-  developer_holding_percentage: number | null;
-  early_buyers_percentage: number | null;
-  freezable: boolean | null;
   gt_score: number | null;
+  pool_created_at: string;
+  developer_holding_percentage: number | null;
+  top_10_holders_percentage: number | null;
   holder_count: number | null;
   honeypot: boolean | null;
-  is_liquidity_locked: boolean | null;
   mintable: boolean | null;
-  pool_created_at: string;
+  freezable: boolean | null;
+  buy_tax: number | null;
   sell_tax: number | null;
-  top_10_holders_percentage: number | null;
+  is_liquidity_locked: boolean | null;
+  early_buyers_percentage: number | null;
+  bundler_percentage: number | null;
+  cluster_percentage: number | null;
 }
 
 export interface PoolAttributesSentimentVotes {
-  down_percentage: number;
   total: number;
   up_percentage: number;
+  down_percentage: number;
 }
 
 export interface PoolAttributesSuggestedPoolsByLiquidity {
@@ -660,10 +661,10 @@ export interface PoolAttributesSuggestedPoolsByLiquidity {
 }
 
 export interface PoolAttributesSuggestedPoolsByLiquidityByBaseTokenSymbol {
+  name: string;
   address: string;
   dex_identifier: string;
   dex_name: string;
-  name: string;
   network_identifier: string;
 }
 
@@ -681,91 +682,91 @@ export interface PoolAttributesTokenValueDataEntry {
 export type PoolFilterTimeframe = "5m" | "1h" | "6h" | "24h";
 
 export interface PoolLockedLiquidityAttributes {
-  final_unlock_timestamp: string | null;
-  locked_percent: number;
-  next_unlock_percent: number | null;
   next_unlock_timestamp: string | null;
+  final_unlock_timestamp: string | null;
   source: string;
   url: string;
+  locked_percent: number;
+  next_unlock_percent: number | null;
 }
 
 export interface PoolLockedLiquidityResource {
-  attributes: PoolLockedLiquidityAttributes;
   id: string;
   type: string;
+  attributes: PoolLockedLiquidityAttributes;
 }
 
 export interface PoolMetricAttributes {
-  currency_token_id: number;
-  currency_token_symbol: string;
   dex_id: number;
-  from_token_address: string;
+  pool_id: number;
   from_token_id: number;
+  to_token_id: number;
+  currency_token_id: number;
   from_token_name: string;
   from_token_symbol: string;
-  from_volume: string;
-  from_volume_in_currency_token: string;
-  from_volume_in_usd: string;
-  historical_data: Record<string, PoolMetricAttributesHistoricalDataEntry>;
-  pool_id: number;
-  price: string;
-  reserve_in_currency_token: string;
-  reserve_in_usd: string;
-  swap_count_24h: number;
-  to_token_address: string;
-  to_token_id: number;
+  from_token_address: string;
   to_token_name: string;
   to_token_symbol: string;
+  to_token_address: string;
+  currency_token_symbol: string;
+  price: string;
+  from_volume: string;
   to_volume: string;
+  reserve_in_usd: string;
+  reserve_in_currency_token: string;
+  from_volume_in_currency_token: string;
+  from_volume_in_usd: string;
   to_volume_in_currency_token: string;
   to_volume_in_usd: string;
+  swap_count_24h: number;
+  historical_data: Record<string, PoolMetricAttributesHistoricalDataEntry>;
 }
 
 export interface PoolMetricAttributesHistoricalDataEntry {
-  last_172800_s: PoolMetricAttributesHistoricalDataEntryEntry;
-  last_1800_s: PoolMetricAttributesHistoricalDataEntryEntry;
-  last_21600_s: PoolMetricAttributesHistoricalDataEntryEntry;
   last_300_s: PoolMetricAttributesHistoricalDataEntryEntry;
-  last_3600_s: PoolMetricAttributesHistoricalDataEntryEntry;
-  last_43200_s: PoolMetricAttributesHistoricalDataEntryEntry;
-  last_7200_s: PoolMetricAttributesHistoricalDataEntryEntry;
-  last_86400_s: PoolMetricAttributesHistoricalDataEntryEntry;
   last_900_s: PoolMetricAttributesHistoricalDataEntryEntry;
+  last_1800_s: PoolMetricAttributesHistoricalDataEntryEntry;
+  last_3600_s: PoolMetricAttributesHistoricalDataEntryEntry;
+  last_7200_s: PoolMetricAttributesHistoricalDataEntryEntry;
+  last_21600_s: PoolMetricAttributesHistoricalDataEntryEntry;
+  last_43200_s: PoolMetricAttributesHistoricalDataEntryEntry;
+  last_86400_s: PoolMetricAttributesHistoricalDataEntryEntry;
+  last_172800_s: PoolMetricAttributesHistoricalDataEntryEntry;
 }
 
 export interface PoolMetricAttributesHistoricalDataEntryEntry {
-  buy_swaps_count: number;
-  buy_volume_in_usd: string;
-  buyers_count: number;
-  net_volume_in_usd: string;
-  price_in_usd: string | null;
-  sell_swaps_count: number;
-  sell_volume_in_usd: string;
-  sellers_count: number;
   swaps_count: number;
+  buyers_count: number;
+  price_in_usd: string | null;
+  sellers_count: number;
   volume_in_usd: string;
+  buy_swaps_count: number;
+  sell_swaps_count: number;
+  buy_volume_in_usd: string;
+  net_volume_in_usd: string;
+  sell_volume_in_usd: string;
 }
 
 export interface PoolMetricResource {
-  attributes: PoolMetricAttributes;
   id: string;
   type: string;
+  attributes: PoolMetricAttributes;
 }
 
 export interface PoolParams {
+  /** GeckoTerminal network identifier. */
+  network: string;
   /** On-chain pool address. */
   address: string;
   /** Index of the token to quote the pool in. */
   base_token?: number;
-  /** GeckoTerminal network identifier. */
-  network: string;
 }
 
 export interface PoolRelatedPoolsParams {
-  /** On-chain pool address. */
-  address: string;
   /** GeckoTerminal network identifier. */
   network: string;
+  /** On-chain pool address. */
+  address: string;
 }
 
 export interface PoolRelatedPoolsResponse {
@@ -775,16 +776,16 @@ export interface PoolRelatedPoolsResponse {
 
 export interface PoolRelationships {
   dex?: ResourceLinkage;
-  pairs?: ResourceLinkageList;
-  pool_metric?: ResourceLinkage;
   tokens: ResourceLinkageList;
+  pool_metric?: ResourceLinkage;
+  pairs?: ResourceLinkageList;
 }
 
 export interface PoolResource {
-  attributes: PoolAttributes;
   id: string;
-  relationships: PoolRelationships;
   type: string;
+  attributes: PoolAttributes;
+  relationships: PoolRelationships;
 }
 
 export interface PoolResponse {
@@ -793,65 +794,65 @@ export interface PoolResponse {
 }
 
 export interface PoolScreenerRequest {
-  /** Buy tax percentage. */
-  buy_tax?: RangeFilter | null;
-  /** Buy count over the chosen window. */
-  buys?: TimeframedRangeFilter | null;
-  /** Restrict to these DEX identifiers. */
-  dexes?: string[] | null;
-  /** Fully diluted valuation in USD. */
-  fdv_in_usd?: RangeFilter | null;
-  /** Only pools above GeckoTerminal's GT score threshold. */
-  good_gt_score?: boolean | null;
-  /** Only pools whose token declares social links. */
-  has_social?: boolean | null;
-  /** Number of token holders. */
-  holder_count?: RangeFilter | null;
-  /** Pool liquidity in USD. */
-  liquidity?: RangeFilter | null;
-  /** Market cap in USD. */
-  mc_in_usd?: RangeFilter | null;
-  /** Restrict to these network identifiers. */
-  networks?: string[] | null;
-  /** Exclude tokens flagged as honeypots. */
-  no_honeypot?: boolean | null;
-  /** Only pools whose token is listed on CoinGecko. */
-  on_coingecko?: boolean | null;
   /** 1-based result page. */
   page?: number;
-  /** Pool age in hours. */
-  pool_creation_hours_ago?: RangeFilter | null;
-  /** Sell tax percentage. */
-  sell_tax?: RangeFilter | null;
-  /** Sell count over the chosen window. */
-  sells?: TimeframedRangeFilter | null;
   /** Ranking applied before pagination. Omit for GeckoTerminal's default. */
   sort?: PoolSort | null;
-  /** Share of supply held by the ten largest holders. */
-  top_10_holders_percentage?: RangeFilter | null;
-  /** Transaction count over the chosen window. */
-  tx_count?: TimeframedRangeFilter | null;
   /** 24h traded volume in USD. */
   volume_24h?: RangeFilter | null;
+  /** Pool liquidity in USD. */
+  liquidity?: RangeFilter | null;
+  /** Fully diluted valuation in USD. */
+  fdv_in_usd?: RangeFilter | null;
+  /** Market cap in USD. */
+  mc_in_usd?: RangeFilter | null;
+  /** Buy tax percentage. */
+  buy_tax?: RangeFilter | null;
+  /** Sell tax percentage. */
+  sell_tax?: RangeFilter | null;
+  /** Pool age in hours. */
+  pool_creation_hours_ago?: RangeFilter | null;
+  /** Share of supply held by the ten largest holders. */
+  top_10_holders_percentage?: RangeFilter | null;
+  /** Number of token holders. */
+  holder_count?: RangeFilter | null;
+  /** Transaction count over the chosen window. */
+  tx_count?: TimeframedRangeFilter | null;
+  /** Buy count over the chosen window. */
+  buys?: TimeframedRangeFilter | null;
+  /** Sell count over the chosen window. */
+  sells?: TimeframedRangeFilter | null;
+  /** Only pools whose token is listed on CoinGecko. */
+  on_coingecko?: boolean | null;
+  /** Only pools whose token declares social links. */
+  has_social?: boolean | null;
+  /** Exclude tokens flagged as honeypots. */
+  no_honeypot?: boolean | null;
+  /** Only pools above GeckoTerminal's GT score threshold. */
+  good_gt_score?: boolean | null;
+  /** Restrict to these network identifiers. */
+  networks?: string[] | null;
+  /** Restrict to these DEX identifiers. */
+  dexes?: string[] | null;
 }
 
 export interface PoolSenderSwapsParams {
+  /** GeckoTerminal network identifier. */
+  network: string;
   /** On-chain pool address. */
   address: string;
   /** Unix timestamp for the start of the window. */
   from_timestamp: number;
-  /** Tag swaps made by the token's developer wallet. */
-  include_developer?: boolean;
-  /** Quote prices in the other token of the pair. */
-  inverted?: boolean;
-  /** GeckoTerminal network identifier. */
-  network: string;
+  /** Unix timestamp for the end of the window. */
+  to_timestamp: number;
   /** Pair id from the pool's `pairs` relationship. */
   pair_id: string;
   /** Restrict swaps to one sender wallet address. */
   sender?: string | null;
-  /** Unix timestamp for the end of the window. */
-  to_timestamp: number;
+  /** Tag swaps made by the token's developer wallet. */
+  include_developer?: boolean;
+  /** Quote prices in the other token of the pair. */
+  inverted?: boolean;
 }
 
 export interface PoolSenderSwapsResponse {
@@ -861,18 +862,18 @@ export interface PoolSenderSwapsResponse {
 export type PoolSort = "-5m_trend_score" | "-1h_trend_score" | "-6h_trend_score" | "-24h_trend_score" | "-24h_transactions" | "-24h_volume" | "-pool_creation_date" | "-24h_price_percent_change" | "-6h_price_percent_change" | "-1h_price_percent_change" | "-5m_price_percent_change" | "fdv" | "-fdv" | "liquidity" | "-liquidity" | "mc" | "-mc";
 
 export interface PoolSwapsParams {
-  /** On-chain pool address. */
-  address: string;
-  /** Quote prices in the other token of the pair. */
-  inverted?: boolean;
   /** GeckoTerminal network identifier. */
   network: string;
+  /** On-chain pool address. */
+  address: string;
+  /** Pair id from the pool's `pairs` relationship. */
+  pair_id: string;
   /** Return swaps older than this cursor. Defaults to the current unix timestamp when neither cursor is supplied. */
   page_after?: string | null;
   /** Return swaps newer than this cursor. */
   page_before?: string | null;
-  /** Pair id from the pool's `pairs` relationship. */
-  pair_id: string;
+  /** Quote prices in the other token of the pair. */
+  inverted?: boolean;
   /** Restrict swaps to one sender wallet address. */
   sender?: string | null;
 }
@@ -885,8 +886,8 @@ export interface PoolSwapsResponse {
 }
 
 export interface PoolSwapsResponseLinks {
-  next: string;
   prev: string;
+  next: string;
 }
 
 export interface PoolSwapsResponseMeta {
@@ -894,10 +895,10 @@ export interface PoolSwapsResponseMeta {
 }
 
 export interface PoolTokenInfoSnapshotsParams {
-  /** On-chain pool address. */
-  address: string;
   /** GeckoTerminal network identifier. */
   network: string;
+  /** On-chain pool address. */
+  address: string;
 }
 
 export interface PoolTokenInfoSnapshotsResponse {
@@ -907,11 +908,11 @@ export interface PoolTokenInfoSnapshotsResponse {
 export interface PoolsResponse {
   data: PoolResource[];
   included: (DexResource | NetworkResource | TokenResource)[];
-  links: LatestPoolsResponseLinks;
   meta: LatestPoolsResponseMeta;
+  links: LatestPoolsResponseLinks;
 }
 
-export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
+export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
 
 export interface RangeFilter {
   /** Inclusive lower bound. */
@@ -922,22 +923,22 @@ export interface RangeFilter {
 
 export interface RelatedPoolAttributes {
   address: string;
-  liquidity: string;
   pool_fee: string | null;
   token_id: string;
+  liquidity: string;
   volume_in_usd_24h: string;
 }
 
 export interface RelatedPoolRelationships {
-  dex: ResourceLinkage;
   tokens: ResourceLinkageList;
+  dex: ResourceLinkage;
 }
 
 export interface RelatedPoolResource {
-  attributes: RelatedPoolAttributes;
   id: string;
-  relationships: RelatedPoolRelationships;
   type: string;
+  attributes: RelatedPoolAttributes;
+  relationships: RelatedPoolRelationships;
 }
 
 export interface ResourceIdentifier {
@@ -964,77 +965,77 @@ export interface RevivalRadarPoolsResponseMeta {
 }
 
 export interface RevivalRadarPoolsResponseMetaSections {
-  revived: string[];
   reviving: string[];
+  revived: string[];
   sunsetting: string[];
 }
 
 export interface SearchAttributes {
-  dexes: SearchAttributesDexes[] | string[];
   networks: SearchAttributesNetworks[] | string[];
-  pairs: string[];
+  dexes: SearchAttributesDexes[] | string[];
   pools: SearchAttributesPools[] | string[];
+  pairs: string[];
   tags: SearchAttributesTags[] | string[];
 }
 
 export interface SearchAttributesDexes {
+  type: string;
+  name: string;
   identifier: string;
   image_url: string;
-  name: string;
-  network: TrendAttributesNewPoolsNetwork;
-  pools_count: number;
-  rank_by_volume_usd_24h: number;
-  swap_count_24h: number;
   swap_volume_usd_24h: string;
-  type: string;
+  swap_count_24h: number;
+  rank_by_volume_usd_24h: number;
+  pools_count: number;
+  network: TrendAttributesNewPoolsNetwork;
 }
 
 export interface SearchAttributesNetworks {
+  type: string;
+  name: string;
   identifier: string;
   image_url: string;
-  name: string;
-  pools_count: number;
-  rank_by_volume_usd_24h: number;
-  swap_count_24h: number;
   swap_volume_usd_24h: string;
-  type: string;
+  swap_count_24h: number;
+  rank_by_volume_usd_24h: number;
+  pools_count: number;
 }
 
 export interface SearchAttributesPools {
+  type: string;
   address: string;
   api_address: string;
-  dex: TrendAttributesNewPoolsDex;
-  fdv_in_usd: string | null;
-  from_volume_in_usd: string;
-  gt_score: number;
-  market_cap_in_usd: string | null;
-  network: TrendAttributesNewPoolsNetwork;
-  on_coingecko: boolean;
-  pool_creation_date: string;
-  pool_id: number;
   price_in_usd: string;
-  price_percent_change: string;
   reserve_in_usd: string;
+  from_volume_in_usd: string;
   to_volume_in_usd: string;
+  price_percent_change: string;
+  on_coingecko: boolean;
+  market_cap_in_usd: string | null;
+  fdv_in_usd: string | null;
+  pool_id: number;
+  network: TrendAttributesNewPoolsNetwork;
+  dex: TrendAttributesNewPoolsDex;
   tokens: SearchAttributesPoolsTokens[];
-  type: string;
   volume_percent_change_24h: string;
+  pool_creation_date: string;
+  gt_score: number;
 }
 
 export interface SearchAttributesPoolsTokens {
+  name: string;
+  symbol: string;
   address: string;
-  holder_count: number | null;
   image_url: string;
   is_base_token: boolean;
   is_verified: boolean;
-  name: string;
-  symbol: string;
+  holder_count: number | null;
 }
 
 export interface SearchAttributesTags {
-  identifier: string;
-  name: string;
   type: string;
+  name: string;
+  identifier: string;
 }
 
 export interface SearchParams {
@@ -1043,9 +1044,9 @@ export interface SearchParams {
 }
 
 export interface SearchResource {
-  attributes: SearchAttributes;
   id: string;
   type: string;
+  attributes: SearchAttributes;
 }
 
 export interface SearchResponse {
@@ -1057,28 +1058,28 @@ export interface SearchTrendAttributes {
 }
 
 export interface SearchTrendAttributesSearchItems {
-  base_token_image_url: string;
-  base_token_name: string;
-  base_token_symbol: string;
-  dex_identifier: string;
-  dex_image_url: string;
-  is_verified: boolean;
+  type: string;
   name: string;
   network_identifier: string;
+  dex_identifier: string;
   network_image_url: string;
-  on_coingecko: boolean;
+  dex_image_url: string;
   pool_address: string;
   pool_api_address: string;
+  base_token_name: string;
+  base_token_symbol: string;
+  base_token_image_url: string;
   price_percent_change: string;
-  reserve_in_usd: string;
-  type: string;
+  on_coingecko: boolean;
+  is_verified: boolean;
   volume_in_usd_24h: string;
+  reserve_in_usd: string;
 }
 
 export interface SearchTrendResource {
-  attributes: SearchTrendAttributes;
   id: string;
   type: string;
+  attributes: SearchTrendAttributes;
 }
 
 export interface SearchTrendsResponse {
@@ -1086,32 +1087,32 @@ export interface SearchTrendsResponse {
 }
 
 export interface SenderSwapAttributes {
+  timestamp: string;
+  swap_total_in_usd: string;
   action: string;
   by: string;
-  swap_total_in_usd: string;
-  timestamp: string;
 }
 
 export interface SenderSwapResource {
-  attributes: SenderSwapAttributes;
   id: string;
   type: string;
+  attributes: SenderSwapAttributes;
 }
 
 export interface SwapAttributes {
+  timestamp: string;
+  tx_hash: string;
+  tx_from_address: string;
   from_token_amount: string;
-  from_token_total_in_usd: string;
   price_from: string;
   price_from_in_currency_token: string;
   price_from_in_usd: string;
+  from_token_total_in_usd: string;
+  to_token_amount: string;
   price_to: string;
   price_to_in_currency_token: string;
   price_to_in_usd: string;
-  timestamp: string;
-  to_token_amount: string;
   to_token_total_in_usd: string;
-  tx_from_address: string;
-  tx_hash: string;
 }
 
 export interface SwapRelationships {
@@ -1120,62 +1121,62 @@ export interface SwapRelationships {
 }
 
 export interface SwapResource {
-  attributes: SwapAttributes;
   id: string;
-  relationships: SwapRelationships;
   type: string;
+  attributes: SwapAttributes;
+  relationships: SwapRelationships;
 }
 
 export interface TagAttributes {
-  buy_count_24h?: number;
-  description?: string | null;
-  fdv_in_usd?: string;
-  icon_url: string | null;
-  identifier: string;
   name: string;
+  identifier: string;
+  icon_url: string | null;
   pool_trend_rank: number | null;
-  reserve_in_usd?: string;
+  description?: string | null;
+  buy_count_24h?: number;
   sell_count_24h?: number;
-  swap_count_24h?: number;
-  swap_volume_usd_24h?: number;
   volume_percent_changes?: TagAttributesVolumePercentChanges;
+  reserve_in_usd?: string;
+  fdv_in_usd?: string;
+  swap_volume_usd_24h?: number;
+  swap_count_24h?: number;
 }
 
 export interface TagAttributesVolumePercentChanges {
-  last_12h: string;
   last_1h: string;
-  last_24h: string;
   last_6h: string;
+  last_12h: string;
+  last_24h: string;
 }
 
 export interface TagNetworkPoolsParams {
+  /** Category slug, as returned by the tags endpoint. */
+  tag: string;
   /** GeckoTerminal network identifier. */
   network: string;
   /** 1-based result page. */
   page?: number;
-  /** Category slug, as returned by the tags endpoint. */
-  tag: string;
 }
 
 export interface TagNetworkPoolsResponse {
   data: PoolResource[];
   included: (DexResource | NetworkResource | TokenResource)[];
-  links: LatestPoolsResponseLinks;
   meta: LatestPoolsResponseMeta;
+  links: LatestPoolsResponseLinks;
 }
 
 export interface TagPoolsParams {
-  /** 1-based result page. */
-  page?: number;
   /** Category slug, as returned by the tags endpoint. */
   tag: string;
+  /** 1-based result page. */
+  page?: number;
 }
 
 export interface TagPoolsResponse {
   data: PoolResource[];
   included: (DexResource | NetworkResource | TokenResource)[];
-  links: LatestPoolsResponseLinks;
   meta: LatestPoolsResponseMeta;
+  links: LatestPoolsResponseLinks;
 }
 
 export interface TagRelationships {
@@ -1183,10 +1184,10 @@ export interface TagRelationships {
 }
 
 export interface TagResource {
-  attributes: TagAttributes;
   id: string;
-  relationships: TagRelationships;
   type: string;
+  attributes: TagAttributes;
+  relationships: TagRelationships;
 }
 
 export interface TagsParams {
@@ -1202,49 +1203,49 @@ export interface TagsResponse {
 
 export interface TagsResponseLinks {
   first: string;
-  last: TagsResponseLinksLast;
-  next: string;
   prev: string | null;
+  next: string;
+  last: TagsResponseLinksLast;
 }
 
 export interface TagsResponseLinksLast {
-  href: string;
   meta: LatestPoolsResponseLinksLastMeta;
+  href: string;
 }
 
 export interface ThemeAttributes {
-  pools: ThemeAttributesPools[];
   pools_count: number;
   tag: ThemeAttributesTag;
+  pools: ThemeAttributesPools[];
 }
 
 export interface ThemeAttributesPools {
-  base_token_id: string;
   network_identifier: string;
   pool_address: string;
+  base_token_id: string;
   tagged_token_id: string;
   tokens: ThemeAttributesPoolsTokens[];
 }
 
 export interface ThemeAttributesPoolsTokens {
   id: string;
-  image_url: string;
   symbol: string;
+  image_url: string;
 }
 
 export interface ThemeAttributesTag {
-  description?: string;
   id: string;
-  identifier: string;
   name: string;
+  identifier: string;
   swap_count_24h: number;
+  description?: string;
   swap_volume_usd_24h?: number;
 }
 
 export interface ThemeResource {
-  attributes: ThemeAttributes;
   id: string;
   type: string;
+  attributes: ThemeAttributes;
 }
 
 export interface TimeframedRangeFilter {
@@ -1257,27 +1258,27 @@ export interface TimeframedRangeFilter {
 }
 
 export interface TokenAttributes {
+  name?: string;
+  symbol?: string;
   address?: string;
-  banner_image_url?: string;
-  cg_coin_id?: string | null;
-  circulating_supply?: number;
-  cto?: string | null;
-  decimals?: number;
-  description?: TokenAttributesDescription;
   image_url?: string;
   is_verified?: boolean;
-  links?: TokenAttributesLinks;
-  market_cap_in_usd?: number | null;
-  metadata_updated_at?: string | null;
-  name?: string;
   on_coingecko?: boolean | null;
+  decimals?: number;
   on_pump_fun?: boolean | null;
+  cg_coin_id?: string | null;
+  market_cap_in_usd?: number | null;
+  links?: TokenAttributesLinks;
+  description?: TokenAttributesDescription;
+  metadata_updated_at?: string | null;
+  circulating_supply?: number;
   supports_bubblemaps?: boolean;
   supports_bubblemaps_v2?: boolean;
-  symbol?: string;
-  token_info_snapshots?: TokenAttributesTokenInfoSnapshots[];
+  banner_image_url?: string;
+  cto?: string | null;
   top_traders_enabled?: boolean;
   verified_at?: string | null;
+  token_info_snapshots?: TokenAttributesTokenInfoSnapshots[];
 }
 
 export interface TokenAttributesDescription {
@@ -1285,19 +1286,19 @@ export interface TokenAttributesDescription {
 }
 
 export interface TokenAttributesLinks {
+  websites?: string[];
+  zora_url?: string | null;
   discord_url?: string | null;
-  facebook_handle?: string | null;
-  github_repo_name?: string | null;
-  instagram_handle?: string | null;
+  warpcast_url?: string | null;
   medium_handle?: string | null;
-  subreddit_handle?: string | null;
-  telegram_handle?: string | null;
   tiktok_handle?: string | null;
   twitter_handle?: string | null;
-  warpcast_url?: string | null;
-  websites?: string[];
   youtube_handle?: string | null;
-  zora_url?: string | null;
+  facebook_handle?: string | null;
+  telegram_handle?: string | null;
+  github_repo_name?: string | null;
+  instagram_handle?: string | null;
+  subreddit_handle?: string | null;
 }
 
 export interface TokenAttributesTokenInfoSnapshots {
@@ -1308,26 +1309,26 @@ export interface TokenAttributesTokenInfoSnapshots {
 }
 
 export interface TokenAttributesTokenInfoSnapshotsLinks {
+  websites?: string[];
+  zora_url?: string | null;
   discord_url?: string | null;
-  facebook_handle?: string | null;
-  github_repo_name?: string | null;
-  instagram_handle?: string | null;
+  warpcast_url?: string | null;
   medium_handle?: string | null;
-  subreddit_handle?: string | null;
-  telegram_handle?: string | null;
   tiktok_handle?: string | null;
   twitter_handle?: string | null;
-  warpcast_url?: string | null;
-  websites?: string[];
   youtube_handle?: string | null;
-  zora_url?: string | null;
+  facebook_handle?: string | null;
+  telegram_handle?: string | null;
+  github_repo_name?: string | null;
+  instagram_handle?: string | null;
+  subreddit_handle?: string | null;
 }
 
 export interface TokenDeveloperDetailAttributes {
   address: string;
+  label: string | null;
   holding_amount: string;
   holding_percentage: number;
-  label: string | null;
   realized_pnl_amount: string | null;
   realized_pnl_percentage: number | null;
   unrealized_pnl_amount: string | null;
@@ -1335,10 +1336,10 @@ export interface TokenDeveloperDetailAttributes {
 }
 
 export interface TokenDeveloperDetailResource {
-  attributes: TokenDeveloperDetailAttributes;
   id: string;
-  relationships: TokenSecurityMetricRelationships;
   type: string;
+  attributes: TokenDeveloperDetailAttributes;
+  relationships: TokenSecurityMetricRelationships;
 }
 
 export interface TokenDeveloperPastTokensParams {
@@ -1353,10 +1354,10 @@ export interface TokenDeveloperPastTokensResponse {
 export interface TokenHistoricalHoldersParams {
   /** GeckoTerminal network identifier. */
   network: string;
-  /** Look-back window for the snapshot series. */
-  period?: HolderHistoryPeriod;
   /** On-chain token address. */
   token_address: string;
+  /** Look-back window for the snapshot series. */
+  period?: HolderHistoryPeriod;
 }
 
 export interface TokenHistoricalHoldersResponse {
@@ -1364,34 +1365,34 @@ export interface TokenHistoricalHoldersResponse {
 }
 
 export interface TokenHoldersDetailAttributes {
+  source: string | null;
   explorer_coin_url: string;
   explorer_holder_url: string;
-  source: string | null;
   top_holders: TokenHoldersDetailAttributesTopHolders[];
 }
 
 export interface TokenHoldersDetailAttributesTopHolders {
+  wallet_address: string;
   amount: number;
-  average_buy_in_usd: number | null;
+  owner_percent: number;
+  value_in_usd: number;
+  is_liquidity_pool: boolean | null;
   entity_name: string | null;
   entity_type: string | null;
-  is_liquidity_pool: boolean | null;
   label: string | null;
-  owner_percent: number;
-  realized_pnl: number | null;
-  realized_pnl_percentage: number | null;
+  average_buy_in_usd: number | null;
   total_buy_count: number | null;
   total_sell_count: number | null;
+  realized_pnl: number | null;
   unrealized_pnl: number | null;
+  realized_pnl_percentage: number | null;
   unrealized_pnl_percentage: number | null;
-  value_in_usd: number;
-  wallet_address: string;
 }
 
 export interface TokenHoldersDetailResource {
-  attributes: TokenHoldersDetailAttributes;
   id: string;
   type: string;
+  attributes: TokenHoldersDetailAttributes;
 }
 
 export interface TokenHoldersSnapshotAttributes {
@@ -1400,9 +1401,9 @@ export interface TokenHoldersSnapshotAttributes {
 }
 
 export interface TokenHoldersSnapshotResource {
-  attributes: TokenHoldersSnapshotAttributes;
   id: string;
   type: string;
+  attributes: TokenHoldersSnapshotAttributes;
 }
 
 export interface TokenRelationships {
@@ -1410,58 +1411,58 @@ export interface TokenRelationships {
 }
 
 export interface TokenResource {
-  attributes: TokenAttributes;
   id: string;
-  relationships: TokenRelationships;
   type: string;
+  attributes: TokenAttributes;
+  relationships: TokenRelationships;
 }
 
 export interface TokenSecurityMetricAttributes {
-  defi_scanner_data: Record<string, string | null>;
-  defi_scanner_updated_at: string | null;
-  go_plus_token_security_data: TokenSecurityMetricAttributesGoPlusTokenSecurityData;
-  go_plus_token_security_updated_at: string | null;
-  holder_count: number;
-  honeypot_scanner_data: TokenSecurityMetricAttributesHoneypotScannerData;
-  honeypot_scanner_updated_at: string | null;
   insightx_security_data: TokenSecurityMetricAttributesInsightxSecurityData;
-  insightx_updated_at: string | null;
-  soul_scanner_data: TokenSecurityMetricAttributesSoulScannerData;
+  holder_count: number;
+  go_plus_token_security_updated_at: string | null;
+  defi_scanner_updated_at: string | null;
   soul_scanner_updated_at: string | null;
+  honeypot_scanner_updated_at: string | null;
+  insightx_updated_at: string | null;
+  go_plus_token_security_data: TokenSecurityMetricAttributesGoPlusTokenSecurityData;
+  defi_scanner_data: Record<string, string | null>;
+  soul_scanner_data: TokenSecurityMetricAttributesSoulScannerData;
+  honeypot_scanner_data: TokenSecurityMetricAttributesHoneypotScannerData;
 }
 
 export interface TokenSecurityMetricAttributesGoPlusTokenSecurityData {
-  anti_whale_modifiable?: string;
+  top_10_holders_percent?: string | null;
   buy_tax?: string;
-  can_take_back_ownership?: string;
+  sell_tax?: string;
+  is_proxy?: string;
+  is_open_source?: string;
   cannot_buy?: string;
   cannot_sell_all?: string;
+  is_in_dex?: string;
   creator_address?: string;
   creator_balance?: string;
   creator_percent?: string;
-  external_call?: string;
-  hidden_owner?: string;
   holder_count?: string;
-  is_anti_whale?: string;
-  is_blacklisted?: string;
   is_honeypot?: string;
-  is_in_dex?: string;
-  is_mintable?: string;
-  is_open_source?: string;
-  is_proxy?: string;
-  is_whitelisted?: string;
-  owner_address?: string;
-  owner_balance?: string;
-  owner_change_balance?: string;
-  owner_percent?: string;
-  personal_slippage_modifiable?: string;
-  selfdestruct?: string;
-  sell_tax?: string;
-  slippage_modifiable?: string;
-  top_10_holders_percent?: string | null;
-  trading_cooldown?: string;
-  transfer_pausable?: string;
   trust_list?: string;
+  is_mintable?: string;
+  can_take_back_ownership?: string;
+  owner_change_balance?: string;
+  hidden_owner?: string;
+  selfdestruct?: string;
+  external_call?: string;
+  slippage_modifiable?: string;
+  transfer_pausable?: string;
+  is_blacklisted?: string;
+  is_whitelisted?: string;
+  is_anti_whale?: string;
+  anti_whale_modifiable?: string;
+  trading_cooldown?: string;
+  personal_slippage_modifiable?: string;
+  owner_balance?: string;
+  owner_percent?: string;
+  owner_address?: string;
 }
 
 export interface TokenSecurityMetricAttributesHoneypotScannerData {
@@ -1470,17 +1471,17 @@ export interface TokenSecurityMetricAttributesHoneypotScannerData {
 }
 
 export interface TokenSecurityMetricAttributesInsightxSecurityData {
-  bundlers_pct?: number;
-  cluster_pct?: number;
   dev_pct?: number;
-  insiders_pct?: number;
-  snipers_pct?: number;
   top10_pct?: number;
+  cluster_pct?: number;
+  snipers_pct?: number;
+  bundlers_pct?: number;
+  insiders_pct?: number;
 }
 
 export interface TokenSecurityMetricAttributesSoulScannerData {
-  freezeable?: string;
   mintable?: string;
+  freezeable?: string;
 }
 
 export interface TokenSecurityMetricRelationships {
@@ -1488,10 +1489,10 @@ export interface TokenSecurityMetricRelationships {
 }
 
 export interface TokenSecurityMetricResource {
-  attributes: TokenSecurityMetricAttributes;
   id: string;
-  relationships: TokenSecurityMetricRelationships;
   type: string;
+  attributes: TokenSecurityMetricAttributes;
+  relationships: TokenSecurityMetricRelationships;
 }
 
 export interface TokenTopHoldersParams {
@@ -1521,31 +1522,31 @@ export interface TrendAttributes {
 }
 
 export interface TrendAttributesNewPools {
+  type: string;
   address: string;
   api_address: string;
-  dex: TrendAttributesNewPoolsDex;
-  network: TrendAttributesNewPoolsNetwork;
-  pair_id: string | null;
-  pool: TrendAttributesNewPoolsPool;
-  pool_created_at: string;
-  price_change: string;
   price_in_usd: string;
+  price_change: string;
   price_percent_change: string;
-  token_id: string | null;
+  network: TrendAttributesNewPoolsNetwork;
+  dex: TrendAttributesNewPoolsDex;
+  pool: TrendAttributesNewPoolsPool;
   tokens: TrendAttributesNewPoolsTokens[];
-  type: string;
+  pair_id: string | null;
+  token_id: string | null;
+  pool_created_at: string;
 }
 
 export interface TrendAttributesNewPoolsDex {
+  name: string;
   identifier: string;
   image_url: string;
-  name: string;
 }
 
 export interface TrendAttributesNewPoolsNetwork {
-  identifier: string;
-  image_url: string;
   name: string;
+  image_url: string;
+  identifier: string;
 }
 
 export interface TrendAttributesNewPoolsPool {
@@ -1553,31 +1554,31 @@ export interface TrendAttributesNewPoolsPool {
 }
 
 export interface TrendAttributesNewPoolsTokens {
-  image_url: string;
-  is_base_token: boolean;
   name: string;
   symbol: string;
+  image_url: string;
+  is_base_token: boolean;
 }
 
 export interface TrendAttributesTopGainersPairs {
+  type: string;
   address: string;
   api_address: string;
-  dex: TrendAttributesNewPoolsDex;
-  network: TrendAttributesNewPoolsNetwork;
-  pair_id: number;
-  pool: TrendAttributesNewPoolsPool;
-  price_change: number;
   price_in_usd: string;
+  price_change: number;
   price_percent_change: number;
-  token_id: string | null;
+  network: TrendAttributesNewPoolsNetwork;
+  dex: TrendAttributesNewPoolsDex;
+  pool: TrendAttributesNewPoolsPool;
   tokens: TrendAttributesNewPoolsTokens[];
-  type: string;
+  pair_id: number;
+  token_id: string | null;
 }
 
 export interface TrendResource {
-  attributes: TrendAttributes;
   id: string;
   type: string;
+  attributes: TrendAttributes;
 }
 
 export interface TrendingLinkAttributes {
@@ -1586,9 +1587,9 @@ export interface TrendingLinkAttributes {
 }
 
 export interface TrendingLinkResource {
-  attributes: TrendingLinkAttributes;
   id: string;
   type: string;
+  attributes: TrendingLinkAttributes;
 }
 
 export interface TrendingLinksResponse {
@@ -1596,12 +1597,12 @@ export interface TrendingLinksResponse {
 }
 
 export interface TrendingThemesParams {
+  /** Restrict results to one network identifier. */
+  network?: string | null;
   /** Restrict results to one DEX identifier. */
   dex?: string | null;
   /** Return GeckoTerminal's extended theme list rather than the top few. */
   more_themes?: boolean;
-  /** Restrict results to one network identifier. */
-  network?: string | null;
 }
 
 export interface TrendingThemesResponse {
@@ -1609,10 +1610,10 @@ export interface TrendingThemesResponse {
 }
 
 export interface TrendsParams {
-  /** Restrict results to one DEX identifier. */
-  dex?: string | null;
   /** Restrict results to one network identifier. */
   network?: string | null;
+  /** Restrict results to one DEX identifier. */
+  dex?: string | null;
 }
 
 export interface TrendsResponse {
@@ -1620,23 +1621,23 @@ export interface TrendsResponse {
 }
 
 export interface WalletTokenAttributes {
+  wallet_address: string;
+  total_buys: number;
+  total_sells: number;
+  realized_pnl: string;
+  total_buy_count: number;
+  total_sell_count: number;
+  total_buy_amount: string;
+  total_sell_amount: string;
+  total_buy_in_usd: string;
+  total_sell_in_usd: string;
   average_buy_in_usd: string;
   average_sell_in_usd: string;
   balance: string | null;
-  explorer_holder_url: string;
-  realized_pnl: string;
-  realized_pnl_percentage: number | null;
-  total_buy_amount: string;
-  total_buy_count: number;
-  total_buy_in_usd: string;
-  total_buys: number;
-  total_sell_amount: string;
-  total_sell_count: number;
-  total_sell_in_usd: string;
-  total_sells: number;
   unrealized_pnl: string | null;
+  explorer_holder_url: string;
+  realized_pnl_percentage: number | null;
   unrealized_pnl_percentage: number | null;
-  wallet_address: string;
 }
 
 export interface WalletTokenParams {
@@ -1651,10 +1652,10 @@ export interface WalletTokenRelationships {
 }
 
 export interface WalletTokenResource {
-  attributes: WalletTokenAttributes;
   id: string;
-  relationships: WalletTokenRelationships;
   type: string;
+  attributes: WalletTokenAttributes;
+  relationships: WalletTokenRelationships;
 }
 
 export interface WalletTokenResponse {

@@ -101,29 +101,66 @@ export interface FacebookListingCard {
   id: string | null;
   video_id: string | null;
   product_item_id: string | null;
-  origin_group_id: string | null;
-  parent_listing_id: string | null;
   feed_story_id: string | null;
   title: string | null;
   custom_title: string | null;
   subtitles: string[];
   share_url: string | null;
-  price: FacebookMoney | null;
-  inventory_count: number | null;
+  price: FacebookListingCardMoney | null;
   price_in_cents: number | null;
-  strikethrough_price: FacebookMoney | null;
-  min_price: FacebookMoney | null;
-  max_price: FacebookMoney | null;
-  status: FacebookListingStatus;
+  strikethrough_price: FacebookListingCardMoney | null;
+  status: FacebookListingCardStatus;
   created_at: string | null;
-  category: FacebookListingCategory;
-  location: FacebookListingLocation;
-  seller: FacebookProfileRef | null;
+  category: FacebookListingCardCategory;
+  location: FacebookListingCardLocation;
+  seller: FacebookListingCardSeller | null;
   delivery_types: FacebookCode[];
-  listing_tags: string[];
   feed_story_type: FacebookCode;
-  primary_photo: FacebookPhoto | null;
-  photos: FacebookPhoto[];
+  primary_photo: FacebookListingCardPhoto | null;
+  photos: FacebookListingCardPhoto[];
+}
+
+export interface FacebookListingCardCategory {
+  id: string | null;
+}
+
+export interface FacebookListingCardLocation {
+  city_id: string | null;
+  city: string | null;
+  state: string | null;
+  city_name: string | null;
+  latitude: number | null;
+  longitude: number | null;
+}
+
+export interface FacebookListingCardMoney {
+  amount: number | null;
+  formatted: string | null;
+}
+
+export interface FacebookListingCardPhoto {
+  id: string | null;
+  type: string;
+  image: FacebookImage | null;
+  thumbnail_url: string | null;
+}
+
+export interface FacebookListingCardSeller {
+  id: string | null;
+  pfbid: string | null;
+  name: string | null;
+  account_type: FacebookCode;
+}
+
+export interface FacebookListingCardStatus {
+  is_hidden: boolean | null;
+  is_live: boolean | null;
+  is_pending: boolean | null;
+  is_sold: boolean | null;
+  is_draft: boolean | null;
+  is_rejected: boolean | null;
+  created_with_seller_app: boolean | null;
+  messaging_enabled: boolean | null;
 }
 
 export interface FacebookListingCategory {
@@ -414,7 +451,7 @@ export type ListingDelivery = "all" | "local_pickup" | "shipping";
 
 export type ListingSort = "best_match" | "creation_time_descend" | "creation_time_ascend" | "price_ascend" | "price_descend" | "distance_ascend" | "distance_descend" | "vehicle_year_ascend" | "vehicle_year_descend" | "vehicle_mileage_ascend" | "vehicle_mileage_descend";
 
-export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
+export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
 
 export interface SearchMarketplaceLocationsParams {
   /** Search text. */
