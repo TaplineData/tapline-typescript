@@ -2356,6 +2356,7 @@ export interface GetTokenHolderCountResponse {
   mint: string;
   chain: string;
   networkId: number;
+  holderCount: number;
 }
 
 export interface GetTopTokenMintChainsResponse {
@@ -3134,12 +3135,7 @@ export interface Liker {
   generatedMedia: Generatedmedia | null;
   isPumpUser?: boolean;
   resolvedAvatarDecoration?: string | null;
-  socials: Social[];
-  updatedAt: string;
-  userId: string;
-  username: string;
-  verifiedBadgeVisible: boolean;
-  walletAddress: string;
+  activeCompetitionEntry?: null;
 }
 
 export interface ListCompetitionsResponse {
@@ -4966,6 +4962,8 @@ export interface TradesBatchParams {
 export interface TradesBatchRequest {
   /** Wallet addresses (Solana or EVM) to fetch trades for, 1 to 30. */
   user_addresses: string[];
+  /** Coin creation timestamp in milliseconds. */
+  created_ts: number;
 }
 
 export interface Transaction {
