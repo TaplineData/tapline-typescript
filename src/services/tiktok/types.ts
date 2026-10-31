@@ -153,6 +153,17 @@ export interface SearchHashtagParams {
   trim?: boolean | null;
 }
 
+export interface SearchUsersParams {
+  /** What to search TikTok for. */
+  query: string;
+  /** Two-letter country code TikTok searches from, `US` by default. Supported: `AR`, `AT`, `AU`, `BD`, `BR`, `CA`, `CH`, `CL`, `DE`, `ES`, `FR`, `GB`, `IE`, `IT`, `JP`, `NL`, `PL`, `PT`, `SE`, `SG`, `TR`, `US`, `ZA`. */
+  region?: string | null;
+  /** The `cursor` from the previous page of the same search. It expires 30 minutes after it is issued. Omit it for the first page. */
+  cursor?: number | null;
+  /** Retained for compatibility. Both values return the same complete cleaned response. */
+  trim?: boolean | null;
+}
+
 export interface TikTokAdvertisement {
   id: string | null;
   title?: string;
@@ -715,6 +726,12 @@ export interface TikTokUser {
   avatar_larger?: TikTokMediaResource;
   covers?: TikTokMediaResource[];
   videos?: TikTokVideo[];
+}
+
+export interface TikTokUserSearchResponse {
+  users: TikTokUser[];
+  cursor: number | string | null;
+  has_more: boolean;
 }
 
 export interface TikTokVideo {
