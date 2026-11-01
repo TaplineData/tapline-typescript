@@ -24,6 +24,7 @@ import { IndeedClient } from './services/indeed/client.js';
 import { FacebookClient } from './services/facebook/client.js';
 import { FacebookAdLibraryClient } from './services/facebook_ad_library/client.js';
 import { FacebookMarketplaceClient } from './services/facebook_marketplace/client.js';
+import { GoogleMapsClient } from './services/google_maps/client.js';
 
 export class TaplineClient {
   readonly airbnb: AirbnbClient;
@@ -48,6 +49,7 @@ export class TaplineClient {
   readonly facebook: FacebookClient;
   readonly facebookAdLibrary: FacebookAdLibraryClient;
   readonly facebookMarketplace: FacebookMarketplaceClient;
+  readonly googleMaps: GoogleMapsClient;
 
   constructor(config: TaplineClientConfig = {}) {
     const base = new BaseClient(config);
@@ -73,5 +75,6 @@ export class TaplineClient {
     this.facebook = new FacebookClient(base);
     this.facebookAdLibrary = new FacebookAdLibraryClient(base);
     this.facebookMarketplace = new FacebookMarketplaceClient(base);
+    this.googleMaps = new GoogleMapsClient(base);
   }
 }
