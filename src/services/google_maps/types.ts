@@ -1458,8 +1458,6 @@ export interface SearchParams {
   open_now?: boolean;
   /** Lowest star rating, 2.0 to 4.5 in steps of 0.5. */
   min_rating?: number | null;
-  /** Places per page. */
-  limit?: number;
   /** `pagination.next_cursor` from the previous page; empty for the first. */
   cursor?: string;
   /** Latitude to search around, within the ±85.05° the map covers; send with `longitude`. */
@@ -1468,6 +1466,8 @@ export interface SearchParams {
   longitude?: number | null;
   /** Map zoom around the point, as in `/maps/@lat,lng,14z`; 14 when omitted. Needs `latitude` and `longitude`. */
   zoom?: number | null;
+  /** Places per page. */
+  limit?: number;
   /** Google language code for the answer's text; hotel check-in and check-out times are read only for `en`. */
   hl?: string;
   /** Two-letter region; sets ranking, currency and units. */

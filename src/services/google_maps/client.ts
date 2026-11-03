@@ -75,7 +75,7 @@ export class GoogleMapsClient {
     return this.base.get<GoogleMapsReverseGeocode>('/v1/google-maps/reverse-geocode', { ...params });
   }
 
-  /** Search Google Maps places by text, optionally around a point. Google reranks between calls, so later pages leave out places earlier pages returned and can miss a few that moved. Costs 2 credits. */
+  /** Search Google Maps places by text, optionally around a point. Google reranks between calls, so later pages leave out places earlier pages returned and can miss a few that moved. Costs 2 credits per 20 results. */
   async search(params: SearchParams): Promise<GoogleMapsSearchPage> {
     return this.base.get<GoogleMapsSearchPage>('/v1/google-maps/search', { ...params });
   }
