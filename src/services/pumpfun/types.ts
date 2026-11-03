@@ -652,11 +652,21 @@ export interface CoinMayhemState {
   multiplayer?: boolean;
   pause_reason?: string;
   complete_reason?: string;
+  first_trade_quote_amount?: string;
+  stats?: CoinMayhemStats;
 }
 
 export interface CoinMayhemStateParams {
   /** Token mint address. */
   mint: string;
+}
+
+export interface CoinMayhemStats {
+  buyCount: number;
+  sellCount: number;
+  totalBuyVolumeSol: string;
+  totalSellVolumeSol: string;
+  netSolDeployed: string;
 }
 
 export interface CoinNarrativesParams {
@@ -725,6 +735,13 @@ export interface CoinTimelineParams {
   limit?: number;
   /** `nextCursor` from the previous page; omit for the first page. */
   cursor?: string | null;
+}
+
+export interface CoinTopCalloutsParams {
+  /** Coin address: a Solana mint or an EVM token (0x). */
+  mint: string;
+  /** Maximum callouts to return. */
+  limit?: number;
 }
 
 export interface CoinsBatch {
@@ -1610,6 +1627,12 @@ export interface GetCoinTimelineResponseItem {
   recipients?: ItemRecipient[];
 }
 
+export interface GetCoinTopCalloutsResponse {
+  callouts: GetMintPositionsResponsePosition[];
+  totalCount: number;
+  hasMore?: boolean;
+}
+
 export interface GetCompetitionEntryHighlightsResponse {
   entryId: string;
   tokens: Token[];
@@ -2023,10 +2046,10 @@ export interface GetMintPositionsResponsePosition {
   accountKind?: string;
   amountHeld: number;
   pnlUsd: number;
-  pnlPercentage: number;
+  pnlPercentage: number | null;
   realizedPnlUsd: number;
   costBasisAmount: number;
-  costBasisUsd: number;
+  costBasisUsd: number | null;
   amountBoughtUsd: number;
   amountBought: number;
   callout: PositionCallout | null;
@@ -3584,7 +3607,7 @@ export interface MayhemCoinsParams {
   include_nsfw?: boolean | null;
 }
 
-export type MayhemState = "active" | "paused";
+export type MayhemState = "active" | "paused" | "completed";
 
 export interface MayhemStatsParams {
   /** Coin address: a Solana mint or an EVM token (0x). */
@@ -4010,6 +4033,7 @@ export interface PositionCallout {
   actingUserId?: null;
   actingUser?: null;
   prediction?: null;
+  pinnedUpdate?: Update;
 }
 
 export interface PositionCoin {
