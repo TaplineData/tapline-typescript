@@ -314,6 +314,7 @@ export interface Callout {
   xUsername: string | null;
   xFollowerCount: number;
   accountKind?: string;
+  prediction?: null;
 }
 
 export interface CalloutAuthor {
@@ -420,8 +421,6 @@ export interface ChainCandlesParams {
   to?: number | null;
   /** Bars ending at `to`. */
   count?: number;
-  /** One pool of the coin. Omit to stitch curve and AMM bars together. */
-  pool?: string | null;
 }
 
 export interface ChainPriceLineParams {
@@ -512,7 +511,7 @@ export interface ClipsById {
   thumbnailUrl: string;
   thumbnailS3Key: string;
   playlistS3Key: string;
-  title?: string;
+  title?: string | null;
   hidden: boolean;
   clipType: string;
   createdAt: string;
@@ -644,6 +643,8 @@ export interface CoinHolderPnlParams {
   mint: string;
 }
 
+export type CoinListSort = "created_timestamp" | "market_cap" | "ath_market_cap" | "last_trade_timestamp";
+
 export interface CoinMayhemState {
   mint: string;
   state: string;
@@ -691,7 +692,7 @@ export interface CoinPosition {
   totalCallouts: number;
   amountHeld: number;
   valueUsd: number | null;
-  pnlUsd: number;
+  pnlUsd: number | null;
   pnlPercentage: number | string | null;
   realizedPnlUsd: number;
   tokenPriceUsd: number | null;
@@ -724,15 +725,6 @@ export interface CoinTimelineParams {
   limit?: number;
   /** `nextCursor` from the previous page; omit for the first page. */
   cursor?: string | null;
-}
-
-export interface CoinTopCalloutsParams {
-  /** Coin address: a Solana mint or an EVM token (0x). */
-  mint: string;
-  /** Maximum callouts to return. */
-  limit?: number;
-  /** Chain of the coin, to pin an EVM token. */
-  chain?: TokenChain | null;
 }
 
 export interface CoinsBatch {
@@ -826,7 +818,7 @@ export interface CoinsParams {
   /** Maximum coins to return. pump.fun serves 70 at most. */
   limit?: number;
   /** Ranking column. */
-  sort?: CoinSort;
+  sort?: CoinListSort;
   /** Sort direction. */
   order?: CoinSortDirection;
   /** Include coins flagged not-safe-for-work. */
@@ -1618,46 +1610,6 @@ export interface GetCoinTimelineResponseItem {
   recipients?: ItemRecipient[];
 }
 
-export interface GetCoinTopCalloutsResponse {
-  callouts: GetCoinTopCalloutsResponseCallout[];
-}
-
-export interface GetCoinTopCalloutsResponseCallout {
-  calloutId: string;
-  userId: string;
-  coinMint: string;
-  marketCap: number;
-  calloutPrice: number;
-  calloutPriceUsd?: number;
-  multiple: number;
-  createdAt: number;
-  maxPriceSol: number;
-  maxPriceUsd?: number;
-  thesis: string;
-  user_uuid: string;
-  likes?: number;
-  hasLiked?: null;
-  hasReposted?: null;
-  repostCount?: number;
-  quoteCount?: number;
-  updates?: unknown[];
-  updateCount?: number;
-  commentCount?: number;
-  replyCount?: number;
-  maxMultiplier?: number;
-  maxMultiplierAt?: string;
-  mediaUrl?: string | null;
-  quotedCalloutId?: null;
-  quotedCallout?: null;
-  chain?: string | null;
-  perp?: null;
-  peakTimestamp?: number;
-  username?: string;
-  profileImage?: string;
-  xUsername?: string | null;
-  isVerified?: boolean;
-}
-
 export interface GetCompetitionEntryHighlightsResponse {
   entryId: string;
   tokens: Token[];
@@ -2252,7 +2204,7 @@ export interface GetPerpTradesResponseTrade {
   quotePriceUsd: string | null;
   valueUsd: string;
   valueNative: string | null;
-  coin: Pool;
+  coin: Pool | null;
   perp?: Perp;
 }
 
@@ -2544,6 +2496,7 @@ export interface GetUserCalloutsResponseCallout {
   tailAthHist4h?: TailHistogram | null;
   tailAthHist24h?: TailHistogram | null;
   author?: CalloutAuthor;
+  prediction?: null;
 }
 
 export interface GetUserCoinCalloutResponse {
@@ -2713,6 +2666,7 @@ export interface GetUserPositionsResponsePosition {
   realizedPnlUsd: number;
   updatedAt: string;
   lastSlotIndexId?: string;
+  tradeCount?: number;
 }
 
 export interface GetUserRepostsResponse {
@@ -3049,6 +3003,7 @@ export interface HoldingCallout {
   viewCount: number;
   quotedCalloutId: null;
   quotedCallout: null;
+  prediction?: null;
 }
 
 export interface HomeFeedLegacyPosition {
@@ -3438,8 +3393,8 @@ export interface Livestream {
   numParticipants: number;
   maxParticipants: number;
   isLive: boolean;
-  thumbnail: string;
-  thumbnailUpdatedAt: number;
+  thumbnail?: string;
+  thumbnailUpdatedAt?: number;
   downrankScore: number;
   title: string;
   mode: string;
@@ -3629,7 +3584,7 @@ export interface MayhemCoinsParams {
   include_nsfw?: boolean | null;
 }
 
-export type MayhemState = "active" | "paused" | "completed";
+export type MayhemState = "active" | "paused";
 
 export interface MayhemStatsParams {
   /** Coin address: a Solana mint or an EVM token (0x). */
@@ -4054,6 +4009,7 @@ export interface PositionCallout {
   quotedCallout: null;
   actingUserId?: null;
   actingUser?: null;
+  prediction?: null;
 }
 
 export interface PositionCoin {
@@ -4240,6 +4196,7 @@ export interface Reply {
   positionAvgEntryMcapUsd: number | null;
   isQuote: boolean;
   viewCount?: number;
+  prediction?: null;
 }
 
 export type ReplyFilter = "ALL" | "EXCLUDE_AUTHOR" | "AUTHOR_ONLY";
@@ -4723,7 +4680,7 @@ export interface SimilarCoinResult {
   quote_mint?: string;
   base_decimals: number;
   quote_decimals?: number;
-  pool_address: string;
+  pool_address?: string;
   chain_id: string;
   multichain_family: number;
   protocol: string;
@@ -5111,15 +5068,15 @@ export interface TrendingCoin {
   mint: string;
   chain?: string;
   initialized?: boolean;
-  name: string;
-  symbol: string;
-  image_uri: string;
+  name?: string;
+  symbol?: string;
+  image_uri?: string;
   metadata_uri?: string;
   twitter?: string;
   bonding_curve?: string;
   associated_bonding_curve?: string;
   creator?: string;
-  created_timestamp: number;
+  created_timestamp?: number;
   complete?: boolean;
   virtual_sol_reserves?: number;
   virtual_token_reserves?: number;
@@ -5128,9 +5085,9 @@ export interface TrendingCoin {
   show_name?: boolean;
   last_trade_timestamp?: number;
   market_cap?: number;
-  nsfw: boolean;
+  nsfw?: boolean;
   inverted?: boolean;
-  is_banned: boolean;
+  is_banned?: boolean;
   pump_swap_pool?: string;
   real_sol_reserves?: number;
   real_token_reserves?: number;
@@ -5153,7 +5110,7 @@ export interface TrendingCoin {
   protocol?: string;
   volume_24h_usd?: number;
   price_change_24h_bps?: number;
-  total_supply_str: string;
+  total_supply_str?: string;
   market_cap_usd?: number;
   virtual_quote_reserves?: number;
   real_quote_reserves?: number;
@@ -5284,8 +5241,6 @@ export interface UserCoinCalloutParams {
   address: string;
   /** Token mint address. */
   mint: string;
-  /** Quote posts of the callout to include. */
-  quotes_limit?: number | null;
 }
 
 export interface UserCreatedCoinsParams {
