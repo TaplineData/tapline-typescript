@@ -265,7 +265,7 @@ export class PumpfunClient {
     return this.base.get<GetAthResponse>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}/ath`, query);
   }
 
-  /** Top callouts on a coin, Solana mint or EVM token. Costs 1 credit. */
+  /** Top callouts on a coin, Solana mint or EVM token, each with the caller's position. Costs 1 credit. */
   async coinTopCallouts(params: CoinTopCalloutsParams): Promise<GetCoinTopCalloutsResponse> {
     const { mint, ...query } = params;
     return this.base.get<GetCoinTopCalloutsResponse>(`/v1/pumpfun/coins/${encodeURIComponent(mint)}/callouts/top`, query);
@@ -605,8 +605,8 @@ export class PumpfunClient {
 
   /** A wallet's callout on one coin; `callout` is `null` when there is none. Costs 1 credit. */
   async userCoinCallout(params: UserCoinCalloutParams): Promise<GetUserCoinCalloutResponse> {
-    const { address, mint, ...query } = params;
-    return this.base.get<GetUserCoinCalloutResponse>(`/v1/pumpfun/users/${encodeURIComponent(address)}/callouts/coin/${encodeURIComponent(mint)}`, query);
+    const { address, mint } = params;
+    return this.base.get<GetUserCoinCalloutResponse>(`/v1/pumpfun/users/${encodeURIComponent(address)}/callouts/coin/${encodeURIComponent(mint)}`);
   }
 
   /** Replies and quote posts a wallet has written, with the thread they belong to. Page with `before_id`, the last reply's id. Costs 1 credit. */
