@@ -2278,6 +2278,49 @@ export interface GetPnlLeaderboardResponse {
   windowStartSec: number;
 }
 
+export interface GetPoolStatsResponse {
+  poolAddress: string;
+  totalQuoteReservesUsd?: number;
+  createdAt: number;
+  fee: number | null;
+  liquidity: string;
+  liquidityToken: string;
+  nonLiquidityToken: string;
+  price: string;
+  priceNonQuoteToken: string;
+  quoteToken: string;
+  highPrice5m: string | null;
+  highPrice1: string | null;
+  highPrice4: string | null;
+  highPrice12: string | null;
+  highPrice24: string | null;
+  lowPrice5m?: string | null;
+  lowPrice1: string | null;
+  lowPrice4: string | null;
+  lowPrice12: string | null;
+  lowPrice24: string | null;
+  priceChange5m: number | null;
+  priceChange1: number | null;
+  priceChange4: number | null;
+  priceChange12: number | null;
+  priceChange24: number | null;
+  volume5m: string;
+  volume1: string;
+  volume4: string;
+  volume12: string;
+  volume24: string;
+  bundlerCount: number | null;
+  bundlerHeldPercentage: number | null;
+  devHeldPercentage: number | null;
+  insiderCount: number | null;
+  insiderHeldPercentage: number | null;
+  sniperCount: number | null;
+  sniperHeldPercentage: number | null;
+  token0: PoolToken;
+  token1: PoolToken;
+  isFallback?: boolean;
+}
+
 export interface GetPortfolioSummaryResponse {
   wallet: string;
   from: number;
@@ -2390,6 +2433,10 @@ export interface GetTokenHolderCountResponse {
   chain: string;
   networkId: number;
   holderCount: number;
+}
+
+export interface GetTokenMetadataBatchResponse {
+  tokens: MultichainToken[];
 }
 
 export interface GetTopTokenMintChainsResponse {
@@ -3720,6 +3767,52 @@ export interface MultiChainBreakdown {
   sei?: Solana;
 }
 
+export interface MultichainToken {
+  address: string;
+  poolAddress: string | null;
+  totalSupply: string | null;
+  circulatingSupply: string | null;
+  chain: string;
+  name: string;
+  symbol: string;
+  decimals: number;
+  imageUri: string | null;
+  highResImageUri: string | null;
+  bannerImageUri: string | null;
+  videoUri: string | null;
+  description: string | null;
+  launchpad: string | null;
+  launchpadProgram: string | null;
+  twitter: string | null;
+  telegram: string | null;
+  discord: string | null;
+  website: string | null;
+  instagram: string | null;
+  facebook: string | null;
+  email: string | null;
+  other: Record<string, string>;
+  creatorAddress: string | null;
+  createTransactionHash: string | null;
+  createdAt: number | null;
+  migrationCompleted: boolean | null;
+  migratedAt: number | null;
+  migratedPoolAddress: string | null;
+  nonMajorPoolSelected: boolean | null;
+  potentialScamReasons: unknown[] | null;
+  isValidated: boolean;
+  operatorBypass: boolean;
+  operatorBlacklist: boolean;
+  operatorWarning: null;
+  isHolderReward?: boolean;
+  assetClass: string | null;
+  issuer: string | null;
+  canonicalStock: boolean | null;
+  underlyingSymbol: string | null;
+  imageBackdrop?: string | null;
+}
+
+export type MultichainTokenChain = "solana" | "base" | "bsc" | "ethereum" | "monad" | "robinhood" | "hyperevm" | "ink" | "arc" | "megaeth" | "xlayer" | "polygon" | "arbitrum" | "avalanche" | "optimism" | "sei";
+
 export type NarrativeSource = "trending" | "movers" | "new";
 
 export interface Nativeasset {
@@ -3956,6 +4049,28 @@ export interface Point {
 export interface Pool {
   chainId: string;
   address: string;
+}
+
+export interface PoolStatsParams {
+  /** Chain the pool trades on. */
+  chain: MultichainTokenChain;
+  /** Pool address: a base58 address on Solana; on an EVM chain a 0x pair address, or a 32-byte 0x pool id for Uniswap v4 pools. `poolAddress` on `/tokens/batch`. */
+  pool: string;
+  /** Token the pool is read for. On Solana pump.fun then answers that token's main pool whatever `pool` says; EVM chains ignore it. */
+  token_address?: string | null;
+}
+
+export interface PoolToken {
+  address: string;
+  name: string;
+  symbol: string;
+  decimals: number;
+  totalSupply: string;
+  circulatingSupply: string;
+  price: string;
+  pooled: string;
+  isScam: null;
+  createdAt: number;
 }
 
 export type PortfolioFilter = "OPEN" | "CLOSED" | "ALL";
@@ -4887,6 +5002,13 @@ export interface TokenMember {
   realizedPnlUsd: number;
   unrealizedPnlUsd: number;
   buySpendUsd: number;
+}
+
+export interface TokenMetadataBatchRequest {
+  /** Token addresses (Solana mints or EVM tokens) on any mix of chains, 1 to 50. EVM addresses come back lowercased; addresses pump.fun cannot resolve are left out. */
+  addresses: string[];
+  /** Look every address up on this chain and leave out those not on it. Omit to let pump.fun pick each address's chain. */
+  chain?: MultichainTokenChain | null;
 }
 
 export interface Tokenpnl {
