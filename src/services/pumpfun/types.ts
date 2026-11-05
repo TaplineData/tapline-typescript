@@ -4014,7 +4014,7 @@ export interface Playback {
 }
 
 export interface PlaylistMapRequest {
-  /** Token mint addresses, at least one. */
+  /** Token mint addresses, 1 to 500. */
   mints: string[];
 }
 
