@@ -54,7 +54,7 @@ export class BirdeyeClient {
     return this.base.get<BirdeyeLeaderboardPage>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/traders/leaderboard`, query);
   }
 
-  /** Returns 20 trending tokens on a chain, or across chains with `all`, with price, liquidity, volume and token metadata. `all` can include chains this API does not serve on other routes (such as `robinhood`); check each item's `network`. Costs 1 credit. */
+  /** Returns 20 trending tokens on a chain, or across chains with `all`, with price, liquidity, volume and token metadata. `all` can include chains this API does not serve on other routes; check each item's `network`. Costs 1 credit. */
   async listTrendingTokens(params: ListTrendingTokensParams): Promise<BirdeyeTrendingTokens> {
     const { chain } = params;
     return this.base.get<BirdeyeTrendingTokens>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/trending`);

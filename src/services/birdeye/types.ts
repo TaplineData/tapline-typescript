@@ -250,7 +250,7 @@ export interface BirdeyeOhlcv {
   t: number[];
 }
 
-export type BirdeyePnlChain = "solana" | "ethereum" | "base" | "bsc";
+export type BirdeyePnlChain = "solana" | "ethereum" | "base" | "bsc" | "arbitrum" | "avalanche" | "optimism" | "polygon" | "robinhood" | "arc" | "mantle" | "monad" | "unichain" | "zksync" | "hyperevm";
 
 export type BirdeyePnlPeriod = "1d" | "7d" | "30d" | "90d";
 
@@ -270,7 +270,7 @@ export interface BirdeyePortfolioToken {
 
 export type BirdeyeSortOrder = "asc" | "desc";
 
-export type BirdeyeTokenChain = "solana" | "ethereum" | "base" | "bsc" | "arbitrum" | "avalanche" | "optimism" | "polygon";
+export type BirdeyeTokenChain = "solana" | "ethereum" | "base" | "bsc" | "arbitrum" | "avalanche" | "optimism" | "polygon" | "robinhood" | "arc" | "mantle" | "megaeth" | "monad" | "unichain" | "linea" | "zksync" | "plasma" | "hyperevm";
 
 export interface BirdeyeTokenHolder {
   address?: string;
@@ -353,13 +353,13 @@ export interface BirdeyeTokenOverview {
   buy1h: number;
   buy1hChangePercent: number;
   buy24h: number;
-  buy24hChangePercent: number;
+  buy24hChangePercent: number | null;
   buy2h: number;
-  buy2hChangePercent: number;
+  buy2hChangePercent: number | null;
   buy30m: number;
-  buy30mChangePercent: number;
+  buy30mChangePercent: number | null;
   buy4h: number;
-  buy4hChangePercent: number;
+  buy4hChangePercent: number | null;
   buy6h?: number;
   buy6hChangePercent?: number;
   buy8h: number;
@@ -372,10 +372,10 @@ export interface BirdeyeTokenOverview {
   buyHistory4h: number;
   buyHistory6h?: number;
   buyHistory8h: number;
-  circulatingSupply?: number;
+  circulatingSupply?: number | null;
   createdAt: string;
   decimals: number;
-  extensions: BirdeyeTokenOverviewExtensions;
+  extensions: BirdeyeTokenOverviewExtensions | null;
   history12hPrice?: number;
   history1hPrice: number;
   history24hPrice: number;
@@ -384,7 +384,7 @@ export interface BirdeyeTokenOverview {
   history4hPrice: number;
   history6hPrice?: number;
   history8hPrice: number;
-  holder: number;
+  holder: number | null;
   lastTradeHumanTime: string;
   lastTradeUnixTime: number;
   liquidity: number;
@@ -401,18 +401,18 @@ export interface BirdeyeTokenOverview {
   priceChange4hPercent: number;
   priceChange6hPercent?: number;
   priceChange8hPercent: number;
-  realMc: number;
+  realMc: number | null;
   securityScore?: string | null;
   sell12h?: number;
   sell12hChangePercent?: number;
   sell1h: number;
-  sell1hChangePercent: number;
+  sell1hChangePercent: number | null;
   sell24h: number;
-  sell24hChangePercent: number;
+  sell24hChangePercent: number | null;
   sell2h: number;
-  sell2hChangePercent: number;
+  sell2hChangePercent: number | null;
   sell30m: number;
-  sell30mChangePercent: number;
+  sell30mChangePercent: number | null;
   sell4h: number;
   sell4hChangePercent: number;
   sell6h?: number;
@@ -434,11 +434,11 @@ export interface BirdeyeTokenOverview {
   trade1h: number;
   trade1hChangePercent: number;
   trade24h: number;
-  trade24hChangePercent: number;
+  trade24hChangePercent: number | null;
   trade2h: number;
-  trade2hChangePercent: number;
+  trade2hChangePercent: number | null;
   trade30m: number;
-  trade30mChangePercent: number;
+  trade30mChangePercent: number | null;
   trade4h: number;
   trade4hChangePercent: number;
   trade6h?: number;
@@ -480,14 +480,14 @@ export interface BirdeyeTokenOverview {
   uniqueViewHistory8h: number;
   uniqueWallet12h?: number;
   uniqueWallet12hChangePercent?: number;
-  uniqueWallet1h: number;
+  uniqueWallet1h: number | null;
   uniqueWallet1hChangePercent: number;
   uniqueWallet24h: number;
-  uniqueWallet24hChangePercent: number;
+  uniqueWallet24hChangePercent: number | null;
   uniqueWallet2h: number;
-  uniqueWallet2hChangePercent: number;
-  uniqueWallet30m: number;
-  uniqueWallet30mChangePercent: number;
+  uniqueWallet2hChangePercent: number | null;
+  uniqueWallet30m: number | null;
+  uniqueWallet30mChangePercent: number | null;
   uniqueWallet4h: number;
   uniqueWallet4hChangePercent: number;
   uniqueWallet6h?: number;
@@ -502,13 +502,13 @@ export interface BirdeyeTokenOverview {
   v1hChangePercent: number;
   v1hUSD: number;
   v24h: number;
-  v24hChangePercent: number;
+  v24hChangePercent: number | null;
   v24hUSD: number;
   v2h: number;
-  v2hChangePercent: number;
+  v2hChangePercent: number | null;
   v2hUSD: number;
   v30m: number;
-  v30mChangePercent: number;
+  v30mChangePercent: number | null;
   v30mUSD: number;
   v4h: number;
   v4hChangePercent: number;
@@ -522,20 +522,20 @@ export interface BirdeyeTokenOverview {
   vBuy12h?: number;
   vBuy12hChangePercent?: number;
   vBuy12hUSD?: number;
-  vBuy1h: number;
+  vBuy1h: number | null;
   vBuy1hChangePercent: number;
-  vBuy1hUSD: number;
+  vBuy1hUSD: number | null;
   vBuy24h: number;
-  vBuy24hChangePercent: number;
+  vBuy24hChangePercent: number | null;
   vBuy24hUSD: number;
   vBuy2h: number;
-  vBuy2hChangePercent: number;
+  vBuy2hChangePercent: number | null;
   vBuy2hUSD: number;
-  vBuy30m: number;
-  vBuy30mChangePercent: number;
-  vBuy30mUSD: number;
+  vBuy30m: number | null;
+  vBuy30mChangePercent: number | null;
+  vBuy30mUSD: number | null;
   vBuy4h: number;
-  vBuy4hChangePercent: number;
+  vBuy4hChangePercent: number | null;
   vBuy4hUSD: number;
   vBuy6h?: number;
   vBuy6hChangePercent?: number;
@@ -547,14 +547,14 @@ export interface BirdeyeTokenOverview {
   vBuyHistory12hUSD?: number;
   vBuyHistory1h: number;
   vBuyHistory1hUSD: number;
-  vBuyHistory24h: number;
-  vBuyHistory24hUSD: number;
-  vBuyHistory2h: number;
-  vBuyHistory2hUSD: number;
-  vBuyHistory30m: number;
-  vBuyHistory30mUSD: number;
-  vBuyHistory4h: number;
-  vBuyHistory4hUSD: number;
+  vBuyHistory24h: number | null;
+  vBuyHistory24hUSD: number | null;
+  vBuyHistory2h: number | null;
+  vBuyHistory2hUSD: number | null;
+  vBuyHistory30m: number | null;
+  vBuyHistory30mUSD: number | null;
+  vBuyHistory4h: number | null;
+  vBuyHistory4hUSD: number | null;
   vBuyHistory6h?: number;
   vBuyHistory6hUSD?: number;
   vBuyHistory8h: number;
@@ -578,21 +578,21 @@ export interface BirdeyeTokenOverview {
   vSell12h?: number;
   vSell12hChangePercent?: number;
   vSell12hUSD?: number;
-  vSell1h: number;
-  vSell1hChangePercent: number;
-  vSell1hUSD: number;
+  vSell1h: number | null;
+  vSell1hChangePercent: number | null;
+  vSell1hUSD: number | null;
   vSell24h: number;
-  vSell24hChangePercent: number;
+  vSell24hChangePercent: number | null;
   vSell24hUSD: number;
-  vSell2h: number;
-  vSell2hChangePercent: number;
-  vSell2hUSD: number;
-  vSell30m: number;
-  vSell30mChangePercent: number;
-  vSell30mUSD: number;
-  vSell4h: number;
+  vSell2h: number | null;
+  vSell2hChangePercent: number | null;
+  vSell2hUSD: number | null;
+  vSell30m: number | null;
+  vSell30mChangePercent: number | null;
+  vSell30mUSD: number | null;
+  vSell4h: number | null;
   vSell4hChangePercent: number;
-  vSell4hUSD: number;
+  vSell4hUSD: number | null;
   vSell6h?: number;
   vSell6hChangePercent?: number;
   vSell6hUSD?: number;
@@ -601,14 +601,14 @@ export interface BirdeyeTokenOverview {
   vSell8hUSD: number;
   vSellHistory12h?: number;
   vSellHistory12hUSD?: number;
-  vSellHistory1h: number;
-  vSellHistory1hUSD: number;
-  vSellHistory24h: number;
-  vSellHistory24hUSD: number;
-  vSellHistory2h: number;
-  vSellHistory2hUSD: number;
-  vSellHistory30m: number;
-  vSellHistory30mUSD: number;
+  vSellHistory1h: number | null;
+  vSellHistory1hUSD: number | null;
+  vSellHistory24h: number | null;
+  vSellHistory24hUSD: number | null;
+  vSellHistory2h: number | null;
+  vSellHistory2hUSD: number | null;
+  vSellHistory30m: number | null;
+  vSellHistory30mUSD: number | null;
   vSellHistory4h: number;
   vSellHistory4hUSD: number;
   vSellHistory6h?: number;
@@ -705,7 +705,7 @@ export interface BirdeyeTokenOverview {
   vBuy30mUSDChangePercent?: number;
   vSell30mUSDChangePercent?: number;
   v30mUSDChangePercent?: number;
-  uniqueWalletHistory30m: number;
+  uniqueWalletHistory30m: number | null;
   vBuy1hUSDChangePercent?: number;
   vSell1hUSDChangePercent?: number;
   v1hUSDChangePercent?: number;
@@ -713,7 +713,7 @@ export interface BirdeyeTokenOverview {
   vBuy2hUSDChangePercent?: number;
   vSell2hUSDChangePercent?: number;
   v2hUSDChangePercent?: number;
-  uniqueWalletHistory2h: number;
+  uniqueWalletHistory2h: number | null;
   vBuy4hUSDChangePercent?: number;
   vSell4hUSDChangePercent?: number;
   v4hUSDChangePercent?: number;
@@ -725,7 +725,7 @@ export interface BirdeyeTokenOverview {
   vBuy24hUSDChangePercent?: number;
   vSell24hUSDChangePercent?: number;
   v24hUSDChangePercent?: number;
-  uniqueWalletHistory24h: number;
+  uniqueWalletHistory24h: number | null;
   activeHours24h?: number;
   history1mPrice?: number;
   priceChange1mPercent?: number;
@@ -744,24 +744,26 @@ export interface BirdeyeTokenOverview {
   liquidityChange24hPercent?: number;
   history8hLiquidity?: number;
   liquidityChange8hPercent?: number;
+  platformId?: string;
 }
 
 export interface BirdeyeTokenOverviewExtensions {
   twitter: string | null;
   website: string | null;
   telegram: string | null;
-  github: string | null;
+  github?: string | null;
   discord: string | null;
   facebook?: string | null;
   instagram?: string | null;
   medium?: string | null;
-  description: string | null;
+  description?: string | null;
   coingeckoId?: string;
-  updateTime: number;
+  updateTime?: number;
   reddit?: string | null;
   coinmarketcapId?: string;
   whitepaper?: string | null;
   bitbucket?: string | null;
+  tiktok?: string | null;
 }
 
 export interface BirdeyeTokenSecurity {
@@ -1057,7 +1059,7 @@ export interface BirdeyeTopTrader {
   netWorth?: number;
   isOnCurve?: boolean;
   unrealizedPnl?: number;
-  unrealizedPnlPercent?: number;
+  unrealizedPnlPercent?: number | string;
   remainVolume?: number;
 }
 
@@ -1121,7 +1123,7 @@ export interface BirdeyeTrade {
   to: BirdeyeTradeTo;
   tokenPrice: number | null;
   mc?: number;
-  network: string;
+  network?: string;
   soldPercentage?: number | null;
   sourceAddress?: string;
   platformAddress?: string;
@@ -1168,7 +1170,7 @@ export interface BirdeyeTradeTo {
 
 export type BirdeyeTraderSort = "total_pnl" | "realized_pnl" | "unrealized_pnl";
 
-export type BirdeyeTrendingChain = "all" | "solana" | "ethereum" | "base" | "bsc" | "arbitrum" | "avalanche" | "optimism" | "polygon";
+export type BirdeyeTrendingChain = "all" | "solana" | "ethereum" | "base" | "bsc" | "arbitrum" | "avalanche" | "optimism" | "polygon" | "robinhood" | "arc" | "mantle" | "megaeth" | "monad" | "unichain" | "linea" | "zksync" | "plasma" | "hyperevm";
 
 export interface BirdeyeTrendingToken {
   token: string;
@@ -1176,7 +1178,7 @@ export interface BirdeyeTrendingToken {
   liquidity: number;
   network: string;
   tokenData: BirdeyeTrendingTokenTokenData;
-  realMc: number;
+  realMc: number | null;
   createdAt?: string;
   tf24h: BirdeyeTrendingTokenTf24h;
   tf1h: BirdeyeTrendingTokenTf1h;
@@ -1531,4 +1533,4 @@ export interface ListWalletTransactionsParams {
   cursor?: string;
 }
 
-export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
+export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error" | "demo_input_not_allowed" | "turnstile_failed" | "turnstile_unavailable";
