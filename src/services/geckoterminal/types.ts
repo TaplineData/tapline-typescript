@@ -912,7 +912,7 @@ export interface PoolsResponse {
   links: LatestPoolsResponseLinks;
 }
 
-export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
+export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error" | "demo_input_not_allowed" | "turnstile_failed" | "turnstile_unavailable";
 
 export interface RangeFilter {
   /** Inclusive lower bound. */

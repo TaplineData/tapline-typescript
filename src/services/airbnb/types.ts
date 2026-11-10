@@ -7,33 +7,33 @@ export type Badge = "superhost" | "guest_favorite" | "top_guest_favorite" | "lux
 export type CancellationPolicy = "flexible" | "moderate" | "firm" | "strict" | "limited";
 
 export interface ErrorDetail {
-  ctx?: Record<string, unknown> | null;
-  input?: unknown | null;
+  type?: string | null;
   loc?: (string | number)[] | null;
   msg?: string | null;
-  type?: string | null;
+  input?: unknown | null;
+  ctx?: Record<string, unknown> | null;
 }
 
 export interface ErrorResponse {
   code: PublicError;
-  details?: ErrorDetail[] | null;
-  domain?: string | null;
   message: string;
   request_id: string;
+  domain?: string | null;
+  details?: ErrorDetail[] | null;
   upgrade_url?: string | null;
 }
 
 export interface GetCalendarRequest {
+  /** Airbnb listing ID */
+  room_id: string;
+  /** Starting month (1-12) */
+  month: number;
+  /** Starting year */
+  year: number;
   /** Number of months to fetch */
   count?: number;
   /** ISO 4217 currency code (default USD). Any valid ISO 4217 code is accepted, but Airbnb only renders prices natively in a subset and silently falls back to USD for the rest, so the response `currency` field is authoritative and may differ from the request. The natively-supported codes are enumerated in the `SupportedCurrency` schema (and machine-readably under this field's `x-supported-currencies`). */
   currency?: string;
-  /** Starting month (1-12) */
-  month: number;
-  /** Airbnb listing ID */
-  room_id: string;
-  /** Starting year */
-  year: number;
 }
 
 export interface GetDetailsRequest {
@@ -42,25 +42,25 @@ export interface GetDetailsRequest {
 }
 
 export interface GetPriceRequest {
-  /** Number of adults */
-  adults?: number;
+  /** Airbnb listing ID */
+  room_id: string;
   /** Check-in date (YYYY-MM-DD) */
   check_in: string;
   /** Check-out date (YYYY-MM-DD) */
   check_out: string;
+  /** Number of adults */
+  adults?: number;
   /** ISO 4217 currency code (default USD). Any valid ISO 4217 code is accepted, but Airbnb only renders prices natively in a subset and silently falls back to USD for the rest, so the response `currency` field is authoritative and may differ from the request. The natively-supported codes are enumerated in the `SupportedCurrency` schema (and machine-readably under this field's `x-supported-currencies`). */
   currency?: string;
-  /** Airbnb listing ID */
-  room_id: string;
 }
 
 export interface GetReviewsRequest {
+  /** Airbnb listing ID */
+  room_id: string;
   /** Number of reviews per page (max 50) */
   limit?: number;
   /** Pagination offset */
   offset?: number;
-  /** Airbnb listing ID */
-  room_id: string;
   /** Sort order (MOST_RECENT, RATING_DESC, RATING_ASC) */
   sort?: ReviewSort;
 }
@@ -77,29 +77,29 @@ export interface ParsedAutocompleteResponse {
 }
 
 export interface ParsedAutocompleteSuggestion {
+  title: string;
+  subtitle: string | null;
   description: string | null;
+  place_id: string | null;
   display_name: string | null;
   latitude: number | null;
   longitude: number | null;
-  place_id: string | null;
-  subtitle: string | null;
-  title: string;
 }
 
 export interface ParsedBreakdownItem {
   nights: number | null;
-  total: Money;
   unit_price: Money;
+  total: Money;
 }
 
 export interface ParsedCalendarDay {
+  date: string | null;
   available: boolean;
+  min_nights: number | null;
+  max_nights: number | null;
   available_for_checkin: boolean;
   available_for_checkout: boolean;
   bookable: boolean | null;
-  date: string | null;
-  max_nights: number | null;
-  min_nights: number | null;
   price: string | null;
 }
 
@@ -108,24 +108,24 @@ export interface ParsedCalendarMetadata {
 }
 
 export interface ParsedCalendarMonth {
-  condition_ranges: ParsedConditionRange[];
-  days: ParsedCalendarDay[];
   month: number | null;
   year: number | null;
+  days: ParsedCalendarDay[];
+  condition_ranges: ParsedConditionRange[];
 }
 
 export interface ParsedCalendarResponse {
-  metadata: ParsedCalendarMetadata;
   months: ParsedCalendarMonth[];
+  metadata: ParsedCalendarMetadata;
 }
 
 export interface ParsedConditionRange {
+  start_date: string | null;
+  end_date: string | null;
+  min_nights: number | null;
+  max_nights: number | null;
   closed_to_arrival: boolean | null;
   closed_to_departure: boolean | null;
-  end_date: string | null;
-  max_nights: number | null;
-  min_nights: number | null;
-  start_date: string | null;
 }
 
 export interface ParsedCoordinates {
@@ -134,8 +134,8 @@ export interface ParsedCoordinates {
 }
 
 export interface ParsedDetailsAmenity {
-  category: string | null;
   name: string | null;
+  category: string | null;
   subtitle: string | null;
 }
 
@@ -145,9 +145,9 @@ export interface ParsedDetailsCalendarInfo {
 
 export interface ParsedDetailsCategoryRating {
   category: string | null;
+  rating: string | null;
   label: string | null;
   percentage: number | null;
-  rating: string | null;
 }
 
 export interface ParsedDetailsHighlight {
@@ -156,187 +156,187 @@ export interface ParsedDetailsHighlight {
 }
 
 export interface ParsedDetailsHost {
+  name: string | null;
+  user_id: string | null;
+  profile_url: string | null;
+  profile_picture_url: string | null;
+  is_superhost: boolean | null;
+  is_verified: boolean | null;
   about: string | null;
-  cohosts: ParsedDetailsPerson[];
+  years_hosting: number | null;
+  months_hosting: number | null;
+  rating_count: number | null;
+  rating_average: number | null;
   host_highlights: string[];
   host_response_rate: number | null;
   host_response_time: HostResponseTime | null;
-  is_superhost: boolean | null;
-  is_verified: boolean | null;
-  months_hosting: number | null;
-  name: string | null;
-  profile_picture_url: string | null;
-  profile_url: string | null;
-  rating_average: number | null;
-  rating_count: number | null;
-  user_id: string | null;
-  years_hosting: number | null;
+  cohosts: ParsedDetailsPerson[];
 }
 
 export interface ParsedDetailsImage {
-  aspect_ratio: number | null;
-  caption: string | null;
-  height: number | null;
-  id: string | null;
-  is_professional: boolean | null;
-  orientation: string | null;
   url: string;
+  caption: string | null;
+  id: string | null;
+  aspect_ratio: number | null;
+  orientation: string | null;
+  is_professional: boolean | null;
   width: number | null;
+  height: number | null;
 }
 
 export interface ParsedDetailsLocation {
-  address: string | null;
   lat: number | null;
   lng: number | null;
+  address: string | null;
 }
 
 export interface ParsedDetailsPerson {
   name: string | null;
-  profile_picture_url: string | null;
-  profile_url: string | null;
   user_id: string | null;
+  profile_url: string | null;
+  profile_picture_url: string | null;
 }
 
 export interface ParsedDetailsPolicies {
-  cancellation_policy: CancellationPolicy | null;
-  check_in_end: string | null;
-  check_in_time: string | null;
-  check_out_time: string | null;
   house_rules_subtitle: string | null;
+  check_in_time: string | null;
+  check_in_end: string | null;
+  check_out_time: string | null;
   safety_and_property: string[];
+  cancellation_policy: CancellationPolicy | null;
 }
 
 export interface ParsedDetailsRatingSummary {
-  category_ratings: ParsedDetailsCategoryRating[];
-  is_guest_favorite: boolean | null;
-  overall_count: number | null;
   overall_rating: number | null;
+  overall_count: number | null;
+  is_guest_favorite: boolean | null;
+  category_ratings: ParsedDetailsCategoryRating[];
 }
 
 export interface ParsedDetailsResponse {
-  amenities?: ParsedDetailsAmenity[];
-  bath_type?: string | null;
-  baths?: number | null;
-  bedrooms?: number | null;
-  beds?: number | null;
-  calendar_info?: ParsedDetailsCalendarInfo | null;
-  description?: string | null;
+  room_id?: string | null;
+  listing_url?: string | null;
+  share_url?: string | null;
+  title?: string | null;
   description_html?: string | null;
+  description?: string | null;
+  property_type?: string | null;
+  room_type?: RoomType | null;
+  main_image_url?: string | null;
+  picture_count?: number | null;
   guest_favorite_description?: string | null;
-  highlights?: ParsedDetailsHighlight[];
-  host?: ParsedDetailsHost | null;
-  images?: ParsedDetailsImage[];
+  person_capacity?: number | null;
+  beds?: number | null;
+  bedrooms?: number | null;
+  baths?: number | null;
+  bath_type?: string | null;
+  is_new_listing?: boolean | null;
   is_guest_favorite?: boolean | null;
   is_hotel?: boolean | null;
   is_luxe?: boolean | null;
-  is_new_listing?: boolean | null;
-  listing_url?: string | null;
+  images?: ParsedDetailsImage[];
+  highlights?: ParsedDetailsHighlight[];
+  amenities?: ParsedDetailsAmenity[];
   location?: ParsedDetailsLocation | null;
-  main_image_url?: string | null;
-  person_capacity?: number | null;
-  picture_count?: number | null;
-  policies?: ParsedDetailsPolicies | null;
-  property_type?: string | null;
+  host?: ParsedDetailsHost | null;
   rating_summary?: ParsedDetailsRatingSummary | null;
-  room_id?: string | null;
-  room_type?: RoomType | null;
-  share_url?: string | null;
-  title?: string | null;
+  policies?: ParsedDetailsPolicies | null;
+  calendar_info?: ParsedDetailsCalendarInfo | null;
 }
 
 export interface ParsedListing {
-  badges: Badge[];
-  baths: number | null;
-  bedrooms: number | null;
-  beds: number | null;
-  coordinates: ParsedCoordinates;
-  early_bird_discount: boolean;
-  free_cancellation: boolean;
-  free_installment: boolean;
-  hotel_credit: boolean;
-  images: string[];
-  is_new_listing: boolean;
-  length_of_stay_discount: boolean;
-  monthly_discount: boolean;
+  room_id: string | null;
+  url: string | null;
   name: string | null;
-  pay_zero_upfront: boolean;
+  title: string | null;
+  coordinates: ParsedCoordinates;
   price: ParsedListingPrice;
   rating: number | null;
   review_count: number | null;
-  room_id: string | null;
-  title: string | null;
-  url: string | null;
+  images: string[];
+  badges: Badge[];
+  beds: number | null;
+  bedrooms: number | null;
+  baths: number | null;
+  free_cancellation: boolean;
+  free_installment: boolean;
+  pay_zero_upfront: boolean;
+  is_new_listing: boolean;
+  length_of_stay_discount: boolean;
   weekly_discount: boolean;
+  monthly_discount: boolean;
+  early_bird_discount: boolean;
+  hotel_credit: boolean;
 }
 
 export interface ParsedListingPrice {
   amount: number | null;
-  currency: string | null;
   formatted: string | null;
-  nights: number | null;
+  currency: string | null;
   original: Money | null;
+  nights: number | null;
 }
 
 export interface ParsedPagination {
   next_cursor: string | null;
-  page_cursors: string[];
   previous_cursor: string | null;
+  page_cursors: string[];
 }
 
 export interface ParsedPriceResponse {
   available?: boolean | null;
-  breakdown?: ParsedBreakdownItem[];
-  can_instant_book?: boolean | null;
-  currency?: string | null;
-  display_price?: Money | null;
-  guest_disclaimer?: string | null;
-  max_guest_capacity?: number | null;
-  max_pet_count?: number | null;
-  message?: string | null;
-  pet_disclaimer?: string | null;
-  pets_allowed?: boolean | null;
-  price_mode?: ParsedPriceResponsePriceMode;
-  rate_details?: ParsedRateDetails | null;
-  requested_stay_total?: Money | null;
   unavailability_message?: string;
+  currency?: string | null;
+  price_mode?: ParsedPriceResponsePriceMode;
+  display_price?: Money | null;
+  rate_details?: ParsedRateDetails | null;
+  breakdown?: ParsedBreakdownItem[];
+  requested_stay_total?: Money | null;
+  message?: string | null;
+  max_guest_capacity?: number | null;
+  can_instant_book?: boolean | null;
+  pets_allowed?: boolean | null;
+  max_pet_count?: number | null;
+  pet_disclaimer?: string | null;
+  guest_disclaimer?: string | null;
 }
 
 export type ParsedPriceResponsePriceMode = "nightly_rate" | "monthly_rate" | "unknown";
 
 export interface ParsedRateDetails {
-  base_price: Money | null;
+  unit: ParsedRateDetailsUnit;
   count: number | null;
+  rate: Money | null;
+  base_price: Money | null;
   discounts: ParsedRateDiscount[];
   final_price: Money | null;
-  rate: Money | null;
-  unit: ParsedRateDetailsUnit;
 }
 
 export type ParsedRateDetailsUnit = "night" | "month";
 
 export interface ParsedRateDiscount {
-  amount: Money;
-  label: string | null;
   type: ParsedRateDiscountType;
+  label: string | null;
+  amount: Money;
 }
 
 export type ParsedRateDiscountType = "weekly_stay_discount" | "monthly_stay_discount" | "long_stay_discount" | "early_booking_discount" | "special_offer" | "airbnb_monthly_stay_savings" | "unknown";
 
 export interface ParsedReviewItem {
-  comments: string | null;
-  created_at: string | null;
   id: string | null;
-  language: string | null;
-  localized_date: string | null;
+  comments: string | null;
   rating: number | null;
-  response: string | null;
-  review_photo_urls: string[];
-  reviewer_id: string | null;
-  reviewer_is_superhost: boolean | null;
-  reviewer_location: string | null;
+  language: string | null;
+  created_at: string | null;
+  localized_date: string | null;
   reviewer_name: string | null;
+  reviewer_id: string | null;
   reviewer_picture_url: string | null;
+  reviewer_location: string | null;
   reviewer_tenure: string | null;
+  reviewer_is_superhost: boolean | null;
+  review_photo_urls: string[];
+  response: string | null;
 }
 
 export interface ParsedReviewsResponse {
@@ -349,66 +349,66 @@ export interface ParsedSearchResponse {
   pagination: ParsedPagination;
 }
 
-export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
+export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error" | "demo_input_not_allowed" | "turnstile_failed" | "turnstile_unavailable";
 
 export type ReviewSort = "MOST_RECENT" | "RATING_DESC" | "RATING_ASC";
 
 export type RoomType = "entire_home" | "private_room" | "shared_room" | "hotel_room" | "studio";
 
 export interface SearchLocationsParams {
-  /** ISO 639-1 language code (2-letter, e.g. 'en', 'pt', 'fr') */
-  language?: string;
   /** Free-text location query (e.g. 'London', 'Rio de Janeiro') */
   query: string;
+  /** ISO 639-1 language code (2-letter, e.g. 'en', 'pt', 'fr') */
+  language?: string;
 }
 
 export interface SearchRequest {
-  /** Number of adults */
-  adults?: number | null;
-  /** Amenities to filter by, as readable slugs (e.g. "wifi", "kitchen", "tv", "self_check_in"). Unknown values are rejected with 422; the enum lists every accepted slug. Translated to Airbnb's numeric filter IDs internally. */
-  amenities?: AmenityFilter[] | null;
-  /** Check-in date (YYYY-MM-DD) */
-  check_in?: string | null;
-  /** Check-out date (YYYY-MM-DD) */
-  check_out?: string | null;
-  /** Number of children */
-  children?: number | null;
-  /** ISO 4217 currency code (default USD). Any valid ISO 4217 code is accepted, but Airbnb only renders prices natively in a subset and silently falls back to USD for the rest, so the response `currency` field is authoritative and may differ from the request. The natively-supported codes are enumerated in the `SupportedCurrency` schema (and machine-readably under this field's `x-supported-currencies`). */
-  currency?: string;
-  /** Pagination cursor from previous response */
-  cursor?: string;
-  /** Filter for free cancellation listings */
-  free_cancellation?: boolean;
-  /** Number of infants */
-  infants?: number | null;
   /** Center latitude for radius search */
   lat?: number | null;
   /** Center longitude for radius search */
   lon?: number | null;
-  /** Minimum number of bathrooms */
-  min_bathrooms?: number | null;
-  /** Minimum number of bedrooms */
-  min_bedrooms?: number | null;
-  /** Minimum number of beds */
-  min_beds?: number | null;
+  /** Search radius in km around (lat, lon). Recommended way to set the area — the bounding box and map zoom are derived automatically. */
+  radius_km?: number | null;
   /** Northeast latitude of bounding box */
   ne_lat?: number | null;
   /** Northeast longitude of bounding box */
   ne_long?: number | null;
-  /** Google Place ID for the search area, from the `GET /v1/airbnb/locations` endpoint (`suggestions[].place_id`). */
-  place_id?: string | null;
-  /** Maximum price filter */
-  price_max?: number | null;
-  /** Minimum price filter */
-  price_min?: number | null;
-  /** Text location query (e.g. 'London, United Kingdom') */
-  query?: string | null;
-  /** Search radius in km around (lat, lon). Recommended way to set the area — the bounding box and map zoom are derived automatically. */
-  radius_km?: number | null;
   /** Southwest latitude of bounding box */
   sw_lat?: number | null;
   /** Southwest longitude of bounding box */
   sw_long?: number | null;
   /** Map zoom level, 1–20 (1 ≈ whole world, ~12 ≈ city, ~16 ≈ street, 20 ≈ building), same scale as Google Maps. Advanced: only needed with an explicit bounding box; auto-derived from `radius_km` otherwise. */
   zoom?: number | null;
+  /** Google Place ID for the search area, from the `GET /v1/airbnb/locations` endpoint (`suggestions[].place_id`). */
+  place_id?: string | null;
+  /** Text location query (e.g. 'London, United Kingdom') */
+  query?: string | null;
+  /** Check-in date (YYYY-MM-DD) */
+  check_in?: string | null;
+  /** Check-out date (YYYY-MM-DD) */
+  check_out?: string | null;
+  /** ISO 4217 currency code (default USD). Any valid ISO 4217 code is accepted, but Airbnb only renders prices natively in a subset and silently falls back to USD for the rest, so the response `currency` field is authoritative and may differ from the request. The natively-supported codes are enumerated in the `SupportedCurrency` schema (and machine-readably under this field's `x-supported-currencies`). */
+  currency?: string;
+  /** Pagination cursor from previous response */
+  cursor?: string;
+  /** Minimum price filter */
+  price_min?: number | null;
+  /** Maximum price filter */
+  price_max?: number | null;
+  /** Amenities to filter by, as readable slugs (e.g. "wifi", "kitchen", "tv", "self_check_in"). Unknown values are rejected with 422; the enum lists every accepted slug. Translated to Airbnb's numeric filter IDs internally. */
+  amenities?: AmenityFilter[] | null;
+  /** Filter for free cancellation listings */
+  free_cancellation?: boolean;
+  /** Number of adults */
+  adults?: number | null;
+  /** Number of children */
+  children?: number | null;
+  /** Number of infants */
+  infants?: number | null;
+  /** Minimum number of bedrooms */
+  min_bedrooms?: number | null;
+  /** Minimum number of beds */
+  min_beds?: number | null;
+  /** Minimum number of bathrooms */
+  min_bathrooms?: number | null;
 }

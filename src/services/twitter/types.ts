@@ -52,12 +52,12 @@ export interface GetUserTweetsParams {
   trim?: boolean | null;
 }
 
-export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error";
+export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extraction_failed" | "upstream_blocked" | "upstream_unavailable" | "upstream_response_invalid" | "invalid_url_scheme" | "invalid_url_host" | "unauthenticated" | "forbidden" | "resource_forbidden" | "not_found" | "endpoint_retired" | "rate_limited" | "invalid_request" | "invalid_cursor" | "insufficient_credits" | "internal_error" | "demo_input_not_allowed" | "turnstile_failed" | "turnstile_unavailable";
 
 export interface TwitterArticle {
-  id: string;
-  title: string;
-  preview_text: string;
+  id?: string;
+  title?: string;
+  preview_text?: string;
   text?: string;
   created_at?: string;
   first_published_at?: string;
@@ -69,18 +69,18 @@ export interface TwitterArticle {
 }
 
 export interface TwitterArticleBlock {
-  text: string;
+  text?: string;
   urls?: TwitterArticleUrl[];
   entity_ranges?: TwitterArticleEntityRange[];
-  type: string;
+  type?: string;
   style_ranges?: TwitterArticleStyleRange[];
 }
 
 export interface TwitterArticleEntity {
   media_ids?: string[];
-  key: string;
+  key?: string;
   url?: string;
-  type: string;
+  type?: string;
 }
 
 export interface TwitterArticleEntityRange {
@@ -91,9 +91,9 @@ export interface TwitterArticleEntityRange {
 
 export interface TwitterArticleImage {
   id?: string;
-  url: string;
-  width: number;
-  height: number;
+  url?: string;
+  width?: number;
+  height?: number;
 }
 
 export interface TwitterArticleStyleRange {
@@ -103,9 +103,9 @@ export interface TwitterArticleStyleRange {
 }
 
 export interface TwitterArticleUrl {
-  text: string;
-  from_index: number;
-  to_index: number;
+  text?: string;
+  from_index?: number;
+  to_index?: number;
 }
 
 export interface TwitterAssetAmount {
@@ -115,8 +115,8 @@ export interface TwitterAssetAmount {
 }
 
 export interface TwitterAssetPricePoint {
-  price: TwitterAssetAmount;
-  priced_at: string;
+  price?: TwitterAssetAmount;
+  priced_at?: string;
 }
 
 export interface TwitterBioEntities {
@@ -125,14 +125,14 @@ export interface TwitterBioEntities {
 }
 
 export interface TwitterBioMention {
-  handle: string;
-  indices: number[];
-  is_unmentioned: boolean;
+  handle?: string;
+  indices?: number[];
+  is_unmentioned?: boolean;
 }
 
 export interface TwitterBirthDate {
-  visibility: string;
-  year_visibility: string;
+  visibility?: string;
+  year_visibility?: string;
   day: number | null;
   month: number | null;
   year: number | null;
@@ -143,9 +143,9 @@ export interface TwitterCard {
   creator_user_id?: string;
   title?: string;
   description?: string;
-  url: string;
+  url?: string;
   vanity_url?: string;
-  type: string;
+  type?: string;
   domain?: string;
   images?: TwitterCardImage[];
 }
@@ -153,9 +153,9 @@ export interface TwitterCard {
 export interface TwitterCardImage {
   name: string;
   alt_text?: string;
-  url: string;
-  width: number;
-  height: number;
+  url?: string;
+  width?: number;
+  height?: number;
 }
 
 export interface TwitterCashtagAttachment {
@@ -173,42 +173,42 @@ export interface TwitterCashtagAttachment {
 }
 
 export interface TwitterCashtagEntity {
-  text: string;
-  indices: number[];
+  text?: string;
+  indices?: number[];
   ticker?: string;
 }
 
 export interface TwitterCommunityImage {
-  url: string;
-  width: number;
-  height: number;
+  url?: string;
+  width?: number;
+  height?: number;
 }
 
 export interface TwitterCommunityReference {
   id: string;
-  name: string;
+  name?: string;
   url: string;
 }
 
 export interface TwitterCommunityResponse {
   id: string;
-  name: string;
+  name?: string;
   description?: string;
-  member_count: number;
-  is_nsfw: boolean;
-  created_at: string;
+  member_count?: number;
+  is_nsfw?: boolean;
+  created_at?: string;
   creator?: TwitterUnavailableUser | TwitterUser;
-  members: (TwitterUnavailableUser | TwitterUser)[];
-  rules: TwitterCommunityRule[];
+  members?: (TwitterUnavailableUser | TwitterUser)[];
+  rules?: TwitterCommunityRule[];
   topic?: string;
-  join_policy: string;
-  default_banner: TwitterCommunityImage;
+  join_policy?: string;
+  default_banner?: TwitterCommunityImage;
   custom_banner?: TwitterCommunityImage;
 }
 
 export interface TwitterCommunityRule {
-  id: string;
-  name: string;
+  id?: string;
+  name?: string;
   description?: string;
 }
 
@@ -225,7 +225,7 @@ export interface TwitterEntities {
 }
 
 export interface TwitterMedia {
-  id: string;
+  id?: string;
   source_post_id?: string;
   alt_text?: string;
   expanded_url?: string;
@@ -234,20 +234,20 @@ export interface TwitterMedia {
   allow_download?: boolean;
   tags?: TwitterMediaTag[];
   source_user?: TwitterUser;
-  type: string;
-  indices: number[];
+  type?: string;
+  indices?: number[];
   width?: number;
   height?: number;
   monetizable?: boolean;
   duration_millis?: number;
-  media_url: string;
+  media_url?: string;
   variants?: TwitterVideoVariant[];
 }
 
 export interface TwitterMediaTag {
   user_id?: string;
-  name: string;
-  type: string;
+  name?: string;
+  type?: string;
 }
 
 export interface TwitterPost {
@@ -255,19 +255,19 @@ export interface TwitterPost {
   conversation_id?: string;
   note_id?: string;
   edit_history_ids?: string[];
-  text: string;
+  text?: string;
   preview_text?: string;
-  language: string;
+  language?: string;
   url?: string;
-  favorite_count: number;
-  quote_count: number;
-  reply_count: number;
-  retweet_count: number;
+  favorite_count?: number;
+  quote_count?: number;
+  reply_count?: number;
+  retweet_count?: number;
   bookmark_count?: number;
   view_count?: number;
   possibly_sensitive?: boolean;
   created_at: string;
-  author: TwitterUser;
+  author?: TwitterUser;
   entities: TwitterEntities;
   quoted_post?: TwitterPostReference;
   reply_to?: TwitterReplyReference;
@@ -276,7 +276,7 @@ export interface TwitterPost {
   cashtag_attachments?: TwitterCashtagAttachment[];
   community?: TwitterCommunityReference;
   preview_entities?: TwitterEntities;
-  display_text_range: number[];
+  display_text_range?: number[];
   is_pinned?: boolean;
   is_reply: boolean;
   is_quote: boolean;
@@ -324,9 +324,9 @@ export interface TwitterProfileResponse {
 }
 
 export interface TwitterProfileUrl {
-  display_url: string;
-  expanded_url: string;
-  url: string;
+  display_url?: string;
+  expanded_url?: string;
+  url?: string;
 }
 
 export interface TwitterReplyReference {
@@ -338,14 +338,14 @@ export interface TwitterReplyReference {
 }
 
 export interface TwitterSmartTag {
-  text: string;
-  indices: number[];
+  text?: string;
+  indices?: number[];
   ticker?: string;
 }
 
 export interface TwitterTextEntity {
-  text: string;
-  indices: number[];
+  text?: string;
+  indices?: number[];
 }
 
 export interface TwitterTweetResponse {
@@ -353,19 +353,19 @@ export interface TwitterTweetResponse {
   conversation_id?: string;
   note_id?: string;
   edit_history_ids?: string[];
-  text: string;
+  text?: string;
   preview_text?: string;
-  language: string;
+  language?: string;
   url?: string;
-  favorite_count: number;
-  quote_count: number;
-  reply_count: number;
-  retweet_count: number;
+  favorite_count?: number;
+  quote_count?: number;
+  reply_count?: number;
+  retweet_count?: number;
   bookmark_count?: number;
   view_count?: number;
   possibly_sensitive?: boolean;
   created_at: string;
-  author: TwitterUser;
+  author?: TwitterUser;
   entities: TwitterEntities;
   quoted_post?: TwitterPostReference;
   reply_to?: TwitterReplyReference;
@@ -374,7 +374,7 @@ export interface TwitterTweetResponse {
   cashtag_attachments?: TwitterCashtagAttachment[];
   community?: TwitterCommunityReference;
   preview_entities?: TwitterEntities;
-  display_text_range: number[];
+  display_text_range?: number[];
   is_pinned?: boolean;
   is_reply: boolean;
   is_quote: boolean;
@@ -389,10 +389,10 @@ export interface TwitterUnavailableUser {
 }
 
 export interface TwitterUrlEntity {
-  display_url: string;
-  expanded_url: string;
-  url: string;
-  indices: number[];
+  display_url?: string;
+  expanded_url?: string;
+  url?: string;
+  indices?: number[];
 }
 
 export interface TwitterUser {
@@ -429,7 +429,7 @@ export interface TwitterUser {
 }
 
 export interface TwitterUserLabel {
-  description: string;
+  description?: string;
   long_description?: string;
   url?: string;
   long_description_mentions?: TwitterUserLabelMention[];
@@ -438,14 +438,14 @@ export interface TwitterUserLabel {
 }
 
 export interface TwitterUserLabelMention {
-  handle: string;
-  indices: number[];
+  handle?: string;
+  indices?: number[];
 }
 
 export interface TwitterUserMention {
   id?: string;
-  handle: string;
-  indices: number[];
+  handle?: string;
+  indices?: number[];
 }
 
 export interface TwitterUserTweetsResponse {
@@ -453,7 +453,7 @@ export interface TwitterUserTweetsResponse {
 }
 
 export interface TwitterVideoVariant {
-  url: string;
-  content_type: string;
+  url?: string;
+  content_type?: string;
   bitrate?: number;
 }

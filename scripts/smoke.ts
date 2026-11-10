@@ -24,6 +24,7 @@ import { run as runFacebook } from './smoke-facebook.js';
 import { run as runFacebookAdLibrary } from './smoke-facebook_ad_library.js';
 import { run as runFacebookMarketplace } from './smoke-facebook_marketplace.js';
 import { run as runGoogleMaps } from './smoke-google_maps.js';
+import { run as runAccount } from './smoke-account.js';
 
 const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'airbnb': runAirbnb,
@@ -49,6 +50,7 @@ const RUNNERS: Record<string, (client: TaplineClient) => Promise<number>> = {
   'facebook_ad_library': runFacebookAdLibrary,
   'facebook_marketplace': runFacebookMarketplace,
   'google_maps': runGoogleMaps,
+  'account': runAccount,
 };
 
 const services = process.argv.slice(2);
