@@ -62,7 +62,7 @@ export interface GetPostCommentsParams {
 export interface GetPostCountParams {
   /** Instagram handle, with or without a leading @. */
   handle: string;
-  /** Ignored. Tapline always returns the exact count. */
+  /** Ignored. `is_estimated` in the response marks a rounded count. */
   allow_estimated?: boolean | null;
 }
 

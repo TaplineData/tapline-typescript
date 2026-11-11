@@ -31,7 +31,7 @@ export class InstagramClient {
     return this.base.get<InstagramProfileResponse>('/v1/instagram/profile', { ...params });
   }
 
-  /** Returns the exact post count for a profile. Costs 1 credit. */
+  /** Returns the post count for a profile. `is_estimated` is true when the profile shows only a rounded count, such as 32K. Costs 1 credit. */
   async getPostCount(params: GetPostCountParams): Promise<InstagramPostCountResponse> {
     return this.base.get<InstagramPostCountResponse>('/v1/instagram/profile/post-count', { ...params });
   }
