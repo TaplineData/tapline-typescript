@@ -857,9 +857,9 @@ export interface Collectible {
   imageUrl: string;
   grade: string;
   setName: string | null;
-  markUsd: number;
-  markSource: string;
-  markAsOf: string;
+  markUsd: number | null;
+  markSource: string | null;
+  markAsOf: string | null;
   insuredValueUsd: number | null;
   insuredAsOf: string | null;
   buybackValueUsd: number | null;
@@ -2047,7 +2047,7 @@ export interface GetMintPositionsResponsePosition {
   xUsername: string | null;
   accountKind?: string;
   amountHeld: number;
-  pnlUsd: number;
+  pnlUsd: number | null;
   pnlPercentage: number | null;
   realizedPnlUsd: number;
   costBasisAmount: number;
@@ -2546,12 +2546,15 @@ export interface GetUserCalloutsResponseCallout {
   replyCount: number;
   maxMultiplier: number;
   maxMultiplierAt: string | null;
-  viewCount: number;
+  viewCount?: number;
   mediaUrl: string | null;
   quotedCalloutId: null;
   quotedCallout: null;
   chain?: string | null;
   perp?: null;
+  prediction?: null;
+  assetClass?: string;
+  collectible?: Collectible;
   tailBuyers?: number | null;
   tailCohort1h?: number | null;
   tailCohort4h?: number | null;
@@ -2568,8 +2571,12 @@ export interface GetUserCalloutsResponseCallout {
   tailAthHist1h?: TailHistogram | null;
   tailAthHist4h?: TailHistogram | null;
   tailAthHist24h?: TailHistogram | null;
+  rewardPools?: string[];
+  tailVolumeUsd?: number | null;
+  paidV1Usd?: number;
+  paidV2Usd?: number;
+  v2Boost?: number | null;
   author?: CalloutAuthor;
-  prediction?: null;
 }
 
 export interface GetUserCoinCalloutResponse {
@@ -4109,7 +4116,7 @@ export interface Position {
   amountHeld: number;
   valueUsd: number | null;
   pnlUsd: number;
-  pnlPercentage: number;
+  pnlPercentage: number | null;
   isExited: boolean;
   costBasisAmount: number;
   costBasisUsd: number | null;
@@ -4118,6 +4125,7 @@ export interface Position {
   realizedPnlUsd: number;
   avgEntryMcapUsd: number | null;
   perp?: null;
+  prediction?: null;
   receiptBasisUsd?: number | null;
 }
 
@@ -4156,6 +4164,7 @@ export interface PositionCoin {
   name: string | null;
   symbol: string | null;
   imageUri: string | null;
+  nsfw?: boolean;
   marketCapUsd: number | null;
   totalSupply: number | null;
   protocol?: string | null;
@@ -4185,7 +4194,7 @@ export interface ProfileIdsRequest {
 }
 
 export interface ProfilePin {
-  position: null;
+  position: GetMintPositionsResponsePosition | null;
   pinnedUpdate: null;
 }
 
@@ -4237,6 +4246,7 @@ export interface Quote {
   positionRealizedPnlUsd: number;
   positionAvgEntryMcapUsd: number | null;
   isQuote: boolean;
+  prediction?: null;
 }
 
 export interface QuoteCallout {
@@ -4307,12 +4317,12 @@ export interface Replayintro {
 export interface Reply {
   id: string;
   content: string;
-  createdAt: string;
+  createdAt: string | null;
   likeCount: number;
   userId: string;
-  walletAddress: string;
-  userName: string;
-  profileImage: string;
+  walletAddress: string | null;
+  userName: string | null;
+  profileImage: string | null;
   accountKind?: string;
   mediaUrl: string | null;
   parentMessageId: string | null;
@@ -4393,7 +4403,7 @@ export interface RepostCallout {
   coinName: string;
   coinImage: string;
   symbol: string;
-  marketCap: number;
+  marketCap: number | null;
   position: Position;
 }
 

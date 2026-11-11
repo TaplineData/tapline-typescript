@@ -1037,7 +1037,7 @@ export interface ListCommentRepliesParams {
 }
 
 export interface ListCommentsParams {
-  /** `feedback_id` of a post, photo, video or reel. */
+  /** `feedback_id` of a post, photo, video or reel, as the posts routes return it. */
   feedback_id: string;
   /** Most relevant, newest first, or all comments. */
   sort?: CommentSort;
