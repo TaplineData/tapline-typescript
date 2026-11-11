@@ -78,7 +78,7 @@ export interface Attachment {
   playback?: Playback;
 }
 
-export type BalanceChain = "all" | "solana" | "ethereum" | "base" | "bsc" | "robinhood" | "hype" | "ink" | "arc";
+export type BalanceChain = "all" | "solana" | "ethereum" | "base" | "bsc" | "robinhood" | "hype" | "ink" | "arc" | "megaeth" | "xlayer" | "monad" | "polygon" | "arbitrum" | "elysium" | "avalanche" | "optimism" | "sei" | "tron";
 
 export interface BanStatusParams {
   /** Wallet address (Solana or EVM) or pump.fun user id (UUID). */
@@ -614,7 +614,7 @@ export interface CoinBoardParams {
   limit?: number;
   /** Rows to skip. */
   offset?: number;
-  /** Keep only coins on these chains, at most 8: pump.fun refuses all nine at once. Repeat the parameter for several; omit it for every chain. */
+  /** Keep only coins on these chains, at most 8: pump.fun refuses more at once. Repeat the parameter for several; omit it for every chain. */
   chains?: TokenChain[] | null;
 }
 
@@ -694,6 +694,7 @@ export interface CoinPosition {
   userName: string;
   profileImage: string;
   walletAddress: string;
+  profileWallet?: string;
   isVerified: boolean;
   verifiedBadgeVisible?: boolean;
   xUsername: string | null;
@@ -1179,7 +1180,7 @@ export interface FeeSharingTotalsParams {
   cursor?: string | null;
 }
 
-export type FeedChain = "all" | "solana" | "ethereum" | "base" | "bsc" | "robinhood" | "hyperevm" | "ink" | "arc";
+export type FeedChain = "all" | "solana" | "ethereum" | "base" | "bsc" | "robinhood" | "hyperevm" | "ink" | "arc" | "megaeth" | "xlayer" | "monad" | "polygon" | "arbitrum" | "elysium" | "avalanche" | "optimism" | "sei" | "tron" | "unichain" | "ton" | "near" | "starknet";
 
 export interface Finishe {
   periodType: string;
@@ -1837,6 +1838,7 @@ export interface GetHomeFeedResponseCoin {
   platform?: string | null;
   program?: string | null;
   chain: string | null;
+  chain_id?: string;
   narrative: null;
   position: CoinPosition;
   recommendationId: string;
@@ -2148,6 +2150,7 @@ export interface GetNewCalloutsFeedResponseCoin {
   platform: string | null;
   program: string | null;
   chain: string | null;
+  chain_id?: string;
   narrative: null;
   position: CoinPosition;
   followedHolders: null;
@@ -3103,7 +3106,7 @@ export interface HomeFeedLegacyPosition {
 export interface HomeFeedParams {
   /** Number of feed entries to return. */
   page_size?: number;
-  /** Restrict the feed to one chain. pump.fun's feed does not cover Monad. */
+  /** Restrict the feed to one chain. */
   chain?: FeedChain;
   /** Page number, from 0. */
   page?: number | null;
@@ -3539,7 +3542,7 @@ export interface MarketActivityParams {
   chain?: TokenChain | null;
 }
 
-export type MarketChain = "solana" | "ethereum" | "bsc" | "base" | "monad" | "robinhood" | "hyperevm" | "ink" | "arc" | "hypercore";
+export type MarketChain = "solana" | "ethereum" | "bsc" | "base" | "monad" | "robinhood" | "hyperevm" | "ink" | "arc" | "megaeth" | "xlayer" | "polygon" | "arbitrum" | "elysium" | "avalanche" | "optimism" | "sei" | "tron" | "unichain" | "hypercore";
 
 export interface Mayhem {
   state: string;
@@ -3745,7 +3748,7 @@ export interface MoversBoardParams {
   /** Maximum board entries to return. pump.fun serves at most 150. */
   limit?: number;
   /** Keep only coins on these chains. Repeat the parameter for several. */
-  chains?: NonMonadChain[] | null;
+  chains?: TokenChain[] | null;
 }
 
 export interface MultiChainBreakdown {
@@ -3811,7 +3814,7 @@ export interface MultichainToken {
   imageBackdrop?: string | null;
 }
 
-export type MultichainTokenChain = "solana" | "base" | "bsc" | "ethereum" | "monad" | "robinhood" | "hyperevm" | "ink" | "arc" | "megaeth" | "xlayer" | "polygon" | "arbitrum" | "avalanche" | "optimism" | "sei";
+export type MultichainTokenChain = "solana" | "base" | "bsc" | "ethereum" | "monad" | "robinhood" | "hyperevm" | "ink" | "arc" | "megaeth" | "xlayer" | "polygon" | "arbitrum" | "avalanche" | "optimism" | "sei" | "tron" | "elysium" | "unichain";
 
 export type NarrativeSource = "trending" | "movers" | "new";
 
@@ -3824,7 +3827,7 @@ export interface Nativeasset {
 export interface NewCalloutsCountParams {
   /** `headToken` from `/home-feed/new`, kept until you reload the feed. */
   since: string;
-  /** Restrict the feed to one chain. pump.fun's feed does not cover Monad. */
+  /** Restrict the feed to one chain. */
   chain?: FeedChain;
   /** Keep positions whose net USD cost basis is at least this. */
   min_cost_basis_usd?: number | null;
@@ -3847,7 +3850,7 @@ export interface NewCalloutsFeedParams {
   page_token?: string | null;
   /** Author updates to include per callout. */
   updates_limit?: number | null;
-  /** Restrict the feed to one chain. pump.fun's feed does not cover Monad. */
+  /** Restrict the feed to one chain. */
   chain?: FeedChain;
   /** Keep positions whose net USD cost basis is at least this. */
   min_cost_basis_usd?: number | null;
@@ -3862,8 +3865,6 @@ export interface NewCalloutsFeedParams {
   /** Keep coins whose current market cap in USD is at most this. */
   max_market_cap_usd?: number | null;
 }
-
-export type NonMonadChain = "solana" | "ethereum" | "bsc" | "base" | "robinhood" | "hyperevm" | "ink" | "arc";
 
 export interface OnboardingSuggestionsParams {
   /** Maximum traders to return. */
@@ -4241,6 +4242,7 @@ export interface Quote {
 export interface QuoteCallout {
   accountKind?: string;
   callout: PositionCallout;
+  chain?: string;
   coinImage: string | null;
   coinMint: string;
   coinName: string | null;
@@ -4982,7 +4984,7 @@ export interface Token {
   imageUri: string | null;
 }
 
-export type TokenChain = "solana" | "ethereum" | "bsc" | "base" | "monad" | "robinhood" | "hyperevm" | "ink" | "arc";
+export type TokenChain = "solana" | "ethereum" | "bsc" | "base" | "monad" | "robinhood" | "hyperevm" | "ink" | "arc" | "megaeth" | "xlayer" | "polygon" | "arbitrum" | "elysium" | "avalanche" | "optimism" | "sei" | "tron" | "unichain";
 
 export interface TokenHolderCountParams {
   /** Coin address: a Solana mint or an EVM token (0x). */
@@ -5207,7 +5209,7 @@ export interface TrendingBoardParams {
   /** Maximum board entries to return. pump.fun serves at most 150. */
   limit?: number;
   /** Keep only coins on these chains. Repeat the parameter for several. */
-  chains?: NonMonadChain[] | null;
+  chains?: TokenChain[] | null;
 }
 
 export interface TrendingCoin {
@@ -5427,8 +5429,8 @@ export interface UserPortfolioParams {
   filter_spam?: boolean | null;
   /** Return only the spam group. Cannot be combined with `filter_spam`. */
   spam_only?: boolean | null;
-  /** Only positions on this chain. pump.fun keeps no Monad portfolio. */
-  chain?: NonMonadChain | null;
+  /** Only positions on this chain. */
+  chain?: TokenChain | null;
 }
 
 export interface UserPositionsParams {
@@ -5460,8 +5462,8 @@ export interface UserTradesParams {
   address: string;
   /** Only trades in this coin (Solana mint or EVM token). */
   mint?: string | null;
-  /** Only trades on this chain. pump.fun serves no Monad trades here. */
-  chain?: NonMonadChain | null;
+  /** Only trades on this chain. */
+  chain?: TokenChain | null;
   /** `nextCursor` from the previous page; omit for the first page. */
   cursor?: string | null;
   /** Maximum trades to return. */
@@ -5703,3 +5705,6 @@ export interface Winner {
   claimSignature?: string;
   claimAmountAtomic?: string;
 }
+
+/** @deprecated Use {@link TokenChain}. */
+export type NonMonadChain = TokenChain;

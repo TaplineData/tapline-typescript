@@ -115,7 +115,7 @@ export class GmgnClient {
     return this.base.get<GetSimilarCoinsResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/similar-coins`, query);
   }
 
-  /** Smart-money profile for a wallet: labels, socials and aggregate performance. This data does not cover arbitrum, arc, robinhood, stable or xlayer; use /wallet-common-stat for those. Costs 2 credits. */
+  /** Smart-money profile for a wallet: labels, socials and aggregate performance. This data does not cover arbitrum, arc, avalanche, elysium, robinhood, stable or xlayer; use /wallet-common-stat for those. Costs 2 credits. */
   async smartMoneyWalletInfo(params: SmartMoneyWalletInfoParams): Promise<GetSmartMoneyWalletInfoResponse> {
     const { chain, wallet_address } = params;
     return this.base.get<GetSmartMoneyWalletInfoResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/smart-money-wallet/${encodeURIComponent(wallet_address)}`);
@@ -349,7 +349,7 @@ export class GmgnClient {
     return this.base.get<GetWalletCommonStatResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/wallet-common-stat/${encodeURIComponent(wallet_address)}`);
   }
 
-  /** Full wallet P&L analytics: realized and unrealized profit, win rate, holding periods and risk flags. This data does not cover arbitrum, arc, robinhood, stable or xlayer; use /wallet-stat for those. Costs 2 credits. */
+  /** Full wallet P&L analytics: realized and unrealized profit, win rate, holding periods and risk flags. This data does not cover arbitrum, arc, avalanche, elysium, robinhood, stable or xlayer; use /wallet-stat for those. Costs 2 credits. */
   async walletPnl(params: WalletPnlParams): Promise<GetSmartMoneyWalletResponse> {
     const { chain, wallet_address, ...query } = params;
     return this.base.get<GetSmartMoneyWalletResponse>(`/v1/gmgn/${encodeURIComponent(chain)}/wallet-pnl/${encodeURIComponent(wallet_address)}`, query);

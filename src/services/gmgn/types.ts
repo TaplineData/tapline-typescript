@@ -185,7 +185,7 @@ export interface BluechipTokenLinks {
   fracaster: unknown | null;
 }
 
-export type Chain = "sol" | "eth" | "bsc" | "base" | "tron" | "monad" | "megaeth" | "hyperevm" | "robinhood" | "arbitrum" | "arc" | "stable" | "xlayer";
+export type Chain = "sol" | "eth" | "bsc" | "base" | "tron" | "monad" | "megaeth" | "hyperevm" | "robinhood" | "arbitrum" | "arc" | "stable" | "xlayer" | "avalanche" | "elysium";
 
 export interface DevCreatedToken {
   token_address: string;
