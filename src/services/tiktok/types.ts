@@ -599,6 +599,7 @@ export interface TikTokSongVideosResponse {
   has_more: boolean;
 }
 
+/** A video's engagement and analytics: play (view), like (digg), comment, share, save (collect) and repost counts. */
 export interface TikTokStatistics {
   comment_count?: number | string;
   digg_count?: number | string;
@@ -669,6 +670,7 @@ export interface TikTokTrendingFeedResponse {
   videos: TikTokVideo[];
 }
 
+/** A TikTok account: nickname, bio (signature), bio link (bio_url), contact emails from the bio (signature_emails), verification, avatars, and follower, following, like and video counts. */
 export interface TikTokUser {
   uid: string | null;
   unique_id: string | null;
@@ -734,6 +736,7 @@ export interface TikTokUserSearchResponse {
   has_more: boolean;
 }
 
+/** A TikTok video: description text, statistics, media files, music, hashtags, and its author's account with follower counts. */
 export interface TikTokVideo {
   aweme_id: string | null;
   group_id?: string | null;
@@ -791,6 +794,7 @@ export interface TikTokVideo {
   media?: TikTokVideoMedia;
 }
 
+/** A video's files: duration, size, covers, playback variants with their format, bitrate and size, download URL, and captions. */
 export interface TikTokVideoMedia {
   original_language?: string;
   is_muted?: boolean;

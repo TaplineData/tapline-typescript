@@ -24,7 +24,7 @@ export class YoutubeClient {
     return this.base.get<PlaylistResponse>(`/v1/youtube/playlist/${encodeURIComponent(playlist_id)}`, query);
   }
 
-  /** Search for matching videos, channels, and playlists. Costs 3 credits. */
+  /** Search for matching videos, channels, and playlists: about 20 per page. Costs 3 credits. */
   async search(params: SearchParams): Promise<SearchResponse> {
     return this.base.get<SearchResponse>('/v1/youtube/search', { ...params });
   }

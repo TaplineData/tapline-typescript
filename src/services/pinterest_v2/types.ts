@@ -85,6 +85,7 @@ export interface PinterestV2BoardResponse {
   cursor: string | null;
 }
 
+/** A board: id, name, description, link, pin, follower, section and collaborator counts, privacy, created and order-modified dates, owner, collaborators, related ideas, cover pin and cover and preview images. */
 export interface PinterestV2BoardSummary {
   id?: string;
   node_id?: string;
@@ -176,6 +177,7 @@ export interface PinterestV2MediaVariant {
   captions?: Record<string, string>;
 }
 
+/** Engagement: saves, repins, shares, comments, reactions and reactions by type, and tried-it counts. */
 export interface PinterestV2Metrics {
   aggregated_pin_id?: string;
   aggregated_pin_node_id?: string;
@@ -198,6 +200,7 @@ export interface PinterestV2MusicCredit {
   thumbnail_url?: string;
 }
 
+/** One pin: id, title, description and alt text, link and domain, engagement (metrics), creation time, pinner, creator, origin pinner, board, rich pin data, hashtags, annotations, images with sizes and colour, video and idea pin pages. */
 export interface PinterestV2Pin {
   id?: string;
   original_pin_id?: string;
@@ -354,6 +357,15 @@ export interface PinterestV2ProductStatus {
   shopping_flags?: number[];
 }
 
+/** A block Pinterest shows above a profile's boards. `type` is Pinterest's story type: `all_pins` is the profile's latest pins, with `url` the page that lists them all. Pinterest gives a story a new `id` on every call. */
+export interface PinterestV2ProfileStory {
+  id?: string;
+  title?: string;
+  url?: string;
+  pins?: PinterestV2StoryPin[];
+  type?: string;
+}
+
 export interface PinterestV2PromotionData {
   campaign_id?: string;
   promotion_id?: string;
@@ -440,9 +452,19 @@ export interface PinterestV2SearchMetadata {
 
 export interface PinterestV2SearchResponse {
   pins: PinterestV2Pin[];
+  stories?: PinterestV2SearchStory[];
   metadata?: PinterestV2SearchMetadata;
   guides?: PinterestV2SearchGuide[];
   cursor: string | null;
+}
+
+/** A block Pinterest puts between search results. `type` is Pinterest's story type: `shop_tab_upsell` holds product pins and `featured_boards` boards. `pin_ids` name the block's pins, which `pins` also lists. */
+export interface PinterestV2SearchStory {
+  id?: string;
+  pin_ids?: string[];
+  title?: string;
+  boards?: PinterestV2BoardSummary[];
+  type?: string;
 }
 
 export interface PinterestV2Story {
@@ -498,6 +520,14 @@ export interface PinterestV2StoryPage {
   images?: PinterestV2Image[];
 }
 
+/** A pin inside a story. Pinterest gives these pins `e1_` ids that it does not resolve for logged-out visitors, so they have no link. */
+export interface PinterestV2StoryPin {
+  id?: string;
+  node_id?: string;
+  description?: string;
+  image_url?: string;
+}
+
 export interface PinterestV2StoryTextStyle {
   color?: string;
   highlight_color?: string;
@@ -515,6 +545,7 @@ export interface PinterestV2TextEntity {
   end?: number;
 }
 
+/** Other texts Pinterest keeps for the pin. `grid_title` (the title on the grid card) is always listed; the others only when they differ from `title` and `description`. */
 export interface PinterestV2TextVariants {
   grid_title?: string;
   unified_title?: string;
@@ -549,6 +580,7 @@ export interface PinterestV2TriedItScore {
   score?: number;
 }
 
+/** A Pinterest account: id, username, name, profile link, follower count, website and avatar images. */
 export interface PinterestV2User {
   id?: string;
   username?: string;
@@ -573,6 +605,7 @@ export interface PinterestV2User {
 
 export interface PinterestV2UserBoardsResponse {
   boards: PinterestV2BoardSummary[];
+  stories: PinterestV2ProfileStory[];
   cursor: string | null;
 }
 

@@ -56,12 +56,29 @@ export interface LinkedinCompanyEmployee {
 }
 
 export interface LinkedinCompanyLocation {
+  street: string | null;
   city: string | null;
   state: string | null;
+  postalCode: string | null;
+  /** ISO 3166-1 alpha-2 code. */
+  country: string | null;
+}
+
+export interface LinkedinCompanyOffice {
+  /** LinkedIn marks this office as the primary location. */
+  isHeadquarters: boolean;
+  street: string | null;
+  streetLine2: string | null;
+  city: string | null;
+  state: string | null;
+  postalCode: string | null;
+  /** ISO 3166-1 alpha-2 code. */
   country: string | null;
 }
 
 export interface LinkedinCompanyPost {
+  /** The share or ugcPost URN of the post's content. */
+  contentUrn: string | null;
   url: string;
   id: string;
   datePublished: string;
@@ -69,7 +86,16 @@ export interface LinkedinCompanyPost {
   likeCount: number | null;
   commentCount: number | null;
   author: LinkedinPostAuthor;
+  /** Members and pages tagged in the text. */
+  mentions: LinkedinPostMention[];
+  /** The post this one quotes, when it reshares one with its own text. */
+  resharedPost: LinkedinResharedPost | null;
+  linkPreview: LinkedinPostLinkPreview | null;
   isRepost: boolean;
+  /** The page that reposted it, when the card is a plain repost. */
+  repostedBy: LinkedinPostReposter | null;
+  images: string[];
+  video: LinkedinPostVideo | null;
 }
 
 export interface LinkedinCompanyPostsResponse {
@@ -87,20 +113,31 @@ export interface LinkedinCompanyResponse {
   employeeCount: number | null;
   followers: number | null;
   website: string | null;
+  /** LinkedIn's job search for the page's open jobs. */
+  jobsUrl: string | null;
   logo: string | null;
   coverImage: string | null;
+  /** The page's tagline. */
   slogan: string | null;
   industry: string | null;
   size: string | null;
   founded: number | null;
   headquarters: string | null;
+  /** Every office on the page's Locations list. */
+  locations: LinkedinCompanyOffice[];
   type: string | null;
+  pageType: LinkedinCompanyResponsePagetype;
+  /** The page's name in its URL, such as `shopify`. */
+  universalName: string;
   specialties: string[];
   similarPages: LinkedinRelatedPage[];
   affiliatedPages: LinkedinRelatedPage[];
+  /** The members LinkedIn features as working there. */
   employees: LinkedinCompanyEmployee[];
   posts: LinkedinCompanyPost[];
 }
+
+export type LinkedinCompanyResponsePagetype = "company" | "school" | "showcase";
 
 export interface LinkedinCursorPagination {
   next_cursor: string | null;
@@ -115,6 +152,7 @@ export interface LinkedinJobCard {
   location: string | null;
   postedDate: string | null;
   postedText: string | null;
+  /** The card's insight line, such as `Actively Hiring` or `Be an early applicant`. */
   benefits: string | null;
 }
 
@@ -130,6 +168,7 @@ export interface LinkedinJobResponse {
   title: string;
   company: LinkedinJobCompany;
   location: string | null;
+  /** The posting age, such as `2 weeks ago`. */
   postedText: string | null;
   applicants: string | null;
   salary: string | null;
@@ -139,7 +178,11 @@ export interface LinkedinJobResponse {
   employmentType: string | null;
   industries: string | null;
   easyApply: boolean | null;
+  /** `closed` when LinkedIn shows `No longer accepting applications`. */
+  jobState: LinkedinJobResponseJobstate;
 }
+
+export type LinkedinJobResponseJobstate = "open" | "closed";
 
 export type LinkedinJobsSearchCompletion = "exhausted" | "depth_limit";
 
@@ -169,12 +212,47 @@ export interface LinkedinPostAuthor {
   name: string | null;
   url: string | null;
   followers: number | null;
+  image: string | null;
 }
 
 export interface LinkedinPostComment {
+  /** The comment's numeric id, from `urn:li:comment:(<post urn>,<id>)`. */
+  id: string | null;
   author: string | null;
   text: string;
+  /** The commenter's member or company page. */
   linkedinUrl: string | null;
+  /** LinkedIn's link to the comment: the post, this comment first. */
+  url: string | null;
+  /** Reactions of every type on the comment. */
+  likeCount: number | null;
+  /** When the comment was posted, read from its id. */
+  datePublished: string | null;
+  /** Whether the post's author wrote the comment. */
+  isByPostAuthor: boolean | null;
+  /** Members and pages tagged in the comment. */
+  mentions: LinkedinPostMention[];
+  /** The commenter's headline; LinkedIn shows guests few of them. */
+  authorHeadline: string | null;
+  authorImage: string | null;
+}
+
+export interface LinkedinPostLinkPreview {
+  title: string | null;
+  /** The linked site or the article's byline. */
+  subtitle: string | null;
+  url: string;
+}
+
+export interface LinkedinPostMention {
+  name: string;
+  /** The mentioned member, company, school or showcase page. */
+  url: string;
+}
+
+export interface LinkedinPostReposter {
+  name: string;
+  url: string | null;
 }
 
 export interface LinkedinPostResponse {
@@ -188,6 +266,11 @@ export interface LinkedinPostResponse {
   datePublished: string | null;
   description: string | null;
   author: LinkedinPostAuthor;
+  /** Members and pages tagged in the text. */
+  mentions: LinkedinPostMention[];
+  /** The post this one quotes, when it reshares one with its own text. */
+  resharedPost: LinkedinResharedPost | null;
+  linkPreview: LinkedinPostLinkPreview | null;
   comments: LinkedinPostComment[];
   moreArticles: LinkedinMoreArticle[];
   images: string[];
@@ -206,13 +289,30 @@ export interface LinkedinPostVideo {
 }
 
 export interface LinkedinProfileActivity {
+  /** The post's numeric id, from its link. */
+  id: string | null;
   title: string | null;
   activityType: string | null;
   link: string;
+  likeCount: number | null;
+  commentCount: number | null;
+  /** When the post was published, read from its id. */
+  datePublished: string | null;
+  /** Who wrote the post: someone else when the member reposted or reacted to it. */
+  author: LinkedinPostAuthor;
+  /** Members and pages tagged in the text. */
+  mentions: LinkedinPostMention[];
+  /** The post this one quotes, when it reshares one with its own text. */
+  resharedPost: LinkedinResharedPost | null;
+  linkPreview: LinkedinPostLinkPreview | null;
+  /** The member who reposted it, when the card is a plain repost. */
+  repostedBy: LinkedinPostReposter | null;
   image: string | null;
 }
 
 export interface LinkedinProfileArticle {
+  /** The article's numeric id, from `urn:li:linkedInArticle:<id>`. */
+  id: string | null;
   headline: string;
   link: string;
   author: string | null;
@@ -220,6 +320,28 @@ export interface LinkedinProfileArticle {
   image: string | null;
   articleBody: string | null;
   likeCount: number | null;
+}
+
+export interface LinkedinProfileCertification {
+  name: string;
+  /** The credential's own page. */
+  url: string | null;
+  /** The issue date as LinkedIn prints it, such as `May 2021`. */
+  date: string | null;
+  issuer: string | null;
+}
+
+export interface LinkedinProfileHonor {
+  name: string;
+  description: string | null;
+  /** The award date as LinkedIn prints it, such as `Aug 2015`. */
+  date: string | null;
+  issuer: string | null;
+}
+
+export interface LinkedinProfileLanguage {
+  name: string;
+  proficiency: string | null;
 }
 
 export interface LinkedinProfileOrganization {
@@ -259,15 +381,25 @@ export interface LinkedinProfileRecommendation {
 }
 
 export interface LinkedinProfileResponse {
+  /** LinkedIn's numeric member id, from `urn:li:member:<id>`. */
+  memberId: string | null;
   url: string;
   publicIdentifier: string;
   name: string;
   headline: string | null;
+  /** The first name LinkedIn uses for the member, such as `Bill`. */
+  firstName: string | null;
+  /** The rest of `name` after `firstName`. */
+  lastName: string | null;
   image: string | null;
   location: string | null;
   followers: number | null;
   connections: string | null;
+  /** How many people recommended the member; guests see the first two in `recommendations`. */
+  recommendationCount: number | null;
   about: string | null;
+  /** Profile badges LinkedIn shows guests, such as `Creator` and `Top Voice`. */
+  badges: string[];
   recentPosts: LinkedinProfileActivity[];
   experience: LinkedinProfileOrganization[];
   articles: LinkedinProfileArticle[];
@@ -278,6 +410,11 @@ export interface LinkedinProfileResponse {
   recommendations: LinkedinProfileRecommendation[];
   similarProfiles: LinkedinSimilarProfile[];
   websites: LinkedinProfileWebsite[];
+  languages: LinkedinProfileLanguage[];
+  certifications: LinkedinProfileCertification[];
+  /** The Honors & Awards section. */
+  honors: LinkedinProfileHonor[];
+  coverImage: string | null;
 }
 
 export interface LinkedinProfileWebsite {
@@ -293,10 +430,18 @@ export interface LinkedinRelatedPage {
   image: string | null;
 }
 
+export interface LinkedinResharedPost {
+  id: string | null;
+  text: string | null;
+  url: string | null;
+  author: LinkedinPostAuthor;
+}
+
 export interface LinkedinSimilarProfile {
   link: string;
   name: string;
   subtitle: string | null;
+  location: string | null;
   image: string | null;
 }
 

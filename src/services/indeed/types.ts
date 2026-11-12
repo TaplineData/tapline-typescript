@@ -42,14 +42,7 @@ export interface GetSalariesParams {
   company_key?: string | null;
 }
 
-/**
- * Indeed Apply metadata. Token-derived fields are null when the token does not decode.
- *
- * `ats_job_id` is the job's id in the employer's applicant system. `required_resume_fields` and
- * `optional_resume_fields` list the résumé sections the application requires or offers, comma-separated
- * (`phone,education,skills`). `scopes` appears only when Indeed sends it and names supported clients such as
- * `desktop` and `mobile`. `locale` is the language or locale tag a few tokens carry (`en`, `fr`, `en_US`).
- */
+/** Application requirements and employer hiring-system details from Indeed. */
 export interface IndeedApply {
   ats_job_id: string | null;
   advertiser_number: string | null;
@@ -79,8 +72,10 @@ export interface IndeedAttributeCount {
   count: number;
 }
 
+/** `start_date` is the day the CEO took office (`2012-10-01`). */
 export interface IndeedCeo {
   name: string | null;
+  start_date: string | null;
   approval: IndeedCeoApproval | null;
   photo_url: string | null;
 }
@@ -108,7 +103,7 @@ export interface IndeedCodeLabel {
   label: string | null;
 }
 
-/** `description` is the short blurb and `about` the long text of the company page. `industry` is Indeed's single industry label and `sectors` its sector list; either may be empty alone. `headquarters` lists the places Indeed gives as head office. `reported_pay` is for the requested country. */
+/** An Indeed company profile with its description, industry, locations, and reported pay. */
 export interface IndeedCompany {
   key: string;
   name: string | null;
@@ -123,10 +118,13 @@ export interface IndeedCompany {
   ratings: IndeedCompanyRatings;
   happiness: IndeedCompanyHappiness;
   similar_companies: IndeedCompanySummary[];
+  parent_company: IndeedParentCompany | null;
   industry: string | null;
+  industry_label: string | null;
   sectors: string[];
   size: IndeedCodeLabel;
   revenue: IndeedCodeLabel;
+  founded_year: number | null;
   headquarters: string[];
   profile_sections: IndeedProfileSection[];
   ceo: IndeedCeo;
@@ -169,17 +167,26 @@ export interface IndeedCompanyHappiness {
   trust: IndeedHappinessScore | null;
 }
 
+/** The company's square logo, page header image and wide logo. */
 export interface IndeedCompanyImages {
   logo_url: string | null;
   header_url: string | null;
   rectangular_logo_url: string | null;
 }
 
+/**
+ * The company's website as Indeed holds it (for some companies a careers page) and its own Facebook, X (`twitter`), Instagram, LinkedIn and YouTube pages.
+ *
+ * `custom_links` are the links the company added to its Indeed page, under the names it gave them; they fill the social pages Indeed's own fields leave empty.
+ */
 export interface IndeedCompanyLinks {
   website: string | null;
+  custom_links: IndeedCustomLink[];
   facebook: string | null;
   twitter: string | null;
   instagram: string | null;
+  linkedin: string | null;
+  youtube: string | null;
 }
 
 export interface IndeedCompanyRatings {
@@ -204,18 +211,32 @@ export interface IndeedCompanySuggestion {
   square_logo_64: string | null;
 }
 
+/** Indeed's autocomplete matches the start of a company's Indeed name. `companies` lists names equal to the query first, then names that start with its words, then names that hold all its words, each group in Indeed's order. */
 export interface IndeedCompanySuggestions {
   companies: IndeedCompanySuggestion[];
 }
 
-/** `page_path` is the company's path on every Indeed country site; `page_url` puts it on the site of the request or the job. */
+/**
+ * `page_path` is the company's path on every Indeed country site; `page_url` puts it on the site of the request or the job.
+ *
+ * Directory entries and a profile's `similar_companies` also carry the profile facts Indeed sends with them: `description`, `links` (website and social pages), `industry` (Indeed's code) and `industry_label`, `sectors`, `size` (employee band), `revenue`, `founded_year` and `headquarters`. Other summaries leave them out.
+ */
 export interface IndeedCompanySummary {
   key: string;
   name: string | null;
+  description?: string | null;
   page_url: string | null;
   page_path: string | null;
+  links?: IndeedCompanyLinks;
   rating: IndeedRating | null;
   is_claimed: boolean | null;
+  industry?: string | null;
+  industry_label?: string | null;
+  sectors?: string[];
+  size?: IndeedCodeLabel;
+  revenue?: IndeedCodeLabel;
+  founded_year?: number | null;
+  headquarters?: string[];
   logo_url: string | null;
 }
 
@@ -234,6 +255,11 @@ export interface IndeedCursorPagination {
   next_cursor: string | null;
   previous_cursor: string | null;
   completion: IndeedCursorCompletion | null;
+}
+
+export interface IndeedCustomLink {
+  name: string | null;
+  url: string;
 }
 
 export type IndeedDistanceUnit = "miles" | "kilometers";
@@ -256,16 +282,7 @@ export interface IndeedHappinessScore {
   count: number | null;
 }
 
-/**
- * `title` is as posted, `standard_title` Indeed's standard title and `normalized_title` the lower-case form the search facets use (it drops suffixes such as `(m/w/d)`).
- *
- * `normalized_category` appears only when Indeed sends its job-category code.
- * `employer_reference` is the employer's requisition id; `company_name_as_posted` stays set when the job has no
- * Indeed company page (`company` null). `published_at` is the employer's posting time, often a date at midnight US
- * Central; `posted_on_indeed_at` is when Indeed received it, which `posted_within_days` filters on.
- * `work_schedule` and `detailed_salary` are the recruiter's free text. `applicants` comes only from
- * `/v1/indeed/jobs/{job_key}`; search results send it null.
- */
+/** An Indeed job listing with company, location, pay, schedule, and application details. */
 export interface IndeedJob {
   key: string;
   title: string | null;
@@ -330,7 +347,11 @@ export interface IndeedJobAttributes {
   qualifications: IndeedAttribute[];
 }
 
-/** The hiring company with the profile facts the job answer carries; `/v1/indeed/companies/{company_key}` has the full profile. */
+/**
+ * The hiring company with the profile facts the job answer carries; `/v1/indeed/companies/{company_key}` has the full profile.
+ *
+ * `industry` is Indeed's industry code as it sends it (`Iv1_RETAIL`, at times several joined by commas) and `industry_label` its readable form (`Retail`); Indeed leaves both empty for most companies.
+ */
 export interface IndeedJobCompany {
   key: string;
   name: string | null;
@@ -342,6 +363,7 @@ export interface IndeedJobCompany {
   parent_company: IndeedParentCompany | null;
   is_claimed: boolean | null;
   industry: string | null;
+  industry_label: string | null;
   size: IndeedCodeLabel;
   revenue: IndeedCodeLabel;
   headquarters: string[];
@@ -412,6 +434,7 @@ export interface IndeedJobSearchPage {
   pagination: IndeedCursorPagination;
 }
 
+/** `job` is the full job record, as `/v1/indeed/jobs/{job_key}` returns it less `applicants`. */
 export interface IndeedJobSearchResult {
   snippet: string | null;
   job: IndeedJob;

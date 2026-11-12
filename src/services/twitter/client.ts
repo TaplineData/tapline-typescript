@@ -26,7 +26,7 @@ export class TwitterClient {
     return this.base.get<TwitterTweetResponse>('/v1/twitter/tweet', { ...params });
   }
 
-  /** Returns an account's pinned post and newest original posts with text, engagement, media, links, and quoted-post data. The response contains about five posts and no cursor. Protected accounts return no posts. Costs 1 credit. */
+  /** Returns the pinned post and up to five recent original posts from an account. Protected accounts return no posts, and there are no additional pages. Costs 1 credit. */
   async getUserTweets(params: GetUserTweetsParams): Promise<TwitterUserTweetsResponse> {
     return this.base.get<TwitterUserTweetsResponse>('/v1/twitter/user-tweets', { ...params });
   }

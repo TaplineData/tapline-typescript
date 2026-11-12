@@ -319,6 +319,7 @@ export interface InstagramMediaImage {
 
 export type InstagramMediaType = "image" | "video";
 
+/** A post's engagement and analytics: like, comment, play and view counts. */
 export interface InstagramMetrics {
   like_count?: number | null;
   comment_count?: number | null;
@@ -350,6 +351,7 @@ export interface InstagramPopularSearchResponse {
   pagination: InstagramPagination;
 }
 
+/** An Instagram post: caption text, like, comment and play counts, its images and videos, and its author. */
 export interface InstagramPost {
   id: string;
   shortcode: string;
@@ -402,6 +404,7 @@ export interface InstagramPostResponse {
 
 export type InstagramPostType = "image" | "video" | "carousel";
 
+/** An Instagram account: bio, bio links, follower, following and post counts, verification, category, business contact (public_email, public_phone_number, biography_emails), address and profile pictures. */
 export interface InstagramProfile {
   id: string;
   handle: string;
@@ -444,6 +447,8 @@ export interface InstagramProfile {
   is_joined_recently?: boolean | null;
   has_channel?: boolean | null;
   has_longform_media?: boolean | null;
+  is_threads_badge_shown?: boolean | null;
+  is_account_transparency_shown?: boolean | null;
   profile_images?: InstagramImage[];
   recent_longform_videos?: InstagramPost[] | null;
 }
@@ -540,23 +545,29 @@ export interface InstagramTopic {
   name: string;
 }
 
+/** An Instagram account in brief: handle, name, verification, privacy and profile picture. A post's owner also carries its bio, follower and post counts and account type. */
 export interface InstagramUser {
   id: string;
   handle?: string | null;
   facebook_id?: string | null;
   messaging_facebook_id?: string | null;
   name?: string | null;
+  biography?: string | null;
   subscriber_count?: number | null;
+  follower_count?: number | null;
+  post_count?: number | null;
   is_verified?: boolean | null;
   is_private?: boolean | null;
   is_embeds_disabled?: boolean | null;
   is_unpublished?: boolean | null;
   badges?: unknown[] | null;
+  account_type?: number | null;
   profile_image_url?: string | null;
   profile_image_id?: string | null;
   profile_images?: InstagramImage[];
 }
 
+/** A page of an account's posts, with the author's profile and follower counts in `profile`. */
 export interface InstagramUserPostsResponse {
   profile: InstagramProfile;
   posts: InstagramPost[];

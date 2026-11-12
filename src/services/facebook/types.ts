@@ -44,6 +44,7 @@ export interface FacebookAiDisclosure {
   transparency_type: FacebookCode;
 }
 
+/** A post attachment: a photo or video (media), album items, or a link card with its title, link (url, external_url) and image. */
 export interface FacebookAttachment {
   title: string | null;
   subtitle: string | null;
@@ -218,6 +219,7 @@ export interface FacebookDashStream {
   quality_label: string | null;
 }
 
+/** Engagement counts: reactions with reactions by type, comments, shares, video views and plays. */
 export interface FacebookEngagement {
   reaction_count: number | null;
   reaction_count_text: string | null;
@@ -689,6 +691,7 @@ export interface FacebookPlace {
   is_user_specified: boolean | null;
 }
 
+/** One post: its id and link, text, creation time, author and owner page, attachments (photos, videos, link cards), top comments and engagement. */
 export interface FacebookPost {
   id: string | null;
   story_id: string | null;
@@ -957,6 +960,7 @@ export interface FacebookVideoSearchReel {
   thumbnail_url: string | null;
 }
 
+/** One video result: the post (text, link, author, date, engagement, attachments) or the reel (description, length, date, view count, thumbnail). */
 export interface FacebookVideoSearchResult {
   video_id: string | null;
   post: FacebookPost | null;

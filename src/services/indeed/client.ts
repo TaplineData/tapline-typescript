@@ -11,7 +11,7 @@ export class IndeedClient {
     return this.base.get<IndeedCompanyDirectory>('/v1/indeed/companies/directory', { ...params });
   }
 
-  /** Find companies by name, with the keys the company routes take. Costs 2 credits. */
+  /** Suggest companies for a partly typed name, with the keys the company routes take. Costs 2 credits. */
   async searchCompanies(params: SearchCompaniesParams): Promise<IndeedCompanySuggestions> {
     return this.base.get<IndeedCompanySuggestions>('/v1/indeed/companies/search', { ...params });
   }

@@ -18,7 +18,7 @@ export class BirdeyeClient {
     return this.base.get<BirdeyeTokenMarkets>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/tokens/${encodeURIComponent(address)}/markets`, query);
   }
 
-  /** USD candles as parallel arrays, oldest first: `o`, `h`, `l`, `c`, `v` and unix seconds in `t`. Up to `count` bars ending before `to` (exclusive), or now when `to` is omitted. Intervals with no trades have no bar. An unknown token answers empty arrays. Costs 1 credit. */
+  /** Returns USD price and volume candles in oldest-first order. Periods with no trades are omitted, and unknown tokens return empty results. Costs 1 credit. */
   async getTokenOhlcv(params: GetTokenOhlcvParams): Promise<BirdeyeOhlcv> {
     const { chain, address, ...query } = params;
     return this.base.get<BirdeyeOhlcv>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/tokens/${encodeURIComponent(address)}/ohlcv`, query);
@@ -72,7 +72,7 @@ export class BirdeyeClient {
     return this.base.get<BirdeyeWalletTokensPage>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/wallets/${encodeURIComponent(wallet)}/tokens`, query);
   }
 
-  /** A wallet's swaps, newest first, with both legs (token, amount, price) and USD value. A transaction that swaps through several tokens appears once per leg, so `tx_hash` can repeat. Pass `token` to keep swaps of one token. Empty values may be omitted. Costs 2 credits. */
+  /** Returns a wallet's swaps, newest first, with amounts, prices, and USD values. Multi-token swaps may appear more than once. Costs 2 credits. */
   async listWalletTransactions(params: ListWalletTransactionsParams): Promise<BirdeyeWalletTransactionsPage> {
     const { chain, wallet, ...query } = params;
     return this.base.get<BirdeyeWalletTransactionsPage>(`/v1/birdeye/chains/${encodeURIComponent(chain)}/wallets/${encodeURIComponent(wallet)}/transactions`, query);
@@ -90,7 +90,7 @@ export class BirdeyeClient {
     return this.base.get<BirdeyeTokenHolders>(`/v1/birdeye/solana/tokens/${encodeURIComponent(address)}/holders`);
   }
 
-  /** A Solana wallet's net worth over time, newest point first, one point per `interval` (at most 90). Points without a value carry only `timestamp`. `net_worth_change_percent` is 999999 when the window starts at zero. An unknown wallet answers an empty `history` list. Costs 2 credits. */
+  /** Returns a Solana wallet's net worth over time, newest first. Unknown wallets return no history. Costs 2 credits. */
   async getNetWorthHistory(params: GetNetWorthHistoryParams): Promise<BirdeyeNetWorthHistory> {
     const { wallet, ...query } = params;
     return this.base.get<BirdeyeNetWorthHistory>(`/v1/birdeye/solana/wallets/${encodeURIComponent(wallet)}/net-worth-history`, query);

@@ -105,7 +105,7 @@ export class BraveSearchClient {
     return this.base.get<BraveSearchSuggestions>('/v1/brave-search/suggestions', { ...params });
   }
 
-  /** Search videos. Costs 5 credits. */
+  /** Search videos: up to 50 per page. Costs 5 credits. */
   async searchVideos(params: SearchVideosParams): Promise<BraveSearchVideosPage> {
     return this.base.get<BraveSearchVideosPage>('/v1/brave-search/videos', { ...params });
   }

@@ -308,6 +308,7 @@ export interface BraveSearchIcon {
   ext?: string | null;
 }
 
+/** An image URL with its width and height in pixels. */
 export interface BraveSearchImage {
   url?: string | null;
   resized_url?: string | null;
@@ -327,6 +328,7 @@ export interface BraveSearchImage {
   theme?: string | null;
 }
 
+/** One image result: the page the image is on (url, site, title), the full-size image with its width and height (image) and a thumbnail. */
 export interface BraveSearchImageResult {
   title: string;
   full_title: string | null;
@@ -380,6 +382,7 @@ export interface BraveSearchNewsPage {
   pagination: BraveSearchCursorPagination;
 }
 
+/** One news article: title, snippet (description), link, publisher (source, site), how long ago it was published (age_label) and its thumbnail image. */
 export interface BraveSearchNewsResult {
   title: string;
   description: string;
@@ -412,6 +415,7 @@ export interface BraveSearchOpeningHoursDaysItem {
   closes: string;
 }
 
+/** One business or place: name (title), website (url), coordinates, address, opening hours, phone and email (contact), categories, rating with its review count (rating), reviews, price range, photos (thumbnail, pictures) and social profiles. A search returns a rating only for places the source has rated. */
 export interface BraveSearchPlace {
   id?: string;
   ai_answer_key?: string | null;
@@ -1836,6 +1840,7 @@ export interface BraveSearchStandingsGroup {
   stage?: string;
 }
 
+/** One autocomplete suggestion: the completed query (text) and its type (query or entity); an entity also has a name, description, category and image. */
 export interface BraveSearchSuggestion {
   name?: string;
   text: string;
@@ -2068,6 +2073,7 @@ export interface BraveSearchUnobservedObject {
   type?: string | null;
 }
 
+/** One video: title, snippet (description), link (url), the date it was published (published_at, age_label), its site, its thumbnail and, in video, its length in seconds, view count, channel and player link. */
 export interface BraveSearchVideoResult {
   title: string;
   full_title?: string | null;
@@ -2093,6 +2099,7 @@ export interface BraveSearchVideoResult {
   video: BraveSearchVideoResultVideo;
 }
 
+/** The video itself: its channel (creator, author), length in seconds (duration_seconds), view count (views, when the source shows one), tags and player link (embed_url). */
 export interface BraveSearchVideoResultVideo {
   embed_url: string | null;
   author: BraveSearchVideoResultVideoAuthor | null;
@@ -3036,6 +3043,7 @@ export interface BraveSearchWebPageVideos {
   results: BraveSearchVideoResult[];
 }
 
+/** One web page: title, snippet text (description), link (url), the date it was published (published_at, age_label), its site, its links to other pages of the site (deep_links, sitelinks) and, on articles, the author (article). */
 export interface BraveSearchWebResult {
   title: string;
   full_title: string | null;

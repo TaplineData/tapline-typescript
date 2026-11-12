@@ -50,7 +50,7 @@ export interface GetPriceRequest {
   check_out: string;
   /** Number of adults */
   adults?: number;
-  /** ISO 4217 currency code (default USD). Any valid ISO 4217 code is accepted, but Airbnb only renders prices natively in a subset and silently falls back to USD for the rest, so the response `currency` field is authoritative and may differ from the request. The natively-supported codes are enumerated in the `SupportedCurrency` schema (and machine-readably under this field's `x-supported-currencies`). */
+  /** The currency used for prices. Airbnb may fall back to USD, so check the currency in the response. */
   currency?: string;
 }
 
@@ -371,7 +371,7 @@ export interface SearchRequest {
   check_in?: string | null;
   /** Check-out date (YYYY-MM-DD) */
   check_out?: string | null;
-  /** ISO 4217 currency code (default USD). Any valid ISO 4217 code is accepted, but Airbnb only renders prices natively in a subset and silently falls back to USD for the rest, so the response `currency` field is authoritative and may differ from the request. The natively-supported codes are enumerated in the `SupportedCurrency` schema (and machine-readably under this field's `x-supported-currencies`). */
+  /** The currency used for prices. Airbnb may fall back to USD, so check the currency in the response. */
   currency?: string;
   /** Pagination cursor from previous response */
   cursor?: string;

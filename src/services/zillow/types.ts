@@ -353,6 +353,11 @@ export interface ZillowPriceHistoryAgentPhoto {
   url: string;
 }
 
+/**
+ * The home as its Zillow page holds it. `zestimate` and `rentZestimate` are Zillow's value and rent estimates; `priceHistory` the listing and sale events; `propertyTaxRate` and `taxAssessedValue` the taxes; `monthlyHoaFee`, `affordabilityEstimateV2.totalMonthlyCost` and `mortgageZHLRates` the monthly costs; `daysOnZillow` and `datePosted` the time on the market; `listing_agent`, `listed_by` and `attributionInfo` the listing agent; `brokerageName` the broker; `openHouseSchedule` the open houses.
+ *
+ * Pages Zillow shows as showcase listings (`isShowcaseListing`) carry fewer of these: no days on Zillow, agent, page views or tax rate. `/v1/zillow/properties/{zpid}/records` has every home's schools, tax history, full price history and listing agent.
+ */
 export interface ZillowProperty {
   zpid: string;
   node_id?: string;
@@ -1021,6 +1026,7 @@ export interface ZillowPropertyStaticMapSource {
   isHighResolutionStaticMap: boolean | null;
 }
 
+/** One home on a search page. `zestimate` and `rentZestimate` are Zillow's value and rent estimates, `daysOnZillow` the days on the market, `brokerName` the listing broker; `openHouseStartDate`, `openHouseEndDate`, `openHouseDescription` and `open_house_info` give the next open houses. Zillow's search page names no agent and no year built: `/v1/zillow/properties/{zpid}` has both. */
 export interface ZillowPropertySummary {
   zpid: string;
   palsId?: string;

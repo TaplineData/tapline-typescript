@@ -250,6 +250,7 @@ export interface TwitterMediaTag {
   type?: string;
 }
 
+/** An X post: text, like, repost, reply, quote, bookmark and view counts, media, links, and its author's full account with follower and following counts. */
 export interface TwitterPost {
   id: string;
   conversation_id?: string;
@@ -280,6 +281,7 @@ export interface TwitterPost {
   is_pinned?: boolean;
   is_reply: boolean;
   is_quote: boolean;
+  is_edited?: boolean;
   is_paid_promotion?: boolean;
   has_ai_generated_media?: boolean;
   media?: TwitterMedia[];
@@ -310,14 +312,20 @@ export interface TwitterProfileResponse {
   possibly_sensitive?: boolean;
   is_blue_verified?: boolean;
   is_verified?: boolean;
+  verification_reason?: string;
   has_hidden_subscriptions?: boolean;
+  can_highlight_posts?: boolean;
   created_at?: string;
+  verified_at?: string;
   birth_date?: TwitterBirthDate;
   location?: string;
   bio_entities?: TwitterBioEntities;
   identity_label?: TwitterUserLabel;
   verified_type?: string;
   translator_type?: string;
+  is_super_follow_eligible?: boolean;
+  parody_commentary_fan_label?: string;
+  is_profile_translatable?: boolean;
   profile_image_shape?: string;
   profile_image_url?: string;
   banner_url?: string;
@@ -378,6 +386,7 @@ export interface TwitterTweetResponse {
   is_pinned?: boolean;
   is_reply: boolean;
   is_quote: boolean;
+  is_edited?: boolean;
   is_paid_promotion?: boolean;
   has_ai_generated_media?: boolean;
   media?: TwitterMedia[];
@@ -395,6 +404,7 @@ export interface TwitterUrlEntity {
   indices?: number[];
 }
 
+/** An X account: bio, website and bio links, location, verification, profile and banner images, and follower, following and post counts. */
 export interface TwitterUser {
   id: string;
   handle?: string;
@@ -415,14 +425,20 @@ export interface TwitterUser {
   possibly_sensitive?: boolean;
   is_blue_verified?: boolean;
   is_verified?: boolean;
+  verification_reason?: string;
   has_hidden_subscriptions?: boolean;
+  can_highlight_posts?: boolean;
   created_at?: string;
+  verified_at?: string;
   birth_date?: TwitterBirthDate;
   location?: string;
   bio_entities?: TwitterBioEntities;
   identity_label?: TwitterUserLabel;
   verified_type?: string;
   translator_type?: string;
+  is_super_follow_eligible?: boolean;
+  parody_commentary_fan_label?: string;
+  is_profile_translatable?: boolean;
   profile_image_shape?: string;
   profile_image_url?: string;
   banner_url?: string;

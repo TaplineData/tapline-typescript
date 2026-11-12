@@ -6,27 +6,27 @@ import type { GetCompanyParams, GetCompanyPostsParams, GetJobParams, GetPostPara
 export class LinkedinClient {
   constructor(private readonly base: BaseClient) {}
 
-  /** Returns a company, school, or showcase page with its profile details, follower and employee counts, specialties, related pages, featured employees, and latest posts. Costs 1 credit. */
+  /** Returns a company, school, or showcase page. Costs 1 credit. */
   async getCompany(params: GetCompanyParams): Promise<LinkedinCompanyResponse> {
     return this.base.get<LinkedinCompanyResponse>('/v1/linkedin/company', { ...params });
   }
 
-  /** Returns posts from a company, school, or showcase page, 10 per page, newest first. Each item includes its text, publish time, engagement, author, and repost status. Costs 1 credit. */
+  /** Lists a company, school, or showcase page's posts, 10 per page, newest first. Costs 1 credit. */
   async getCompanyPosts(params: GetCompanyPostsParams): Promise<LinkedinCompanyPostsResponse> {
     return this.base.get<LinkedinCompanyPostsResponse>('/v1/linkedin/company/posts', { ...params });
   }
 
-  /** Returns one job with its company, location, posting age, applicant count, salary when available, full description, seniority, employment type, industries, and application method. Costs 1 credit. */
+  /** Returns one job posting. Costs 1 credit. */
   async getJob(params: GetJobParams): Promise<LinkedinJobResponse> {
     return this.base.get<LinkedinJobResponse>('/v1/linkedin/job', { ...params });
   }
 
-  /** Searches jobs by keyword, location, company, posting window, distance, and application method. Returns 10 jobs per page. Pass `pagination.next_cursor` back for the next page. Costs 1 credit. */
+  /** Returns matching jobs, including company and posting details, 10 at a time. Costs 1 credit. */
   async searchJobs(params: SearchJobsParams): Promise<LinkedinJobsSearchResponse> {
     return this.base.get<LinkedinJobsSearchResponse>('/v1/linkedin/jobs/search', { ...params });
   }
 
-  /** Returns one post or article with its text, publish time, engagement, author, comments, images, and native video. Missing posts return 404. Costs 1 credit. */
+  /** Returns one post or Pulse article. Missing posts return 404. Costs 1 credit. */
   async getPost(params: GetPostParams): Promise<LinkedinPostResponse> {
     return this.base.get<LinkedinPostResponse>('/v1/linkedin/post', { ...params });
   }
@@ -36,7 +36,7 @@ export class LinkedinClient {
     return this.base.get<LinkedinPostTranscriptResponse>('/v1/linkedin/post/transcript', { ...params });
   }
 
-  /** Returns a member profile with its headline, bio, location, follower count, experience, education, recent activity, projects, publications, recommendations, and similar profiles. Missing or unavailable profiles return 404. Costs 2 credits. */
+  /** Returns a public member profile. Missing or unavailable profiles return 404. Costs 2 credits. */
   async getProfile(params: GetProfileParams): Promise<LinkedinProfileResponse> {
     return this.base.get<LinkedinProfileResponse>('/v1/linkedin/profile', { ...params });
   }

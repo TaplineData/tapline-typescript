@@ -57,11 +57,13 @@ export interface FacebookImage {
   height: number | null;
 }
 
+/** One Marketplace listing: title, description, price and original price, status, listing date, category path, location, seller with ratings, condition and other attributes, delivery and shipping, and vehicle details. Photos and videos are on `/marketplace/listings/{listing_id}/photos`. */
 export interface FacebookListing {
   id: string;
   product_item_id: string | null;
   title: string | null;
   base_title: string | null;
+  custom_title: string | null;
   description: string | null;
   share_url: string | null;
   price: FacebookMoney | null;
@@ -86,6 +88,7 @@ export interface FacebookListing {
   details_type: FacebookCode;
   seller_type: string | null;
   vehicle_seller_type: string | null;
+  vehicle: FacebookListingVehicle | null;
   is_multi_variant_listing: boolean | null;
   cross_post_marketplace_flags: boolean[];
   badges: string[];
@@ -97,6 +100,7 @@ export interface FacebookListingAttribute {
   label: string | null;
 }
 
+/** One Marketplace result: id and link, title, price and original price (strikethrough_price), status, listing date, category, city and state, seller, delivery types, photo and video. */
 export interface FacebookListingCard {
   id: string | null;
   video_id: string | null;
@@ -177,6 +181,8 @@ export interface FacebookListingLocation {
   city: string | null;
   state: string | null;
   city_name: string | null;
+  postal_code: string | null;
+  country_code: string | null;
   latitude: number | null;
   longitude: number | null;
 }
@@ -222,6 +228,24 @@ export interface FacebookListingStatus {
   is_rejected: boolean | null;
   created_with_seller_app: boolean | null;
   messaging_enabled: boolean | null;
+}
+
+/** A vehicle listing's title status, make, model and trim, odometer, fuel economy, colours, fuel and transmission. */
+export interface FacebookListingVehicle {
+  title_status: string | null;
+  is_paid_off: boolean | null;
+  make: string | null;
+  model: string | null;
+  trim: string | null;
+  condition: string | null;
+  odometer: FacebookVehicleMeasure | null;
+  mileage_city: FacebookVehicleMeasure | null;
+  mileage_combined: FacebookVehicleMeasure | null;
+  mileage_highway: FacebookVehicleMeasure | null;
+  exterior_color: string | null;
+  interior_color: string | null;
+  fuel_type: string | null;
+  transmission: string | null;
 }
 
 export interface FacebookListingsPage {
@@ -346,6 +370,11 @@ export interface FacebookScrubberPreview {
   thumbnail_height: number | null;
   max_number_of_images_per_sprite: number | null;
   time_interval_between_image: number | null;
+}
+
+export interface FacebookVehicleMeasure {
+  value: number | null;
+  unit: string | null;
 }
 
 export interface FacebookVideo {

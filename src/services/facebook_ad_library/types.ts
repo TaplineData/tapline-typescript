@@ -36,6 +36,7 @@ export interface FacebookAd {
   service_status: FacebookServiceStatus;
 }
 
+/** One Ad Library ad: its text, the advertiser page, the creative media and call to action, and its delivery. */
 export interface FacebookAdCard {
   ad_archive_id: string | null;
   ad_id: string | null;
@@ -52,6 +53,7 @@ export interface FacebookAdCard {
   moderation: FacebookAdModeration;
 }
 
+/** One carousel card: its own copy, link, call to action and image or video. */
 export interface FacebookAdCarouselCard {
   title: string | null;
   body: string | null;
@@ -68,6 +70,7 @@ export interface FacebookAdCollation {
   count: number | null;
 }
 
+/** The ad's creative: link, display format, call to action (cta_type), carousel cards, images and videos. */
 export interface FacebookAdCreative {
   link_url: string | null;
   extra_links: string[];
@@ -84,6 +87,7 @@ export interface FacebookAdCreative {
   extra_videos: FacebookAdVideo[];
 }
 
+/** Ad status and run dates: whether the ad is still running, when it started and stopped, and the platforms it runs on. */
 export interface FacebookAdDelivery {
   total_active_seconds: number | null;
   is_active: boolean | null;
@@ -183,6 +187,7 @@ export interface FacebookAdSearchPage {
   pagination: FacebookCursorPagination;
 }
 
+/** The ad's copy: headline (title), ad text (body), link caption and link description. */
 export interface FacebookAdText {
   title: string | null;
   body: string | null;

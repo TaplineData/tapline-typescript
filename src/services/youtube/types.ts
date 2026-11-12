@@ -13,10 +13,24 @@ export interface ChannelResponse {
   handle: string | null;
   handle_url: string | null;
   description: string | null;
+  /** External links from the channel's About panel, such as its website and social profiles. Null on the yt-dlp fallback. */
+  links: string[] | null;
   channel_follower_count: number | null;
+  /** Number of videos the channel has published. */
+  video_count: number | null;
+  /** Total views across the channel's videos. */
+  view_count: number | null;
+  /** Whether YouTube shows the verified badge on the channel. */
+  is_verified: boolean | null;
+  /** Date the channel joined YouTube, as YYYY-MM-DD. */
+  joined_date: string | null;
   tags: string[];
+  /** Country the channel lists on its About panel, in English. */
+  country: string | null;
   thumbnail: string | null;
   thumbnails: ThumbnailItem[];
+  /** URL of the channel's banner image, widest size. */
+  banner: string | null;
   /** Content tabs available on the channel: Videos, Shorts, and Streams. Null when the yt-dlp fallback cannot identify individual tabs. */
   available_content_types: ChannelContentType[] | null;
   /** Number of available Videos, Shorts, and Streams content tabs. */
@@ -25,10 +39,33 @@ export interface ChannelResponse {
   playlist_count: number | null;
 }
 
+export interface ChannelVideoItem {
+  video_id: string | null;
+  title: string | null;
+  url: string | null;
+  duration?: number | null;
+  view_count: number | null;
+  /** When the video was published, as YouTube labels it on the channel page. */
+  published_time_text: string | null;
+  channel: string | null;
+  channel_id: string | null;
+  /** The channel's @handle. */
+  channel_handle: string | null;
+  channel_url: string | null;
+  /** Channel tab the item was listed on. */
+  content_type: ChannelContentType;
+  thumbnail: string | null;
+  thumbnails: ThumbnailItem[] | null;
+  /** URL of the channel's profile picture. */
+  channel_thumbnail: string | null;
+  live_status: LiveStatus | null;
+  channel_is_verified: boolean | null;
+}
+
 export interface ChannelVideosResponse {
   channel_id: string;
   returned_count: number;
-  videos: VideoListItem[];
+  videos: ChannelVideoItem[];
   pagination: CursorPagination;
 }
 
@@ -142,12 +179,12 @@ export interface FormatsResponse {
 }
 
 export interface GetChannelParams {
-  /** YouTube channel ID, @handle, or full allowed channel URL. Full URLs may use /channel/, /@, /c/, or /user/ and cannot include a content tab or query string. */
+  /** YouTube channel ID, handle with or without @, or full allowed channel URL. Full URLs may use /channel/, /@, /c/, or /user/ and cannot include a content tab or query string. */
   channel_id: string;
 }
 
 export interface GetChannelVideosParams {
-  /** YouTube channel ID, @handle, or full allowed channel URL. Full URLs may use /channel/, /@, /c/, or /user/ and cannot include a content tab or query string. */
+  /** YouTube channel ID, handle with or without @, or full allowed channel URL. Full URLs may use /channel/, /@, /c/, or /user/ and cannot include a content tab or query string. */
   channel_id: string;
   /** Channel tab: videos, shorts, or streams. Ignored when cursor is supplied because the cursor preserves the walk's tab. */
   content_type?: ChannelContentType;
@@ -326,6 +363,8 @@ export interface SearchResultItem {
   url: string | null;
   duration: number | null;
   view_count: number | null;
+  /** When the video was published, as YouTube labels it in search results. Null on channels and playlists. */
+  published_time_text: string | null;
   channel: string | null;
   channel_id: string | null;
   channel_url: string | null;
