@@ -6,7 +6,7 @@ import type { GetCalendarRequest, GetDetailsRequest, GetPriceRequest, GetReviews
 export class AirbnbClient {
   constructor(private readonly base: BaseClient) {}
 
-  /** Check a listing's availability by month. Costs 1 credit. */
+  /** Check a listing's availability and stay rules by month. Prices are not included; use `/price` for them. Costs 1 credit. */
   async getCalendar(body: GetCalendarRequest): Promise<ParsedCalendarResponse> {
     return this.base.post<ParsedCalendarResponse>('/v1/airbnb/calendar', body);
   }

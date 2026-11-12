@@ -32,7 +32,7 @@ export interface GetCalendarRequest {
   year: number;
   /** Number of months to fetch */
   count?: number;
-  /** ISO 4217 currency code (default USD). Any valid ISO 4217 code is accepted, but Airbnb only renders prices natively in a subset and silently falls back to USD for the rest, so the response `currency` field is authoritative and may differ from the request. The natively-supported codes are enumerated in the `SupportedCurrency` schema (and machine-readably under this field's `x-supported-currencies`). */
+  /** Ignored. The calendar carries no prices. Any valid ISO 4217 code is still accepted. */
   currency?: string;
 }
 
@@ -100,32 +100,16 @@ export interface ParsedCalendarDay {
   available_for_checkin: boolean;
   available_for_checkout: boolean;
   bookable: boolean | null;
-  price: string | null;
-}
-
-export interface ParsedCalendarMetadata {
-  constant_min_nights: number | null;
 }
 
 export interface ParsedCalendarMonth {
   month: number | null;
   year: number | null;
   days: ParsedCalendarDay[];
-  condition_ranges: ParsedConditionRange[];
 }
 
 export interface ParsedCalendarResponse {
   months: ParsedCalendarMonth[];
-  metadata: ParsedCalendarMetadata;
-}
-
-export interface ParsedConditionRange {
-  start_date: string | null;
-  end_date: string | null;
-  min_nights: number | null;
-  max_nights: number | null;
-  closed_to_arrival: boolean | null;
-  closed_to_departure: boolean | null;
 }
 
 export interface ParsedCoordinates {
