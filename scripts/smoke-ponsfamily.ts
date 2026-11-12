@@ -8,7 +8,7 @@ import type { AnySchema } from 'ajv';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 
 import type { TaplineClient } from '../src/index.js';
-import type { CreatorHoldingsRequest, GetDeveloperTradesParams, GetFeeSharingParams, GetForumCommunityParams, GetForumHoldingParams, GetForumPostCommentsParams, GetForumPostParams, GetMarketAthParams, GetMarketBurnedParams, GetMarketChartParams, GetMarketHoldersParams, GetMarketOrderDepthParams, GetMarketParams, GetMarketTipParams, GetMarketTradesParams, GetPortfolioChartParams, GetProfileParams, GetTokenImagesParams, GetTokenParams, GetV2CreatorFeesParams, GetV2DistributorParams, GetV2MarketChartParams, GetV2MarketHoldersParams, GetV2MarketTradesParams, GetWalletIdentitiesParams, GetWalletPositionsParams, ListForumCommunitiesParams, ListForumPostsParams, ListLaunchesParams, ListLiveMarketsParams, SearchLaunchesParams } from '../src/services/ponsfamily/types.js';
+import type { CreatorHoldingsRequest, GetDeveloperTradesParams, GetFeeSharingParams, GetForumCommunityParams, GetForumHoldingParams, GetForumPostCommentsParams, GetForumPostParams, GetMarketAthParams, GetMarketBurnedParams, GetMarketChartParams, GetMarketHoldersParams, GetMarketOrderDepthParams, GetMarketParams, GetMarketTipParams, GetMarketTradesParams, GetPortfolioChartParams, GetProfileParams, GetTokenImagesParams, GetTokenParams, GetV2CreatorFeesParams, GetV2DistributorParams, GetV2MarketChartParams, GetV2MarketHoldersParams, GetV2MarketTradesParams, GetWalletIdentitiesParams, GetWalletPositionsParams, ListForumCommunitiesParams, ListForumPostsParams, ListGraduatedCatalogParams, ListGraduationsParams, ListLaunchesParams, ListLiveMarketsParams, SearchLaunchesParams } from '../src/services/ponsfamily/types.js';
 import { TaplineError } from '../src/errors.js';
 import { typeAt, unknownKeys, valueAt } from './schema-walk.js';
 
@@ -41,8 +41,8 @@ const METHODS: Record<string, Method> = {
   get_forum_post: { response: 'GetForumPostResponse', isArray: false, call: (c, i) => c.ponsfamily.getForumPost(i.params as unknown as GetForumPostParams) },
   get_forum_post_comments: { response: 'GetForumPostCommentsResponse', isArray: false, call: (c, i) => c.ponsfamily.getForumPostComments(i.params as unknown as GetForumPostCommentsParams) },
   list_launches: { response: 'ListLaunchesResponse', isArray: false, call: (c, i) => c.ponsfamily.listLaunches(i.params as unknown as ListLaunchesParams) },
-  list_graduated_catalog: { response: 'Launch', isArray: true, call: (c) => c.ponsfamily.listGraduatedCatalog() },
-  list_graduations: { response: 'Graduation', isArray: true, call: (c) => c.ponsfamily.listGraduations() },
+  list_graduated_catalog: { response: 'ListGraduatedCatalogResponse', isArray: false, call: (c, i) => c.ponsfamily.listGraduatedCatalog(i.params as unknown as ListGraduatedCatalogParams) },
+  list_graduations: { response: 'ListGraduationsResponse', isArray: false, call: (c, i) => c.ponsfamily.listGraduations(i.params as unknown as ListGraduationsParams) },
   list_live_markets: { response: 'LiveMarket', isArray: true, call: (c, i) => c.ponsfamily.listLiveMarkets(i.params as unknown as ListLiveMarketsParams) },
   search_launches: { response: 'SearchLaunchesResponse', isArray: false, call: (c, i) => c.ponsfamily.searchLaunches(i.params as unknown as SearchLaunchesParams) },
   get_market: { response: 'GetMarketResponse', isArray: false, call: (c, i) => c.ponsfamily.getMarket(i.params as unknown as GetMarketParams) },

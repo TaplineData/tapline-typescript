@@ -49,22 +49,6 @@ export interface ApprovedCreatorParams {
   mint: string;
 }
 
-export interface AthBatchRequest {
-  /** Coin addresses (Solana mints or EVM tokens), 1 to 100. */
-  mints: string[];
-}
-
-export type AthCurrency = "USD" | "SOL" | "BASE" | "QUOTE";
-
-export interface AthParams {
-  /** Coin address: a Solana mint or an EVM token (0x). */
-  mint: string;
-  /** Quote currency. */
-  currency?: AthCurrency;
-  /** Chain of the coin. Omit for a Solana pump.fun coin, the original behaviour; set it for an EVM token or to pin a coin to one chain. */
-  chain?: TokenChain | null;
-}
-
 export interface Attachment {
   key: string;
   url: string;
@@ -729,15 +713,6 @@ export type CoinSort = "created_timestamp" | "market_cap" | "ath_market_cap" | "
 
 export type CoinSortDirection = "ASC" | "DESC";
 
-export interface CoinTimelineParams {
-  /** Coin address: a Solana mint or an EVM token (0x). */
-  mint: string;
-  /** Maximum timeline events to return. */
-  limit?: number;
-  /** `nextCursor` from the previous page; omit for the first page. */
-  cursor?: string | null;
-}
-
 export interface CoinTopCalloutsParams {
   /** Coin address: a Solana mint or an EVM token (0x). */
   mint: string;
@@ -1164,15 +1139,6 @@ export interface FeeDetail {
 
 export type FeePeriod = "1d" | "7d" | "30d";
 
-export interface FeeSharingSharesParams {
-  /** Solana wallet address. pump.fun refuses EVM wallets here. */
-  address: string;
-  /** Maximum shares to return. */
-  limit?: number;
-  /** Cursor from a previous page. */
-  cursor?: string;
-}
-
 export interface FeeSharingTotalsParams {
   /** Wallet address, Solana or EVM (0x). */
   address: string;
@@ -1187,11 +1153,6 @@ export interface Finishe {
   periodLabel: string;
   rank: number;
   periodStart: string;
-}
-
-export interface FirstTradeParams {
-  /** Coin address: a Solana mint or an EVM token (0x). */
-  mint: string;
 }
 
 export interface Firstappearance {
@@ -1266,12 +1227,6 @@ export interface GetAchievementCatalogResponse {
 
 export interface GetApprovedCreatorResponse {
   isApprovedCreator: boolean;
-}
-
-export type GetAthBatchResponse = Record<string, GetAthResponse>;
-
-export interface GetAthResponse {
-  athMarketCap: number | string;
 }
 
 export type GetBanStatusResponse = boolean | Record<string, unknown> | null;
@@ -1613,21 +1568,6 @@ export interface GetCoinResponse {
   telegram?: string;
 }
 
-export interface GetCoinTimelineResponse {
-  items: GetCoinTimelineResponseItem[];
-  pagination: PageCursor;
-}
-
-export interface GetCoinTimelineResponseItem {
-  eventType: string;
-  timestamp: string;
-  creator?: string;
-  shareholders?: ItemShareholder[];
-  tx?: string;
-  totalDistributed?: string;
-  recipients?: ItemRecipient[];
-}
-
 export interface GetCoinTopCalloutsResponse {
   callouts: GetMintPositionsResponsePosition[];
   totalCount: number;
@@ -1664,37 +1604,6 @@ export interface GetCreatorFeesResponse {
   isClaimable: boolean;
   series: Series[];
   claimable?: SeriesEarned;
-}
-
-export interface GetFeeSharingSharesResponse {
-  items: GetFeeSharingSharesResponseItem[];
-  pagination: PageCursor;
-}
-
-export interface GetFeeSharingSharesResponseItem {
-  mint: string;
-  bps: number;
-  isAdmin: boolean;
-  sharingConfig: string;
-  poolAddress: string | null;
-}
-
-export interface GetFirstTradeResponse {
-  slotIndexId: string;
-  tx: string;
-  timestamp: string;
-  userAddress: string;
-  type: string;
-  program: string;
-  priceUsd: string;
-  priceSol: string;
-  amountUsd: string;
-  amountSol: string;
-  baseAmount: string;
-  quoteAmount: string;
-  fillPriceUsd: string;
-  fillPriceSol: string;
-  isDevBuy: boolean;
 }
 
 export interface GetFollowSuggestionsResponse {
@@ -1951,13 +1860,13 @@ export interface GetMarketActivityResponse {
 export interface GetMarketActivityResponse5m {
   numTxs: number;
   volumeUSD: number;
-  numUsers: number;
+  numUsers: number | null;
   numBuys: number;
   numSells: number;
   buyVolumeUSD: number;
   sellVolumeUSD: number;
-  numBuyers: number;
-  numSellers: number;
+  numBuyers: number | null;
+  numSellers: number | null;
   priceChangePercent: number;
 }
 
@@ -3135,12 +3044,6 @@ export interface Item {
   submission: Submission;
 }
 
-export interface ItemRecipient {
-  address: string;
-  shareBps: number;
-  amount: string;
-}
-
 export interface ItemResolution {
   firstPublishAt?: string;
   moderatorAddress: string;
@@ -3161,11 +3064,6 @@ export interface ItemResolutionhistory {
   disputeEndsAt: string;
   decisionVersion: number;
   winners?: BountyResolutionHistoryWinner[];
-}
-
-export interface ItemShareholder {
-  address: string;
-  shareBps: number;
 }
 
 export interface ItemSubmission {
@@ -3883,12 +3781,6 @@ export type OrderDirection = "asc" | "desc";
 export interface Page {
   nextCursor: string | null;
   to: number | null;
-  limit: number;
-}
-
-export interface PageCursor {
-  nextCursor: string | null;
-  hasMore: boolean;
   limit: number;
 }
 

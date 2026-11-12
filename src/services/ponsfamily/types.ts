@@ -146,10 +146,8 @@ export interface DeveloperTradeEvent {
   timestamp?: number | null;
   blockNumber?: number | null;
   transactionHash?: string | null;
-  priceUsd?: number | null;
   tokenAmount?: string | null;
   tokenAmountDecimal?: number | null;
-  valueUsd?: number | null;
   toAddress?: string | null;
 }
 
@@ -341,16 +339,13 @@ export interface GetDeveloperTradesParams {
 export interface GetDeveloperTradesResponse {
   deployer?: string | null;
   events?: DeveloperTradeEvent[] | null;
-  buyCount?: number | null;
-  sellCount?: number | null;
   moveCount?: number | null;
   burnCount?: number | null;
-  totalSoldUsd?: number | null;
   totalMovedTokens?: number | null;
   totalBurnedTokens?: number | null;
-  dumped?: boolean | null;
   movedFunds?: boolean | null;
   burned?: boolean | null;
+  complete?: boolean | null;
 }
 
 export interface GetEthPriceResponse {
@@ -422,11 +417,7 @@ export interface GetMarketAthParams {
 
 export interface GetMarketAthResponse {
   token?: string | null;
-  pool?: string | null;
   priceEth?: number | null;
-  blockNumber?: number | null;
-  timestamp?: string | null;
-  updatedAt?: number | null;
 }
 
 export interface GetMarketBurnedParams {
@@ -451,8 +442,6 @@ export interface GetMarketChartResponse {
   range?: string | null;
   intervalSeconds?: number | null;
   points?: MarketChartPoint[] | null;
-  updatedAt?: number | null;
-  source?: string | null;
 }
 
 export interface GetMarketHoldersParams {
@@ -483,8 +472,6 @@ export interface GetMarketOrderDepthResponse {
 export interface GetMarketParams {
   /** Token contract address on Robinhood Chain. */
   token: string;
-  /** Include the holder list in the snapshot. */
-  include_holders?: boolean;
 }
 
 export interface GetMarketResponse {
@@ -493,14 +480,7 @@ export interface GetMarketResponse {
   priceEth?: number | null;
   priceUsd?: number | null;
   marketCapUsd?: number | null;
-  liquidityUsd?: number | null;
   volume24hUsd?: number | null;
-  changePct?: number | null;
-  points?: MarketPricePoint[] | null;
-  trades?: MarketTrade[] | null;
-  holdersCount?: number | null;
-  holders?: MarketHolder[] | null;
-  updatedAt?: number | null;
 }
 
 export interface GetMarketTipParams {
@@ -628,9 +608,6 @@ export interface GetV2MarketChartResponse {
   range?: string | null;
   intervalSeconds?: number | null;
   points?: V2ChartPoint[] | null;
-  updatedAt?: number | null;
-  quoteSymbol?: string | null;
-  quoteUsd?: number | null;
 }
 
 export interface GetV2MarketHoldersParams {
@@ -677,7 +654,6 @@ export interface GetWalletPositionsResponse {
 export interface Graduation {
   token?: string | null;
   graduatedAt?: string | null;
-  observedBlockNumber?: number | null;
 }
 
 export interface Launch {
@@ -687,43 +663,29 @@ export interface Launch {
   deployer?: string | null;
   pool?: string | null;
   pairToken?: string | null;
-  transactionHash?: string | null;
   blockNumber?: number | null;
   launchedAt?: string | null;
-  initialBuyWei?: string | null;
   name?: string | null;
   symbol?: string | null;
   logo?: string | null;
   description?: string | null;
   priceUsd?: number | null;
   marketCapUsd?: number | null;
-  liquidityUsd?: number | null;
   volume24hUsd?: number | null;
   graduated?: boolean | null;
   graduatedAt?: string | null;
-  graduatedBlockNumber?: number | null;
   graduationProgressPct?: number | null;
   pairedPrincipalEth?: number | null;
   graduationThresholdEth?: number | null;
-  latestBuyAt?: string | null;
-  latestBuyBlockNumber?: number | null;
   realMcapUsd?: number | null;
   burnedPct?: number | null;
   quoteAsset?: QuoteAsset | null;
-  venue?: string | null;
-  isOriginal?: boolean | null;
 }
-
-export type LaunchAge = "all" | "24h" | "7d";
 
 export interface LaunchPage {
   items?: Launch[] | null;
-  page?: number | null;
-  pageSize?: number | null;
-  total?: number | null;
+  nextCursor?: string | null;
 }
-
-export type LaunchSearchSort = "relevance" | "marketCap" | "volume" | "newest" | "oldest";
 
 export type LaunchSort = "recentBuys" | "newest" | "oldest" | "marketCap" | "volume";
 
@@ -755,45 +717,47 @@ export interface ListForumPostsResponse {
   posts?: ForumPost[] | null;
 }
 
+export interface ListGraduatedCatalogParams {
+  /** `nextCursor` from the previous page. */
+  cursor?: string | null;
+}
+
+export interface ListGraduatedCatalogResponse {
+  items?: Launch[] | null;
+  nextCursor?: string | null;
+}
+
+export interface ListGraduationsParams {
+  /** `nextCursor` from the previous page. */
+  cursor?: string | null;
+}
+
+export interface ListGraduationsResponse {
+  items?: Graduation[] | null;
+  nextCursor?: string | null;
+}
+
 export interface ListLaunchesParams {
-  /** Ranking column for the active board. */
+  /** Ranking column for the board. */
   sort?: LaunchSort;
-  /** Only include launches from this window. */
-  age?: LaunchAge;
   /** Restrict to a launchpad version. */
   version?: LaunchVersion;
-  /** Page of active launches. */
-  page?: number;
-  /** Active launches per page. */
-  page_size?: number;
-  /** Include the graduated block (counts only; pons sends no graduated items). */
-  include_graduated?: boolean;
-  /** Page number echoed in the graduated block. */
-  graduated_page?: number;
-  /** Page size echoed in the graduated block. */
-  graduated_page_size?: number;
+  /** `active.nextCursor` from the previous page, with the same `sort`. */
+  cursor?: string | null;
 }
 
 export interface ListLaunchesResponse {
-  generatedAt?: number | null;
   active?: LaunchPage | null;
-  graduated?: LaunchPage | null;
-  activeTotal?: number | null;
-  graduatedTotal?: number | null;
-  launchTotal?: number | null;
 }
 
 export interface ListLiveMarketsParams {
-  /** Restrict the live-market snapshot to these token addresses, at most 100 per call. */
+  /** Restrict the live-market snapshot to these token addresses, at most 8 per call. */
   markets?: string[] | null;
 }
 
 export interface LiveMarket {
   token?: string | null;
   pool?: string | null;
-  latestBuyAt?: string | null;
-  latestBuyBlockNumber?: number | null;
-  latestMarketBlockNumber?: number | null;
   priceUsd?: number | null;
   marketCapUsd?: number | null;
   graduated?: boolean | null;
@@ -805,7 +769,6 @@ export interface LiveMarket {
 export interface MarketChartPoint {
   t?: number | null;
   priceEth?: number | null;
-  blockNumber?: number | null;
   volumeEth?: number | null;
   tradeCount?: number | null;
 }
@@ -814,27 +777,15 @@ export interface MarketHolder {
   address?: string | null;
   balance?: string | null;
   percentage?: number | null;
-  entryMcapUsd?: number | null;
-  pnlUsd?: number | null;
-  pnlPct?: number | null;
-}
-
-export interface MarketPricePoint {
-  t?: number | null;
-  priceUsd?: number | null;
-  blockNumber?: number | null;
 }
 
 export interface MarketTrade {
   side?: string | null;
   timestamp?: number | null;
-  blockNumber?: number | null;
   transactionHash?: string | null;
   recipient?: string | null;
-  tokenAmount?: string | null;
-  ethAmount?: string | null;
-  priceUsd?: number | null;
-  valueUsd?: number | null;
+  tokenAmount?: number | null;
+  ethAmount?: number | null;
 }
 
 export interface MigrationSchedule {
@@ -895,7 +846,6 @@ export type PublicError = "blocked" | "concurrency_exceeded" | "timeout" | "extr
 export interface QuoteAsset {
   address?: string | null;
   symbol?: string | null;
-  name?: string | null;
   decimals?: number | null;
   isNative?: boolean | null;
   assetClass?: string | null;
@@ -904,19 +854,10 @@ export interface QuoteAsset {
 export interface SearchLaunchesParams {
   /** Free-text query matched against token name, symbol and address. */
   q?: string;
-  /** Ranking column for the result set. */
-  sort?: LaunchSearchSort;
-  /** Only include launches from this window. */
-  age?: LaunchAge;
-  /** Result page. */
-  page?: number;
 }
 
 export interface SearchLaunchesResponse {
   items?: Launch[] | null;
-  page?: number | null;
-  pageSize?: number | null;
-  total?: number | null;
 }
 
 export interface TokenSocials {
@@ -929,7 +870,6 @@ export interface TokenSocials {
 export interface V2ChartPoint {
   t?: number | null;
   price?: number | null;
-  blockNumber?: number | null;
   volumeQuote?: number | null;
   tradeCount?: number | null;
 }
@@ -944,11 +884,10 @@ export interface V2Trade {
   id?: string | null;
   venue?: string | null;
   side?: string | null;
-  tokenAmount?: string | null;
-  quoteAmount?: string | null;
+  tokenAmount?: number | null;
+  quoteAmount?: number | null;
   account?: string | null;
   transactionHash?: string | null;
-  blockNumber?: number | null;
   timestamp?: number | null;
 }
 
