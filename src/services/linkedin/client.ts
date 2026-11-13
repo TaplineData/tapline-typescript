@@ -36,7 +36,7 @@ export class LinkedinClient {
     return this.base.get<LinkedinPostTranscriptResponse>('/v1/linkedin/post/transcript', { ...params });
   }
 
-  /** Returns a public member profile with its jobs, schools, skills, posts, articles, recommendations and similar people. Missing profiles return 404. Costs 2 credits. */
+  /** Returns a public member profile with its jobs, schools, skills, posts, articles, recommendations and similar people. Missing profiles return 404. The logged-out page can mask the headline, About, connections (`500+`), job titles and dates. Costs 2 credits. */
   async getProfile(params: GetProfileParams): Promise<LinkedinProfileResponse> {
     return this.base.get<LinkedinProfileResponse>('/v1/linkedin/profile', { ...params });
   }

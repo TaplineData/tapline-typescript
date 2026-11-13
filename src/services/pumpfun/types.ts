@@ -299,6 +299,7 @@ export interface Callout {
   xFollowerCount: number;
   accountKind?: string;
   prediction?: null;
+  authorIsDev?: boolean;
 }
 
 export interface CalloutAuthor {
@@ -587,6 +588,8 @@ export interface Coin {
   fdv_usd?: number;
   price_usd?: number;
   source?: string;
+  volume_24h_usd?: number;
+  price_change_24h_bps?: number;
 }
 
 export type CoinBoard = "new" | "graduating" | "graduated" | "movers" | "charity";
@@ -695,7 +698,7 @@ export interface CoinPosition {
   costBasisUsd: number | string | null;
   amountBoughtUsd: number | null;
   amountBought: number | null;
-  callout: PositionCallout;
+  callout: PositionCallout | null;
   contentKind: string;
   quote: PositionQuote | null;
   followerCount?: number;
@@ -790,6 +793,8 @@ export interface CoinsBatch {
   fdv_usd?: number;
   price_usd?: number;
   source?: string;
+  volume_24h_usd?: number;
+  price_change_24h_bps?: number;
 }
 
 export interface CoinsBatchRequest {
@@ -865,6 +870,7 @@ export interface Competition {
   isFinal: boolean;
   top: Top[];
   winners: CompetitionWinner[];
+  scoringRule?: string;
 }
 
 export interface CompetitionEntryHighlightsParams {
@@ -923,6 +929,7 @@ export interface CompetitionWinner {
   isVerified: boolean;
   verifiedBadgeVisible: boolean;
   prize: string;
+  resolvedAvatarDecoration?: string | null;
 }
 
 export interface Contributor {
@@ -999,6 +1006,10 @@ export interface Daily {
   tailPnlHist4h?: TailHistogram | null;
   tailPnlHist24h?: TailHistogram | null;
   ranks?: TailRanks | null;
+  calloutsCreated?: number;
+  calloutsTailedIn?: number;
+  paidV1Usd?: number | null;
+  paidV2Usd?: number | null;
 }
 
 export interface Data {
@@ -1177,6 +1188,8 @@ export interface Follower {
   timestamp: number | string | null;
   followers: number;
   resolved_avatar_decoration?: string | null;
+  pnlUsd?: number | null;
+  pnlRanked?: boolean;
 }
 
 export interface FollowersCountParams {
@@ -1566,6 +1579,8 @@ export interface GetCoinResponse {
   platform?: string;
   is_backfill?: boolean;
   telegram?: string;
+  volume_24h_usd?: number;
+  price_change_24h_bps?: number;
 }
 
 export interface GetCoinTopCalloutsResponse {
@@ -1597,11 +1612,11 @@ export interface GetCompetitionResponse {
 }
 
 export interface GetCreatorFeesResponse {
-  creator: string;
-  interval: string;
-  period: string;
+  creator?: string;
+  interval?: string;
+  period?: string;
   earned: Earned[];
-  isClaimable: boolean;
+  isClaimable?: boolean;
   series: Series[];
   claimable?: SeriesEarned;
 }
@@ -1614,6 +1629,7 @@ export interface GetFollowSuggestionsResponse {
 
 export interface GetFollowersCountResponse {
   count: number;
+  traderCount?: number;
 }
 
 export interface GetFollowingCountResponse {
@@ -1689,6 +1705,7 @@ export interface GetGroupPnlLeaderboardResponseEntry {
   isVerified: boolean;
   verifiedBadgeVisible: boolean;
   activeCompetitionEntry?: ActiveCompetitionEntry | null;
+  resolvedAvatarDecoration?: string | null;
 }
 
 export interface GetHolderRewardsResponse {
@@ -2012,7 +2029,7 @@ export interface GetMoversBoardResponseEntry {
   bc: number;
   sc: number;
   txc: number;
-  nh: number;
+  nh?: number;
   t10: number;
   dh: number;
   tw: boolean;
@@ -2085,6 +2102,8 @@ export interface GetPayoutsLeaderboardResponse {
   entries: GetPayoutsLeaderboardResponseEntry[];
   totalEarners: number;
   generatedAt: string;
+  windowPaidV1Usdc?: number;
+  windowPaidV2Usdc?: number;
 }
 
 export interface GetPayoutsLeaderboardResponseEntry {
@@ -2114,6 +2133,7 @@ export interface GetPerpTradesResponse {
   aggregates: Aggregate;
   cursor: string | null;
   source: string;
+  lifecycleOpenedAt?: null;
 }
 
 export interface GetPerpTradesResponseTrade {
@@ -2486,6 +2506,9 @@ export interface GetUserCalloutsResponseCallout {
   paidV2Usd?: number;
   v2Boost?: number | null;
   author?: CalloutAuthor;
+  authorIsDev?: boolean;
+  v2BoostFactors?: unknown[];
+  v2BoostReasons?: unknown[];
 }
 
 export interface GetUserCoinCalloutResponse {
@@ -3346,12 +3369,14 @@ export interface LiveCoin {
   is_backfill?: boolean;
   is_charity?: boolean;
   tokenized_agent?: boolean;
+  platform?: string | null;
 }
 
 export interface LiveCoinMayhem {
   complete_reason?: string;
   mode: string;
   state: string;
+  pause_reason?: string;
 }
 
 export interface LiveCoinsParams {
@@ -3595,6 +3620,7 @@ export interface Member {
   xUsername?: string;
   isVerified: boolean;
   verifiedBadgeVisible: boolean;
+  resolvedAvatarDecoration?: string | null;
 }
 
 export interface Meta {
@@ -3673,6 +3699,9 @@ export interface MultiChainBreakdown {
   avalanche?: Solana;
   optimism?: Solana;
   sei?: Solana;
+  unichain?: Solana;
+  tron?: Solana;
+  elysium?: Solana;
 }
 
 export interface MultichainToken {
@@ -3908,9 +3937,9 @@ export interface PerpsParams {
 }
 
 export interface Playback {
-  posterUrl: string;
+  posterUrl?: string;
   mp4Url: string;
-  hlsUrl: string;
+  hlsUrl?: string;
 }
 
 export interface PlaylistMapRequest {
@@ -3947,7 +3976,7 @@ export interface Point {
 }
 
 export interface Pool {
-  chainId: string;
+  chainId?: string;
   address: string;
 }
 
@@ -4050,6 +4079,10 @@ export interface PositionCallout {
   actingUser?: null;
   prediction?: null;
   pinnedUpdate?: Update;
+  authorIsDev?: boolean;
+  evmChain?: string;
+  mediaTranscript?: string;
+  mediaWaveform?: number[];
 }
 
 export interface PositionCoin {
@@ -4087,7 +4120,7 @@ export interface ProfileIdsRequest {
 
 export interface ProfilePin {
   position: GetMintPositionsResponsePosition | null;
-  pinnedUpdate: null;
+  pinnedUpdate: Update | null;
 }
 
 export interface Progress {
@@ -4139,6 +4172,7 @@ export interface Quote {
   positionAvgEntryMcapUsd: number | null;
   isQuote: boolean;
   prediction?: null;
+  authorIsDev?: boolean;
 }
 
 export interface QuoteCallout {
@@ -4159,6 +4193,7 @@ export interface QuoteCallout {
   walletAddress: string;
   xFollowerCount: number;
   xUsername: string | null;
+  evmChain?: string;
 }
 
 export interface QuoteEntry {
@@ -4240,6 +4275,7 @@ export interface Reply {
   isQuote: boolean;
   viewCount?: number;
   prediction?: null;
+  authorIsDev?: boolean;
 }
 
 export type ReplyFilter = "ALL" | "EXCLUDE_AUTHOR" | "AUTHOR_ONLY";
@@ -4354,6 +4390,15 @@ export interface Result {
   user: GetUserResponse | null;
   resolvedVia: string;
   definitive: boolean;
+  chains?: ResultChain[];
+}
+
+export interface ResultChain {
+  chain: string;
+  name: string;
+  symbol: string;
+  image_uri: string | null;
+  liquidity_usd: number | null;
 }
 
 export interface ResultCoin {
@@ -4473,6 +4518,7 @@ export interface Row {
   xUsername?: string | null;
   isVerified: boolean;
   verifiedBadgeVisible: boolean;
+  resolvedAvatarDecoration?: string | null;
 }
 
 export interface SearchCoinsParams {
@@ -4633,6 +4679,8 @@ export interface SearchedCoin {
   price_usd?: number;
   source?: string;
   preview?: boolean;
+  volume_24h_usd?: number;
+  price_change_24h_bps?: number;
 }
 
 export interface SecurityVerdict {
@@ -4648,7 +4696,7 @@ export interface SecurityVerdict {
 
 export interface Series {
   bucketStart: number;
-  earned: SeriesEarned;
+  earned?: SeriesEarned;
   byQuote: Earned[];
 }
 
@@ -4871,6 +4919,18 @@ export interface TailRanks {
   tailPnl24hUsd: number | null;
   tailUniqueBuyers: number | null;
   tailVolumeUsd: number | null;
+  tailAth1hUsdPosition?: number | null;
+  tailAth4hUsdPosition?: number | null;
+  tailAth24hUsdPosition?: number | null;
+  tailBuyersPosition?: number | null;
+  tailCohort1hPosition?: number | null;
+  tailCohort4hPosition?: number | null;
+  tailCohort24hPosition?: number | null;
+  tailPnl1hUsdPosition?: number | null;
+  tailPnl4hUsdPosition?: number | null;
+  tailPnl24hUsdPosition?: number | null;
+  tailUniqueBuyersPosition?: number | null;
+  tailVolumeUsdPosition?: number | null;
 }
 
 export interface Token {
@@ -4948,6 +5008,7 @@ export interface Top {
   xUsername?: string | null;
   isVerified: boolean;
   verifiedBadgeVisible: boolean;
+  resolvedAvatarDecoration?: string | null;
 }
 
 export interface TopClipsParams {
@@ -5002,6 +5063,8 @@ export interface Topholder {
   isBundler: boolean;
   enteredAt: number | null;
   funding?: null;
+  isBondingCurve?: boolean;
+  isPool?: boolean;
 }
 
 export interface Topposition {
@@ -5199,6 +5262,12 @@ export interface TrendingCoin {
   source?: string;
   recommendation_id?: string;
   recommendation_rank?: number;
+  coin_key?: string;
+  curve?: TrendingCoinCurve;
+}
+
+export interface TrendingCoinCurve {
+  had_curve: boolean;
 }
 
 export interface TrendingCoinsParams {

@@ -48,13 +48,17 @@ export interface FacebookAiDisclosure {
 export interface FacebookAttachment {
   title: string | null;
   subtitle: string | null;
+  /** Link URL of a link card. */
   url: string | null;
+  /** The outside site a link card points to. */
   external_url: string | null;
   target: FacebookAttachmentTarget;
+  /** Album photos and videos. */
   items: (FacebookPhoto | FacebookVideo | FacebookOtherMedia)[];
   source: string | null;
   article_author: string | null;
   kind: FacebookCode;
+  /** The attached photo or video. */
   media: FacebookPhoto | FacebookVideo | FacebookOtherMedia | null;
 }
 
@@ -221,15 +225,20 @@ export interface FacebookDashStream {
 
 /** Engagement counts: reactions with reactions by type, comments, shares, video views and plays. */
 export interface FacebookEngagement {
+  /** Reactions of every type. */
   reaction_count: number | null;
   reaction_count_text: string | null;
+  /** Comments. */
   comment_count: number | null;
+  /** Shares. */
   share_count: number | null;
   share_count_text: string | null;
+  /** Video views. */
   view_count: number | null;
   view_count_text: string | null;
   play_count: number | null;
   post_play_count: number | null;
+  /** Reactions by type, such as Like and Love, with their counts. */
   reactions: FacebookReaction[];
 }
 
@@ -472,28 +481,39 @@ export interface FacebookOtherMedia {
 
 /** A page or public profile: page ID (the id the Ad Library takes) and profile ID, username, name, link and Ad Library link, followers, following, likes and talking about, verified badge and active business page, tabs, category, profile picture and cover photo. */
 export interface FacebookPage {
+  /** Page ID: the id the Ad Library takes. */
   page_id: string | null;
+  /** Profile ID of the page or public profile. */
   profile_id: string | null;
+  /** Username (vanity name) in the page link. */
   username?: string | null;
   story_bucket_ids?: string[];
+  /** Page name. */
   name: string | null;
+  /** Link to the page. */
   url: string | null;
+  /** Link to the page's ads in the Ad Library. */
   ad_library_url?: string | null;
+  /** Audience counts: followers, following, likes and talking about. */
   metrics: FacebookPageMetrics;
   status: FacebookPageStatus;
   instagram?: FacebookInstagramAccount | null;
   tabs?: FacebookPageTab[];
+  /** Page category. */
   category?: string | null;
   entity_type?: FacebookCode;
+  /** Verified badge. */
   verification?: FacebookCode;
   alternate_name?: string | null;
   gender?: FacebookCode;
   profile_type_transition?: FacebookCode;
   social_context?: FacebookSocialContextItem[];
   legal?: FacebookPageLegal;
+  /** Profile picture (photo) URL. */
   profile_picture_url?: string | null;
   profile_photo?: FacebookPhoto;
   profile_pictures?: FacebookImage[];
+  /** Cover photo. */
   cover_photo?: FacebookCoverPhoto | null;
 }
 
@@ -528,19 +548,30 @@ export interface FacebookPageIntro {
   profile_id: string;
   page_id: string | null;
   bio_status_id: string | null;
+  /** Bio: the Intro card's about text. */
   bio: string | null;
+  /** Opening hours as Facebook prints them. */
   hours_text: string | null;
+  /** Website links. */
   websites: string[];
+  /** Other links: Instagram, X, YouTube and other social profiles. */
   social_links: FacebookSocialLink[];
+  /** Rating with its review count. */
   rating: FacebookPageRating | null;
+  /** Price range, such as `$$`. */
   price_range: string | null;
   items: FacebookIntroItem[];
+  /** Page category. */
   category: string | null;
   confirmed_owner: string | null;
   services: string[];
+  /** Contact email addresses. */
   emails: string[];
+  /** Contact phone numbers. */
   phones: string[];
+  /** Postal addresses. */
   addresses: string[];
+  /** Page type, such as `PAGE`. */
   profile_type: string | null;
   photos_mediaset_token: string | null;
   featured_photos: FacebookPhoto[];
@@ -553,10 +584,15 @@ export interface FacebookPageLegal {
 }
 
 export interface FacebookPageMetrics {
+  /** Page likes. */
   like_count?: number | null;
+  /** Followers, exact. */
   follower_count?: number | null;
+  /** People talking about the page. */
   talking_about_count?: number | null;
+  /** Followers, rounded as Facebook prints them. */
   follower_count_approx?: number | null;
+  /** Accounts the page follows, rounded as Facebook prints them. */
   following_count_approx?: number | null;
 }
 
@@ -579,8 +615,11 @@ export interface FacebookPagePhotosPage {
 
 /** A page or public profile read from its link in one call: the description, the header (page ID, username, name, link, Ad Library link, exact followers and talking about, following, verified badge, active business page, profile picture and cover photo) and the Intro card (about text, category and page type, website and other links, phone, email, address, hours, rating). */
 export interface FacebookPageProfile {
+  /** Page description (meta description of the page). */
   description: string | null;
+  /** Page header: IDs, name, link, followers, verified badge, profile picture and cover photo. */
   page: FacebookPage;
+  /** Intro card: bio, category, links and contact details. */
   intro: FacebookPageIntro | null;
 }
 
@@ -703,27 +742,36 @@ export interface FacebookPlace {
 
 /** One post: post ID and post URL, text, created at, author (name, short name, ID, URL, picture) and owner page, attachments (images, videos with thumbnail and duration, link cards with link URL), AI disclosure (made with AI), top comments and engagement (reaction count, reactions by type, comment count, share count, view count). */
 export interface FacebookPost {
+  /** Post ID. */
   id: string | null;
   story_id: string | null;
   feedback_id: string | null;
   group_id: string | null;
   title: string | null;
+  /** Post text. */
   text: string | null;
   rich_text: FacebookRichTextBlock[];
+  /** Post URL. */
   url: string | null;
   status: FacebookPostStatus;
+  /** When the post was published (created at), ISO 8601. */
   created_at: string | null;
   message_entities?: FacebookMessageEntity[] | null;
+  /** Post author: name, short name, ID, URL and picture. */
   author: FacebookProfileRef | null;
   actors: FacebookProfileRef[];
   collaborators: FacebookProfileRef[];
   owner: FacebookProfileRef | null;
+  /** Top comments Facebook shows with the post. */
   top_comments: FacebookComment[];
   music: FacebookPostMusic | null;
   attached_post: FacebookPost | null;
+  /** Engagement: reaction count, reactions by type, comment, share and view counts. */
   engagement: FacebookEngagement;
+  /** Media and links: images, videos and link cards. */
   attachments: FacebookAttachment[];
   place_name: string | null;
+  /** AI disclosure: whether the post is marked as made with AI. */
   ai_disclosure: FacebookAiDisclosure;
 }
 
@@ -751,15 +799,20 @@ export interface FacebookPostsPage {
 }
 
 export interface FacebookProfileRef {
+  /** Account ID. */
   id: string | null;
   pfbid: string | null;
   username: string | null;
+  /** Name. */
   name: string | null;
+  /** Profile or page URL. */
   url: string | null;
   is_verified: boolean | null;
+  /** Short name, such as the first name. */
   short_name: string | null;
   account_type: FacebookCode;
   gender: string | null;
+  /** Profile picture URL. */
   profile_picture_url: string | null;
 }
 

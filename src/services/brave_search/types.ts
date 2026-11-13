@@ -2,13 +2,20 @@
 
 /** A postal address: the one-line address (display_address) and its parts: street (street_address), house number, city (address_locality), region (address_region, the state or province), postal code, country, country code (ISO 3166-1 alpha-2, lowercase) and plus code. Place searches read the parts from the one-line address and leave out a part it doesn't hold cleanly. */
 export interface BraveSearchAddress {
+  /** One-line address. */
   display_address: string;
+  /** Street. */
   street_address?: string | null;
   house_number?: string | null;
+  /** City. */
   address_locality?: string | null;
+  /** State or province as the address prints it: a code such as `NY` in the US, Canada, Australia, Italy, Brazil and Mexico, a name such as `Maharashtra` elsewhere; null when the address holds none. */
   address_region?: string | null;
+  /** Postal code. */
   postal_code?: string | null;
+  /** Country name. */
   country?: string | null;
+  /** Country code, ISO 3166-1 alpha-2, lowercase. */
   country_code?: string;
   plus_code?: string;
   type: string;
@@ -55,6 +62,7 @@ export interface BraveSearchAiAnswerBlockEntitiesItem {
 export interface BraveSearchAiAnswerCitation {
   title: string;
   snippet: string;
+  snippet_html?: string;
   url: string;
   source_index: number;
   favicon_url: string;
@@ -73,6 +81,7 @@ export interface BraveSearchAiAnswerOtherEvent {
 export interface BraveSearchAiAnswerSource {
   title: string;
   description: string;
+  description_html?: string;
   url: string;
   hostname: string;
   favicon_url: string;
@@ -296,11 +305,19 @@ export interface BraveSearchGoggle {
   digest: string;
   transferred_to?: string | null;
   transferred_from?: string | null;
+  rules?: BraveSearchGoggleRules | null;
   avatar: string;
 }
 
 export interface BraveSearchGoggleList {
   goggles: BraveSearchGoggle[];
+}
+
+export interface BraveSearchGoggleRules {
+  boost: number;
+  downrank: number;
+  discard: number;
+  default: string | null;
 }
 
 export interface BraveSearchIcon {
@@ -313,13 +330,16 @@ export interface BraveSearchIcon {
 
 /** An image URL with its width and height in pixels. */
 export interface BraveSearchImage {
+  /** Image URL. */
   url?: string | null;
   resized_url?: string | null;
   proxied_url?: string;
   placeholder_url?: string;
   click_url?: string | null;
   alt?: string | null;
+  /** Height in pixels. */
   height?: number | null;
+  /** Width in pixels. */
   width?: number | null;
   format?: string | null;
   content_size?: string | null;
@@ -333,14 +353,17 @@ export interface BraveSearchImage {
 
 /** One image result: the page the image is on (url, site, title), the full-size image with its width and height (image) and a thumbnail. */
 export interface BraveSearchImageResult {
+  /** Title of the page the image is on. */
   title: string;
   full_title: string | null;
   description: string;
   language: string | null;
+  /** Page URL: the page the image is on. */
   url: string;
   content_fetched_at: string | null;
   published_at: string | null;
   fetched_at: string | null;
+  /** Site the page is on: hostname and favicon. */
   site: BraveSearchSite;
   similar_images_token: string | null;
   content_fetched_at_as_sent?: boolean | number | string | BraveSearchUnobservedObject;
@@ -352,8 +375,11 @@ export interface BraveSearchImageResult {
   icons: BraveSearchIcon[] | null;
   from_context: boolean;
   confidence: string | null;
+  /** Rank of the result on the page, from 1. */
   position: number;
+  /** Full-size image with its width and height (size). */
   image: BraveSearchImage;
+  /** Thumbnail image. */
   thumbnail: BraveSearchImage;
 }
 
@@ -387,15 +413,23 @@ export interface BraveSearchNewsPage {
 
 /** One news article: title, snippet (description), link, publisher (source, site), how long ago it was published (age_label) and its thumbnail image. */
 export interface BraveSearchNewsResult {
+  /** Headline. */
   title: string;
+  /** Snippet of the article. */
   description: string;
   description_html?: string;
+  /** Article URL. */
   url: string;
   is_live: boolean;
+  /** Publish date as Brave prints it, such as `1 day ago`. */
   age_label: string | null;
+  /** Site the article is on: hostname and favicon. */
   site: BraveSearchSite;
+  /** News source: the publisher's name. */
   source: BraveSearchSource | null;
+  /** Rank of the result on the page, from 1. */
   position?: number;
+  /** Article image (thumbnail). */
   thumbnail: BraveSearchImage | null;
 }
 
@@ -420,15 +454,21 @@ export interface BraveSearchOpeningHoursDaysItem {
 
 /** One business or place: place id (id), name (title), category (category, categories, icon_category) and description, website (url), coordinates (latitude, longitude), address with its street, house number, city, region, postal code and country, phone and email (contact), opening hours with today's hours (opening_hours.current_day), rating with its best rating, review count and whether Tripadvisor rated it (rating), reviews, price level (price_range), cuisines, photo (thumbnail) and more photos (pictures), family friendly and social profiles. A search returns a rating only for places the source has rated. */
 export interface BraveSearchPlace {
+  /** Place ID; `/v1/brave-search/places/{place_id}` takes it. */
   id?: string;
   ai_answer_key?: string | null;
+  /** Business name. */
   title: string;
   full_title?: string | null;
+  /** Short description of the place. */
   description: string | null;
   language?: string | null;
+  /** Website of the business. */
   url?: string;
   provider_url: string;
+  /** Rating with its review count. */
   rating: BraveSearchRating | null;
+  /** Price level, such as `$$`. */
   price_range: string | null;
   rating_score?: number | null;
   content_fetched_at?: string | null;
@@ -438,13 +478,20 @@ export interface BraveSearchPlace {
   fetched_at_as_sent?: boolean | number | string | BraveSearchUnobservedObject;
   spid?: string;
   pid?: string;
+  /** Coordinates: latitude and longitude. */
   coordinates?: BraveSearchCoordinates;
+  /** Address: the one-line address and its parts. */
   address: BraveSearchAddress;
+  /** Opening hours: today's hours and the week. */
   opening_hours: BraveSearchOpeningHours | null;
+  /** Phone number and email. */
   contact: BraveSearchPlaceContact | null;
+  /** Categories of the business. */
   categories: string[];
+  /** Main category, such as `restaurant`. */
   category: string | null;
   cuisines: string[] | null;
+  /** Reviews Brave shows for the place. */
   reviews: BraveSearchPlaceReviews | null;
   profiles: BraveSearchProfile[];
   results?: BraveSearchPlaceWebResultsItem[] | null;
@@ -464,12 +511,15 @@ export interface BraveSearchPlace {
   is_source_both?: boolean;
   raw: BraveSearchUnobservedObject | null;
   icon_category: string | null;
+  /** Photo of the place. */
   thumbnail: BraveSearchImage | null;
   pictures: BraveSearchPlacePictures | null;
 }
 
 export interface BraveSearchPlaceContact {
+  /** Email address. */
   email?: string | null;
+  /** Phone number. */
   telephone: string;
 }
 
@@ -1845,17 +1895,24 @@ export interface BraveSearchStandingsGroup {
 
 /** One autocomplete suggestion: the completed query (text) and its type (query or entity); an entity also has a name, description, category and image. */
 export interface BraveSearchSuggestion {
+  /** Entity name. */
   name?: string;
+  /** Suggested query (completion). */
   text: string;
-  description?: string;
+  /** Entity description. */
+  description?: string | null;
+  /** Entity category, such as `application`. */
   category?: string | null;
+  /** Type: `query` or `entity`. */
   type: string;
   is_logo?: boolean;
+  /** Entity image. */
   image_url?: string;
 }
 
 /** Brave's autocomplete suggestions for the search (query), in Brave's order. */
 export interface BraveSearchSuggestions {
+  /** Suggestions in Brave's relevance order, most relevant first. */
   suggestions: BraveSearchSuggestion[];
   query: BraveSearchTextQuery;
 }
@@ -2079,17 +2136,23 @@ export interface BraveSearchUnobservedObject {
 
 /** One video: title, snippet (description), link (url), the date it was published (published_at, age_label), its site, its thumbnail and, in video, its length in seconds, view count, channel and player link. */
 export interface BraveSearchVideoResult {
+  /** Video title. */
   title: string;
   full_title?: string | null;
+  /** Snippet of the video's description. */
   description: string;
   language?: string | null;
+  /** Video page URL. */
   url: string;
+  /** Date the video was published, ISO 8601. */
   published_at: string | null;
   content_fetched_at?: string | null;
   fetched_at?: string | null;
+  /** Site the video is on, such as youtube.com. */
   site: BraveSearchSite;
   publisher: string | null;
   source: BraveSearchSource | null;
+  /** Publish date as Brave prints it. */
   age_label: string | null;
   type?: string;
   content_fetched_at_as_sent?: boolean | number | string | BraveSearchUnobservedObject;
@@ -2099,18 +2162,25 @@ export interface BraveSearchVideoResult {
   family_friendly?: boolean;
   icons?: BraveSearchIcon[] | null;
   position?: number;
+  /** Thumbnail image. */
   thumbnail: BraveSearchImage | null;
+  /** The video itself: length, views, channel and player link. */
   video: BraveSearchVideoResultVideo;
 }
 
 /** The video itself: its channel (creator, author), length in seconds (duration_seconds), view count (views, when the source shows one), tags and player link (embed_url). */
 export interface BraveSearchVideoResultVideo {
+  /** Player (embed) link. */
   embed_url: string | null;
+  /** Channel the video is on. */
   author: BraveSearchVideoResultVideoAuthor | null;
+  /** Channel or creator name. */
   creator: string | null;
   tags: string[] | null;
+  /** Length of the video in seconds. */
   duration_seconds: number | null;
   duration_seconds_as_sent?: boolean | number | string | BraveSearchUnobservedObject;
+  /** View count, when the source shows one. */
   views: number | null;
   publisher: string | null;
   requires_subscription: boolean | null;
@@ -2208,8 +2278,15 @@ export interface BraveSearchWebPageAdsResultsItemCreative {
   description: string;
   schema_type: string;
   landing_page: string;
+  conversion?: BraveSearchWebPageAdsResultsItemCreativeConversion;
   thumbnail: BraveSearchImage;
   thumbnail_organic?: boolean;
+}
+
+export interface BraveSearchWebPageAdsResultsItemCreativeConversion {
+  url_pattern: string;
+  observation_window: number;
+  type: string;
 }
 
 export interface BraveSearchWebPageDiscussions {
@@ -2384,7 +2461,7 @@ export interface BraveSearchWebPageInfoboxResultsItemProvidersItem {
 export interface BraveSearchWebPageInfoboxResultsItemRatingsItem {
   rating_value: number;
   best_rating: number;
-  review_count: number;
+  review_count?: number;
   source: BraveSearchSource;
   from_tripadvisor: boolean;
 }
@@ -2905,7 +2982,18 @@ export interface BraveSearchWebPageRichResultsItemWeather {
   current_weather: BraveSearchWebPageRichResultsItemWeatherCurrentWeather;
   daily: BraveSearchWebPageRichResultsItemWeatherDailyItem[];
   hours3: BraveSearchWebPageRichResultsItemWeatherHours3Item[];
-  alerts: BraveSearchUnobservedObject[];
+  alerts: BraveSearchWebPageRichResultsItemWeatherAlertsItem[];
+}
+
+export interface BraveSearchWebPageRichResultsItemWeatherAlertsItem {
+  description: string;
+  tags: string[];
+  sender: string;
+  event: string;
+  ts_start: number;
+  ts_end: number;
+  start_relative_i18n: string;
+  type?: string | null;
 }
 
 export interface BraveSearchWebPageRichResultsItemWeatherCurrentWeather {
@@ -2934,7 +3022,7 @@ export interface BraveSearchWebPageRichResultsItemWeatherCurrentWeatherWeather {
 export interface BraveSearchWebPageRichResultsItemWeatherCurrentWeatherWind {
   speed: number;
   deg: number;
-  gust: number;
+  gust?: number;
 }
 
 export interface BraveSearchWebPageRichResultsItemWeatherDailyItem {
@@ -2953,6 +3041,7 @@ export interface BraveSearchWebPageRichResultsItemWeatherDailyItem {
   wind: BraveSearchWebPageRichResultsItemWeatherDailyItemWind;
   clouds: number;
   pop: number;
+  rain?: number;
   uvi: number;
 }
 
@@ -2982,7 +3071,7 @@ export interface BraveSearchWebPageRichResultsItemWeatherDailyItemWeather {
 export interface BraveSearchWebPageRichResultsItemWeatherDailyItemWind {
   speed: number;
   deg: number;
-  gust: number;
+  gust?: number;
 }
 
 export interface BraveSearchWebPageRichResultsItemWeatherHours3Item {
@@ -2995,6 +3084,8 @@ export interface BraveSearchWebPageRichResultsItemWeatherHours3Item {
   humidity: number;
   clouds: number;
   pop: number;
+  rain?: number;
+  snow?: number;
 }
 
 export interface BraveSearchWebPageRichResultsItemWeatherHours3ItemTemperature {
@@ -3014,7 +3105,7 @@ export interface BraveSearchWebPageRichResultsItemWeatherHours3ItemWeather {
 export interface BraveSearchWebPageRichResultsItemWeatherHours3ItemWind {
   speed: number;
   deg: number;
-  gust: number;
+  gust?: number;
 }
 
 export interface BraveSearchWebPageRichResultsItemWeatherLocation {
@@ -3049,21 +3140,28 @@ export interface BraveSearchWebPageVideos {
 
 /** One web page: title, snippet text (description), link (url), the date it was published (published_at, age_label), its site, its links to other pages of the site (deep_links, sitelinks) and, on articles, the author (article). */
 export interface BraveSearchWebResult {
+  /** Page title. */
   title: string;
   full_title: string | null;
+  /** Snippet text Brave shows under the title. */
   description: string;
   description_html?: string;
   language: string;
+  /** Page URL. */
   url: string;
+  /** Links to other pages of the site. */
   deep_links: BraveSearchWebResultDeepLinks | null;
   rating: BraveSearchRating | null;
   is_live: boolean;
+  /** Date the page was published, ISO 8601, when Brave knows it. */
   published_at: string | null;
   location?: BraveSearchPlace;
   source: BraveSearchSource;
   type: string;
   subtype: string;
+  /** Site the page is on: hostname, breadcrumbs and favicon. */
   site: BraveSearchSite;
+  /** Publish date as Brave prints it, such as `2 days ago`. */
   age_label: string | null;
   locations: BraveSearchUnobservedObject[] | null;
   movie: BraveSearchWebResultMovie | null;
@@ -3071,6 +3169,7 @@ export interface BraveSearchWebResult {
   recipe: BraveSearchWebResultRecipe | null;
   qa: BraveSearchWebResultQa | null;
   book: BraveSearchWebResultBook | null;
+  /** Article details, such as the author. */
   article: BraveSearchWebResultArticle | null;
   product: BraveSearchWebResultProduct | null;
   product_cluster: BraveSearchWebResultProductClusterItem[] | null;
@@ -3084,7 +3183,9 @@ export interface BraveSearchWebResult {
   content_type: string | null;
   boosted?: boolean;
   organization?: BraveSearchWebResultOrganization;
+  /** Rank of the result on the page, from 1. */
   position: number;
+  /** Thumbnail image. */
   thumbnail: BraveSearchImage | null;
   video: BraveSearchWebResultVideo | null;
 }
@@ -3221,7 +3322,7 @@ export interface BraveSearchWebResultProductClusterItem {
   name: string;
   description?: string;
   description_html?: string;
-  url: string;
+  url?: string;
   price?: string;
   rating?: BraveSearchRating;
   type: string;

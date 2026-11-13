@@ -180,7 +180,7 @@ export interface LinkedinCompanyResponse {
   specialties: string[];
   /** Similar pages (lookalike companies) LinkedIn lists, usually 10, each with its industry. */
   similarPages: LinkedinRelatedPage[];
-  /** Affiliated pages, such as showcase pages and subsidiaries. */
+  /** Affiliated pages: `/company/` links are group companies, `/showcase/` links are brand pages. */
   affiliatedPages: LinkedinRelatedPage[];
   /** The members LinkedIn features as working there. */
   employees: LinkedinCompanyEmployee[];
@@ -303,6 +303,7 @@ export interface LinkedinOrganizationRole {
 export interface LinkedinPostAuthor {
   name: string | null;
   url: string | null;
+  /** The author's follower count; null when LinkedIn shows no exact count. */
   followers: number | null;
   image: string | null;
 }
@@ -367,12 +368,15 @@ export interface LinkedinPostReposter {
 }
 
 export interface LinkedinPostResponse {
+  /** The post's activity URN, `urn:li:activity:<id>`; null on Pulse articles. */
   activityUrn: string | null;
+  /** The URN of the post's content: a share or ugcPost URN. */
   contentUrn: string | null;
   url: string;
   name: string | null;
   headline: string | null;
   commentCount: number | null;
+  /** Reactions of every type on the post. */
   likeCount: number | null;
   /** The up to three most used reaction types, such as `LIKE` and `PRAISE`; LinkedIn shows guests no count per type. */
   reactionTypes: string[];
@@ -388,6 +392,7 @@ export interface LinkedinPostResponse {
   linkPreview: LinkedinPostLinkPreview | null;
   job: LinkedinPostJob | null;
   document: LinkedinPostDocument | null;
+  /** The comments LinkedIn shows guests, up to 10 per call; `commentCount` holds the total. */
   comments: LinkedinPostComment[];
   moreArticles: LinkedinMoreArticle[];
   images: string[];
@@ -411,6 +416,7 @@ export interface LinkedinProfileActivity {
   title: string | null;
   activityType: string | null;
   link: string;
+  /** Reactions of every type on the post. */
   likeCount: number | null;
   commentCount: number | null;
   /** The up to three most used reaction types, such as `LIKE` and `PRAISE`; LinkedIn shows guests no count per type. */
@@ -517,17 +523,22 @@ export interface LinkedinProfileResponse {
   url: string;
   publicIdentifier: string;
   name: string;
+  /** The headline under the name; LinkedIn can hide it from guests. */
   headline: string | null;
   /** The first name LinkedIn uses for the member, such as `Bill`. */
   firstName: string | null;
   /** The rest of `name` after `firstName`. */
   lastName: string | null;
+  /** The profile photo URL. */
   image: string | null;
   location: string | null;
+  /** The follower count. */
   followers: number | null;
+  /** The connection count as LinkedIn prints it, such as `500+`. */
   connections: string | null;
   /** How many people recommended the member; guests see the first two in `recommendations`. */
   recommendationCount: number | null;
+  /** The About section; LinkedIn can hide it from guests. */
   about: string | null;
   /** Profile badges LinkedIn shows guests, such as `Creator` and `Top Voice`. */
   badges: string[];
@@ -558,6 +569,7 @@ export interface LinkedinProfileResponse {
   courses: LinkedinProfileCourse[];
   /** The Volunteer Experience section. */
   volunteering: LinkedinProfileVolunteering[];
+  /** The cover (background) image URL. */
   coverImage: string | null;
 }
 

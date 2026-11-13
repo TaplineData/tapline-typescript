@@ -65,27 +65,39 @@ export interface FacebookListing {
   origin_target_id: string | null;
   shipping_profile_id: string | null;
   shipping_option_ids: string[];
+  /** Listing title. */
   title: string | null;
   base_title: string | null;
   custom_title: string | null;
+  /** Listing description from the seller. */
   description: string | null;
   share_url: string | null;
+  /** Price. */
   price: FacebookMoney | null;
   inventory_count: number | null;
   price_in_cents: number | null;
+  /** List price: the original price before a cut. */
   strikethrough_price: FacebookMoney | null;
   sweepstake_status: string | null;
   friends_visibility: FacebookCode;
   can_share: boolean | null;
+  /** Status: live, pending, sold or hidden. */
   status: FacebookListingStatus;
+  /** Date listed, ISO 8601. */
   created_at: string | null;
+  /** Listing category. */
   category: FacebookListingCategory;
   taxonomy: FacebookListingCategory[];
+  /** Location: city, state, postal code and coordinates. */
   location: FacebookListingLocation;
+  /** Seller: name, ID, photo, joined date and ratings. */
   seller: FacebookListingSellerProfile;
   hashtags: string[];
+  /** Item details, such as the condition. */
   attributes: FacebookListingAttribute[];
+  /** Delivery options, such as local pickup or shipping. */
   delivery_types: FacebookCode[];
+  /** Shipping details. */
   shipping: FacebookListingShipping;
   inventory_type: FacebookCode;
   search_pivots: string[];
@@ -108,25 +120,37 @@ export interface FacebookListingAttribute {
 
 /** One Marketplace result: id and link, title, price and original price (strikethrough_price), status, listing date, category, city and state, seller, delivery types, photo and video. */
 export interface FacebookListingCard {
+  /** Listing ID. */
   id: string | null;
   video_id: string | null;
   product_item_id: string | null;
   feed_story_id: string | null;
+  /** Listing title. */
   title: string | null;
   custom_title: string | null;
   subtitles: string[];
+  /** Link to the listing. */
   share_url: string | null;
+  /** Price. */
   price: FacebookListingCardMoney | null;
   price_in_cents: number | null;
+  /** List price: the original price before a cut. */
   strikethrough_price: FacebookListingCardMoney | null;
+  /** Status: live, pending, sold or hidden. */
   status: FacebookListingCardStatus;
+  /** Date listed, ISO 8601. */
   created_at: string | null;
   category: FacebookListingCardCategory;
+  /** Location: city, state and coordinates. */
   location: FacebookListingCardLocation;
+  /** Seller. */
   seller: FacebookListingCardSeller | null;
+  /** Delivery options, such as local pickup or shipping. */
   delivery_types: FacebookCode[];
   feed_story_type: FacebookCode;
+  /** Main image of the listing. */
   primary_photo: FacebookListingCardPhoto | null;
+  /** Listing images. */
   photos: FacebookListingCardPhoto[];
 }
 
@@ -267,27 +291,39 @@ export interface FacebookListingWithMedia {
   origin_target_id: string | null;
   shipping_profile_id: string | null;
   shipping_option_ids: string[];
+  /** Listing title. */
   title: string | null;
   base_title: string | null;
   custom_title: string | null;
+  /** Listing description from the seller. */
   description: string | null;
   share_url: string | null;
+  /** Price. */
   price: FacebookMoney | null;
   inventory_count: number | null;
   price_in_cents: number | null;
+  /** List price: the original price before a cut. */
   strikethrough_price: FacebookMoney | null;
   sweepstake_status: string | null;
   friends_visibility: FacebookCode;
   can_share: boolean | null;
+  /** Status: live, pending, sold or hidden. */
   status: FacebookListingStatus;
+  /** Date listed, ISO 8601. */
   created_at: string | null;
+  /** Listing category. */
   category: FacebookListingCategory;
   taxonomy: FacebookListingCategory[];
+  /** Location: city, state, postal code and coordinates. */
   location: FacebookListingLocation;
+  /** Seller: name, ID, photo, joined date and ratings. */
   seller: FacebookListingSellerProfile;
   hashtags: string[];
+  /** Item details, such as the condition. */
   attributes: FacebookListingAttribute[];
+  /** Delivery options, such as local pickup or shipping. */
   delivery_types: FacebookCode[];
+  /** Shipping details. */
   shipping: FacebookListingShipping;
   inventory_type: FacebookCode;
   search_pivots: string[];
@@ -300,7 +336,9 @@ export interface FacebookListingWithMedia {
   badges: string[];
   badge_source: string | null;
   badge_image_urls: string[];
+  /** Listing images: every photo with its caption and size. */
   photos: FacebookPhoto[];
+  /** Listing videos with their thumbnails. */
   videos: FacebookVideo[];
 }
 
@@ -390,15 +428,20 @@ export interface FacebookPhoto {
 }
 
 export interface FacebookProfileRef {
+  /** Account ID. */
   id: string | null;
   pfbid: string | null;
   username: string | null;
+  /** Name. */
   name: string | null;
+  /** Profile or page URL. */
   url: string | null;
   is_verified: boolean | null;
+  /** Short name, such as the first name. */
   short_name: string | null;
   account_type: FacebookCode;
   gender: string | null;
+  /** Profile picture URL. */
   profile_picture_url: string | null;
 }
 

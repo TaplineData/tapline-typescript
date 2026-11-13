@@ -416,6 +416,8 @@ export interface IndeedJobCompany {
   is_claimed: boolean | null;
   industry: string | null;
   industry_label: string | null;
+  /** Industry sectors, by name. */
+  sectors: string[];
   size: IndeedCodeLabel;
   revenue: IndeedCodeLabel;
   headquarters: string[];

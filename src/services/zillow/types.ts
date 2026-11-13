@@ -1026,7 +1026,7 @@ export interface ZillowPropertyResoFacts {
 }
 
 export interface ZillowPropertyResponsivePhoto {
-  key?: string;
+  key?: string | null;
   photoKey?: string;
   caption?: string;
   url: string;

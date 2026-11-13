@@ -313,6 +313,7 @@ export interface GetAnalyticsResponse {
   generatedAt?: number | null;
   latestDay?: number | null;
   series?: AnalyticsDay[] | null;
+  hours?: AnalyticsDay[] | null;
   today?: AnalyticsDay | null;
   indexer?: AnalyticsIndexer | null;
   earnings?: AnalyticsEarnings | null;

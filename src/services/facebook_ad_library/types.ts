@@ -38,17 +38,25 @@ export interface FacebookAd {
 
 /** One Ad Library ad: ad archive ID and Ad Library URL, collation ID and collation count (versions of one creative), ad text, ad categories, the advertiser page (page ID, page name, profile URL, profile picture, like count, page categories, is deleted), the creative (images, videos, carousel cards, extra texts, extra links, link URL, display format, call to action text and type), delivery and moderation. */
 export interface FacebookAdCard {
+  /** Ad archive ID: the ad's Ad Library ID. */
   ad_archive_id: string | null;
   ad_id: string | null;
+  /** Ad text: headline, body, caption and link description. */
   text: FacebookAdText;
+  /** Ad Library URL of the ad. */
   url: string | null;
+  /** Advertiser: the page that runs the ad. */
   page: FacebookPage;
   regulation: FacebookAdRegulation;
+  /** Collation ID and count: versions of one creative. */
   collation: FacebookAdCollation;
+  /** Ad categories, such as political or housing. */
   categories: FacebookCode[];
   disclaimer: FacebookAdDisclaimer;
+  /** Media and call to action: images, videos, cards, link and display format. */
   creative: FacebookAdCreative;
   performance: FacebookAdPerformance;
+  /** Ad status, run dates and platforms. */
   delivery: FacebookAdDelivery;
   moderation: FacebookAdModeration;
 }
@@ -72,29 +80,41 @@ export interface FacebookAdCollation {
 
 /** The ad's creative: link, display format, call to action (cta_type), carousel cards, images and videos. */
 export interface FacebookAdCreative {
+  /** Link URL the ad sends people to. */
   link_url: string | null;
   extra_links: string[];
   branded_content: FacebookPage | null;
+  /** Display format, such as `IMAGE`, `VIDEO` or `DCO`. */
   display_format: FacebookCode;
+  /** Call to action type and text, such as `LEARN_MORE` / `Learn more`. */
   cta_type: FacebookCode;
+  /** Carousel cards. */
   cards: FacebookAdCarouselCard[];
   is_reshared: boolean | null;
   root_reshared_post: unknown | null;
   event: unknown | null;
+  /** Ad images. */
   images: FacebookAdImage[];
   extra_images: FacebookAdImage[];
+  /** Ad videos. */
   videos: FacebookAdVideo[];
   extra_videos: FacebookAdVideo[];
 }
 
 /** Ad status and run dates: whether the ad is active (still running), start date, end date (or last seen), total active time, the publisher platforms it runs on, and the targeted or reached countries (EU ads). */
 export interface FacebookAdDelivery {
+  /** Total active time in seconds. */
   total_active_seconds: number | null;
+  /** Ad status: whether the ad is still running. */
   is_active: boolean | null;
+  /** Start date the ad began running, ISO 8601. */
   start_at: string | null;
+  /** End date: when the ad stopped, or the last day seen running. */
   end_at: string | null;
   last_seen_at: string | null;
+  /** Platforms the ad runs on, such as Facebook and Instagram. */
   publisher_platforms: FacebookCode[];
+  /** Countries targeted or reached (EU ads). */
   targeted_or_reached_countries: string[];
 }
 
@@ -193,9 +213,13 @@ export interface FacebookAdSearchPage {
 
 /** The ad's copy: headline (title), ad text (body), link caption and link description. */
 export interface FacebookAdText {
+  /** Ad title (headline). */
   title: string | null;
+  /** Ad text (body copy). */
   body: string | null;
+  /** Link caption, such as the site's domain. */
   caption: string | null;
+  /** Link description under the headline. */
   link_description: string | null;
   extra_texts: string[];
 }
@@ -426,28 +450,39 @@ export interface FacebookMoneyRange {
 
 /** A page or public profile: page ID (the id the Ad Library takes) and profile ID, username, name, link and Ad Library link, followers, following, likes and talking about, verified badge and active business page, tabs, category, profile picture and cover photo. */
 export interface FacebookPage {
+  /** Page ID: the id the Ad Library takes. */
   page_id: string | null;
+  /** Profile ID of the page or public profile. */
   profile_id: string | null;
+  /** Username (vanity name) in the page link. */
   username?: string | null;
   story_bucket_ids?: string[];
+  /** Page name. */
   name: string | null;
+  /** Link to the page. */
   url: string | null;
+  /** Link to the page's ads in the Ad Library. */
   ad_library_url?: string | null;
+  /** Audience counts: followers, following, likes and talking about. */
   metrics: FacebookPageMetrics;
   status: FacebookPageStatus;
   instagram?: FacebookInstagramAccount | null;
   tabs?: FacebookPageTab[];
+  /** Page category. */
   category?: string | null;
   entity_type?: FacebookCode;
+  /** Verified badge. */
   verification?: FacebookCode;
   alternate_name?: string | null;
   gender?: FacebookCode;
   profile_type_transition?: FacebookCode;
   social_context?: FacebookSocialContextItem[];
   legal?: FacebookPageLegal;
+  /** Profile picture (photo) URL. */
   profile_picture_url?: string | null;
   profile_photo?: FacebookPhoto;
   profile_pictures?: FacebookImage[];
+  /** Cover photo. */
   cover_photo?: FacebookCoverPhoto | null;
 }
 
@@ -470,10 +505,15 @@ export interface FacebookPageLegal {
 }
 
 export interface FacebookPageMetrics {
+  /** Page likes. */
   like_count?: number | null;
+  /** Followers, exact. */
   follower_count?: number | null;
+  /** People talking about the page. */
   talking_about_count?: number | null;
+  /** Followers, rounded as Facebook prints them. */
   follower_count_approx?: number | null;
+  /** Accounts the page follows, rounded as Facebook prints them. */
   following_count_approx?: number | null;
 }
 

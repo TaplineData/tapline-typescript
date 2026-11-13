@@ -312,8 +312,8 @@ export interface TwitterPost {
   is_reply: boolean;
   /** Is quote: the post quotes another post. */
   is_quote: boolean;
-  /** Is repost: always false on `/user-tweets`, whose window holds the account's original posts only. */
-  is_repost?: boolean;
+  /** Is repost: always false, since the logged-out x.com pages this API reads hold original posts only. */
+  is_repost: boolean;
   /** Is note post: true for a long post (an X Note), whose full text is in `text` and whose note is `note_id`. */
   is_note_post: boolean;
   /** Edited: the post has more than one version. */
@@ -495,8 +495,8 @@ export interface TwitterTweetResponse {
   is_reply: boolean;
   /** Is quote: the post quotes another post. */
   is_quote: boolean;
-  /** Is repost: always false on `/user-tweets`, whose window holds the account's original posts only. */
-  is_repost?: boolean;
+  /** Is repost: always false, since the logged-out x.com pages this API reads hold original posts only. */
+  is_repost: boolean;
   /** Is note post: true for a long post (an X Note), whose full text is in `text` and whose note is `note_id`. */
   is_note_post: boolean;
   /** Edited: the post has more than one version. */
