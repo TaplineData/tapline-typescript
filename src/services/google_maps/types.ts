@@ -220,6 +220,7 @@ export interface GoogleMapsContributorSummary {
   photo_count: number | null;
   local_guide_level: number | null;
   is_local_guide: boolean | null;
+  /** Profile picture; a business owner's is the business logo. */
   avatar_url: string | null;
 }
 
@@ -707,63 +708,94 @@ export interface GoogleMapsPhotosQuery {
  */
 export interface GoogleMapsPlace {
   feature_id: string | null;
+  /** Customer id (CID): Google's decimal place number. */
   cid: string | null;
   place_id: string | null;
+  /** Knowledge Graph id, `/g/…` or `/m/…`. */
   kgmid: string | null;
+  /** Google Business Profile id. */
   business_profile_id: string | null;
   name: string | null;
+  /** The name in the local language, where it differs. */
   native_name: string | null;
   address: string | null;
   description: string | null;
   short_description: string | null;
   description_paragraphs: string[];
   long_description: string | null;
+  /** Card details: the line Maps shows under the name. */
   card_text: string | null;
   name_language: string | null;
   native_name_language: string | null;
   url: string | null;
+  /** Reviews link: the place's Google reviews page. */
   reviews_url: string | null;
+  /** Directions link: Google Maps directions to the place. */
+  directions_url: string | null;
+  /** Knowledge Graph link: the Google Search page of `kgmid`. */
+  knowledge_graph_url: string | null;
   website: GoogleMapsLink | null;
   phone: GoogleMapsPhone | null;
+  /** Booking links to the place's own reservation pages. */
   reservation_links: GoogleMapsLink[];
+  /** Booking and order links: reserve a table, book online, order online. */
   action_links: GoogleMapsActionLink[];
   claim_url: string | null;
+  /** Hotel price for a night, or the place's price text. */
   price: GoogleMapsMoney | null;
+  /** Price level, such as `$$`. */
   price_level: string | null;
   rating: number | null;
   review_count: number | null;
+  /** Rating distribution: reviews per star. */
   rating_counts: GoogleMapsRatingCount[];
   photo_count: number | null;
+  /** Hours today, as Maps shows them: `Open · Closes 11 PM`. */
   open_status: string | null;
+  /** Open now: open, closing soon or closed. */
   open_state: GoogleMapsCode;
   open_state_changes_at: string | null;
+  /** Opening hours for each day of the coming week. */
   hours: GoogleMapsDayHours[];
+  /** Service hours, such as delivery, takeout, brunch or happy hours. */
   secondary_hours: GoogleMapsSecondaryHours[];
+  /** Status: operational, temporarily closed or permanently closed. */
   business_status: GoogleMapsCode;
   is_operating_business: boolean | null;
+  /** Claimed: the business manages its Google profile. */
   is_claimed: boolean;
   notices: GoogleMapsNotice[];
   notice_summaries: string[];
   posting_restrictions: GoogleMapsPostingRestriction[];
   location: GoogleMapsPlaceLocation;
+  /** The owner: owner id, owner name, owner link and the business logo in `avatar_url`. */
   owner: GoogleMapsContributorSummary | null;
+  /** Parent place, such as the mall a store is in. */
   located_in: GoogleMapsPlaceSummary | null;
   area: GoogleMapsPlaceArea | null;
   containing_regions: GoogleMapsContainingRegion[];
+  /** Child places, such as a mall's stores. */
   places_inside: GoogleMapsPlaceInside[];
   directory_categories: GoogleMapsDirectoryCategory[];
   top_reviews: GoogleMapsReview[];
+  /** Review snippets Maps quotes for the place. */
   review_quotes: GoogleMapsReviewQuote[];
   partner_reviews: GoogleMapsPartnerReviews[];
+  /** Review tags: topics reviews mention, with counts. */
   review_topics: GoogleMapsReviewTopic[];
+  /** Main category first, then more categories. */
   categories: string[];
+  /** Category id of the main category, such as `restaurant`. */
   category_gcids: string[];
   result_type: string | null;
   result_type_tags: string[];
   place_kind: GoogleMapsCode;
   commerce_kind: GoogleMapsCode;
+  /** About: attribute groups such as accessibility (wheelchair access), service options, amenities and payments. Search results carry fewer groups than the place route. */
   attributes: GoogleMapsAttributeGroup[];
+  /** From the business: lines such as `LGBTQ+ friendly` or `Identifies as women-owned`. */
   highlights: GoogleMapsHighlight[];
+  /** Hotel class, offers and amenities; null for a place that is not lodging. */
   hotel: GoogleMapsHotel | null;
   travel_times: GoogleMapsTravelTime[];
   photos: GoogleMapsPhoto[];
@@ -807,20 +839,32 @@ export interface GoogleMapsPlaceInside {
 export interface GoogleMapsPlaceLocation {
   building_feature_id: string | null;
   address_lines: string[];
+  /** Street and house number. */
   street: string | null;
+  /** Neighbourhood. */
   neighborhood: string | null;
   city: string | null;
   postal_code: string | null;
+  /** Region: state, province or first-level area. */
   state: string | null;
+  /** County or second-level area. */
+  county: string | null;
+  /** City line of the address, such as `New York, NY`. */
   locality: string | null;
+  /** Country name, in the answer's language. */
   country: string | null;
+  /** ISO 3166-1 alpha-2 country code. */
   country_code: string | null;
+  /** Local plus code. */
   plus_code: string | null;
+  /** Global plus code. */
   global_plus_code: string | null;
   address_with_name: string | null;
   latitude: number | null;
   longitude: number | null;
+  /** IANA time zone. */
   time_zone: string | null;
+  /** Entry point. */
   entrance: GoogleMapsCoordinates | null;
   alternate_point: GoogleMapsCoordinates | null;
   floor: string | null;
@@ -973,11 +1017,12 @@ export interface GoogleMapsReverseGeocode {
   query: GoogleMapsCoordinateQuery;
 }
 
-/** `author` is the reviewer: contributor id, name, profile link, picture, review and photo counts and Local Guide flag. `owner_response` is the owner's reply, `photos` the photos in the review and `details` its guided answers (food, service). */
+/** `author` is the reviewer: contributor id, name, profile link, picture, review and photo counts and Local Guide flag. `owner_response` is the owner reply, `photos` the review photos with their captions and `details` the review details: guided answers (food, service). */
 export interface GoogleMapsReview {
   review_id: string | null;
   text: string | null;
   preview_text: string | null;
+  /** Review language code, such as `en`. */
   language: string | null;
   original_language_name: string | null;
   translated_text: string | null;
@@ -987,10 +1032,13 @@ export interface GoogleMapsReview {
   report_url: string | null;
   rating: number | null;
   max_rating: number | null;
+  /** Helpful count: how many people marked the review helpful. */
   like_count: number | null;
   reaction_counts: GoogleMapsReviewReaction[];
+  /** Published at, ISO 8601. */
   created_at: string | null;
   edited_at: string | null;
+  /** Published ago, such as `2 weeks ago`. */
   relative_date: string | null;
   author: GoogleMapsContributorSummary | null;
   place: GoogleMapsPlaceSummary | null;
@@ -1021,6 +1069,7 @@ export interface GoogleMapsReviewOwnerResponse {
   language: string | null;
   report_url: string | null;
   created_at: string | null;
+  /** Owner reply ago, such as `a week ago`. */
   relative_date: string | null;
 }
 
@@ -1058,6 +1107,7 @@ export interface GoogleMapsReviewTopic {
   mention_breakdown: GoogleMapsTopicMentionCount[];
 }
 
+/** Up to `limit` reviews a page (1 to 60, default 20) in `sort` order; `pagination.next_cursor` asks for the next page. The place's overall rating and review count come from `/v1/google-maps/places/{feature_id}`. */
 export interface GoogleMapsReviewsPage {
   reviews: GoogleMapsReview[];
   query: GoogleMapsReviewsQuery;
@@ -1136,6 +1186,7 @@ export interface GoogleMapsSearchMeta {
   offset: number;
 }
 
+/** Up to `limit` places a page (1 to 100, default 20); `pagination.next_cursor` asks for the next page. Google sends no total count. */
 export interface GoogleMapsSearchPage {
   results: GoogleMapsPlace[];
   searched_area: GoogleMapsSearchArea | null;

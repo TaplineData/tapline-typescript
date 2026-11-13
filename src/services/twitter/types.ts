@@ -185,6 +185,7 @@ export interface TwitterCommunityImage {
 }
 
 export interface TwitterCommunityReference {
+  /** Community ID: the X Community the post was shared in. */
   id: string;
   name?: string;
   url: string;
@@ -227,20 +228,28 @@ export interface TwitterEntities {
 export interface TwitterMedia {
   id?: string;
   source_post_id?: string;
+  /** Alt text the author wrote for the image. */
   alt_text?: string;
   expanded_url?: string;
   tco_url?: string;
   availability?: string;
   allow_download?: boolean;
+  /** Tagged people: the accounts tagged in the photo. */
   tags?: TwitterMediaTag[];
   source_user?: TwitterUser;
+  /** Media type: `photo`, `video` or `animated_gif`. */
   type?: string;
   indices?: number[];
+  /** Dimensions: the media's original width in pixels. */
   width?: number;
+  /** Dimensions: the media's original height in pixels. */
   height?: number;
   monetizable?: boolean;
+  /** Video duration in milliseconds. */
   duration_millis?: number;
+  /** Image URL; for a video or GIF, its thumbnail. */
   media_url?: string;
+  /** Video: the video or GIF files, one per format and bitrate. */
   variants?: TwitterVideoVariant[];
 }
 
@@ -250,23 +259,39 @@ export interface TwitterMediaTag {
   type?: string;
 }
 
-/** An X post: text, like, repost, reply, quote, bookmark and view counts, media, links, and its author's full account with follower and following counts. */
+/** An X post: post type, text, like, repost, reply, quote, bookmark and view counts, media, links, and its author's full account with follower and following counts. */
 export interface TwitterPost {
+  /** Post ID: the post's numeric X id. */
   id: string;
+  /** Conversation ID: the id of the thread's first post. */
   conversation_id?: string;
+  /** Note post: the id of the X Note that holds a long post's full text; set on long posts only. */
   note_id?: string;
+  /** Edit post IDs: the ids of every version of the post, oldest first. */
   edit_history_ids?: string[];
+  /** Text: the post's full text; for a long post, its whole Note. */
   text?: string;
+  /** The shorter text X shows before a long post is expanded. */
   preview_text?: string;
+  /** Language: the language code X detected for the text. */
   language?: string;
+  /** Post URL on x.com. */
   url?: string;
+  /** Like count. */
   favorite_count?: number;
+  /** Quote count. */
   quote_count?: number;
+  /** Reply count. */
   reply_count?: number;
+  /** Repost count. */
   retweet_count?: number;
+  /** Bookmark count. */
   bookmark_count?: number;
+  /** View count; left out when X shows no count. */
   view_count?: number;
+  /** Possibly sensitive: X marks the post's media as possibly sensitive. */
   possibly_sensitive?: boolean;
+  /** Created at: when the post was sent, ISO 8601 UTC. */
   created_at: string;
   author?: TwitterUser;
   entities: TwitterEntities;
@@ -277,15 +302,33 @@ export interface TwitterPost {
   cashtag_attachments?: TwitterCashtagAttachment[];
   community?: TwitterCommunityReference;
   preview_entities?: TwitterEntities;
+  /** Display text range: the start and end of the text X displays. */
   display_text_range?: number[];
+  /** Post type: `reply` when it answers another post, else `quote` when it quotes one, else `post`. */
+  post_type: TwitterPostPostType;
+  /** Is pinned: the account pinned this post to its profile. */
   is_pinned?: boolean;
+  /** Is reply: the post answers another post. */
   is_reply: boolean;
+  /** Is quote: the post quotes another post. */
   is_quote: boolean;
+  /** Is repost: always false on `/user-tweets`, whose window holds the account's original posts only. */
+  is_repost?: boolean;
+  /** Is note post: true for a long post (an X Note), whose full text is in `text` and whose note is `note_id`. */
+  is_note_post: boolean;
+  /** Edited: the post has more than one version. */
   is_edited?: boolean;
+  /** Is paid promotion: the author marked the post as a paid promotion. */
   is_paid_promotion?: boolean;
+  /** The post's media is marked as AI-generated. */
   has_ai_generated_media?: boolean;
+  /** Has video: true when `media` holds a video; animated GIFs do not count. */
+  has_video?: boolean;
+  /** Media: images, and videos with their thumbnail, duration and files. */
   media?: TwitterMedia[];
 }
+
+export type TwitterPostPostType = "post" | "reply" | "quote";
 
 export interface TwitterPostReference {
   id: string;
@@ -293,41 +336,82 @@ export interface TwitterPostReference {
 }
 
 export interface TwitterProfileResponse {
+  /** User ID: the account's numeric X id. */
   id: string;
+  /** Username: the X handle, without the @. */
   handle?: string;
+  /** Pinned post IDs: the post the account pinned to its profile. */
   pinned_post_ids?: string[];
+  /** Name: the account's display name. */
   name?: string;
+  /** Bio: the profile description. */
   bio?: string;
+  /** Profile URL on x.com. */
   url?: string;
+  /** Website: the link in the profile's website field. */
   website_urls?: TwitterProfileUrl[];
+  /** Followers: how many accounts follow this one. */
   follower_count?: number;
+  /** Following: how many accounts this one follows. */
   following_count?: number;
+  /** Posts count: the account's posts, replies and reposts. */
   post_count?: number;
+  /** Media count: how many of the account's posts hold a photo or video. */
+  media_count?: number;
+  /** Subscribers to the account's paid subscription. */
   subscriber_count?: number;
+  /** Creator subscriptions: paid subscriptions the account holds. */
   creator_subscription_count?: number;
+  /** Highlights count: posts the account added to its Highlights tab. */
   highlighted_post_count?: number;
+  /** Seed post count X reports for the account. */
   user_seed_post_count?: number;
+  /** Business affiliates count: accounts affiliated with this business account. */
   business_affiliate_count?: number;
+  /** Protected: true when only approved followers see the account's posts. */
   is_protected?: boolean;
+  /** Possibly sensitive: X marks the account's media as possibly sensitive. */
   possibly_sensitive?: boolean;
+  /** Blue verified: the account has the blue checkmark (X Premium). */
   is_blue_verified?: boolean;
+  /** Legacy verified: the account kept a legacy verification checkmark. */
   is_verified?: boolean;
+  /** Verification reason: X's text on why the account is verified. */
   verification_reason?: string;
+  /** Hidden subscriptions: the account hides its subscriptions on its profile. */
   has_hidden_subscriptions?: boolean;
+  /** Can highlight posts: the account can add posts to a Highlights tab. */
   can_highlight_posts?: boolean;
+  /** Account created: when the account joined X, ISO 8601 UTC. */
   created_at?: string;
+  /** Verified since: when the account's verification started, ISO 8601 UTC. */
   verified_at?: string;
   birth_date?: TwitterBirthDate;
+  /** Location: the free-text location on the profile. */
   location?: string;
   bio_entities?: TwitterBioEntities;
   identity_label?: TwitterUserLabel;
+  /** Verified type (account type): `Business` or `Government` for a gold or grey checkmark. */
   verified_type?: string;
+  /** Professional account type, `Business` or `Creator`; left out for a personal account. */
+  professional_type?: string;
+  /** Professional categories the account picked, such as `Science & Technology`. */
+  professional_categories?: string[];
+  /** Translator type: the account's X translator role, `none` for most accounts. */
   translator_type?: string;
+  /** Super follow eligible: the account can offer paid subscriptions. */
   is_super_follow_eligible?: boolean;
+  /** Parody label: `Parody`, `Commentary`, `Fan` or `None`. */
   parody_commentary_fan_label?: string;
+  /** Profile translatable: X offers a translation of the bio. */
   is_profile_translatable?: boolean;
+  /** Default profile image: true when the account keeps X's anonymous default picture. */
+  has_default_profile_image?: boolean;
+  /** Profile image shape: `Circle`, or `Square` for a business account. */
   profile_image_shape?: string;
+  /** Profile picture URL. */
   profile_image_url?: string;
+  /** Banner image URL. */
   banner_url?: string;
 }
 
@@ -338,8 +422,11 @@ export interface TwitterProfileUrl {
 }
 
 export interface TwitterReplyReference {
+  /** Replied-to post: the id of the post this one answers. */
   post_id: string;
+  /** In reply to: the id of the account this post answers. */
   user_id?: string;
+  /** In reply to: the handle of the account this post answers. */
   handle?: string;
   created_at: string;
   author?: TwitterUser;
@@ -357,21 +444,37 @@ export interface TwitterTextEntity {
 }
 
 export interface TwitterTweetResponse {
+  /** Post ID: the post's numeric X id. */
   id: string;
+  /** Conversation ID: the id of the thread's first post. */
   conversation_id?: string;
+  /** Note post: the id of the X Note that holds a long post's full text; set on long posts only. */
   note_id?: string;
+  /** Edit post IDs: the ids of every version of the post, oldest first. */
   edit_history_ids?: string[];
+  /** Text: the post's full text; for a long post, its whole Note. */
   text?: string;
+  /** The shorter text X shows before a long post is expanded. */
   preview_text?: string;
+  /** Language: the language code X detected for the text. */
   language?: string;
+  /** Post URL on x.com. */
   url?: string;
+  /** Like count. */
   favorite_count?: number;
+  /** Quote count. */
   quote_count?: number;
+  /** Reply count. */
   reply_count?: number;
+  /** Repost count. */
   retweet_count?: number;
+  /** Bookmark count. */
   bookmark_count?: number;
+  /** View count; left out when X shows no count. */
   view_count?: number;
+  /** Possibly sensitive: X marks the post's media as possibly sensitive. */
   possibly_sensitive?: boolean;
+  /** Created at: when the post was sent, ISO 8601 UTC. */
   created_at: string;
   author?: TwitterUser;
   entities: TwitterEntities;
@@ -382,15 +485,33 @@ export interface TwitterTweetResponse {
   cashtag_attachments?: TwitterCashtagAttachment[];
   community?: TwitterCommunityReference;
   preview_entities?: TwitterEntities;
+  /** Display text range: the start and end of the text X displays. */
   display_text_range?: number[];
+  /** Post type: `reply` when it answers another post, else `quote` when it quotes one, else `post`. */
+  post_type: TwitterTweetResponsePostType;
+  /** Is pinned: the account pinned this post to its profile. */
   is_pinned?: boolean;
+  /** Is reply: the post answers another post. */
   is_reply: boolean;
+  /** Is quote: the post quotes another post. */
   is_quote: boolean;
+  /** Is repost: always false on `/user-tweets`, whose window holds the account's original posts only. */
+  is_repost?: boolean;
+  /** Is note post: true for a long post (an X Note), whose full text is in `text` and whose note is `note_id`. */
+  is_note_post: boolean;
+  /** Edited: the post has more than one version. */
   is_edited?: boolean;
+  /** Is paid promotion: the author marked the post as a paid promotion. */
   is_paid_promotion?: boolean;
+  /** The post's media is marked as AI-generated. */
   has_ai_generated_media?: boolean;
+  /** Has video: true when `media` holds a video; animated GIFs do not count. */
+  has_video?: boolean;
+  /** Media: images, and videos with their thumbnail, duration and files. */
   media?: TwitterMedia[];
 }
+
+export type TwitterTweetResponsePostType = "post" | "reply" | "quote";
 
 export interface TwitterUnavailableUser {
   id: string;
@@ -399,48 +520,90 @@ export interface TwitterUnavailableUser {
 
 export interface TwitterUrlEntity {
   display_url?: string;
+  /** Expanded URL: the full link behind the t.co link. */
   expanded_url?: string;
   url?: string;
   indices?: number[];
 }
 
-/** An X account: bio, website and bio links, location, verification, profile and banner images, and follower, following and post counts. */
+/** An X account: bio, website and bio links, location, verification, profile and banner images, follower, following and post counts, media count, and professional type and categories. */
 export interface TwitterUser {
+  /** User ID: the account's numeric X id. */
   id: string;
+  /** Username: the X handle, without the @. */
   handle?: string;
+  /** Pinned post IDs: the post the account pinned to its profile. */
   pinned_post_ids?: string[];
+  /** Name: the account's display name. */
   name?: string;
+  /** Bio: the profile description. */
   bio?: string;
+  /** Profile URL on x.com. */
   url?: string;
+  /** Website: the link in the profile's website field. */
   website_urls?: TwitterProfileUrl[];
+  /** Followers: how many accounts follow this one. */
   follower_count?: number;
+  /** Following: how many accounts this one follows. */
   following_count?: number;
+  /** Posts count: the account's posts, replies and reposts. */
   post_count?: number;
+  /** Media count: how many of the account's posts hold a photo or video. */
+  media_count?: number;
+  /** Subscribers to the account's paid subscription. */
   subscriber_count?: number;
+  /** Creator subscriptions: paid subscriptions the account holds. */
   creator_subscription_count?: number;
+  /** Highlights count: posts the account added to its Highlights tab. */
   highlighted_post_count?: number;
+  /** Seed post count X reports for the account. */
   user_seed_post_count?: number;
+  /** Business affiliates count: accounts affiliated with this business account. */
   business_affiliate_count?: number;
+  /** Protected: true when only approved followers see the account's posts. */
   is_protected?: boolean;
+  /** Possibly sensitive: X marks the account's media as possibly sensitive. */
   possibly_sensitive?: boolean;
+  /** Blue verified: the account has the blue checkmark (X Premium). */
   is_blue_verified?: boolean;
+  /** Legacy verified: the account kept a legacy verification checkmark. */
   is_verified?: boolean;
+  /** Verification reason: X's text on why the account is verified. */
   verification_reason?: string;
+  /** Hidden subscriptions: the account hides its subscriptions on its profile. */
   has_hidden_subscriptions?: boolean;
+  /** Can highlight posts: the account can add posts to a Highlights tab. */
   can_highlight_posts?: boolean;
+  /** Account created: when the account joined X, ISO 8601 UTC. */
   created_at?: string;
+  /** Verified since: when the account's verification started, ISO 8601 UTC. */
   verified_at?: string;
   birth_date?: TwitterBirthDate;
+  /** Location: the free-text location on the profile. */
   location?: string;
   bio_entities?: TwitterBioEntities;
   identity_label?: TwitterUserLabel;
+  /** Verified type (account type): `Business` or `Government` for a gold or grey checkmark. */
   verified_type?: string;
+  /** Professional account type, `Business` or `Creator`; left out for a personal account. */
+  professional_type?: string;
+  /** Professional categories the account picked, such as `Science & Technology`. */
+  professional_categories?: string[];
+  /** Translator type: the account's X translator role, `none` for most accounts. */
   translator_type?: string;
+  /** Super follow eligible: the account can offer paid subscriptions. */
   is_super_follow_eligible?: boolean;
+  /** Parody label: `Parody`, `Commentary`, `Fan` or `None`. */
   parody_commentary_fan_label?: string;
+  /** Profile translatable: X offers a translation of the bio. */
   is_profile_translatable?: boolean;
+  /** Default profile image: true when the account keeps X's anonymous default picture. */
+  has_default_profile_image?: boolean;
+  /** Profile image shape: `Circle`, or `Square` for a business account. */
   profile_image_shape?: string;
+  /** Profile picture URL. */
   profile_image_url?: string;
+  /** Banner image URL. */
   banner_url?: string;
 }
 

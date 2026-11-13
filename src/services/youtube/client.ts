@@ -6,13 +6,13 @@ import type { ChannelResponse, ChannelVideosResponse, CommentsResponse, FormatsR
 export class YoutubeClient {
   constructor(private readonly base: BaseClient) {}
 
-  /** Get a channel's profile and statistics. Costs 3 credits. */
+  /** Get a channel's profile, About panel links and statistics. Costs 3 credits. */
   async getChannel(params: GetChannelParams): Promise<ChannelResponse> {
     const { channel_id } = params;
     return this.base.get<ChannelResponse>(`/v1/youtube/channels/${encodeURIComponent(channel_id)}`);
   }
 
-  /** Get recent videos from a channel. Costs 3 credits. */
+  /** Get a channel's videos, newest first: 30 per page, 48 for Shorts. Costs 3 credits. */
   async getChannelVideos(params: GetChannelVideosParams): Promise<ChannelVideosResponse> {
     const { channel_id, ...query } = params;
     return this.base.get<ChannelVideosResponse>(`/v1/youtube/channels/${encodeURIComponent(channel_id)}/videos`, query);

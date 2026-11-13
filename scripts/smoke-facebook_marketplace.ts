@@ -8,7 +8,7 @@ import type { AnySchema } from 'ajv';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 
 import type { TaplineClient } from '../src/index.js';
-import type { GetMarketplaceListingParams, ListMarketplaceCategoryListingsParams, ListMarketplaceFeedParams, ListMarketplaceListingPhotosParams, ListMarketplaceRentalsParams, SearchMarketplaceLocationsParams, SearchMarketplaceParams } from '../src/services/facebook_marketplace/types.js';
+import type { GetMarketplaceListingParams, GetMarketplaceListingWithMediaParams, ListMarketplaceCategoryListingsParams, ListMarketplaceFeedParams, ListMarketplaceListingPhotosParams, ListMarketplaceRentalsParams, SearchMarketplaceLocationsParams, SearchMarketplaceParams } from '../src/services/facebook_marketplace/types.js';
 import { TaplineError } from '../src/errors.js';
 import { typeAt, unknownKeys, valueAt } from './schema-walk.js';
 
@@ -36,6 +36,7 @@ const METHODS: Record<string, Method> = {
   search_marketplace: { response: 'FacebookListingsPage', isArray: false, call: (c, i) => c.facebookMarketplace.searchMarketplace(i.params as unknown as SearchMarketplaceParams) },
   get_marketplace_listing: { response: 'FacebookListing', isArray: false, call: (c, i) => c.facebookMarketplace.getMarketplaceListing(i.params as unknown as GetMarketplaceListingParams) },
   list_marketplace_listing_photos: { response: 'FacebookListingPhotos', isArray: false, call: (c, i) => c.facebookMarketplace.listMarketplaceListingPhotos(i.params as unknown as ListMarketplaceListingPhotosParams) },
+  get_marketplace_listing_with_media: { response: 'FacebookListingWithMedia', isArray: false, call: (c, i) => c.facebookMarketplace.getMarketplaceListingWithMedia(i.params as unknown as GetMarketplaceListingWithMediaParams) },
   search_marketplace_locations: { response: 'FacebookMarketplaceLocations', isArray: false, call: (c, i) => c.facebookMarketplace.searchMarketplaceLocations(i.params as unknown as SearchMarketplaceLocationsParams) },
   list_marketplace_rentals: { response: 'FacebookRentalsMap', isArray: false, call: (c, i) => c.facebookMarketplace.listMarketplaceRentals(i.params as unknown as ListMarketplaceRentalsParams) },
 };

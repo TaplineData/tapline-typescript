@@ -8,7 +8,7 @@ import type { AnySchema } from 'ajv';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 
 import type { TaplineClient } from '../src/index.js';
-import type { GetEventAboutParams, GetEventParams, GetGroupAboutParams, GetGroupParams, GetPageAboutParams, GetPageIntroParams, GetPageParams, GetPhotoParams, GetPostParams, GetReelParams, GetVideoParams, ListCityEventsParams, ListCommentRepliesParams, ListCommentsParams, ListGroupEventsParams, ListGroupPhotosParams, ListGroupPostsParams, ListHashtagPostsParams, ListPageEventsParams, ListPageFollowersParams, ListPageFollowingParams, ListPagePhotosParams, ListPagePostsParams, ListPageVideosParams, LookUpPageParams, ResolveUrlParams, SearchEventsParams, SearchVideosParams } from '../src/services/facebook/types.js';
+import type { GetEventAboutParams, GetEventParams, GetGroupAboutParams, GetGroupParams, GetPageAboutParams, GetPageByUrlParams, GetPageIntroParams, GetPageParams, GetPhotoParams, GetPostParams, GetReelParams, GetVideoParams, ListCityEventsParams, ListCommentRepliesParams, ListCommentsParams, ListGroupEventsParams, ListGroupPhotosParams, ListGroupPostsParams, ListHashtagPostsParams, ListPageEventsParams, ListPageFollowersParams, ListPageFollowingParams, ListPagePhotosParams, ListPagePostsParams, ListPageVideosParams, LookUpPageParams, ResolveUrlParams, SearchEventsParams, SearchVideosParams } from '../src/services/facebook/types.js';
 import { TaplineError } from '../src/errors.js';
 import { typeAt, unknownKeys, valueAt } from './schema-walk.js';
 
@@ -42,6 +42,7 @@ const METHODS: Record<string, Method> = {
   list_group_photos: { response: 'FacebookGroupPhotosPage', isArray: false, call: (c, i) => c.facebook.listGroupPhotos(i.params as unknown as ListGroupPhotosParams) },
   list_group_posts: { response: 'FacebookPostsPage', isArray: false, call: (c, i) => c.facebook.listGroupPosts(i.params as unknown as ListGroupPostsParams) },
   list_hashtag_posts: { response: 'FacebookHashtagPosts', isArray: false, call: (c, i) => c.facebook.listHashtagPosts(i.params as unknown as ListHashtagPostsParams) },
+  get_page_by_url: { response: 'FacebookPageProfile', isArray: false, call: (c, i) => c.facebook.getPageByUrl(i.params as unknown as GetPageByUrlParams) },
   look_up_page: { response: 'FacebookPageSummary', isArray: false, call: (c, i) => c.facebook.lookUpPage(i.params as unknown as LookUpPageParams) },
   list_page_videos: { response: 'FacebookPageVideosPage', isArray: false, call: (c, i) => c.facebook.listPageVideos(i.params as unknown as ListPageVideosParams) },
   get_page: { response: 'FacebookPage', isArray: false, call: (c, i) => c.facebook.getPage(i.params as unknown as GetPageParams) },

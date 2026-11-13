@@ -26,7 +26,7 @@ export class InstagramClient {
     return this.base.get<InstagramCommentsResponse>('/v1/instagram/post/comments', { ...params });
   }
 
-  /** Returns normalized profile data and recent posts. `recent_posts_status` distinguishes available, private, and unavailable timelines. `trim` is accepted for compatibility and does not remove fields. Costs 3 credits. */
+  /** Returns an account's profile with its 12 newest posts, 12 newest reels and story highlights. Costs 3 credits. */
   async getProfile(params: GetProfileParams): Promise<InstagramProfileResponse> {
     return this.base.get<InstagramProfileResponse>('/v1/instagram/profile', { ...params });
   }
@@ -56,7 +56,7 @@ export class InstagramClient {
     return this.base.get<InstagramHighlightsResponse>('/v1/instagram/user/highlights', { ...params });
   }
 
-  /** Returns normalized profile and post data. Pass `pagination.next_cursor` as `next_max_id` while `pagination.has_more` is true. `trim` is accepted for compatibility and does not remove fields. Costs 3 credits. */
+  /** Returns 12 posts per page with their authors; pass `pagination.next_cursor` as `next_max_id` for the next page. Costs 3 credits. */
   async getUserPosts(params: GetUserPostsParams): Promise<InstagramUserPostsResponse> {
     return this.base.get<InstagramUserPostsResponse>('/v1/instagram/user/posts', { ...params });
   }

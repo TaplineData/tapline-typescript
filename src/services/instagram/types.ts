@@ -208,6 +208,7 @@ export interface InstagramCaption {
   id?: string | null;
   author_id?: string | null;
   media_id?: string | null;
+  /** Text of the caption. */
   text: string;
   translated_text?: string | null;
   status?: string | null;
@@ -215,6 +216,7 @@ export interface InstagramCaption {
   hashtags?: string[];
   mentions?: string[];
   content_type?: string | null;
+  /** Edited: the caption was changed after posting. */
   is_edited?: boolean | null;
   has_translation?: boolean | null;
 }
@@ -247,6 +249,13 @@ export interface InstagramDescription {
 
 export interface InstagramEmbedResponse {
   html: string;
+}
+
+/** The Facebook page linked to an Instagram account (its Facebook link). */
+export interface InstagramFacebookPage {
+  id: string;
+  name?: string | null;
+  url?: string | null;
 }
 
 export interface InstagramHighlight {
@@ -296,14 +305,19 @@ export interface InstagramMedia {
   alt_text?: string | null;
   commerciality_status?: string | null;
   tagged_users?: InstagramTag[] | null;
+  /** Image or video. */
   type: InstagramMediaType;
   width?: number | null;
   height?: number | null;
+  /** Video duration in seconds. */
   duration_seconds?: number | null;
+  /** Has audio: the video has a sound track. */
   has_audio?: boolean | null;
   is_download_eligible?: boolean | null;
   preview_placeholder?: string | null;
+  /** Image: the photo, or a video's cover (thumbnail), in each size Instagram sends. */
   images: InstagramMediaImage[];
+  /** Video files, in each size Instagram sends. */
   videos: InstagramVideo[];
   audio_url?: string | null;
 }
@@ -321,13 +335,18 @@ export type InstagramMediaType = "image" | "video";
 
 /** A post's engagement and analytics: like, comment, play and view counts. */
 export interface InstagramMetrics {
+  /** Like count. */
   like_count?: number | null;
+  /** Comment count. */
   comment_count?: number | null;
+  /** View count: the video's plays. */
   play_count?: number | null;
+  /** Instagram view count: the video's plays on Instagram alone. */
   instagram_play_count?: number | null;
   facebook_play_count?: number | null;
   facebook_like_count?: number | null;
   facebook_comment_count?: number | null;
+  /** View count Instagram sends beside the plays, when it sends one. */
   view_count?: number | null;
   repost_count?: number | null;
   remix_count?: number | null;
@@ -353,35 +372,49 @@ export interface InstagramPopularSearchResponse {
 
 /** An Instagram post: caption text, like, comment and play counts, its images and videos, and its author. */
 export interface InstagramPost {
+  /** Post ID. */
   id: string;
+  /** Post code: the code in the post's URL. */
   shortcode: string;
   facebook_id?: string | null;
   title?: string | null;
+  /** Text: the caption, its hashtags, mentions and edit flag. */
   caption?: InstagramCaption | null;
   accessibility_text?: string | null;
+  /** Language of the caption, when Instagram sends it. */
   language?: string | null;
+  /** Post URL. */
   url: string;
+  /** Engagement: like, comment and view counts. */
   metrics: InstagramMetrics;
+  /** Commenting disabled and other limits on the post. */
   restrictions?: InstagramRestrictions | null;
   is_live?: boolean | null;
+  /** Created at: when the post was published. */
   taken_at?: string | null;
+  /** Author: username, name, ID, verified flag and picture; bio, followers, posts count and type when the author owns the profile asked for. */
   author?: InstagramUser | null;
   collaborators?: InstagramUser[] | null;
   location?: InstagramLocation | null;
+  /** Music: the song or original audio a reel uses. */
   audio?: InstagramAudio | null;
   topics?: InstagramTopic[] | null;
+  /** Tagged people. */
   tagged_users?: InstagramTag[] | null;
   facebook_tagged_users?: InstagramTag[] | null;
   attributions?: InstagramAttribution[] | null;
+  /** Post type: image, video or carousel. */
   type: InstagramPostType;
   product_type?: string | null;
   subtype?: string | null;
   available_autodub_languages?: string[] | null;
+  /** Paid partnership: the paid partnership flag and sponsor tags. */
   sponsorship?: InstagramSponsorship | null;
   ai_label?: string | null;
   ai_detection_method?: string | null;
   is_pinned?: boolean | null;
   is_quiet?: boolean | null;
+  /** Media: each image or video of the post, one per carousel slide (images), with thumbnails, video duration and has audio. */
   media: InstagramMedia[];
 }
 
@@ -404,64 +437,111 @@ export interface InstagramPostResponse {
 
 export type InstagramPostType = "image" | "video" | "carousel";
 
-/** An Instagram account: bio, bio links, follower, following and post counts, verification, category, business contact (public_email, public_phone_number, biography_emails), address and profile pictures. */
+/** An Instagram account: bio, bio links, Facebook link, follower, following and post counts, verification, category, business contact (public_email, public_phone_number, biography_emails), address, account flags and profile pictures. */
 export interface InstagramProfile {
+  /** User ID: the account's numeric Instagram id. */
   id: string;
+  /** Username, without the @. */
   handle: string;
+  /** Facebook ID of the Instagram account. */
   facebook_id?: string | null;
+  /** Display name. */
   name?: string | null;
+  /** Bio text. */
   biography?: string | null;
+  /** Website: the bio's main link. */
   external_url?: string | null;
+  /** The website link through Instagram's l.instagram.com redirect. */
   external_redirect_url?: string | null;
+  /** Bio links: every link in the bio. */
   bio_links?: InstagramBioLink[] | null;
+  /** Followers count. */
   follower_count?: number | null;
+  /** Following count. */
   following_count?: number | null;
+  /** Posts count. */
   post_count?: number | null;
+  /** Reel count; logged-out Instagram does not send it, so it is null. See has_reels. */
   reel_count?: number | null;
+  /** Highlights count: how many story highlights the profile lists. */
   highlight_count?: number | null;
+  /** IGTV video count; logged-out Instagram does not send it, so it is null. */
   longform_video_count?: number | null;
   engagement_rate?: number | null;
+  /** Private account. */
   is_private?: boolean | null;
+  /** Verified (blue check). */
   is_verified?: boolean | null;
+  /** Memorialized account. */
   is_memorialized?: boolean | null;
+  /** Embeds disabled: the account blocks embedding its posts. */
   is_embeds_disabled?: boolean | null;
   is_country_blocked?: boolean | null;
+  /** Latest reel media: whether a story is up now (posted in the last 24 hours). */
   has_active_story?: boolean | null;
+  /** Latest reel media: when the story that is up was posted; null when none is up. */
   latest_reel_at?: string | null;
   biography_entities?: InstagramBiographyEntity[] | null;
   address?: InstagramAddress | null;
+  /** Related profiles (similar accounts), when Instagram sends them. */
   related_profiles?: InstagramUser[] | null;
+  /** Facebook link: the Facebook page linked to the account. */
+  facebook_page?: InstagramFacebookPage | null;
   pronouns?: string[] | null;
+  /** Category of a business or creator account. */
   category?: string | null;
   business_category?: string | null;
+  /** Contact method, when Instagram sends it (not to logged-out visitors). */
   contact_method?: string | null;
+  /** Business email the account shows, when Instagram sends it (not to logged-out visitors). */
   public_email?: string | null;
+  /** Email addresses written in the bio. */
   biography_emails?: string[] | null;
+  /** Business phone the account shows, when Instagram sends it (not to logged-out visitors). */
   public_phone_number?: string | null;
+  /** Account type: 1 personal, 2 business, 3 creator. */
   account_type?: number | null;
   account_label?: string | null;
+  /** Text post app badge label: the Threads username on the profile's Threads badge. */
+  threads_badge_label?: string | null;
   badges?: unknown[] | null;
+  /** Business account. */
   is_business?: boolean | null;
+  /** Professional account: a business or creator account. */
   is_professional?: boolean | null;
+  /** Unpublished account. */
   is_unpublished?: boolean | null;
+  /** Recently joined, when Instagram sends it (not to logged-out visitors). */
   is_joined_recently?: boolean | null;
+  /** Has reels: the account has posted reels. */
+  has_reels?: boolean | null;
+  /** Has channel (broadcast channel), when Instagram sends it (not to logged-out visitors). */
   has_channel?: boolean | null;
   has_longform_media?: boolean | null;
+  /** Show text post app badge: the profile shows its Threads badge. */
   is_threads_badge_shown?: boolean | null;
+  /** Account transparency details shown: the profile shows its About this account details. */
   is_account_transparency_shown?: boolean | null;
+  /** Profile picture URLs: the standard picture, then the HD one. */
   profile_images?: InstagramImage[];
   recent_longform_videos?: InstagramPost[] | null;
 }
 
 export interface InstagramProfileResponse {
   profile: InstagramProfile;
+  /** Recent posts: the account's newest 12 grid posts. Pass pagination.next_cursor as next_max_id to /v1/instagram/user/posts for the next 12. */
   recent_posts: InstagramPostPage | null;
   recent_posts_status: InstagramProfileResponseRecentPostsStatus;
+  /** Recent reels: the newest 12 reels on the account's reels tab. Pass pagination.next_cursor as max_id to /v1/instagram/user/reels for more. */
+  recent_reels: InstagramPostPage | null;
+  /** Highlights: the account's story highlights. */
+  highlights: InstagramHighlight[];
 }
 
 export type InstagramProfileResponseRecentPostsStatus = "available" | "private" | "unavailable";
 
 export interface InstagramRestrictions {
+  /** Commenting disabled: the author turned comments off. */
   comments_disabled?: boolean | null;
   sharing_restricted?: boolean | null;
   media_unavailable_reason?: string | null;
@@ -472,6 +552,7 @@ export interface InstagramRestrictions {
 export interface InstagramSponsorship {
   sponsors?: InstagramUser[] | null;
   is_ad?: boolean | null;
+  /** Paid partnership: the post carries the paid partnership label. */
   is_paid_partnership?: boolean | null;
 }
 
@@ -547,21 +628,30 @@ export interface InstagramTopic {
 
 /** An Instagram account in brief: handle, name, verification, privacy and profile picture. A post's owner also carries its bio, follower and post counts and account type. */
 export interface InstagramUser {
+  /** User ID: the account's numeric Instagram id. */
   id: string;
+  /** Username, without the @. */
   handle?: string | null;
   facebook_id?: string | null;
   messaging_facebook_id?: string | null;
+  /** Display name. */
   name?: string | null;
+  /** Bio text; sent on a post's author when the author owns the profile asked for. */
   biography?: string | null;
   subscriber_count?: number | null;
+  /** Followers; sent on a post's author when the author owns the profile asked for. */
   follower_count?: number | null;
+  /** Posts count; sent on a post's author when the author owns the profile asked for. */
   post_count?: number | null;
+  /** Verified (blue check). */
   is_verified?: boolean | null;
   is_private?: boolean | null;
   is_embeds_disabled?: boolean | null;
   is_unpublished?: boolean | null;
   badges?: unknown[] | null;
+  /** Account type: 1 personal, 2 business, 3 creator. */
   account_type?: number | null;
+  /** Profile picture URL. */
   profile_image_url?: string | null;
   profile_image_id?: string | null;
   profile_images?: InstagramImage[];
@@ -569,8 +659,11 @@ export interface InstagramUser {
 
 /** A page of an account's posts, with the author's profile and follower counts in `profile`. */
 export interface InstagramUserPostsResponse {
+  /** The account the posts belong to, with its followers and posts count. */
   profile: InstagramProfile;
+  /** Posts: 12 per page, in the profile grid's order. */
   posts: InstagramPost[];
+  /** Pass next_cursor as next_max_id for the next page while has_more is true. */
   pagination: InstagramPagination;
 }
 

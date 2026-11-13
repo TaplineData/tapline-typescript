@@ -6,12 +6,12 @@ import type { GetCompanyParams, GetCompanyPostsParams, GetJobParams, GetPostPara
 export class LinkedinClient {
   constructor(private readonly base: BaseClient) {}
 
-  /** Returns a company, school, or showcase page. Costs 1 credit. */
+  /** Returns a company, school, or showcase page with its headcount, similar pages and newest 10 posts. Costs 1 credit. */
   async getCompany(params: GetCompanyParams): Promise<LinkedinCompanyResponse> {
     return this.base.get<LinkedinCompanyResponse>('/v1/linkedin/company', { ...params });
   }
 
-  /** Lists a company, school, or showcase page's posts, 10 per page, newest first. Costs 1 credit. */
+  /** Lists a company, school, or showcase page's posts, 10 per page up to page 7, newest first. Costs 1 credit. */
   async getCompanyPosts(params: GetCompanyPostsParams): Promise<LinkedinCompanyPostsResponse> {
     return this.base.get<LinkedinCompanyPostsResponse>('/v1/linkedin/company/posts', { ...params });
   }
@@ -21,12 +21,12 @@ export class LinkedinClient {
     return this.base.get<LinkedinJobResponse>('/v1/linkedin/job', { ...params });
   }
 
-  /** Returns matching jobs, including company and posting details, 10 at a time. Costs 1 credit. */
+  /** Returns jobs matching a keyword and location, 10 per page through a cursor, up to 1,000. Costs 1 credit. */
   async searchJobs(params: SearchJobsParams): Promise<LinkedinJobsSearchResponse> {
     return this.base.get<LinkedinJobsSearchResponse>('/v1/linkedin/jobs/search', { ...params });
   }
 
-  /** Returns one post or Pulse article. Missing posts return 404. Costs 1 credit. */
+  /** Returns one post or Pulse article with its author, reactions, media and comments. Missing posts return 404. Costs 1 credit. */
   async getPost(params: GetPostParams): Promise<LinkedinPostResponse> {
     return this.base.get<LinkedinPostResponse>('/v1/linkedin/post', { ...params });
   }
@@ -36,7 +36,7 @@ export class LinkedinClient {
     return this.base.get<LinkedinPostTranscriptResponse>('/v1/linkedin/post/transcript', { ...params });
   }
 
-  /** Returns a public member profile. Missing or unavailable profiles return 404. Costs 2 credits. */
+  /** Returns a public member profile with its jobs, schools, skills, posts, articles, recommendations and similar people. Missing profiles return 404. Costs 2 credits. */
   async getProfile(params: GetProfileParams): Promise<LinkedinProfileResponse> {
     return this.base.get<LinkedinProfileResponse>('/v1/linkedin/profile', { ...params });
   }

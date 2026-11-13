@@ -36,7 +36,7 @@ export interface FacebookAd {
   service_status: FacebookServiceStatus;
 }
 
-/** One Ad Library ad: its text, the advertiser page, the creative media and call to action, and its delivery. */
+/** One Ad Library ad: ad archive ID and Ad Library URL, collation ID and collation count (versions of one creative), ad text, ad categories, the advertiser page (page ID, page name, profile URL, profile picture, like count, page categories, is deleted), the creative (images, videos, carousel cards, extra texts, extra links, link URL, display format, call to action text and type), delivery and moderation. */
 export interface FacebookAdCard {
   ad_archive_id: string | null;
   ad_id: string | null;
@@ -87,7 +87,7 @@ export interface FacebookAdCreative {
   extra_videos: FacebookAdVideo[];
 }
 
-/** Ad status and run dates: whether the ad is still running, when it started and stopped, and the platforms it runs on. */
+/** Ad status and run dates: whether the ad is active (still running), start date, end date (or last seen), total active time, the publisher platforms it runs on, and the targeted or reached countries (EU ads). */
 export interface FacebookAdDelivery {
   total_active_seconds: number | null;
   is_active: boolean | null;
@@ -119,6 +119,7 @@ export interface FacebookAdDisclaimerVerification {
   fec_info: string | null;
 }
 
+/** One ad image: the original image URL and the resized and watermarked copies. */
 export interface FacebookAdImage {
   original_url: string | null;
   resized_url: string | null;
@@ -126,6 +127,7 @@ export interface FacebookAdImage {
   crops: unknown[];
 }
 
+/** Report count, hidden-data status, gated type, beneficiary payer eligibility, contains sensitive content, contains digital created media (AI) and the state media label. */
 export interface FacebookAdModeration {
   report_count: number | null;
   hide_data_status: FacebookCode;
@@ -144,6 +146,7 @@ export interface FacebookAdParty {
   license_info_list: string[];
 }
 
+/** Spend, impressions and reach estimate ranges, when the Ad Library shows them (political and issue ads, EU reach). */
 export interface FacebookAdPerformance {
   spend: FacebookMoneyRange | null;
   impressions: FacebookCountRange | null;
@@ -182,6 +185,7 @@ export interface FacebookAdReportAdvertisersPage {
   pagination: FacebookCursorPagination;
 }
 
+/** One page of Ad Library ads, 10 ads per page, with the cursor for the next page. */
 export interface FacebookAdSearchPage {
   ads: FacebookAdCard[];
   pagination: FacebookCursorPagination;
@@ -224,6 +228,7 @@ export interface FacebookAdVersionsPage {
   pagination: FacebookCursorPagination;
 }
 
+/** One ad video: HD and SD video URLs and the video preview image. */
 export interface FacebookAdVideo {
   hd_url: string | null;
   sd_url: string | null;
@@ -419,6 +424,7 @@ export interface FacebookMoneyRange {
   formatted: string | null;
 }
 
+/** A page or public profile: page ID (the id the Ad Library takes) and profile ID, username, name, link and Ad Library link, followers, following, likes and talking about, verified badge and active business page, tabs, category, profile picture and cover photo. */
 export interface FacebookPage {
   page_id: string | null;
   profile_id: string | null;
@@ -426,6 +432,7 @@ export interface FacebookPage {
   story_bucket_ids?: string[];
   name: string | null;
   url: string | null;
+  ad_library_url?: string | null;
   metrics: FacebookPageMetrics;
   status: FacebookPageStatus;
   instagram?: FacebookInstagramAccount | null;

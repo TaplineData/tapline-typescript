@@ -7,27 +7,39 @@ export type Availability = "public" | "unlisted" | "needs_auth" | "premium_only"
 export type ChannelContentType = "videos" | "shorts" | "streams";
 
 export interface ChannelResponse {
+  /** The channel ID. */
   channel_id: string;
+  /** The channel's name. */
   channel: string | null;
+  /** Channel URL built from the channel ID. */
   channel_url: string | null;
+  /** The channel's @handle, its username on YouTube. */
   handle: string | null;
+  /** Channel URL built from the @handle. */
   handle_url: string | null;
+  /** The channel's bio, as its About panel shows it. */
   description: string | null;
-  /** External links from the channel's About panel, such as its website and social profiles. Null on the yt-dlp fallback. */
+  /** Bio links from the channel's About panel, such as its website and social profiles. Null on the yt-dlp fallback. */
   links: string[] | null;
+  /** Facebook ID the channel linked to its YouTube account, usually the Facebook page's username. Null when no Facebook account is linked. */
+  facebook_profile_id: string | null;
+  /** Subscribers, rounded as YouTube shows them. Null when the channel hides its subscriber count. */
   channel_follower_count: number | null;
-  /** Number of videos the channel has published. */
+  /** Videos count: number of videos the channel has published. */
   video_count: number | null;
-  /** Total views across the channel's videos. */
+  /** Views count: total views across the channel's videos. */
   view_count: number | null;
   /** Whether YouTube shows the verified badge on the channel. */
   is_verified: boolean | null;
   /** Date the channel joined YouTube, as YYYY-MM-DD. */
   joined_date: string | null;
+  /** Tags (keywords) the channel set for itself. */
   tags: string[];
   /** Country the channel lists on its About panel, in English. */
   country: string | null;
+  /** URL of the channel's profile picture, largest size. */
   thumbnail: string | null;
+  /** The channel's profile picture in each size. */
   thumbnails: ThumbnailItem[];
   /** URL of the channel's banner image, widest size. */
   banner: string | null;
@@ -40,25 +52,37 @@ export interface ChannelResponse {
 }
 
 export interface ChannelVideoItem {
+  /** The video ID. */
   video_id: string | null;
+  /** The video's title. */
   title: string | null;
+  /** Video URL; Shorts use the /shorts/ form. */
   url: string | null;
+  /** Video duration in seconds. Left out on Shorts. */
   duration?: number | null;
+  /** View count, rounded as the channel page shows it. */
   view_count: number | null;
-  /** When the video was published, as YouTube labels it on the channel page. */
+  /** Publish date, as YouTube labels it on the channel page. Null on Shorts. */
   published_time_text: string | null;
+  /** Author name: the channel's name. */
   channel: string | null;
+  /** Author ID: the channel's ID. */
   channel_id: string | null;
-  /** The channel's @handle. */
+  /** Author username: the channel's @handle. */
   channel_handle: string | null;
+  /** URL of the channel. */
   channel_url: string | null;
-  /** Channel tab the item was listed on. */
+  /** Video type: the channel tab the item was listed on (videos, shorts or streams). */
   content_type: ChannelContentType;
+  /** URL of the video's thumbnail, smallest size. */
   thumbnail: string | null;
+  /** The video's thumbnail in each size. */
   thumbnails: ThumbnailItem[] | null;
-  /** URL of the channel's profile picture. */
+  /** Author picture: URL of the channel's profile picture. */
   channel_thumbnail: string | null;
+  /** Live state: is_live, is_upcoming or was_live. Null on a regular upload. */
   live_status: LiveStatus | null;
+  /** Whether YouTube shows the verified badge on the channel. */
   channel_is_verified: boolean | null;
 }
 
@@ -357,21 +381,35 @@ export interface SearchResponse {
 }
 
 export interface SearchResultItem {
+  /** Result type: video, channel, playlist or movie. */
   result_type: SearchResultType;
+  /** Video, channel or playlist ID. */
   id: string | null;
+  /** The result's title. */
   title: string | null;
+  /** URL of the video, channel or playlist. */
   url: string | null;
+  /** Video length in seconds. Null on channels and playlists. */
   duration: number | null;
+  /** Video views. Null on channels and playlists. */
   view_count: number | null;
   /** When the video was published, as YouTube labels it in search results. Null on channels and playlists. */
   published_time_text: string | null;
+  /** Name of the channel. */
   channel: string | null;
+  /** ID of the channel. */
   channel_id: string | null;
+  /** URL of the channel. */
   channel_url: string | null;
+  /** URL of the result's thumbnail, smallest size. */
   thumbnail: string | null;
+  /** The result's thumbnail in each size. */
   thumbnails: ThumbnailItem[] | null;
+  /** Snippet of the description that YouTube shows in search. */
   description: string | null;
+  /** Live state: is_live, is_upcoming or was_live. Null on a regular upload. */
   live_status: LiveStatus | null;
+  /** Whether YouTube shows the verified badge on the channel. */
   channel_is_verified: boolean | null;
 }
 

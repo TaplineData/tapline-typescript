@@ -107,30 +107,50 @@ export interface IndeedCodeLabel {
 export interface IndeedCompany {
   key: string;
   name: string | null;
+  /** Tagline: the company's one-line blurb. */
   description: string | null;
+  /** Description: the long About text of the company page. */
   about: string | null;
   page_url: string | null;
   page_path: string | null;
   reviews_url: string | null;
   salaries_url: string | null;
   links: IndeedCompanyLinks;
+  /** Reported pay: the average salary per pay period from employees' reports in the requested country. */
   reported_pay: IndeedReportedPay;
+  /** Employer rating from 1 to 5 with its count, overall and by category. */
   ratings: IndeedCompanyRatings;
+  /** Happiness scores from 0 to 100 with response counts, overall and by factor. */
   happiness: IndeedCompanyHappiness;
+  /** Similar companies Indeed shows beside this one. */
   similar_companies: IndeedCompanySummary[];
+  /** Parent company, when Indeed lists this one as its subsidiary. */
   parent_company: IndeedParentCompany | null;
   industry: string | null;
   industry_label: string | null;
+  /** Industry sectors, by name. */
   sectors: string[];
+  /** Size band: the employee count range. */
   size: IndeedCodeLabel;
+  /** Estimated revenue range. */
   revenue: IndeedCodeLabel;
+  /** Founded: the year the company was founded. */
   founded_year: number | null;
+  /** Headquarters location: the head office address as the company wrote it. */
   headquarters: string[];
+  /** Headquarters street, city, region, postal code and country, read from the first `headquarters` entry. */
+  headquarters_address: IndeedHeadquartersAddress | null;
+  /** Overview sections the company wrote for its page. */
   profile_sections: IndeedProfileSection[];
+  /** CEO: name, photo, start date and employees' approval. */
   ceo: IndeedCeo;
+  /** Claimed profile: true when the company manages its Indeed page. */
   is_claimed: boolean | null;
+  /** Brand color, as a hex code. */
   brand_color: string | null;
+  /** Ticker: the company's stock symbol. */
   stock_symbol: string | null;
+  /** Logo, cover image and wide logo. */
   images: IndeedCompanyImages;
 }
 
@@ -181,6 +201,8 @@ export interface IndeedCompanyImages {
  */
 export interface IndeedCompanyLinks {
   website: string | null;
+  /** The company's careers page: the first custom link named or pathed for careers or jobs. */
+  careers_url: string | null;
   custom_links: IndeedCustomLink[];
   facebook: string | null;
   twitter: string | null;
@@ -282,35 +304,65 @@ export interface IndeedHappinessScore {
   count: number | null;
 }
 
+/** The parts of the first `headquarters` entry its text names; a part it leaves out is null. */
+export interface IndeedHeadquartersAddress {
+  /** Street lines before the city, as written (`400 Queen St W`). */
+  street: string | null;
+  city: string | null;
+  /** US state or Canadian province, by name (`Quebec`). */
+  region: string | null;
+  /** Canadian, US or UK postal code (`S7K 1J5`, `97035`). */
+  postal_code: string | null;
+  /** ISO 3166-1 alpha-2 country, from a country name, postal code or region (`CA`). */
+  country_code: string | null;
+}
+
 /** An Indeed job listing with company, location, pay, schedule, and application details. */
 export interface IndeedJob {
+  /** Job ID on Indeed. */
   key: string;
   title: string | null;
+  /** Position title: Indeed's standard title for the job. */
   standard_title: string | null;
   normalized_title: string | null;
   description: string | null;
   description_html: string | null;
   language: string | null;
+  /** Job page link. */
   indeed_url: string;
+  /** Links found in the description. */
   description_urls: string[];
   pay: IndeedPay | null;
   applicants: IndeedJobApplicants | null;
+  /** Job state: expired or open, plus repost, urgent and high-volume hiring flags. */
   status: IndeedJobStatus;
+  /** Posted: when the employer published the job. */
   published_at: string | null;
+  /** Created: when the posting was created on Indeed. */
   posted_on_indeed_at: string | null;
+  /** Closes: when the posting expires. */
   expires_at: string | null;
+  /** The hiring company: name, Indeed ID, website, logo, description and industry (sector). */
   company: IndeedJobCompany | null;
+  /** Places: the job's address down to the street, and whether it is remote. */
   location: IndeedJobLocation | null;
   origin: IndeedJobOrigin;
   company_name_as_posted: string | null;
+  /** Working hours, as the recruiter wrote them. */
   work_schedule: string | null;
   detailed_salary: string | null;
+  /** Contact emails found in the description. */
   description_emails: string[];
+  /** Employment type, remote work, working hours, benefits, experience level, education level, licences and qualifications. */
   attributes: IndeedJobAttributes;
+  /** Required and preferred qualifications the employer marked. */
   requirements: IndeedRequirement[];
+  /** Job category: Indeed's occupation codes and labels. */
   occupations: IndeedAttribute[];
+  /** How to apply: the employer's application page, or the Indeed Apply form. */
   apply: IndeedJobApply;
   employer_activity: IndeedEmployerActivity | null;
+  /** Employer job number: the employer's own requisition id. */
   employer_reference: string | null;
   normalized_category?: string | null;
   photos: IndeedJobPhoto[];

@@ -56,9 +56,15 @@ export interface LinkedinCompanyEmployee {
 }
 
 export interface LinkedinCompanyLocation {
+  /** The headquarters' street. */
   street: string | null;
+  /** The headquarters' second street line, such as a suite or floor. */
+  streetLine2: string | null;
+  /** The headquarters' city. */
   city: string | null;
+  /** The headquarters' area: its state or region, such as `California`. */
   state: string | null;
+  /** The headquarters' postal code. */
   postalCode: string | null;
   /** ISO 3166-1 alpha-2 code. */
   country: string | null;
@@ -67,74 +73,121 @@ export interface LinkedinCompanyLocation {
 export interface LinkedinCompanyOffice {
   /** LinkedIn marks this office as the primary location. */
   isHeadquarters: boolean;
+  /** The office's street. */
   street: string | null;
+  /** The office's second street line, such as a suite or floor. */
   streetLine2: string | null;
   city: string | null;
+  /** The office's area: its state or region. */
   state: string | null;
   postalCode: string | null;
   /** ISO 3166-1 alpha-2 code. */
   country: string | null;
 }
 
+export interface LinkedinCompanyPageTab {
+  /** The tab's label, such as `Jobs`. */
+  name: string;
+  url: string | null;
+}
+
 export interface LinkedinCompanyPost {
-  /** The share or ugcPost URN of the post's content. */
+  /** Share URN: the share or ugcPost URN of the post's content. */
   contentUrn: string | null;
+  /** Post URL. */
   url: string;
+  /** Post ID: the post's numeric activity id. */
   id: string;
+  /** Posted at, read from the post id. */
   datePublished: string;
+  /** The post's text. */
   text: string | null;
+  /** Reactions of every type; 0 when LinkedIn prints no count. */
   likeCount: number | null;
+  /** Comments; 0 when LinkedIn prints no count. */
   commentCount: number | null;
+  /** Reactions by type: the types LinkedIn draws beside the reaction count, such as `LIKE` and `PRAISE`, most used first; guests see no count per type. */
+  reactionTypes: string[];
+  /** The post's author: its name, LinkedIn URL, picture and followers. */
   author: LinkedinPostAuthor;
+  /** The author's numeric LinkedIn ID: the page's organization ID on the page's own posts, null on posts by others. */
+  authorId: string | null;
+  /** The author's headline, when LinkedIn shows it on the card; LinkedIn shows guests few of them. */
+  authorHeadline: string | null;
   /** Members and pages tagged in the text. */
   mentions: LinkedinPostMention[];
   /** The post this one quotes, when it reshares one with its own text. */
   resharedPost: LinkedinResharedPost | null;
   linkPreview: LinkedinPostLinkPreview | null;
+  /** Whether the card is a repost or a post by someone other than the page. */
   isRepost: boolean;
   /** The page that reposted it, when the card is a plain repost. */
   repostedBy: LinkedinPostReposter | null;
+  /** The post's images. */
   images: string[];
+  /** The post's native video. */
   video: LinkedinPostVideo | null;
 }
 
 export interface LinkedinCompanyPostsResponse {
+  /** The page number, 1 to 7. */
   page: number;
+  /** Whether `page + 1` holds more posts. */
   hasNextPage: boolean;
+  /** Up to 10 posts, newest first. */
   posts: LinkedinCompanyPost[];
 }
 
 export interface LinkedinCompanyResponse {
+  /** LinkedIn ID: the page's numeric organization id. */
   id: string | null;
+  /** The page's LinkedIn URL. */
   url: string;
   name: string;
+  /** The page's About text. */
   description: string | null;
+  /** The headquarters address: street, area, city, postal code and country. */
   location: LinkedinCompanyLocation;
+  /** Employees: the members LinkedIn counts as working there. LinkedIn leaves it off some guest pages, then null. */
   employeeCount: number | null;
+  /** The page's followers. */
   followers: number | null;
   website: string | null;
-  /** LinkedIn's job search for the page's open jobs. */
+  /** Jobs link: LinkedIn's job search for the page's open jobs; null when the page lists none. */
   jobsUrl: string | null;
+  /** The page's logo. */
   logo: string | null;
+  /** The page's cover image. */
   coverImage: string | null;
-  /** The page's tagline. */
+  /** The page's tagline: the line under its name. */
   slogan: string | null;
   industry: string | null;
+  /** The size band, such as `51-200 employees`. */
   size: string | null;
+  /** The year founded. */
   founded: number | null;
+  /** The headquarters as the About section prints it, such as `Ottawa, ON`. */
   headquarters: string | null;
   /** Every office on the page's Locations list. */
   locations: LinkedinCompanyOffice[];
+  /** The company type, such as `Privately Held` or `Public Company`. */
   type: string | null;
+  /** The page type: `company`, `school`, or `showcase` for a showcase page. */
   pageType: LinkedinCompanyResponsePagetype;
   /** The page's name in its URL, such as `shopify`. */
   universalName: string;
+  /** The specialties from the About section. */
   specialties: string[];
+  /** Similar pages (lookalike companies) LinkedIn lists, usually 10, each with its industry. */
   similarPages: LinkedinRelatedPage[];
+  /** Affiliated pages, such as showcase pages and subsidiaries. */
   affiliatedPages: LinkedinRelatedPage[];
   /** The members LinkedIn features as working there. */
   employees: LinkedinCompanyEmployee[];
+  /** The page's newest posts, up to 10; `/v1/linkedin/company/posts` pages through more. */
   posts: LinkedinCompanyPost[];
+  /** The page tabs LinkedIn shows guests, such as `Overview`, `Jobs` and `Life`; most pages show guests none. */
+  pageTabs: LinkedinCompanyPageTab[];
 }
 
 export type LinkedinCompanyResponsePagetype = "company" | "school" | "showcase";
@@ -145,41 +198,73 @@ export interface LinkedinCursorPagination {
 }
 
 export interface LinkedinJobCard {
+  /** Job ID. */
   id: string;
+  /** Job URL. */
   url: string;
   title: string;
   company: LinkedinJobCompany;
   location: string | null;
+  /** Posted at: the date LinkedIn lists the job under, such as `2026-11-10`. */
   postedDate: string | null;
+  /** The posting age, such as `2 days ago`. */
   postedText: string | null;
   /** The card's insight line, such as `Actively Hiring` or `Be an early applicant`. */
   benefits: string | null;
 }
 
 export interface LinkedinJobCompany {
+  /** The company's name. */
   name: string | null;
+  /** The company's LinkedIn URL. */
   url: string | null;
+  /** The company's logo. */
   logo: string | null;
 }
 
+export interface LinkedinJobPoster {
+  name: string;
+  /** The poster's member profile. */
+  url: string | null;
+  /** The poster's headline. */
+  headline: string | null;
+  image: string | null;
+}
+
 export interface LinkedinJobResponse {
+  /** Job ID. */
   id: string;
+  /** Job URL. */
   url: string;
   title: string;
+  /** The job's company: its name, LinkedIn URL and logo. */
   company: LinkedinJobCompany;
+  /** The hiring company's numeric LinkedIn ID. */
+  companyId: string | null;
+  /** The job's location. */
   location: string | null;
-  /** The posting age, such as `2 weeks ago`. */
+  /** Posted at, as the posting age LinkedIn prints, such as `2 weeks ago`; guests see no posting date. */
   postedText: string | null;
+  /** Applicants as LinkedIn prints them, such as `Over 200 applicants`. */
   applicants: string | null;
+  /** The salary range the employer published. */
   salary: string | null;
+  /** The job description as plain text. */
   description: string | null;
+  /** The job description as HTML. */
   descriptionHtml: string | null;
+  /** The seniority level, such as `Mid-Senior level`. */
   seniorityLevel: string | null;
+  /** The employment type, such as `Full-time`. */
   employmentType: string | null;
+  /** The industries LinkedIn lists for the job. */
   industries: string | null;
+  /** Whether the job takes LinkedIn Easy Apply; null when the page shows no apply button. */
   easyApply: boolean | null;
   /** `closed` when LinkedIn shows `No longer accepting applications`. */
   jobState: LinkedinJobResponseJobstate;
+  /** The hiring team member LinkedIn shows guests as the job's poster, when the posting names one. */
+  jobPoster: LinkedinJobPoster | null;
 }
 
 export type LinkedinJobResponseJobstate = "open" | "closed";
@@ -187,6 +272,7 @@ export type LinkedinJobResponseJobstate = "open" | "closed";
 export type LinkedinJobsSearchCompletion = "exhausted" | "depth_limit";
 
 export interface LinkedinJobsSearchResponse {
+  /** Up to 10 jobs; pass `pagination.next_cursor` as `cursor` for the next 10, up to 1,000 jobs. */
   jobs: LinkedinJobCard[];
   pagination: LinkedinCursorPagination;
 }
@@ -203,6 +289,12 @@ export interface LinkedinMoreArticle {
 export interface LinkedinOrganizationRole {
   "@type": string;
   title: string | null;
+  /** Schools only: the degree, such as `BSBA`. */
+  degree: string | null;
+  /** Schools only: the field of study, such as `Marketing`. */
+  fieldOfStudy: string | null;
+  /** Schools only: the activities and societies line. */
+  activities: string | null;
   description: string | null;
   startDate: number | string | null;
   endDate: number | string | null;
@@ -237,6 +329,25 @@ export interface LinkedinPostComment {
   authorImage: string | null;
 }
 
+/** A PDF or slide document attached to the post. */
+export interface LinkedinPostDocument {
+  title: string | null;
+  pageCount: number | null;
+  /** The page images LinkedIn ships with the post, the cover first. */
+  pageImages: string[];
+}
+
+/** A job posting shared in the post. */
+export interface LinkedinPostJob {
+  /** The job's numeric id, from its link. */
+  id: string | null;
+  title: string | null;
+  company: string | null;
+  location: string | null;
+  url: string;
+  logo: string | null;
+}
+
 export interface LinkedinPostLinkPreview {
   title: string | null;
   /** The linked site or the article's byline. */
@@ -263,14 +374,20 @@ export interface LinkedinPostResponse {
   headline: string | null;
   commentCount: number | null;
   likeCount: number | null;
+  /** The up to three most used reaction types, such as `LIKE` and `PRAISE`; LinkedIn shows guests no count per type. */
+  reactionTypes: string[];
   datePublished: string | null;
   description: string | null;
   author: LinkedinPostAuthor;
+  /** The author's headline, when the author is a member. */
+  authorHeadline: string | null;
   /** Members and pages tagged in the text. */
   mentions: LinkedinPostMention[];
   /** The post this one quotes, when it reshares one with its own text. */
   resharedPost: LinkedinResharedPost | null;
   linkPreview: LinkedinPostLinkPreview | null;
+  job: LinkedinPostJob | null;
+  document: LinkedinPostDocument | null;
   comments: LinkedinPostComment[];
   moreArticles: LinkedinMoreArticle[];
   images: string[];
@@ -296,6 +413,8 @@ export interface LinkedinProfileActivity {
   link: string;
   likeCount: number | null;
   commentCount: number | null;
+  /** The up to three most used reaction types, such as `LIKE` and `PRAISE`; LinkedIn shows guests no count per type. */
+  reactionTypes: string[];
   /** When the post was published, read from its id. */
   datePublished: string | null;
   /** Who wrote the post: someone else when the member reposted or reacted to it. */
@@ -305,9 +424,13 @@ export interface LinkedinProfileActivity {
   /** The post this one quotes, when it reshares one with its own text. */
   resharedPost: LinkedinResharedPost | null;
   linkPreview: LinkedinPostLinkPreview | null;
+  job: LinkedinPostJob | null;
+  document: LinkedinPostDocument | null;
   /** The member who reposted it, when the card is a plain repost. */
   repostedBy: LinkedinPostReposter | null;
   image: string | null;
+  /** The video's poster image, when the post is a video. */
+  videoPoster: string | null;
 }
 
 export interface LinkedinProfileArticle {
@@ -331,6 +454,12 @@ export interface LinkedinProfileCertification {
   issuer: string | null;
 }
 
+export interface LinkedinProfileCourse {
+  name: string;
+  /** The course number the member gave. */
+  number: string | null;
+}
+
 export interface LinkedinProfileHonor {
   name: string;
   description: string | null;
@@ -350,6 +479,8 @@ export interface LinkedinProfileOrganization {
   url: string | null;
   location: string | null;
   member: LinkedinOrganizationRole;
+  /** The company or school logo; masked profiles show it for the current company and top school only. */
+  logo: string | null;
 }
 
 export interface LinkedinProfileProject {
@@ -400,21 +531,48 @@ export interface LinkedinProfileResponse {
   about: string | null;
   /** Profile badges LinkedIn shows guests, such as `Creator` and `Top Voice`. */
   badges: string[];
+  /** The member's posts and reposts, newest first, up to 9; no pagination. */
   recentPosts: LinkedinProfileActivity[];
+  /** Jobs, current first. */
   experience: LinkedinProfileOrganization[];
+  /** The member's newest articles, up to 10; no pagination. */
   articles: LinkedinProfileArticle[];
+  /** Posts the member liked or commented on, up to 9; no pagination. */
   activity: LinkedinProfileActivity[];
+  /** Schools. */
   education: LinkedinProfileOrganization[];
   publications: LinkedinProfilePublication[];
   projects: LinkedinProfileProject[];
+  /** Recommendations received; guests see the first two, `recommendationCount` holds the total. */
   recommendations: LinkedinProfileRecommendation[];
+  /** Similar people: the profiles LinkedIn suggests beside this one, up to 20. */
   similarProfiles: LinkedinSimilarProfile[];
   websites: LinkedinProfileWebsite[];
   languages: LinkedinProfileLanguage[];
   certifications: LinkedinProfileCertification[];
   /** The Honors & Awards section. */
   honors: LinkedinProfileHonor[];
+  /** Skill names; LinkedIn shows them to guests on open profiles only. */
+  skills: string[];
+  /** Courses the member lists as taken. */
+  courses: LinkedinProfileCourse[];
+  /** The Volunteer Experience section. */
+  volunteering: LinkedinProfileVolunteering[];
   coverImage: string | null;
+}
+
+export interface LinkedinProfileVolunteering {
+  role: string;
+  organization: string | null;
+  organizationUrl: string | null;
+  /** The cause, such as `Economic Empowerment`. */
+  cause: string | null;
+  description: string | null;
+  /** A year, or `YYYY-MM`. */
+  startDate: number | string | null;
+  /** A year, or `YYYY-MM`; null while the role is current. */
+  endDate: number | string | null;
+  logo: string | null;
 }
 
 export interface LinkedinProfileWebsite {
@@ -423,8 +581,10 @@ export interface LinkedinProfileWebsite {
 }
 
 export interface LinkedinRelatedPage {
+  /** The page's LinkedIn URL. */
   link: string;
   name: string;
+  /** The page's industry, as LinkedIn prints it on the card. */
   industry: string | null;
   location: string | null;
   image: string | null;

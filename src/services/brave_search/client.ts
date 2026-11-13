@@ -46,12 +46,12 @@ export class BraveSearchClient {
     return this.base.get<BraveSearchSimilarImages>('/v1/brave-search/images/similar', { ...params });
   }
 
-  /** Search news articles. Results carry a relative age, not a timestamp; the source sends none. Costs 5 credits. */
+  /** Search news articles: up to 50 per page. Results carry a relative age, not a timestamp; the source sends none. Costs 5 credits. */
   async searchNews(params: SearchNewsParams): Promise<BraveSearchNewsPage> {
     return this.base.get<BraveSearchNewsPage>('/v1/brave-search/news', { ...params });
   }
 
-  /** Search places around a point: up to 100 businesses, addresses and areas within about 8 km. Costs 8 credits. */
+  /** Search places around a point: up to 100 businesses, addresses and areas within about 8 km, in one page. Costs 8 credits. */
   async searchPlaces(params: SearchPlacesParams): Promise<BraveSearchPlacesPage> {
     return this.base.get<BraveSearchPlacesPage>('/v1/brave-search/places', { ...params });
   }
@@ -100,7 +100,7 @@ export class BraveSearchClient {
     return this.base.get<BraveSearchSportsGames>(`/v1/brave-search/sports/teams/${encodeURIComponent(team_id)}/games`, query);
   }
 
-  /** Autocomplete a search query. Costs 1 credit. */
+  /** Autocomplete a search query: up to 8 suggestions in one page. Costs 1 credit. */
   async listSuggestions(params: ListSuggestionsParams): Promise<BraveSearchSuggestions> {
     return this.base.get<BraveSearchSuggestions>('/v1/brave-search/suggestions', { ...params });
   }

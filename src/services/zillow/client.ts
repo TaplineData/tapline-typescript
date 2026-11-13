@@ -29,7 +29,7 @@ export class ZillowClient {
     return this.base.get<ZillowPropertyHistory>(`/v1/zillow/properties/${encodeURIComponent(zpid)}/history`, query);
   }
 
-  /** Returns a property's price and tax history, last sale, schools, nearby homes, and listing, buyer and co-agent attribution. Costs 1 credit. */
+  /** Returns a property's full record: price, estimates, address, county, parcel ID, facts and features, taxes, price and tax history, schools, nearby homes and agents. Costs 1 credit. */
   async getPropertyRecords(params: GetPropertyRecordsParams): Promise<ZillowPropertyRecords> {
     const { zpid } = params;
     return this.base.get<ZillowPropertyRecords>(`/v1/zillow/properties/${encodeURIComponent(zpid)}/records`);

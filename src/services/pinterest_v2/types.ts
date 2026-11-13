@@ -71,51 +71,79 @@ export interface PinterestV2AudioData {
 }
 
 export interface PinterestV2BoardCover {
+  /** Cover pin id: the pin whose image covers the board. */
   pin_id?: string;
   timestamp?: number;
   crop?: number[];
   custom_cover?: boolean;
+  /** Cover pin image link. */
   image_url?: string;
   image_signature?: string;
 }
 
 export interface PinterestV2BoardResponse {
+  /** The board: id, name, description, link, privacy, owner and counts. */
   board: PinterestV2BoardSummary;
+  /** The board's pins in board order, up to 25 per page. */
   pins: PinterestV2Pin[];
+  /** Pass back as `cursor` for the next page; null on the last page. */
   cursor: string | null;
 }
 
 /** A board: id, name, description, link, pin, follower, section and collaborator counts, privacy, created and order-modified dates, owner, collaborators, related ideas, cover pin and cover and preview images. */
 export interface PinterestV2BoardSummary {
+  /** Board id. */
   id?: string;
   node_id?: string;
+  /** Id of the board section the pin sits in. */
   section_id?: string;
+  /** Board name as it appears in the board link. */
   slug?: string;
+  /** Board name. */
   name?: string;
+  /** Board description. */
   description?: string;
+  /** Board link. */
   url?: string;
+  /** Pin count: pins on the board. */
   pin_count?: number;
+  /** Follower count: accounts that follow the board. */
   follower_count?: number;
+  /** Collaborator count. */
   collaborator_count?: number;
+  /** Section count. */
   section_count?: number;
+  /** Pins outside any section. */
   sectionless_pin_count?: number;
+  /** Place saves count: places saved to the board. */
   place_saves_count?: number;
+  /** Privacy: public, protected or secret. */
   privacy?: string;
+  /** Created at: when the board was made. */
   created_at?: string;
+  /** Order modified at: when a pin was last added to the board or moved on it. */
   modified_at?: string;
   event_date?: string;
   event_start_date?: string;
+  /** Owner: id, username, name and image of the account that owns the board. */
   owner?: PinterestV2User;
+  /** Collaborators: the accounts that pin to the board with the owner. */
   collaborators?: PinterestV2User[];
+  /** Related ideas: Pinterest topics with links. */
   related_interests?: PinterestV2RelatedInterest[];
+  /** Board category. */
   category?: string;
+  /** Collaborative: whether other accounts can pin to the board. */
   is_collaborative?: boolean;
   is_ads_only?: boolean;
   has_custom_cover?: boolean;
   collaborator_requests_enabled?: boolean;
+  /** Cover pin id and crop. */
   cover_pin?: PinterestV2BoardCover;
+  /** Cover image in each size. */
   cover_images?: PinterestV2Image[];
   header_images?: PinterestV2Image[];
+  /** Preview images of the board's latest pins. */
   images?: PinterestV2Image[];
 }
 
@@ -149,10 +177,15 @@ export interface PinterestV2CookTime {
 
 export interface PinterestV2Image {
   alt_text?: string;
+  /** Image link. */
   url?: string;
+  /** Image size name, such as 236x, 736x or originals. */
   variant?: string;
+  /** Image width in pixels. */
   width?: number;
+  /** Image height in pixels. */
   height?: number;
+  /** Image color: the dominant colour as a hex code. */
   dominant_color?: string;
 }
 
@@ -181,14 +214,21 @@ export interface PinterestV2MediaVariant {
 export interface PinterestV2Metrics {
   aggregated_pin_id?: string;
   aggregated_pin_node_id?: string;
+  /** Repins. */
   repin_count?: number;
+  /** Shares. */
   share_count?: number;
+  /** Reactions. */
   reaction_count?: number;
   favorite_count?: number;
+  /** Saves. */
   save_count?: number;
   done_count?: number;
+  /** Comments. */
   comment_count?: number;
+  /** Reactions by type: count per reaction type id. */
   reactions?: Record<string, number>;
+  /** Tried it photos, videos and responses. */
   tried_it?: PinterestV2TriedItMetrics;
 }
 
@@ -202,120 +242,184 @@ export interface PinterestV2MusicCredit {
 
 /** One pin: id, title, description and alt text, link and domain, engagement (metrics), creation time, pinner, creator, origin pinner, board, rich pin data, hashtags, annotations, images with sizes and colour, video and idea pin pages. */
 export interface PinterestV2Pin {
+  /** Pin id. */
   id?: string;
+  /** Canonical pin: id of the original pin this one repeats. */
   original_pin_id?: string;
   product_id?: string;
   top_interest_id?: number;
   advertiser_id?: string;
   link_domain_id?: string;
   node_id?: string;
+  /** Title; when the pin has none, the title on its logged-out page. */
   title?: string;
+  /** Description; when the pin has none, the description on its logged-out page. */
   description?: string;
+  /** SEO alt text: the image description written for search engines and screen readers. */
   alt_text?: string;
+  /** Auto alt text: the image description Pinterest generates. */
   auto_alt_text?: string;
+  /** Grid title, SEO title, SEO description and the other texts kept for the pin. */
   text_variants?: PinterestV2TextVariants;
+  /** Link to the pin's page. */
   url?: string;
+  /** Link: the website the pin leads to. */
   link?: string;
   mobile_link?: string;
   original_pin_url?: string;
   affiliate_link?: string;
+  /** Engagement: saves, repins, shares, comments, reactions, reactions by type and tried it photos. */
   metrics?: PinterestV2Metrics;
   product_status?: PinterestV2ProductStatus;
+  /** Comments disabled and the other limits on the pin. */
   restrictions?: PinterestV2Restrictions;
+  /** Created at: when the pin was saved. */
   created_at?: string;
+  /** Pinner: the account that saved the pin, with id, username, name, image, followers and website. */
   pinner?: PinterestV2User;
+  /** Creator: the account that made the pin, with id, username, name, image, followers and website. */
   creator?: PinterestV2User;
+  /** Origin pinner: the account that first saved the pin. */
   origin_pinner?: PinterestV2User;
   promoter?: PinterestV2User;
+  /** Board the pin is saved to: board id, name, link, privacy, image, pins, sections and collaborative. */
   board?: PinterestV2BoardSummary;
+  /** Account that owns the link's website. */
   link_owner?: PinterestV2User;
+  /** Idea pin pages of an idea pin. */
   story?: PinterestV2Story;
   carousel?: PinterestV2CarouselItem[];
   collection?: PinterestV2CollectionItem[];
+  /** Rich pin: type, title, description, site name, products and rating. */
   rich_content?: PinterestV2RichContent;
   sponsorship?: PinterestV2AttributionData;
   source_attribution?: PinterestV2AttributionData;
   media_attribution?: PinterestV2AttributionData;
   music_attributions?: PinterestV2MusicCredit[];
   text_entities?: PinterestV2TextEntity[];
+  /** Hashtags in the description. */
   hashtags?: string[];
+  /** Topics assigned to the pin. */
   topics?: PinterestV2Topic[];
+  /** Promoted and the pin's ad campaign. */
   promotion?: PinterestV2PromotionData;
+  /** Annotations: the interest tags linked to the pin. */
   annotations?: PinterestV2RelatedInterest[];
   breadcrumbs?: PinterestV2RelatedInterest[];
+  /** Visual objects: boxes around the things found in the image. */
   visual_objects?: PinterestV2VisualObject[];
+  /** Domain of the link. */
   domain?: string;
+  /** Pin category. */
   category?: string;
+  /** Image color: the image's dominant colour as a hex code. */
   dominant_color?: string;
   is_video?: boolean;
+  /** Is a repin: whether the pinner saved another account's pin. */
   is_repin?: boolean;
+  /** Pin format: image, video, story, carousel or collection. */
   media_type?: string;
   product_type?: string;
   digital_media_source_type?: number;
   referring_source?: string;
+  /** Creation method, such as uploaded, bookmarklet or extension. */
   creation_method?: string;
   affiliate_disclosure?: string;
+  /** Image in each size, with width and height. */
   images?: PinterestV2Image[];
   image_signature?: string;
+  /** Video streams, length and views. */
   video?: PinterestV2Video;
 }
 
 export interface PinterestV2PinResponse {
+  /** Pin id. */
   id?: string;
+  /** Canonical pin: id of the original pin this one repeats. */
   original_pin_id?: string;
   product_id?: string;
   top_interest_id?: number;
   advertiser_id?: string;
   link_domain_id?: string;
   node_id?: string;
+  /** Title; when the pin has none, the title on its logged-out page. */
   title?: string;
+  /** Description; when the pin has none, the description on its logged-out page. */
   description?: string;
+  /** SEO alt text: the image description written for search engines and screen readers. */
   alt_text?: string;
+  /** Auto alt text: the image description Pinterest generates. */
   auto_alt_text?: string;
+  /** Grid title, SEO title, SEO description and the other texts kept for the pin. */
   text_variants?: PinterestV2TextVariants;
+  /** Link to the pin's page. */
   url?: string;
+  /** Link: the website the pin leads to. */
   link?: string;
   mobile_link?: string;
   original_pin_url?: string;
   affiliate_link?: string;
+  /** Engagement: saves, repins, shares, comments, reactions, reactions by type and tried it photos. */
   metrics?: PinterestV2Metrics;
   product_status?: PinterestV2ProductStatus;
+  /** Comments disabled and the other limits on the pin. */
   restrictions?: PinterestV2Restrictions;
+  /** Created at: when the pin was saved. */
   created_at?: string;
+  /** Pinner: the account that saved the pin, with id, username, name, image, followers and website. */
   pinner?: PinterestV2User;
+  /** Creator: the account that made the pin, with id, username, name, image, followers and website. */
   creator?: PinterestV2User;
+  /** Origin pinner: the account that first saved the pin. */
   origin_pinner?: PinterestV2User;
   promoter?: PinterestV2User;
+  /** Board the pin is saved to: board id, name, link, privacy, image, pins, sections and collaborative. */
   board?: PinterestV2BoardSummary;
+  /** Account that owns the link's website. */
   link_owner?: PinterestV2User;
+  /** Idea pin pages of an idea pin. */
   story?: PinterestV2Story;
   carousel?: PinterestV2CarouselItem[];
   collection?: PinterestV2CollectionItem[];
+  /** Rich pin: type, title, description, site name, products and rating. */
   rich_content?: PinterestV2RichContent;
   sponsorship?: PinterestV2AttributionData;
   source_attribution?: PinterestV2AttributionData;
   media_attribution?: PinterestV2AttributionData;
   music_attributions?: PinterestV2MusicCredit[];
   text_entities?: PinterestV2TextEntity[];
+  /** Hashtags in the description. */
   hashtags?: string[];
+  /** Topics assigned to the pin. */
   topics?: PinterestV2Topic[];
+  /** Promoted and the pin's ad campaign. */
   promotion?: PinterestV2PromotionData;
+  /** Annotations: the interest tags linked to the pin. */
   annotations?: PinterestV2RelatedInterest[];
   breadcrumbs?: PinterestV2RelatedInterest[];
+  /** Visual objects: boxes around the things found in the image. */
   visual_objects?: PinterestV2VisualObject[];
+  /** Domain of the link. */
   domain?: string;
+  /** Pin category. */
   category?: string;
+  /** Image color: the image's dominant colour as a hex code. */
   dominant_color?: string;
   is_video?: boolean;
+  /** Is a repin: whether the pinner saved another account's pin. */
   is_repin?: boolean;
+  /** Pin format: image, video, story, carousel or collection. */
   media_type?: string;
   product_type?: string;
   digital_media_source_type?: number;
   referring_source?: string;
+  /** Creation method, such as uploaded, bookmarklet or extension. */
   creation_method?: string;
   affiliate_disclosure?: string;
+  /** Image in each size, with width and height. */
   images?: PinterestV2Image[];
   image_signature?: string;
+  /** Video streams, length and views. */
   video?: PinterestV2Video;
 }
 
@@ -370,6 +474,7 @@ export interface PinterestV2PromotionData {
   campaign_id?: string;
   promotion_id?: string;
   is_active_ad?: boolean;
+  /** Promoted: whether the pin is a paid promotion. */
   is_promoted?: boolean;
   has_been_promoted?: boolean;
   is_third_party_ad?: boolean;
@@ -380,9 +485,13 @@ export interface PinterestV2PromotionData {
 
 export interface PinterestV2Rating {
   id?: string;
+  /** Rich pin rating count. */
   rating_count?: number;
+  /** Rich pin review count. */
   review_count?: number;
+  /** Rich pin rating. */
   value?: string;
+  /** Highest rating the site allows. */
   best_value?: string;
 }
 
@@ -405,6 +514,7 @@ export interface PinterestV2RelatedInterest {
 }
 
 export interface PinterestV2Restrictions {
+  /** Comments disabled: whether the pin takes comments. */
   comments_disabled?: boolean;
   is_hidden?: boolean;
   is_viewer_restricted?: boolean;
@@ -418,18 +528,28 @@ export interface PinterestV2Restrictions {
 
 export interface PinterestV2RichContent {
   id?: string;
+  /** Rich pin title. */
   title?: string;
+  /** Rich pin name as shown on the pin. */
   display_name?: string;
+  /** Rich pin description. */
   description?: string;
+  /** Page the rich pin data comes from. */
   url?: string;
+  /** Rich pin rating, rating count and review count. */
   rating?: PinterestV2Rating;
+  /** Rich pin products with prices and stock. */
   products?: PinterestV2Product[];
+  /** Rich pin type, such as article, recipe or product. */
   type?: string;
+  /** Rich pin site name. */
   site_name?: string;
   is_hard_404?: boolean;
   is_soft_404?: boolean;
   display_cook_time_seconds?: number;
+  /** Article details for an article pin. */
   article?: PinterestV2Article;
+  /** Recipe details for a recipe pin. */
   recipe?: PinterestV2Recipe;
   favicon_url?: string;
 }
@@ -451,10 +571,12 @@ export interface PinterestV2SearchMetadata {
 }
 
 export interface PinterestV2SearchResponse {
+  /** Pins, up to 25 per page. */
   pins: PinterestV2Pin[];
   stories?: PinterestV2SearchStory[];
   metadata?: PinterestV2SearchMetadata;
   guides?: PinterestV2SearchGuide[];
+  /** Pass back as `cursor` for the next page; null on the last page. */
   cursor: string | null;
 }
 
@@ -473,9 +595,11 @@ export interface PinterestV2Story {
   root_user_id?: string;
   node_id?: string;
   title?: string;
+  /** Number of idea pin pages. */
   page_count?: number;
   total_video_duration_ms?: number;
   is_deleted?: boolean;
+  /** Idea pin pages: each page's blocks, text, images and videos. */
   pages?: PinterestV2StoryPage[];
   has_affiliate_products?: boolean;
   has_product_pins?: boolean;
@@ -547,28 +671,41 @@ export interface PinterestV2TextEntity {
 
 /** Other texts Pinterest keeps for the pin. `grid_title` (the title on the grid card) is always listed; the others only when they differ from `title` and `description`. */
 export interface PinterestV2TextVariants {
+  /** Grid title: the title on the pin's grid card. */
   grid_title?: string;
+  /** Title on the pin's close-up view. */
   unified_title?: string;
+  /** SEO title: the page title Pinterest writes for search engines. */
   seo_title?: string;
+  /** Title on the pin's logged-out page. */
   page_title?: string;
+  /** Description on the pin's grid card. */
   grid_description?: string;
+  /** Description on the pin's close-up view. */
   unified_description?: string;
+  /** SEO description: the page description Pinterest writes for search engines. */
   seo_description?: string;
+  /** Description on the pin's logged-out page. */
   page_description?: string;
+  /** Description with links as HTML. */
   description_html?: string;
 }
 
 export interface PinterestV2Topic {
   id?: string;
+  /** Topic name. */
   name?: string;
 }
 
 export interface PinterestV2TriedItMetrics {
+  /** Accounts that tried the pin. */
   user_count?: number;
   responses_count?: number;
   recommended_count?: number;
   details_count?: number;
+  /** Tried it videos. */
   videos_count?: number;
+  /** Tried it photos. */
   images_count?: number;
   rating?: number;
   tags?: string[];
@@ -582,13 +719,20 @@ export interface PinterestV2TriedItScore {
 
 /** A Pinterest account: id, username, name, profile link, follower count, website and avatar images. */
 export interface PinterestV2User {
+  /** Account id. */
   id?: string;
+  /** Username. */
   username?: string;
   node_id?: string;
+  /** Name shown on the profile. */
   full_name?: string;
+  /** Link to the profile. */
   profile_url?: string;
+  /** Website the account links to. */
   website_url?: string;
+  /** Website domain the account claimed. */
   domain_url?: string;
+  /** Followers. */
   follower_count?: number;
   is_direct_to_site_allowed?: boolean;
   is_verified_merchant?: boolean;
@@ -600,12 +744,15 @@ export interface PinterestV2User {
   is_ads_only?: boolean;
   is_default_image?: boolean;
   is_partner?: boolean;
+  /** Profile image in each size. */
   images?: PinterestV2Image[];
 }
 
 export interface PinterestV2UserBoardsResponse {
+  /** Boards, about 25 per page, most recently pinned to first. */
   boards: PinterestV2BoardSummary[];
   stories: PinterestV2ProfileStory[];
+  /** Pass back as `cursor` for the next page; null on the last page. */
   cursor: string | null;
 }
 
@@ -617,17 +764,25 @@ export interface PinterestV2VerifiedIdentityData {
 export interface PinterestV2Video {
   id?: string;
   node_id?: string;
+  /** Video stream links. */
   urls?: string[];
+  /** Video views. */
   view_count?: number;
+  /** Video length in milliseconds. */
   duration_ms?: number;
   signature?: string;
+  /** Video in each format and size. */
   variants?: PinterestV2MediaVariant[];
 }
 
 export interface PinterestV2VisualObject {
+  /** Left edge as a share of the image width. */
   x?: number;
+  /** Top edge as a share of the image height. */
   y?: number;
+  /** Box width as a share of the image width. */
   width?: number;
+  /** Box height as a share of the image height. */
   height?: number;
 }
 

@@ -303,11 +303,16 @@ export interface TikTokCommentsResponse {
 
 export interface TikTokContentRestrictions {
   warning_text?: string;
+  /** Share setting: others may share the video. */
   allow_share?: boolean;
+  /** Comment setting: TikTok accepts comments on the video. */
   allow_comment?: boolean;
+  /** Repost setting: others may repost the video. */
   allow_repost?: boolean;
   allow_download?: boolean;
+  /** Duet setting: others may duet the video. */
   allow_duet?: boolean;
+  /** Stitch setting: others may stitch the video. */
   allow_stitch?: boolean;
   allow_react?: boolean;
   allow_music?: boolean;
@@ -315,6 +320,7 @@ export interface TikTokContentRestrictions {
   allow_adding_to_story?: boolean;
   allow_create_sticker?: boolean;
   is_private?: boolean;
+  /** Deleted. App answers only. */
   is_deleted?: boolean;
   is_under_review?: boolean;
   is_prohibited?: boolean;
@@ -325,6 +331,7 @@ export interface TikTokContentRestrictions {
   warning_type?: number | string;
   warnings?: TikTokContentWarning[];
   sound_exemption?: number | string;
+  /** Comment setting: who may comment, as TikTok's code. 0 is everyone and 3 is comments off. */
   comment_audience?: number | string;
   share_type?: number | string;
   privacy_code?: number | string;
@@ -472,37 +479,47 @@ export interface TikTokMediaResource {
   url_list: string[];
   width?: number | string;
   height?: number | string;
+  /** The file's size in bytes: the video size on a video file. */
   data_size?: number | string;
   file_hash?: string;
   file_cs?: string;
 }
 
 export interface TikTokMusic {
+  /** Music ID. */
   id: string | null;
   extracted_from_aweme_id?: string;
+  /** Music title. */
   title?: string;
   language?: string;
   video_count?: number | string;
   restrictions?: TikTokMusicRestrictions;
   create_time?: number | string;
+  /** Music author name. */
   author: string | null;
   owner?: TikTokUser;
   artists?: TikTokUser[];
   matched_song?: TikTokMatchedSong;
   external_songs?: TikTokExternalSong[];
   album?: string;
+  /** Music duration in seconds. */
   duration_seconds?: number | string;
+  /** Original sound: the poster recorded the sound. */
   is_original?: boolean;
   is_original_sound?: boolean;
+  /** Music is copyrighted. */
   is_copyrighted?: boolean;
+  /** Music is commercial: cleared for use in business videos. */
   is_commerce_music?: boolean;
   is_unlimited_music?: boolean;
   is_author_artist?: boolean;
   is_label_supplied?: boolean;
   theme_tags?: string[];
+  /** Music cover URL. */
   cover_large?: TikTokMediaResource;
   cover_medium?: TikTokMediaResource;
   cover_thumb?: TikTokMediaResource;
+  /** Music URL: the audio file. */
   play?: TikTokMediaResource;
 }
 
@@ -535,6 +552,7 @@ export interface TikTokPhoto {
   live_photo?: TikTokLivePhoto;
 }
 
+/** Images: a photo post's title and photos. */
 export interface TikTokPhotoPost {
   title?: string;
   text_language?: string;
@@ -567,8 +585,11 @@ export interface TikTokProfileResponse {
 }
 
 export interface TikTokProfileVideosResponse {
+  /** Up to 35 videos and photo posts per page. */
   videos: TikTokVideo[];
+  /** Send as `max_cursor` for the next page. Null on the last page. */
   max_cursor: string | null;
+  /** Another page exists. */
   has_more: boolean;
 }
 
@@ -601,12 +622,19 @@ export interface TikTokSongVideosResponse {
 
 /** A video's engagement and analytics: play (view), like (digg), comment, share, save (collect) and repost counts. */
 export interface TikTokStatistics {
+  /** Comment count. */
   comment_count?: number | string;
+  /** Like count. */
   digg_count?: number | string;
+  /** View count. */
   play_count?: number | string;
+  /** Share count. */
   share_count?: number | string;
+  /** Save count: how many accounts saved the video. */
   collect_count?: number | string;
+  /** Repost count. */
   repost_count?: number | string;
+  /** Download count. App answers only. */
   download_count?: number | string;
   forward_count?: number | string;
   whatsapp_share_count?: number | string;
@@ -670,50 +698,75 @@ export interface TikTokTrendingFeedResponse {
   videos: TikTokVideo[];
 }
 
-/** A TikTok account: nickname, bio (signature), bio link (bio_url), contact emails from the bio (signature_emails), verification, avatars, and follower, following, like and video counts. */
+/** A TikTok account: name (nickname), bio (signature), website (bio_url), contact emails from the bio (signature_emails), category, verified, private, business, organization and TikTok Shop flags, comment, duet, stitch and download settings, avatars, and follower, following, like, liked-video, friend and video counts. */
 export interface TikTokUser {
+  /** User ID: the account's numeric id. */
   uid: string | null;
+  /** Username: the handle, without the @. */
   unique_id: string | null;
   short_id?: string;
   instagram_id?: string;
+  /** Secondary user ID (secUid), which TikTok's list pages take. */
   sec_uid?: string;
   live_room_id?: string;
+  /** Name: the display name. */
   nickname?: string;
+  /** Bio: the profile text. */
   signature?: string;
   verification_description?: string;
+  /** Language: the account's app language code. */
   language?: string;
+  /** Website: the link in the bio. */
   bio_url?: string;
+  /** Followers: how many accounts follow this one. */
   follower_count?: number | string;
+  /** Following: how many accounts this one follows. */
   following_count?: number | string;
+  /** Likes count: likes on all the account's videos. */
   total_favorited?: number | string;
+  /** Videos count: the account's public videos and photo posts. */
   aweme_count?: number | string;
+  /** Liked videos count: videos this account liked. */
   favoriting_count?: number | string;
+  /** Friends count: accounts that follow each other with this one. */
   friend_count?: number | string;
   like_engagement_rate?: number | string;
+  /** Verified: TikTok shows the verified badge. */
   is_verified?: boolean;
+  /** Private account. */
   is_private?: boolean;
   has_active_story?: boolean;
   following_visibility?: number | string;
   is_embed_banned?: boolean;
   is_hidden_from_search?: boolean;
   mention_status?: number | string;
+  /** Account created, in Unix seconds. */
   created_at?: number | string;
   nickname_modified_at?: string;
   unique_id_modified_at?: string;
   musician?: TikTokMusician;
   youtube_channel?: TikTokLinkedYoutubeChannel;
   twitter?: TikTokLinkedTwitterAccount;
+  /** Location: the account's country code. App answers only. */
   region?: string;
   account_region?: string;
+  /** Comment setting: who may comment on the account's videos, as TikTok's code. */
   comment_setting?: number | string;
+  /** Duet setting: who may duet the account's videos, as TikTok's code. */
   duet_setting?: number | string;
+  /** Stitch setting: who may stitch the account's videos, as TikTok's code. */
   stitch_setting?: number | string;
+  /** Download setting: whether others may save the account's videos, as TikTok's code. */
   download_setting?: number | string;
   profile_embed_permission?: number | string;
+  /** Business account. */
   is_business?: boolean;
+  /** Category: the business account's category. */
   business_category?: string;
+  /** TikTok Shop seller. */
   is_seller?: boolean;
   is_live_seller?: boolean;
+  /** Organization: the account belongs to an organization. */
   is_organization?: boolean;
   is_favorites_public?: boolean;
   is_star?: boolean;
@@ -725,8 +778,10 @@ export interface TikTokUser {
   signature_emails?: string[];
   avatar_thumb?: TikTokMediaResource;
   avatar_medium?: TikTokMediaResource;
+  /** Profile picture, 1080 px. */
   avatar_larger?: TikTokMediaResource;
   covers?: TikTokMediaResource[];
+  /** Recent posts: the account's videos, where the answer holds them. */
   videos?: TikTokVideo[];
 }
 
@@ -736,49 +791,68 @@ export interface TikTokUserSearchResponse {
   has_more: boolean;
 }
 
-/** A TikTok video: description text, statistics, media files, music, hashtags, and its author's account with follower counts. */
+/** A TikTok video or photo post: description text, language, hashtags, mentions, place, pinned and ad flags, statistics, media files, music, settings, and its author's account with follower counts. */
 export interface TikTokVideo {
+  /** Video ID. */
   aweme_id: string | null;
   group_id?: string | null;
   poll_id?: string;
+  /** Text: the caption. */
   description?: string;
+  /** Language of the text. */
   description_language?: string;
   search_description?: string;
   search_description_language?: string;
+  /** Video URL. */
   url: string | null;
+  /** Share URL. App answers only. */
   share_url?: string;
   statistics?: TikTokStatistics;
+  /** Settings: duet, stitch, comment, share and repost settings, and the private, review and deleted states. */
   restrictions: TikTokContentRestrictions;
+  /** Created at, in Unix seconds. */
   create_time?: number | string;
+  /** Created at, in UTC. */
   create_time_utc?: string;
   last_edited_at?: string;
   author?: TikTokUser;
+  /** Music: its ID, title, author name, duration, URL, cover, and original sound, copyrighted and commercial flags. */
   music?: TikTokMusic;
   added_sound?: TikTokMusic;
+  /** Mentions and hashtags in the text, with their positions. Type 0 is a mention (`unique_id`), type 1 a hashtag. */
   text_entities: TikTokTextEntity[];
+  /** Hashtags in the text. */
   hashtags: TikTokHashtag[];
   tagged_users?: TikTokUser[];
   sponsors?: TikTokUser[];
   advertisement?: TikTokAdvertisement;
   products?: TikTokProduct[];
   anchors?: TikTokAnchor[];
+  /** Location name and address of the tagged place. */
   location?: TikTokLocation;
   playlist?: TikTokPlaylist;
   sticker?: TikTokSticker;
   effects?: TikTokEffect[];
   follow_up?: TikTokFollowUpRelationship;
+  /** Region: the poster's country code. App answers only. */
   region?: string;
+  /** Content type: `video` or `multi_photo` (a photo post). */
   content_type: string;
+  /** Aweme type: TikTok's aweme_type code. 0 is a video and 150 a photo post. */
   post_type_code?: number | string;
   category_code?: number | string;
+  /** Paid partnership: TikTok's branded content code. App answers only. */
   branded_content_type?: number | string;
+  /** Paid partnership label, for example `Paid partnership`. App answers only. */
   branded_content_label?: string;
   ai_labels?: TikTokAiLabels;
+  /** Sticker texts: the text stickers on the video. */
   text_overlays?: TikTokTextOverlay[];
   is_ad: boolean | null;
   is_official_item?: boolean;
   is_original_item?: boolean;
   is_memory_post?: boolean;
+  /** Is pinned to the top of the profile. On /profile/videos it is false on every video that is not pinned. */
   is_pinned?: boolean;
   is_paid_content?: boolean;
   has_promotional_music?: boolean;
@@ -790,6 +864,7 @@ export interface TikTokVideo {
   creation_tools?: string[];
   related_searches?: TikTokRelatedSearch[];
   anchor_extras?: string;
+  /** Images: the photos of a photo post. */
   photo_post?: TikTokPhotoPost;
   media?: TikTokVideoMedia;
 }
@@ -798,24 +873,36 @@ export interface TikTokVideo {
 export interface TikTokVideoMedia {
   original_language?: string;
   is_muted?: boolean;
+  /** Video width in pixels. */
   width?: number | string;
+  /** Video height in pixels. */
   height?: number | string;
+  /** Video duration in milliseconds. */
   duration_ms?: number | string;
+  /** Video definition, for example `540p`. */
   ratio?: string;
   has_original_audio?: boolean;
+  /** Has watermark, as TikTok's app reports it. App answers only. */
   has_watermark?: boolean;
   is_hd_bitrate?: boolean;
   is_custom_cover?: boolean;
+  /** Thumbnail: the cover image. */
   cover?: TikTokMediaResource;
+  /** Original cover image. */
   origin_cover?: TikTokMediaResource;
+  /** Dynamic cover: the animated preview. */
   dynamic_cover?: TikTokMediaResource;
   animated_cover?: TikTokMediaResource;
   ai_dynamic_cover?: TikTokMediaResource;
   ai_dynamic_cover_backup?: TikTokMediaResource;
+  /** Video: the playable files, each with its format, codec, bitrate and size (`data_size`). */
   playback_variants: TikTokVideoVariant[];
   audio_variants: TikTokAudioVariant[];
+  /** Download URL: the file TikTok offers to save. */
   download?: TikTokMediaResource;
+  /** Video without watermark. App answers only. */
   download_no_watermark?: TikTokMediaResource;
+  /** Subtitles: the caption tracks, each with its language and URL. */
   captions: TikTokCaption[];
   audio_loudness?: number | string;
   audio_peak?: number | string;
@@ -832,12 +919,15 @@ export interface TikTokVideoVariant {
   url_list: string[];
   width?: number | string;
   height?: number | string;
+  /** The file's size in bytes: the video size on a video file. */
   data_size?: number | string;
   file_hash?: string;
   file_cs?: string;
   variant: string;
   codec?: string;
+  /** Video format: the file's container. */
   format?: string;
+  /** Video bitrate in bits per second. */
   bitrate?: number | string;
   fps?: number | string;
   quality_type?: number | string;

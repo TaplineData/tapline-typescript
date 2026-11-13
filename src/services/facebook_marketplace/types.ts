@@ -57,10 +57,14 @@ export interface FacebookImage {
   height: number | null;
 }
 
-/** One Marketplace listing: title, description, price and original price, status, listing date, category path, location, seller with ratings, condition and other attributes, delivery and shipping, and vehicle details. Photos and videos are on `/marketplace/listings/{listing_id}/photos`. */
+/** One Marketplace listing: title and custom title, description, price, currency and original price (strikethrough_price), status (live, sold, pending, listing status), listing date, category ID, name, slug and category path, location (place, place slug, coordinates, postal code, country code), seller (seller ID, name, photo, joined date, seller profile ID, seller rating and combined rating, seller CMS ID), condition and other attributes, delivery types and shipping (shipping profile ID and shipping option IDs at the top level), item count, product item ID, origin target ID, badges with their badge source, and vehicle details. Photos and videos are on `/marketplace/listings/{listing_id}/photos`. */
 export interface FacebookListing {
   id: string;
   product_item_id: string | null;
+  seller_cms_id: string | null;
+  origin_target_id: string | null;
+  shipping_profile_id: string | null;
+  shipping_option_ids: string[];
   title: string | null;
   base_title: string | null;
   custom_title: string | null;
@@ -92,6 +96,8 @@ export interface FacebookListing {
   is_multi_variant_listing: boolean | null;
   cross_post_marketplace_flags: boolean[];
   badges: string[];
+  badge_source: string | null;
+  badge_image_urls: string[];
 }
 
 export interface FacebookListingAttribute {
@@ -208,14 +214,19 @@ export interface FacebookListingSellerProfile {
   shows_verified_badge: boolean | null;
 }
 
+/** Shipping: shipping price and shipping price lists (price only, and with zip code), purchase protection, shipping offered, buy now enabled, checkout, free-shipping discounts, delivery window, shipping eligible and the shipping label rate type. */
 export interface FacebookListingShipping {
   shipping_price_text: string | null;
+  shipping_price_list: string[];
+  shipping_price_list_with_zip_code: string[];
   is_purchase_protected: boolean | null;
   is_shipping_offered: boolean | null;
   is_buy_now_enabled: boolean | null;
   is_checkout_enabled: boolean | null;
   has_free_shipping_discounts: boolean | null;
   estimated_delivery_window: string | null;
+  is_shipping_eligible: boolean | null;
+  shipping_label_rate_type: string | null;
 }
 
 export interface FacebookListingStatus {
@@ -248,6 +259,52 @@ export interface FacebookListingVehicle {
   transmission: string | null;
 }
 
+/** One Marketplace listing with every photo and video, read from the listing's own page in one call: all listing fields, then photos (photo links, captions, sizes) and videos (video links, HD links, thumbnails, sizes). */
+export interface FacebookListingWithMedia {
+  id: string;
+  product_item_id: string | null;
+  seller_cms_id: string | null;
+  origin_target_id: string | null;
+  shipping_profile_id: string | null;
+  shipping_option_ids: string[];
+  title: string | null;
+  base_title: string | null;
+  custom_title: string | null;
+  description: string | null;
+  share_url: string | null;
+  price: FacebookMoney | null;
+  inventory_count: number | null;
+  price_in_cents: number | null;
+  strikethrough_price: FacebookMoney | null;
+  sweepstake_status: string | null;
+  friends_visibility: FacebookCode;
+  can_share: boolean | null;
+  status: FacebookListingStatus;
+  created_at: string | null;
+  category: FacebookListingCategory;
+  taxonomy: FacebookListingCategory[];
+  location: FacebookListingLocation;
+  seller: FacebookListingSellerProfile;
+  hashtags: string[];
+  attributes: FacebookListingAttribute[];
+  delivery_types: FacebookCode[];
+  shipping: FacebookListingShipping;
+  inventory_type: FacebookCode;
+  search_pivots: string[];
+  details_type: FacebookCode;
+  seller_type: string | null;
+  vehicle_seller_type: string | null;
+  vehicle: FacebookListingVehicle | null;
+  is_multi_variant_listing: boolean | null;
+  cross_post_marketplace_flags: boolean[];
+  badges: string[];
+  badge_source: string | null;
+  badge_image_urls: string[];
+  photos: FacebookPhoto[];
+  videos: FacebookVideo[];
+}
+
+/** One page of Marketplace listings (Facebook sends 10 to 24 per page) with the cursor for the next page. */
 export interface FacebookListingsPage {
   listings: FacebookListingCard[];
   search: FacebookListingSearch;
@@ -422,6 +479,11 @@ export interface FacebookVideoPlayer {
 }
 
 export interface GetMarketplaceListingParams {
+  /** Numeric Marketplace listing id. */
+  listing_id: string;
+}
+
+export interface GetMarketplaceListingWithMediaParams {
   /** Numeric Marketplace listing id. */
   listing_id: string;
 }

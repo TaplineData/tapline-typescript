@@ -356,7 +356,7 @@ export interface ZillowPriceHistoryAgentPhoto {
 /**
  * The home as its Zillow page holds it. `zestimate` and `rentZestimate` are Zillow's value and rent estimates; `priceHistory` the listing and sale events; `propertyTaxRate` and `taxAssessedValue` the taxes; `monthlyHoaFee`, `affordabilityEstimateV2.totalMonthlyCost` and `mortgageZHLRates` the monthly costs; `daysOnZillow` and `datePosted` the time on the market; `listing_agent`, `listed_by` and `attributionInfo` the listing agent; `brokerageName` the broker; `openHouseSchedule` the open houses.
  *
- * Pages Zillow shows as showcase listings (`isShowcaseListing`) carry fewer of these: no days on Zillow, agent, page views or tax rate. `/v1/zillow/properties/{zpid}/records` has every home's schools, tax history, full price history and listing agent.
+ * Pages Zillow shows as showcase listings (`isShowcaseListing`) carry fewer of these: no days on Zillow, agent, page views or tax rate. `/v1/zillow/properties/{zpid}/records` has every home's county, parcel ID, annual tax, assessed value, tax rate, days on Zillow, schools, tax and price history, nearby homes and listing agent.
  */
 export interface ZillowProperty {
   zpid: string;
@@ -774,10 +774,16 @@ export interface ZillowPropertyPropertyTourOptions {
   tourType: string;
 }
 
+/** The home's full record. `price` is the list price, `zestimate` and `rentZestimate` Zillow's value and rent estimates, `priceHistory` the listing and sale events, `lastSoldPrice` the last sale; `taxHistory`, `propertyTaxRate`, `resoFacts.taxAnnualAmount` and `resoFacts.taxAssessedValue` the taxes; `parcelId` the parcel ID, `county` the county, `neighborhoodRegion` the neighborhood; `hoaFee` the HOA fee, due at the interval `resoFacts.hoaFee` names; `daysOnZillow` the days on the market and `resoFacts.onMarketDate` the listing date; `attributionInfo` the listing agent, broker and MLS ID; `schools` the schools; `nearbyHomes` the nearby homes; `resoFacts` the facts and features, year built included; `thumb` the main photo. */
 export interface ZillowPropertyRecords {
   zpid: string;
+  parcelId?: string | null;
+  description?: string | null;
+  price?: number | null;
   priceHistory: ZillowPropertyPriceHistory[];
   lastSoldPrice: number | null;
+  zestimate?: number | null;
+  rentZestimate?: number | null;
   taxHistory: ZillowTaxHistoryEntry[] | null;
   homeStatus: string;
   dateSold: number | null;
@@ -785,6 +791,30 @@ export interface ZillowPropertyRecords {
   schools: ZillowSchool[];
   nearbyHomes: ZillowPropertySummary[] | null;
   resoFacts: ZillowSchoolAssignmentFacts | null;
+  parentRegion?: ZillowPropertyParentRegion | null;
+  homeType?: string | null;
+  address?: ZillowRecordsAddress;
+  streetAddress?: string | null;
+  city?: string | null;
+  state?: string | null;
+  zipcode?: string | null;
+  county?: string | null;
+  countyFIPS?: string | null;
+  neighborhoodRegion?: ZillowPropertyNeighborhoodRegion | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  bedrooms?: number | null;
+  bathrooms?: number | null;
+  livingAreaValue?: number | null;
+  livingAreaUnits?: string | null;
+  livingAreaUnitsShort?: string | null;
+  lotAreaValue?: number | null;
+  lotAreaUnits?: string | null;
+  propertyTaxRate?: number | null;
+  hoaFee?: number | null;
+  daysOnZillow?: number | null;
+  timeOnZillow?: string | null;
+  thumb?: ZillowPropertyNeighborhoodMapThumb[];
 }
 
 export interface ZillowPropertyRegionLink {
@@ -1153,6 +1183,16 @@ export interface ZillowPropertyVirtualTour {
   viewerUrl: string;
 }
 
+export interface ZillowRecordsAddress {
+  streetAddress: string;
+  city: string | null;
+  state: string | null;
+  zipcode: string | null;
+  neighborhood?: unknown | null;
+  community?: unknown | null;
+  subdivision?: string | null;
+}
+
 export interface ZillowRecordsAttributionInfo {
   mlsId: string | null;
   lastChecked: string | null;
@@ -1176,6 +1216,33 @@ export interface ZillowRecordsAttributionInfo {
   mlsDisclaimer: string | null;
   notMLSSourcedListing: boolean | null;
   providerLogo: string | null;
+}
+
+export interface ZillowRecordsFeeAndDue {
+  name: string | null;
+  type: string;
+  fee: string | null;
+  phone: string | null;
+}
+
+export interface ZillowRecordsRoom {
+  description?: unknown | null;
+  roomDescription?: string | null;
+  area?: unknown | null;
+  dimensions?: unknown | null;
+  level?: unknown | null;
+  features?: unknown | null;
+  roomArea?: string | null;
+  roomAreaSource?: unknown | null;
+  roomAreaUnits?: string | null;
+  roomDimensions?: string | null;
+  roomFeatures?: string[] | null;
+  roomLength?: string | null;
+  roomLengthWidthSource?: unknown | null;
+  roomLengthWidthUnits?: string | null;
+  roomLevel?: string | null;
+  roomType?: string;
+  roomWidth?: string | null;
 }
 
 export interface ZillowRegion {
@@ -1232,13 +1299,195 @@ export interface ZillowSchool {
   districtName?: string;
 }
 
+/** The home's facts and features from its MLS listing, the assigned schools included. `onMarketDate` is the listing date, `yearBuilt` the year built, `parcelNumber` the parcel ID, `taxAnnualAmount` the annual tax, `taxAssessedValue` the assessed value and `hoaFee` the HOA fee with its frequency. */
 export interface ZillowSchoolAssignmentFacts {
+  listingId?: unknown | null;
+  additionalParcelsDescription?: unknown | null;
+  zoningDescription?: string | null;
+  hoaFeeTotal?: string | null;
+  pricePerSquareFoot?: number | null;
+  storiesTotal?: number | null;
+  totalActualRent?: number | null;
+  canRaiseHorses?: boolean;
+  developmentStatus?: unknown | null;
+  hasPetsAllowed?: boolean | null;
+  availabilityDate?: number | null;
+  landLeaseExpirationDate?: unknown | null;
+  offerReviewDate?: unknown | null;
+  onMarketDate?: number | null;
   elementarySchool: string | null;
   elementarySchoolDistrict: string | null;
   middleOrJuniorSchool: string | null;
   middleOrJuniorSchoolDistrict: string | null;
   highSchool: string | null;
   highSchoolDistrict: string | null;
+  listAOR?: string | null;
+  aboveGradeFinishedArea?: string | null;
+  accessibilityFeatures?: string[] | null;
+  additionalFeeInfo?: unknown | null;
+  architecturalStyle?: string | null;
+  associations?: unknown[];
+  associationFee?: string | null;
+  associationAmenities?: string[] | null;
+  associationFee2?: string | null;
+  associationFeeIncludes?: string[] | null;
+  associationName?: string | null;
+  associationName2?: string | null;
+  associationPhone?: string | null;
+  associationPhone2?: string | null;
+  basementYN?: boolean | null;
+  buildingFeatures?: unknown | null;
+  buildingName?: string | null;
+  appliances?: string[] | null;
+  atAGlanceFacts?: ZillowPropertyAtAGlanceFact[] | null;
+  attic?: string | null;
+  basement?: string | null;
+  bathrooms?: number | null;
+  bathroomsFull?: number | null;
+  bathroomsHalf?: number | null;
+  bathroomsOneQuarter?: number | null;
+  bathroomsPartial?: unknown | null;
+  bathroomsFloat?: number | null;
+  bathroomsThreeQuarter?: number | null;
+  bedrooms?: number | null;
+  belowGradeFinishedArea?: string | null;
+  bodyType?: unknown | null;
+  builderModel?: unknown | null;
+  builderName?: string | null;
+  buildingArea?: string | null;
+  buildingAreaSource?: unknown | null;
+  carportParkingCapacity?: number | null;
+  cityRegion?: string;
+  commonWalls?: string | null;
+  communityFeatures?: string[] | null;
+  compensationBasedOn?: unknown | null;
+  constructionMaterials?: string[] | null;
+  contingency?: unknown | null;
+  cooling?: string[] | null;
+  coveredParkingCapacity?: number | null;
+  cropsIncludedYN?: unknown | null;
+  cumulativeDaysOnMarket?: string | null;
+  doorFeatures?: string[] | null;
+  electric?: string[] | null;
+  elevation?: number | null;
+  elevationUnits?: string | null;
+  entryLevel?: unknown | null;
+  entryLocation?: string | null;
+  exclusions?: string[] | null;
+  exteriorFeatures?: string[] | null;
+  feesAndDues?: ZillowRecordsFeeAndDue[];
+  fencing?: string | null;
+  fireplaceFeatures?: string[] | null;
+  fireplaces?: number | null;
+  flooring?: string[] | null;
+  foundationArea?: number | null;
+  foundationDetails?: string[] | null;
+  frontageLength?: unknown | null;
+  frontageType?: unknown | null;
+  furnished?: boolean;
+  garageParkingCapacity?: number | null;
+  gas?: string[] | null;
+  greenBuildingVerificationType?: unknown | null;
+  greenEnergyEfficient?: string[] | null;
+  greenEnergyGeneration?: unknown | null;
+  greenIndoorAirQuality?: unknown | null;
+  greenSustainability?: unknown | null;
+  greenWaterConservation?: string[] | null;
+  hasAdditionalParcels?: boolean;
+  hasAssociation?: boolean | null;
+  hasAttachedGarage?: boolean | null;
+  hasAttachedProperty?: boolean;
+  hasCooling?: boolean | null;
+  hasCarport?: boolean | null;
+  hasElectricOnProperty?: boolean | null;
+  hasFireplace?: boolean | null;
+  hasGarage?: boolean;
+  hasHeating?: boolean | null;
+  hasHomeWarranty?: boolean;
+  hasLandLease?: boolean;
+  hasOpenParking?: boolean | null;
+  hasRentControl?: unknown | null;
+  hasSpa?: boolean;
+  hasPrivatePool?: boolean | null;
+  hasView?: boolean | null;
+  hasWaterfrontView?: boolean | null;
+  heating?: string[] | null;
+  hoaFee?: string | null;
+  homeType?: string;
+  horseAmenities?: string[] | null;
+  horseYN?: boolean | null;
+  inclusions?: string[] | null;
+  incomeIncludes?: unknown | null;
+  interiorFeatures?: string[] | null;
+  irrigationWaterRightsAcres?: number | null;
+  irrigationWaterRightsYN?: boolean | null;
+  isNewConstruction?: boolean | null;
+  isSeniorCommunity?: boolean | null;
+  landLeaseAmount?: string | null;
+  laundryFeatures?: string[] | null;
+  leaseTerm?: string | null;
+  levels?: string | null;
+  listingTerms?: string | null;
+  lotFeatures?: string[] | null;
+  lotSize?: string | null;
+  lotSizeDimensions?: string | null;
+  livingArea?: string | null;
+  livingAreaRange?: unknown | null;
+  livingAreaRangeUnits?: string | null;
+  livingQuarters?: unknown[];
+  mainLevelBathrooms?: number | null;
+  mainLevelBedrooms?: number | null;
+  marketingType?: unknown | null;
+  municipality?: unknown | null;
+  numberOfUnitsInCommunity?: number | null;
+  numberOfUnitsVacant?: unknown | null;
+  openParkingCapacity?: number | null;
+  otherEquipment?: string[] | null;
+  otherFacts?: unknown[];
+  otherParking?: string[] | null;
+  otherStructures?: string[] | null;
+  ownership?: string | null;
+  ownershipType?: string | null;
+  parcelNumber?: string | null;
+  parkingCapacity?: number;
+  parkingFeatures?: string[];
+  parkName?: unknown | null;
+  patioAndPorchFeatures?: string[] | null;
+  petsMaxWeight?: unknown | null;
+  poolFeatures?: string[] | null;
+  propertyCondition?: string | null;
+  propertySubType?: string[] | null;
+  roadSurfaceType?: string[] | null;
+  roofType?: string | null;
+  rooms?: ZillowRecordsRoom[];
+  roomTypes?: string[] | null;
+  securityFeatures?: string[] | null;
+  sewer?: string[] | null;
+  spaFeatures?: string[] | null;
+  specialListingConditions?: string | null;
+  stories?: number | null;
+  storiesDecimal?: number | null;
+  structureType?: string | null;
+  subdivisionName?: string | null;
+  taxAnnualAmount?: number | null;
+  taxAssessedValue?: number | null;
+  tenantPays?: unknown | null;
+  topography?: string | null;
+  utilities?: string[] | null;
+  vegetation?: string[] | null;
+  view?: string[] | null;
+  virtualTour?: string | null;
+  waterSource?: string[] | null;
+  waterBodyName?: string | null;
+  waterfrontFeatures?: string[] | null;
+  waterView?: string | null;
+  waterViewYN?: boolean | null;
+  windowFeatures?: string[] | null;
+  woodedArea?: unknown | null;
+  yearBuilt?: number | null;
+  yearBuiltEffective?: unknown | null;
+  zoning?: string | null;
+  media?: unknown[];
 }
 
 export interface ZillowSchoolThemedRating {

@@ -470,6 +470,7 @@ export interface FacebookOtherMedia {
   type: string | null;
 }
 
+/** A page or public profile: page ID (the id the Ad Library takes) and profile ID, username, name, link and Ad Library link, followers, following, likes and talking about, verified badge and active business page, tabs, category, profile picture and cover photo. */
 export interface FacebookPage {
   page_id: string | null;
   profile_id: string | null;
@@ -477,6 +478,7 @@ export interface FacebookPage {
   story_bucket_ids?: string[];
   name: string | null;
   url: string | null;
+  ad_library_url?: string | null;
   metrics: FacebookPageMetrics;
   status: FacebookPageStatus;
   instagram?: FacebookInstagramAccount | null;
@@ -521,6 +523,7 @@ export interface FacebookPageEventsPage {
   pagination: FacebookCursorPagination;
 }
 
+/** A page's Intro card: about text (bio), category and page type, websites and other links (social links), phones, emails, addresses, business hours, rating with review count, price range, services and the confirmed owner. */
 export interface FacebookPageIntro {
   profile_id: string;
   page_id: string | null;
@@ -572,6 +575,13 @@ export interface FacebookPagePhotosPage {
   collection: FacebookCollectionSummary;
   photos: FacebookPhoto[];
   pagination: FacebookCursorPagination;
+}
+
+/** A page or public profile read from its link in one call: the description, the header (page ID, username, name, link, Ad Library link, exact followers and talking about, following, verified badge, active business page, profile picture and cover photo) and the Intro card (about text, category and page type, website and other links, phone, email, address, hours, rating). */
+export interface FacebookPageProfile {
+  description: string | null;
+  page: FacebookPage;
+  intro: FacebookPageIntro | null;
 }
 
 export interface FacebookPageRating {
@@ -691,7 +701,7 @@ export interface FacebookPlace {
   is_user_specified: boolean | null;
 }
 
-/** One post: its id and link, text, creation time, author and owner page, attachments (photos, videos, link cards), top comments and engagement. */
+/** One post: post ID and post URL, text, created at, author (name, short name, ID, URL, picture) and owner page, attachments (images, videos with thumbnail and duration, link cards with link URL), AI disclosure (made with AI), top comments and engagement (reaction count, reactions by type, comment count, share count, view count). */
 export interface FacebookPost {
   id: string | null;
   story_id: string | null;
@@ -734,6 +744,7 @@ export interface FacebookPostStatus {
   is_text_only: boolean | null;
 }
 
+/** One page of posts, newest first: 3 posts per page, the most Facebook shows a logged-out visitor per request; the cursor fetches the next 3. */
 export interface FacebookPostsPage {
   posts: FacebookPost[];
   pagination: FacebookCursorPagination;
@@ -992,6 +1003,11 @@ export interface GetPageAboutParams {
   profile_id: string;
   /** `collection_id` of the tab, from `/resolve` on the tab's URL or the page's `tabs[].collections`. */
   collection_id: string;
+}
+
+export interface GetPageByUrlParams {
+  /** A facebook.com URL or path, such as `https://www.facebook.com/NASA/posts/pfbid0...`. */
+  url: string;
 }
 
 export interface GetPageIntroParams {
